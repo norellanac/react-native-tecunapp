@@ -9,6 +9,49 @@ import { createStackNavigator } from '@react-navigation/stack';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
 
+/*/*******redux persist storage*****/
+//*****crear archivo "./src/reducers" from "App.js" */
+import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reducers from './src/reducers';
+import reduxThunk from 'redux-thunk';
+import {AsyncStorage} from 'react-native';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+
+//const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+
+//redux persisting
+// Middleware: Redux Persist Config
+const persistConfig = {
+  // Root
+  key: "root",
+  // Storage Method (React Native)
+  storage: AsyncStorage,
+  /* Whitelist (Save Specific Reducers)
+	whitelist: [
+	  'authReducer',
+	],*/
+	// Blacklist (Don't Save Specific Reducers)
+
+	blacklist: [
+	  'demo',
+	],
+  };
+    
+  const persistedReducer = persistReducer(persistConfig, reducers)
+  const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
+
+  export const persistor = persistStore(store);
+
+  export const apiUrl = {
+	link: "http://canjeaton.com",
+  };
+//redux persisting
+
+
+/*/*******redux persist storage*****/
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
