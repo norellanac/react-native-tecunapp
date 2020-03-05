@@ -51,7 +51,7 @@ const persistConfig = {
 /*/*******redux persist storage*****/
 
 const Stack = createStackNavigator();
-
+import MainStackNavigator from './navigation/MainStackNavigator'
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
@@ -95,15 +95,11 @@ export default function App(props) {
       <Provider store={store}>
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
           <PersistGate persistor={persistor} loading={null}>
 
-          <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
-
-          </Stack.Navigator>
+            <MainStackNavigator />
             </PersistGate>
-        </NavigationContainer>
       </View>
       </Provider>
     );

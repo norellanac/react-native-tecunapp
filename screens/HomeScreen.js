@@ -5,7 +5,8 @@ import * as WebBrowser from 'expo-web-browser';
 
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
+export default function HomeScreen(props) {
+  const { navigation } = props
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -38,6 +39,11 @@ export default function HomeScreen() {
           <TouchableOpacity onPress={handleHelpPress} style={styles.helpLink}>
             <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+        style={styles.buttonContainer}
+        onPress={() => navigation.navigate('Detail')}>
+        <Text style={styles.buttonText}>Who is ?</Text>
+      </TouchableOpacity>
         </View>
       </ScrollView>
 
