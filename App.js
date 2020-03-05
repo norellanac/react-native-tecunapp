@@ -48,8 +48,6 @@ const persistConfig = {
 	link: "http://canjeaton.com",
   };
 //redux persisting
-
-
 /*/*******redux persist storage*****/
 
 const Stack = createStackNavigator();
@@ -59,6 +57,8 @@ export default function App(props) {
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
+
+  
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
@@ -73,6 +73,8 @@ export default function App(props) {
         await Font.loadAsync({
           ...Ionicons.font,
           'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          Roboto: require("native-base/Fonts/Roboto.ttf"),
+          Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -90,14 +92,20 @@ export default function App(props) {
     return null;
   } else {
     return (
+      <Provider store={store}>
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
         <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+          <PersistGate persistor={persistor} loading={null}>
+
           <Stack.Navigator>
             <Stack.Screen name="Root" component={BottomTabNavigator} />
+
           </Stack.Navigator>
+            </PersistGate>
         </NavigationContainer>
       </View>
+      </Provider>
     );
   }
 }
