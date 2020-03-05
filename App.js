@@ -4,7 +4,7 @@ import { SplashScreen, AppLoading } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 
-import { Container, Root } from "native-base";
+import { Container, Text } from "native-base";
 //***********navegagion************ */
 import { createAppContainer } from "react-navigation";
 import { NavigationContainer } from "@react-navigation/native";
@@ -22,28 +22,68 @@ import RegisterScreen from './screens/RegisterScreen'
 /***************componentes**************** */
 import HeaderCustom from './components/HeaderCustom'
 
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator(
+  {
+    ProfileRoute: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: <HeaderCustom />
+      }
+    },
 
-function RootStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{ gestureEnabled: false }}
-    >
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ title: 'My app' }}
-      />
-      <Stack.Screen
-        name="Register"
-        component={RegisterScreen}
-        initialParams={{ user: 'me' }}
-      />
-    </Stack.Navigator>
-  );
-}
+    LoginRoute: {
+      screen: HomeScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
 
+    RegisterRoute: {
+      screen: RegisterScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+
+
+    AwardsProfileRoute: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: "Historial",
+        headerRight: <HeaderCustom />,
+        headerTintColor: "#EF5F2F",
+        headerTitleStyle: {
+          color: "#EF5F2F"
+        }
+      }
+    },
+
+    GiftRoute: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: "Premios",
+        headerRight: <HeaderCustom />,
+        headerTintColor: "#EF5F2F",
+        headerTitleStyle: {
+          color: "#EF5F2F"
+        }
+      }
+    },
+    HelpRoute: {
+      screen: HomeScreen,
+      navigationOptions: {
+        title: "Ayuda",
+        headerTintColor: "#EF5F2F",
+        headerTitleStyle: {
+          color: "#EF5F2F"
+        }
+      }
+    }
+  },
+  {
+    initialRouteName: "LoginRoute"
+  }
+);
 //***********navegagion************ */
 
 /*/*******redux persist storage*****/
@@ -85,7 +125,7 @@ export const apiUrl = {
 //redux persisting
 /*/*******redux persist storage*****/
 
-const AppContainer = createAppContainer(Stack);
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -114,9 +154,7 @@ export default class App extends React.Component {
         <Container>
           <Root>
             <PersistGate persistor={persistor} loading={null}>
-            <NavigationContainer> <AppContainer />
-             </NavigationContainer>
-              
+              <AppContainer />
             </PersistGate>
           </Root>
         </Container>
