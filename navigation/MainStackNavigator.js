@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from '../screens/HomeScreen'
 import Detail from '../screens/RegisterScreen'
 import Settings from '../screens/LinksScreen'
+import LoginScreen from '../screens/LoginScreen'
 
 const Stack = createStackNavigator()
 
@@ -38,9 +39,9 @@ function MainStackNavigator() {
           })}
         />
         <Stack.Screen
-          name='Settings'
-          component={Settings}
-          options={{ title: 'Settings' }}
+          name='LoginScreen'
+          component={LoginScreen}
+          options={{ title: 'LoginScreen' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,23 +1,25 @@
-import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import { SplashScreen } from 'expo';
-import * as Font from 'expo-font';
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import * as React from "react";
+import { Platform, StatusBar, StyleSheet, View } from "react-native";
+import { SplashScreen } from "expo";
+import * as Font from "expo-font";
+import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
+import BottomTabNavigator from "./navigation/BottomTabNavigator";
+import useLinking from "./navigation/useLinking";
+
+import { Container, Root } from "native-base";
 
 /*/*******redux persist storage*****/
 //*****crear archivo "./src/reducers" from "App.js" */
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import reducers from './src/reducers';
-import reduxThunk from 'redux-thunk';
-import {AsyncStorage} from 'react-native';
-import { persistStore, persistReducer } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
+import { createStore, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import reducers from "./src/reducers";
+import reduxThunk from "redux-thunk";
+import { AsyncStorage } from "react-native";
+import { persistStore, persistReducer } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
 
 //const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
@@ -32,33 +34,29 @@ const persistConfig = {
 	whitelist: [
 	  'authReducer',
 	],*/
-	// Blacklist (Don't Save Specific Reducers)
+  // Blacklist (Don't Save Specific Reducers)
 
-	blacklist: [
-	  'demo',
-	],
-  };
-    
-  const persistedReducer = persistReducer(persistConfig, reducers)
-  const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
+  blacklist: ["demo"]
+};
 
-  export const persistor = persistStore(store);
+const persistedReducer = persistReducer(persistConfig, reducers);
+const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
 
-  export const apiUrl = {
-	link: "http://canjeaton.com",
-  };
+export const persistor = persistStore(store);
+
+export const apiUrl = {
+  link: "http://canjeaton.com"
+};
 //redux persisting
 /*/*******redux persist storage*****/
 
 const Stack = createStackNavigator();
-import MainStackNavigator from './navigation/MainStackNavigator'
+import MainStackNavigator from "./navigation/MainStackNavigator";
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
   const { getInitialState } = useLinking(containerRef);
-
-  
 
   // Load any resources or data that we need prior to rendering the app
   React.useEffect(() => {
@@ -72,9 +70,9 @@ export default function App(props) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-          'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+          "space-mono": require("./assets/fonts/SpaceMono-Regular.ttf"),
           Roboto: require("native-base/Fonts/Roboto.ttf"),
-          Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
+          Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service
@@ -93,14 +91,15 @@ export default function App(props) {
   } else {
     return (
       <Provider store={store}>
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <PersistGate persistor={persistor} loading={null}>
-
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-            <MainStackNavigator />
+        <Container style={styles.container}>
+          <Root>
+            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            <PersistGate persistor={persistor} loading={null}>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <MainStackNavigator />
             </PersistGate>
-      </View>
+          </Root>
+        </Container>
       </Provider>
     );
   }
@@ -109,6 +108,6 @@ export default function App(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });

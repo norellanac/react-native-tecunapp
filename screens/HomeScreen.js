@@ -2,11 +2,15 @@ import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
+import FooterTabsNavigationIconText from '../components/FooterTabsNavigationIconText'
+
 
 import { MonoText } from '../components/StyledText';
 
 export default function HomeScreen(props) {
   const { navigation } = props
+  console.log("home: ", navigation);
+  
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -53,6 +57,8 @@ export default function HomeScreen(props) {
         <View style={[styles.codeHighlightContainer, styles.navigationFilename]}>
           <MonoText style={styles.codeHighlightText}>navigation/BottomTabNavigator.js</MonoText>
         </View>
+
+      <FooterTabsNavigationIconText  navigation={navigation}/>
       </View>
     </View>
   );

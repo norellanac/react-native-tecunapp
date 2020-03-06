@@ -4,9 +4,13 @@ import { Col, Grid, Row } from 'react-native-easy-grid';
 import { Container, Content, Text, Card, CardItem, Button, Icon, Form, Item, Input, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
+import FooterTabsNavigationIconText from '../components/FooterTabsNavigationIconText'
 
 
 class RegisterScreen extends Component {
+	constructor(props) {
+		super();
+	  }
 	state = {
 		dpi: '',
 		name: '',
@@ -94,6 +98,7 @@ class RegisterScreen extends Component {
 	};
 
 	render() {
+		const { navigation } = this.props.navigation
 		if (this.props.user.dpi) {
 			//el navigate le pela la verga
 			//this.props.navigation.navigate("CategoriesRoute");
@@ -105,7 +110,7 @@ class RegisterScreen extends Component {
 			);
 		}
 
-		console.log('Register: ', this.props);
+		console.log('RegisterScreen: ', this.props);
 
 		return (
 			<Container style={{ backgroundColor: '#EF5F2F' }}>
@@ -264,6 +269,7 @@ class RegisterScreen extends Component {
 						</Card>
 					</Content>
 				</KeyboardAvoidingView>
+											{/*<FooterTabsNavigationIconText  navigation={this.props.navigation}/>*/}
 			</Container>
 		);
 	}
