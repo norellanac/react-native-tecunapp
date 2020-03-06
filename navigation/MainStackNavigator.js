@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from '../screens/HomeScreen'
 import Detail from '../screens/RegisterScreen'
-import Settings from '../screens/LinksScreen'
+import Settings from '../components/SideBar'
 import LoginScreen from '../screens/LoginScreen'
 
 const Stack = createStackNavigator()
@@ -12,17 +12,11 @@ const Stack = createStackNavigator()
 function MainStackNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
+      <Stack.Navigator 
         initialRouteName='Home'
         screenOptions={{
           gestureEnabled: true,
-          headerStyle: {
-            backgroundColor: '#101010'
-          },
-          headerTitleStyle: {
-            fontWeight: 'bold'
-          },
-          headerTintColor: '#ffd700',
+          headerShown: false,
           headerBackTitleVisible: false
         }}
         headerMode='float'>
@@ -39,8 +33,8 @@ function MainStackNavigator() {
           })}
         />
         <Stack.Screen
-          name='LoginScreen'
-          component={LoginScreen}
+          name='LoginScreen'            header='null'
+          component={Settings}
           options={{ title: 'LoginScreen' }}
         />
       </Stack.Navigator>

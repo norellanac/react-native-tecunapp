@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import { SplashScreen } from "expo";
+import { SplashScreen, SafeAreaView } from "expo";
 import * as Font from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
@@ -10,7 +10,7 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
 import { Container, Root } from "native-base";
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 /*/*******redux persist storage*****/
 //*****crear archivo "./src/reducers" from "App.js" */
 import { createStore, applyMiddleware } from "redux";
@@ -90,17 +90,20 @@ export default function App(props) {
     return null;
   } else {
     return (
+      <SafeAreaProvider>
+
       <Provider store={store}>
-        <Container style={styles.container}>
-          <Root>
-            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-            <PersistGate persistor={persistor} loading={null}>
-              <Stack.Screen name="Root" component={BottomTabNavigator} />
-              <MainStackNavigator />
-            </PersistGate>
-          </Root>
-        </Container>
+          <Container style={styles.container}>
+            <Root>
+              {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+              <PersistGate persistor={persistor} loading={null}>
+                <Stack.Screen name="Root" component={BottomTabNavigator} />
+                <MainStackNavigator />
+              </PersistGate>
+            </Root>
+          </Container>
       </Provider>
+      </SafeAreaProvider>
     );
   }
 }
