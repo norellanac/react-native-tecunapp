@@ -6,29 +6,35 @@ import { Container, Header, Left, Body, Right, Button, Icon, Title } from 'nativ
 
 function HeaderCustom(props) {
   return (
-    <Container>
       <Header>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() =>
+                props.navigation.navigate('Home')
+              }>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title>Header</Title>
+            <Title></Title>
           </Body>
           <Right>
-            <Button transparent>
-              <Icon name='search' />
+            <Button transparent onPress={() =>
+                props.navigation.navigate('User')
+              }>
+              <Icon name='user' type="FontAwesome" />
             </Button>
-            <Button transparent>
-              <Icon name='heart' />
+            <Button transparent onPress={() =>
+                props.navigation.navigate('Settings')
+              }>
+              <Icon name='notifications' type="MaterialIcons" />
             </Button>
-            <Button transparent>
+            <Button transparent onPress={() =>
+                props.navigation.navigate('Settings')
+              }>
               <Icon name='more' />
             </Button>
           </Right>
         </Header>
-    </Container>
   );
 }
 

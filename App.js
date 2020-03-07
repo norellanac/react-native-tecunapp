@@ -90,8 +90,6 @@ export default function App(props) {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-
       <Provider store={store}>
           <Container style={styles.container}>
             <Root>
@@ -103,7 +101,6 @@ export default function App(props) {
             </Root>
           </Container>
       </Provider>
-      </SafeAreaProvider>
     );
   }
 }

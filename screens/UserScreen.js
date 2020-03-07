@@ -28,7 +28,7 @@ import HeaderCustom from "../components/HeaderCustom";
 
 import { MonoText } from "../components/StyledText";
 
-export default function HomeScreen(props) {
+export default function UserScreen(props) {
   const { navigation } = props;
   console.log("home: ", navigation);
 
@@ -36,42 +36,21 @@ export default function HomeScreen(props) {
     <Container>
         <HeaderCustom navigation={navigation} />
         <Content>
-          <Card style={{flex: 0}}>
+        <Card>
             <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} />
-                <Body>
-                  <Text>NativeBase</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Image source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} style={{height: 200, width: 200, flex: 1}}/>
-                <Text>
-                  //Your text here
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon name="logo-github" />
-                  <Text>1,926 stars</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
+              <Icon active name="logo-googleplus" />
+              <Text>Google Plus</Text>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+             </CardItem>
+           </Card>
         </Content>
         <FooterTabsNavigationIconText navigation={navigation} />
       </Container>
   );
 }
 
-HomeScreen.navigationOptions = {
-  header: null
-};
 
 function DevelopmentModeNotice() {
   if (__DEV__) {

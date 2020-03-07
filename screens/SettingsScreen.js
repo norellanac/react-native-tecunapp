@@ -9,10 +9,10 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
   Container,
-  Card,
-  CardItem,
+  Switch,
+  ListItem,
   Content,
-  Thumbnail,
+  List,
   FooterTab,
   Button,
   Left,
@@ -28,7 +28,7 @@ import HeaderCustom from "../components/HeaderCustom";
 
 import { MonoText } from "../components/StyledText";
 
-export default function HomeScreen(props) {
+export default function SettingsScreen(props) {
   const { navigation } = props;
   console.log("home: ", navigation);
 
@@ -36,42 +36,53 @@ export default function HomeScreen(props) {
     <Container>
         <HeaderCustom navigation={navigation} />
         <Content>
-          <Card style={{flex: 0}}>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} />
-                <Body>
-                  <Text>NativeBase</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Image source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} style={{height: 200, width: 200, flex: 1}}/>
-                <Text>
-                  //Your text here
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon name="logo-github" />
-                  <Text>1,926 stars</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "#FF9501" }}>
+                <Icon active name="airplane" />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Airplane Mode</Text>
+            </Body>
+            <Right>
+              <Switch value={false} />
+            </Right>
+          </ListItem>
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "#007AFF" }}>
+                <Icon active name="wifi" />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Wi-Fi</Text>
+            </Body>
+            <Right>
+              <Text>GeekyAnts</Text>
+              <Icon active name="arrow-forward" />
+            </Right>
+          </ListItem>
+          <ListItem icon>
+            <Left>
+              <Button style={{ backgroundColor: "#007AFF" }}>
+                <Icon active name="bluetooth" />
+              </Button>
+            </Left>
+            <Body>
+              <Text>Bluetooth</Text>
+            </Body>
+            <Right>
+              <Text>On</Text>
+              <Icon active name="arrow-forward" />
+            </Right>
+          </ListItem>
         </Content>
         <FooterTabsNavigationIconText navigation={navigation} />
       </Container>
   );
 }
 
-HomeScreen.navigationOptions = {
-  header: null
-};
 
 function DevelopmentModeNotice() {
   if (__DEV__) {

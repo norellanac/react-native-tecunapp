@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from '../screens/HomeScreen'
-import Detail from '../screens/RegisterScreen'
-import Settings from '../components/SideBar'
+import User from '../screens/UserScreen'
+import Settings from '../screens/SettingsScreen'
 import LoginScreen from '../screens/LoginScreen'
 
 const Stack = createStackNavigator()
@@ -26,14 +26,14 @@ function MainStackNavigator() {
           options={{ title: 'Home Screen' }}
         />
         <Stack.Screen
-          name='Detail'
-          component={Detail}
+          name='User'
+          component={User}
           options={({ route }) => ({
             title: 'route.params.item.name'
           })}
         />
         <Stack.Screen
-          name='LoginScreen'            header='null'
+          name='Settings'            header='null'
           component={Settings}
           options={{ title: 'LoginScreen' }}
         />
