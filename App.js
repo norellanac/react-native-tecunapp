@@ -10,7 +10,7 @@ import BottomTabNavigator from "./navigation/BottomTabNavigator";
 import useLinking from "./navigation/useLinking";
 
 import { Container, Root } from "native-base";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from "react-native-safe-area-context";
 /*/*******redux persist storage*****/
 //*****crear archivo "./src/reducers" from "App.js" */
 import { createStore, applyMiddleware } from "redux";
@@ -45,8 +45,9 @@ const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
 export const persistor = persistStore(store);
 
 export const apiUrl = {
-  link: "http://canjeaton.com"
+  link: "http://quecompraste.website:3000"
 };
+//http://192.168.50.144:3000
 //redux persisting
 /*/*******redux persist storage*****/
 
@@ -91,15 +92,15 @@ export default function App(props) {
   } else {
     return (
       <Provider store={store}>
-          <Container style={styles.container}>
-            <Root>
-              {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-              <PersistGate persistor={persistor} loading={null}>
-                <Stack.Screen name="Root" component={BottomTabNavigator} />
-                <MainStackNavigator />
-              </PersistGate>
-            </Root>
-          </Container>
+        <Container style={styles.container}>
+          <Root>
+            {Platform.OS === "ios" && <StatusBar barStyle="default" />}
+            <PersistGate persistor={persistor} loading={null}>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <MainStackNavigator />
+            </PersistGate>
+          </Root>
+        </Container>
       </Provider>
     );
   }
@@ -108,6 +109,10 @@ export default function App(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    ...Platform.select({
+      android: {
+        marginTop: StatusBar.currentHeight
+      }
+    })
   }
 });

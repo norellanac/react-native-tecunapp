@@ -1,4 +1,5 @@
 import { loginTypes, cargandoLogin, errorLogin, getUser, userLogout, registerUser, updatePass, updatePhon } from "../types/loginTypes";
+import { apiUrl } from './../../App';
 
 export const traerToken = (email, password) => async dispatch => {
   dispatch({
@@ -7,12 +8,12 @@ export const traerToken = (email, password) => async dispatch => {
   try {
     let dataForm = "_method=" + encodeURIComponent("POST");
     dataForm += "&grant_type=" + encodeURIComponent("password");
-    dataForm += "&client_id=" + encodeURIComponent("7");
-    dataForm += "&client_secret=" + encodeURIComponent("dni5WEaKOhF26EoYyp5zQRM9YIqaxtq7WnvIorGD");
+    dataForm += "&client_id=" + encodeURIComponent("2");
+    dataForm += "&client_secret=" + encodeURIComponent("ENw3H6G5E4dm2b1tN4aOPq7AsGhMXQdQxFmxCXfn");
     dataForm += "&username=" + encodeURIComponent(email);
     dataForm += "&password=" + encodeURIComponent(password);
 
-    const response = await fetch("http://canjeaton.com/oauth/token", {
+    const response = await fetch(`${apiUrl.link}/oauth/token`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -21,6 +22,10 @@ export const traerToken = (email, password) => async dispatch => {
       body: dataForm
     });
     const data = await response.json();
+    console.log("test: ", `${apiUrl.link}/api/oauth/token`);
+    console.log('data: ', data);
+    
+    
     if (!response.ok) {
       dispatch({
         type: errorLogin,
@@ -35,7 +40,7 @@ export const traerToken = (email, password) => async dispatch => {
       });
     }
   } catch (error) {
-    console.log("error:");
+    console.log("error: ", error);
     dispatch({
       type: errorLogin,
       error: error.message,
@@ -49,7 +54,7 @@ export const traerUser = tokenUsr => async dispatch => {
     type: cargandoLogin
   });
   try {
-    const response = await fetch("http://canjeaton.com/api/userInfo", {
+    const response = await fetch(`${apiUrl.link}/api/user`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -58,22 +63,19 @@ export const traerUser = tokenUsr => async dispatch => {
       }
     });
     const data = await response.json();
-    if (!response.ok) {
-      dispatch({
-        type: errorLogin,
-        error: "Algo salió mal, " + response.status,
-        cargando: false
-      });
-    } else {
+    console.log("data: ", data);
+    console.log('response: ', response.ok);
+    
+    
+    if (response.ok) {
       dispatch({
         type: getUser,
-        payload: data.user,
-        wallet: data.wallet,
+        payload: data,
         cargando: false
-      });      
+      });  
     }
   } catch (error) {
-    console.log("error:");
+    console.log("error: ", error);
     dispatch({
       type: errorLogin,
       error: error.message,

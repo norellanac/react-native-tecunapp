@@ -28,7 +28,7 @@ export default (state = INITIAL, action) => {
 		case errorLogin:
 			return { ...state, error: action.error, cargando: action.cargando };
 		case getUser:
-			return { ...state, user: action.payload, wallet: action.wallet, cargando: action.cargando };
+			return { ...state, user: action.payload, cargando: action.cargando, error: '', };
 		case userLogout:
 			return {
 				...state,

@@ -25,11 +25,15 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "com.naorellana.template",
       "supportsTablet": true
     },
-    /*funcion para header en android*/
+    "android": {
+      "package": "com.naorellana.template"
+    }
+    /*funcion para header en android
     "androidStatusBar": {
       "barStyle": "light-content",
-    }
+    }*/
   }
 }

@@ -6,6 +6,7 @@ import Home from '../screens/HomeScreen'
 import User from '../screens/UserScreen'
 import Settings from '../screens/SettingsScreen'
 import LoginScreen from '../screens/LoginScreen'
+import RegisterScreen from '../screens/RegisterScreen'
 
 const Stack = createStackNavigator()
 
@@ -13,7 +14,7 @@ function MainStackNavigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-        initialRouteName='Home'
+        initialRouteName='Login'
         screenOptions={{
           gestureEnabled: true,
           headerShown: false,
@@ -35,7 +36,17 @@ function MainStackNavigator() {
         <Stack.Screen
           name='Settings'            header='null'
           component={Settings}
+          options={{ title: 'Settings' }}
+        />
+        <Stack.Screen
+          name='Login'            header='null'
+          component={LoginScreen}
           options={{ title: 'LoginScreen' }}
+        />
+        <Stack.Screen
+          name='Register'            header='null'
+          component={RegisterScreen}
+          options={{ title: 'RegisterScreen' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
