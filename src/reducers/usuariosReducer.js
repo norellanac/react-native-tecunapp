@@ -12,7 +12,6 @@ import { PURGE } from 'redux-persist';
 const INITIAL = {
 	token: '',
 	user: [],
-	wallet: [],
 	cargando: false,
 	registered: false,
 	error: '',
@@ -34,7 +33,6 @@ export default (state = INITIAL, action) => {
 				...state,
 				token: undefined,
 				user: [],
-				wallet: [],
 				cargando: false,
 				error: '',
 				updatePa: '',

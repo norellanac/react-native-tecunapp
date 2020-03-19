@@ -54,7 +54,7 @@ export const traerUser = tokenUsr => async dispatch => {
     type: cargandoLogin
   });
   try {
-    const response = await fetch(`${apiUrl.link}/api/user`, {
+    const response = await fetch(`${apiUrl.link}/api/users`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -70,7 +70,7 @@ export const traerUser = tokenUsr => async dispatch => {
     if (response.ok) {
       dispatch({
         type: getUser,
-        payload: data,
+        payload: data.data,
         cargando: false
       });  
     }
@@ -99,7 +99,7 @@ export const registerUsers = ( dpi, name, lastname, email, phone, password ) => 
     dataForm += "&role_id=" + encodeURIComponent("4");
     dataForm += "&status_id=" + encodeURIComponent("1");
 
-    const response = await fetch("http://canjeaton.com/api/newUserStorage", {
+    const response = await fetch(`${apiUrl.link}/api/users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -111,7 +111,7 @@ export const registerUsers = ( dpi, name, lastname, email, phone, password ) => 
     if (!response.ok) {
       dispatch({
         type: errorLogin,
-        error: data.message,
+        error: data.error,
         cargando: false
       });
     } else {

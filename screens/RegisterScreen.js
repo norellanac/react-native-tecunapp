@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, KeyboardAvoidingView } from "react-native";
+import { Image, KeyboardAvoidingView , Linking} from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   Container,
@@ -12,6 +12,9 @@ import {
   Form,
   Item,
   Input,
+  ListItem,
+  CheckBox,
+  Body,
   Spinner
 } from "native-base";
 import { connect } from "react-redux";
@@ -57,6 +60,7 @@ class RegisterScreen extends Component {
     if (this.props.error == "") {
       await this.props.traerToken(Email, Password);
       await this.props.traerUser(this.props.token);
+      this.props.navigation.navigate("User");
     }
   };
 
@@ -92,7 +96,20 @@ class RegisterScreen extends Component {
           <Grid>
             <Col style={{ alignItems: "center", marginBottom: 15 }}>
               <Text style={{ color: "white" }}>
-                Las contraseñas no coinsiden
+                Las contraseñas no coinciden
+              </Text>
+            </Col>
+          </Grid>
+        </Row>
+      );
+    }
+    if (!this.state.checkTerm) {
+      return (
+        <Row>
+          <Grid>
+            <Col style={{ alignItems: "center", marginBottom: 15 }}>
+              <Text style={{ color: "white" }}>
+                Debe aceptar los términos y condiciones
               </Text>
             </Col>
           </Grid>
@@ -117,16 +134,6 @@ class RegisterScreen extends Component {
 
   render() {
     const { navigation } = this.props.navigation;
-    if (this.props.user.dpi) {
-      //el navigate le pela la verga
-      //this.props.navigation.navigate("CategoriesRoute");
-      return (
-        <Container>
-          <HeaderCategories />
-          <CategoriesScreen />
-        </Container>
-      );
-    }
 
     console.log("RegisterScreen: ", this.props);
 
@@ -270,6 +277,38 @@ class RegisterScreen extends Component {
                   style={{ color: "white" }}
                 />
               </Item>
+              <Content>
+                <ListItem listBorderColor="transparent">
+                  <CheckBox
+                    checked={this.state.checkTerm}
+                    onPress={() => this.setState({checkTerm: !this.state.checkTerm})}
+                    color="#1B2853"
+                  />
+                  <Body>
+                    <Button
+                      transparent
+                      uppercase={false}
+                      vertical
+                      onPress={() =>
+                        Linking.openURL("http://10x.org/privacypolicy/")
+                      }
+                    >
+                      <Text
+                        uppercase={false}
+                        style={{
+                          fontSize: 15,
+                          color: "white",
+                          fontWeight: "bold",
+                          textDecorationLine: "underline",
+                          textTransform: "none"
+                        }}
+                      >
+                        Aceptar Términos y condiciones
+                      </Text>
+                    </Button>
+                  </Body>
+                </ListItem>
+              </Content>
             </Form>
             <Card transparent>
               <CardItem style={{ backgroundColor: "#309BFF" }}>
