@@ -11,7 +11,7 @@ class FooterTabsNavigationIconText extends Component {
     console.log('footer: ', this.props);
     return (
       <Footer>
-          <FooterTab style={{ backgroundColor: '#1B2853'}}>
+          <FooterTab style={{ backgroundColor: '#ed913b'}}>
             <Button
             vertical
             onPress={() => this.props.navigation.navigate('Home')}>

@@ -16,9 +16,9 @@ import { AsyncStorage } from "react-native";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 
-import image1 from "./assets/images/robot-dev.png";
-import image2 from "./assets/images/robot-dev.png";
-import image3 from "./assets/images/robot-dev.png";
+import image1 from "./assets/images/tecun/logoColor.png";
+import image2 from "./assets/images/tecun/logoBlanco.png";
+import image3 from "./assets/images/tecun/logoColor.png";
 //const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 //redux persisting
@@ -74,21 +74,21 @@ const slides = [
     title: "Hello All",
     text: "Say something cool",
     image: image1,
-    backgroundColor: "#59b2ab"
+    backgroundColor: "#1D578A"
   },
   {
     key: "2",
     title: " Be Cool",
     text: "Other cool stuff",
     image: image2,
-    backgroundColor: "#febe29"
+    backgroundColor: "#E87823"
   },
   {
     key: "3",
     title: "Let us Start",
     text: "We are already cool!",
     image: image3,
-    backgroundColor: "#22bcb5"
+    backgroundColor: "#181e26"
   }
 ];
 

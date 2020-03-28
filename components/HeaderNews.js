@@ -26,13 +26,13 @@ function HeaderCustom(props) {
       </Body>
       <Right>
         <Button transparent onPress={() => props.navigation.navigate("User")}>
-          <Icon name="user" type="FontAwesome" />
+          <Icon name="search" type="FontAwesome" />
         </Button>
         <Button
           transparent
           onPress={() => props.navigation.navigate("Settings")}
         >
-          <Icon name="notifications" type="MaterialIcons" />
+          <Icon name="podcast" type="FontAwesome" />
         </Button>
         <Button
           transparent

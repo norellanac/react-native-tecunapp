@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, Linking, KeyboardAvoidingView } from "react-native";
+import { Image, Linking, KeyboardAvoidingView, Dimensions } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import a from "../components/HeaderCustom";
 import {
@@ -88,25 +88,28 @@ class LoginScreen extends Component {
   };
 
   render() {
+
+  let screenWidth = Dimensions.get("window").width;
+  let screenHeight = Dimensions.get("window").height;
     if (this.props.usuariosReducer.user.name) {
       this.props.navigation.navigate("Home");
     }
     return (
-      <Container style={{ backgroundColor: "#309BFF" }}>
+      <Container style={{ backgroundColor: "#ed913b" }}>
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
           <Content>
             <Card transparent>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid style={{ marginTop: 60 }}>
                   <Col style={{ alignItems: "center" }}>
                     <Image
                       source={require("./../assets/images/robot-prod.png")}
-                      style={{ width: 165, height: 165 }}
+                      style={{ width: screenWidth-20, height: 165 }}
                     />
                   </Col>
                 </Grid>
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Col style={{ alignItems: "center" }}>
                     <Text
@@ -157,13 +160,13 @@ class LoginScreen extends Component {
               </Item>
             </Form>
             <Card transparent>
-              <CardItem style={{ backgroundColor: "#309BFF", marginTop: 20 }}>
+              <CardItem style={{ backgroundColor: "#ed913b", marginTop: 20 }}>
                 <Grid>
                   <Row>{this.ponerError()}</Row>
                   <Row>{this.ponerContenido()}</Row>
                 </Grid>
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Col style={{ alignItems: "center" }}>
                     <Button
@@ -190,7 +193,7 @@ class LoginScreen extends Component {
                   </Col>
                 </Grid>
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Col style={{ alignItems: "center" }}>
                     <Button

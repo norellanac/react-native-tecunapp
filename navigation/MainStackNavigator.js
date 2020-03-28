@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from '../screens/HomeScreen'
-import User from '../screens/UserScreen'
-import Settings from '../screens/SettingsScreen'
+import User from '../screens/UserScreenProfile'
+import Settings from '../screens/NewsScreenHome'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 

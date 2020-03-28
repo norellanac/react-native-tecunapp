@@ -7,11 +7,11 @@ import {
   Content,
   List,
   ListItem,
-  Thumbnail,
+  Icon,
   Text,
   Left,
-  Body,
-  Right,
+  CardItem,
+  Card,
   Button
 } from "native-base";
 import { connect } from "react-redux";
@@ -19,7 +19,7 @@ import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "./../components/HeaderCustom";
 import { persistor } from "./../App";
-class UserScreen extends Component {
+class UserScreenOptions extends Component {
   constructor(props) {
     super();
   }
@@ -128,34 +128,62 @@ class UserScreen extends Component {
   render() {
     //const { navigation } = this.props.navigation
 
-    console.log("UserScreen: ", this.props);
+    console.log("UserScreenOptions: ", this.props);
 
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-          <List>
-            <ListItem thumbnail>
-              <Left>
-                <Thumbnail
-                  square
-                  source={{
-                    uri:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRN7USRtFiSwwrfqNMPm_kTcGJ4NkIX7xRy4ztZq4Acm298JkWd"
-                  }}
-                />
-              </Left>
-              <Body>
-                <Text>{this.props.user.name}</Text>
-                <Text> {this.props.user.email}</Text>
-              </Body>
-              <Right>
-                <Button transparent onPress={this.logout}>
-                  <Text>Salir</Text>
-                </Button>
-              </Right>
-            </ListItem>
-          </List>
+          <Card transparent>
+            <Button
+              transparent
+              vertical
+              onPress={() =>
+                this.props.navigation.navigate("EditPasswordRoute")
+              }
+            >
+              <CardItem>
+                <Grid style={{ backgroundColor: "#F8FAFB" }}>
+                  <Col size={1} style={{ alignItems: "center", marginTop: 7 }}>
+                    <Icon type="Octicons" name="key" />
+                  </Col>
+                  <Col size={5} style={{ marginBottom: 10, marginTop: 10 }}>
+                    <Text style={{ color: "#1c2752" }}>Cambiar Contraseña</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+            <Button
+              transparent
+              vertical
+              onPress={() => this.props.navigation.navigate("EditPhoneRoute")}
+            >
+              <CardItem>
+                <Grid style={{ backgroundColor: "#F8FAFB" }}>
+                  <Col size={1} style={{ alignItems: "center", marginTop: 7 }}>
+                    <Icon type="AntDesign" name="phone" />
+                  </Col>
+                  <Col size={5} style={{ marginBottom: 10, marginTop: 10 }}>
+                    <Text style={{ color: "#1c2752" }}>
+                      Editar mi número teléfono
+                    </Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+            <CardItem>
+              <Grid style={{ backgroundColor: "#F8FAFB" }}>
+                <Col size={1} style={{ alignItems: "center", marginTop: 7 }}>
+                  <Icon type="MaterialCommunityIcons" name="logout" />
+                </Col>
+                <Col size={5} style={{ marginBottom: 10, marginTop: 10 }}>
+                  <Text onPress={this.logout} style={{ color: "#1c2752" }}>
+                    Cerrar sesión
+                  </Text>
+                </Col>
+              </Grid>
+            </CardItem>
+          </Card>
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>
@@ -167,4 +195,4 @@ const mapStateToProps = reducers => {
   return reducers.usuariosReducer;
 };
 
-export default connect(mapStateToProps, loginActions)(UserScreen);
+export default connect(mapStateToProps, loginActions)(UserScreenOptions);

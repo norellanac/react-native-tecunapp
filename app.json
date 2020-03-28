@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Tab Navigation Template",
-    "slug": "naorellanaApp",
+    "name": "TECUN APP",
+    "slug": "TECUNAPP",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -25,15 +25,11 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.naorellana.template",
+      "bundleIdentifier": "com.naorellana.gt.tecunapp",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.naorellana.template"
+      "package": "com.naorellana.gt.tecunapp"
     }
-    /*funcion para header en android
-    "androidStatusBar": {
-      "barStyle": "light-content",
-    }*/
   }
 }

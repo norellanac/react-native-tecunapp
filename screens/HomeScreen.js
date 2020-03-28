@@ -3,7 +3,7 @@ import {
   Image,
   Platform,
   StyleSheet,
-  TouchableOpacity,
+  Dimensions,
   View
 } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -24,9 +24,12 @@ import {
 import { ScrollView } from "react-native-gesture-handler";
 import * as WebBrowser from "expo-web-browser";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
-import HeaderCustom from "../components/HeaderCustom";
+import HeaderCustom from "../components/HeaderNews";
 
 import { MonoText } from "../components/StyledText";
+
+var screenWidth = Dimensions.get("window").width;
+var screenHeight = Dimensions.get("window").height;
 
 export default function HomeScreen(props) {
   const { navigation } = props;
@@ -34,38 +37,87 @@ export default function HomeScreen(props) {
 
   return (
     <Container>
-        <HeaderCustom navigation={navigation} />
-        <Content>
-          <Card style={{flex: 0}}>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} />
-                <Body>
-                  <Text>NativeBase</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
+      <HeaderCustom navigation={navigation} />
+      <Content>
+        <Card style={{ flex: 0 }}>
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail 
+              style={{ backgroundColor: "black" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
               <Body>
-                <Image source={{uri: 'https://thumbs.dreamstime.com/z/space-astronaut-vector-illustration-eps-file-format-75632689.jpg'}} style={{height: 200, width: 200, flex: 1}}/>
-                <Text>
-                  //Your text here
-                </Text>
+                <Text>Nueva Publicación</Text>
+                <Text note>April 15, 2016</Text>
               </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon name="logo-github" />
-                  <Text>1,926 stars</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
-        </Content>
-        <FooterTabsNavigationIconText navigation={navigation} />
-      </Container>
+            </Left>
+          </CardItem>
+          <CardItem style={{ backgroundColor: "#181e26" }}>
+            <Body>
+              <Image
+                source={require("../assets/images/robot-dev.png")}
+                style={{ width: screenWidth-20, height: 150 }}
+              />
+              <Text style={{color: "white"}}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
+            </Body>
+          </CardItem>
+          <CardItem>
+          <Left>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="heart" type="FontAwesome" />
+                <Text>1,926 Likes</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="comment" type="FontAwesome" />
+                <Text>1,926 Comentarios</Text>
+              </Button>
+            </Right>
+          </CardItem>
+        </Card>
+
+        <Card style={{ flex: 0 }}>
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail 
+              style={{ backgroundColor: "black" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
+              <Body>
+                <Text>Nueva Publicación</Text>
+                <Text note>April 15, 2016</Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem style={{ backgroundColor: "#181e26" }}>
+            <Body>
+              <Image
+                source={require("../assets/images/robot-dev.png")}
+                style={{ width: screenWidth-20, height: 150 }}
+              />
+              <Text style={{color: "white"}}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
+            </Body>
+          </CardItem>
+          <CardItem>
+          <Left>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="heart" type="FontAwesome" />
+                <Text>1,926 Likes</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="comment" type="FontAwesome" />
+                <Text>1,926 Comentarios</Text>
+              </Button>
+            </Right>
+          </CardItem>
+        </Card>
+      
+      </Content>
+      <FooterTabsNavigationIconText navigation={navigation} />
+    </Container>
   );
 }
 

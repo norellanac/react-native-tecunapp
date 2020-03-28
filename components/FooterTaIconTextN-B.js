@@ -9,29 +9,28 @@ class FooterTabsNavigationIconText extends Component {
     //const { navigation } = this.props.navigation
     console.log("footer: ", this.props);
     return (
-      <Footer>
-        <FooterTab>
+      <Footer >
+        <FooterTab style={{ backgroundColor: '#ed913b'}}>
           <Button
             vertical
             onPress={() => this.props.navigation.navigate("Home")}
           >
-            <Icon name="apps" />
-            <Text>Apps</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="newspaper-o" type="FontAwesome" />
+            <Text style={{ color: '#FFFFFF' }}>Tecun News</Text>
           </Button>
           <Button
             vertical
             onPress={() => this.props.navigation.navigate("Settings")}
           >
-            <Icon name="settings" />
-            <Text>Setting</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="ticket" type="FontAwesome" />
+            <Text style={{ color: '#FFFFFF' }}>Tecun Club</Text>
           </Button>
           <Button
             vertical
-            active
             onPress={() => this.props.navigation.navigate("User")}
           >
-            <Icon name="user" type="FontAwesome" />
-            <Text>User</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="users" type="FontAwesome5" />
+            <Text style={{ color: '#FFFFFF' }}>User</Text>
           </Button>
         </FooterTab>
       </Footer>

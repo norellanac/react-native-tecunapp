@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Image, KeyboardAvoidingView , Linking} from "react-native";
+import { Image, KeyboardAvoidingView , Linking, Dimensions} from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   Container,
@@ -133,26 +133,28 @@ class RegisterScreen extends Component {
   };
 
   render() {
+    let screenWidth = Dimensions.get("window").width;
+  let screenHeight = Dimensions.get("window").height;
     const { navigation } = this.props.navigation;
 
     console.log("RegisterScreen: ", this.props);
 
     return (
-      <Container style={{ backgroundColor: "#309BFF" }}>
+      <Container style={{ backgroundColor: "#ed913b" }}>
         <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
           <Content>
             <Card transparent>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid style={{ marginTop: 60 }}>
                   <Col style={{ alignItems: "center" }}>
                     <Image
                       source={require("../assets/images/robot-dev.png")}
-                      style={{ width: 165, height: 165 }}
+                      style={{ width: screenWidth-20, height: 165 }}
                     />
                   </Col>
                 </Grid>
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Col style={{ alignItems: "center" }}>
                     <Text
@@ -311,7 +313,7 @@ class RegisterScreen extends Component {
               </Content>
             </Form>
             <Card transparent>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Row>
                     <Col style={{ alignItems: "center" }}>
@@ -325,10 +327,10 @@ class RegisterScreen extends Component {
                   </Row>
                 </Grid>
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 {this.ponerContenido()}
               </CardItem>
-              <CardItem style={{ backgroundColor: "#309BFF" }}>
+              <CardItem style={{ backgroundColor: "#ed913b" }}>
                 <Grid>
                   <Col style={{ alignItems: "center" }}>
                     <Button
