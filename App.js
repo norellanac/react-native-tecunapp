@@ -43,7 +43,7 @@ const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
 export const persistor = persistStore(store);
 
 export const apiUrl = {
-  link: "http://quecompraste.website:3000"
+  link: "http://192.168.0.10:3000"
 };
 //http://192.168.50.144:3000
 //redux persisting

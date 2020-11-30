@@ -9,7 +9,7 @@ export const traerToken = (email, password) => async dispatch => {
     let dataForm = "_method=" + encodeURIComponent("POST");
     dataForm += "&grant_type=" + encodeURIComponent("password");
     dataForm += "&client_id=" + encodeURIComponent("2");
-    dataForm += "&client_secret=" + encodeURIComponent("ENw3H6G5E4dm2b1tN4aOPq7AsGhMXQdQxFmxCXfn");
+    dataForm += "&client_secret=" + encodeURIComponent("uWGU9xcqkElLlAEqAWOOvnSdaWUYZRUh2gQ5zlai");
     dataForm += "&username=" + encodeURIComponent(email);
     dataForm += "&password=" + encodeURIComponent(password);
 
@@ -109,7 +109,7 @@ export const registerUsers = ( dpi, name, lastname, email, phone, password ) => 
     });
     const data = await response.json();    
     if (!response.ok) {
-      dispatch({
+      dispatch({ 
         type: errorLogin,
         error: data.error,
         cargando: false
