@@ -3,17 +3,18 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from '../screens/HomeScreen'
-import User from '../screens/UserScreenProfile'
-import Settings from '../screens/NewsScreenHome'
+import GamesScreen from '../screens/GamesScreen'
+import TeamScreen from '../screens/TeamScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
+import JobsScreen from '../screens/JobsScren'
 
 const Stack = createStackNavigator()
 
 function MainStackNavigator() {
   return (
     <NavigationContainer>
-      <Stack.Navigator 
+      <Stack.Navigator
         initialRouteName='Login'
         screenOptions={{
           gestureEnabled: true,
@@ -21,6 +22,19 @@ function MainStackNavigator() {
           headerBackTitleVisible: false
         }}
         headerMode='float'>
+
+        <Stack.Screen
+          name='Login' header='null'
+          component={LoginScreen}
+          options={{ title: 'LoginScreen' }}
+        />
+        <Stack.Screen
+          name='Register' header='null'
+          component={RegisterScreen}
+          options={{ title: 'RegisterScreen' }}
+        />
+
+
         <Stack.Screen
           name='Home'
           component={Home}
@@ -28,25 +42,20 @@ function MainStackNavigator() {
         />
         <Stack.Screen
           name='User'
-          component={User}
+          component={GamesScreen}
           options={({ route }) => ({
             title: 'route.params.item.name'
           })}
         />
         <Stack.Screen
-          name='Settings'            header='null'
-          component={Settings}
-          options={{ title: 'Settings' }}
+          name='TeamScreen' header='null'
+          component={TeamScreen}
+          options={{ title: 'TeamScreen' }}
         />
         <Stack.Screen
-          name='Login'            header='null'
-          component={LoginScreen}
-          options={{ title: 'LoginScreen' }}
-        />
-        <Stack.Screen
-          name='Register'            header='null'
-          component={RegisterScreen}
-          options={{ title: 'RegisterScreen' }}
+          name='JobsScreen' header='null'
+          component={JobsScreen}
+          options={{ title: 'Empleos' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

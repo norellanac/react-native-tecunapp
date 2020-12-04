@@ -20,7 +20,7 @@ class FooterTabsNavigationIconText extends Component {
           </Button>
           <Button
             vertical
-            onPress={() => this.props.navigation.navigate("Settings")}
+            onPress={() => this.props.navigation.navigate("TeamScreen")}
           >
             <Icon style={{ color: '#FFFFFF' }}  name="hard-hat" type="FontAwesome5" />
             <Text style={{ color: '#FFFFFF' }}>Tecun</Text>

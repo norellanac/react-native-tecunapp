@@ -15,11 +15,11 @@ import {
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
-import HeaderCustom from "./../components/HeaderCustom";
-import { persistor } from "./../App";
+import HeaderCustom from "../components/HeaderCustom";
+import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
 
-class NewsScreenHome extends Component {
+class TeamScreen extends Component {
   constructor() {
     super();
   }
@@ -32,9 +32,9 @@ class NewsScreenHome extends Component {
     password: "",
     confirmPassword: "",
     images: [
-      "https://app.canjeaton.com/storage/users/cajeaton1.png",
-      "https://app.canjeaton.com/storage/users/cajeaton2.png",
-      "https://app.canjeaton.com/storage/users/cajeaton3.png",
+      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
+      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
+      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
     ]
   };
 
@@ -75,62 +75,6 @@ class NewsScreenHome extends Component {
     }
   };
 
-  ponerContenido = () => {
-    if (this.props.cargando) {
-      return <Spinner color="blue" style={{ flex: 1 }} />;
-    }
-    return (
-      <Grid>
-        <Col style={{ alignItems: "center" }}>
-          <Button
-            onPress={this.userData}
-            rounded
-            style={{
-              backgroundColor: "#1B2853",
-              borderBottomLeftRadius: 20,
-              borderTopLeftRadius: 20,
-              borderBottomRightRadius: 20,
-              borderTopRightRadius: 20
-            }}
-          >
-            <Text style={{ fontWeight: "bold" }}> Registrate </Text>
-          </Button>
-        </Col>
-      </Grid>
-    );
-  };
-
-  handleSubmit = () => {
-    if (this.state.password !== this.state.confirmPassword) {
-      return (
-        <Row>
-          <Grid>
-            <Col style={{ alignItems: "center", marginBottom: 15 }}>
-              <Text style={{ color: "white" }}>
-                Las contraseñas no coinciden
-              </Text>
-            </Col>
-          </Grid>
-        </Row>
-      );
-    }
-  };
-
-  Erroruser = () => {
-    if (this.props.error != "") {
-      return (
-        <Row>
-          <Grid>
-            <Col style={{ alignItems: "center", marginBottom: 15 }}>
-              <Text style={{ color: "white" }}>{this.props.error}</Text>
-            </Col>
-          </Grid>
-        </Row>
-      );
-    }
-  };
-
-
   render() {
     //const { navigation } = this.props.navigation
     var screenWidth = Dimensions.get("window").width - 2;
@@ -154,9 +98,7 @@ class NewsScreenHome extends Component {
             <Button
               transparent
               vertical
-              onPress={() =>
-                this.props.navigation.navigate("AddressProfileRoute")
-              }
+              onPress={() => this.props.navigation.navigate("JobsScreen")}
             >
               <CardItem style={{ marginTop: 0 }}>
                 <Grid
@@ -192,9 +134,7 @@ class NewsScreenHome extends Component {
             <Button
               transparent
               vertical
-              onPress={() =>
-                this.props.navigation.navigate("AwardsProfileRoute")
-              }
+              onPress={() => this.props.navigation.navigate("JobsScreen")}
             >
               <CardItem>
                 <Grid
@@ -341,4 +281,4 @@ const mapStateToProps = reducers => {
   return reducers.usuariosReducer;
 };
 
-export default connect(mapStateToProps, loginActions)(NewsScreenHome);
+export default connect(mapStateToProps, loginActions)(TeamScreen);

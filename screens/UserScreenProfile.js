@@ -3,7 +3,8 @@ import { Image, KeyboardAvoidingView } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   Container,
-  Header,
+  List,
+  ListItem,
   Content,
   View,
   Thumbnail,
@@ -12,7 +13,9 @@ import {
   Left,
   CardItem,
   Card,
-  Button
+  Button,
+  Body,
+  Right
 } from "native-base";
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
@@ -175,7 +178,28 @@ class UserScreenProfile extends Component {
               </Col>
             </Grid>
           </View>
-
+          <List>
+            <ListItem thumbnail>
+              <Left>
+                <Thumbnail
+                  square
+                  source={{
+                    uri:
+                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRN7USRtFiSwwrfqNMPm_kTcGJ4NkIX7xRy4ztZq4Acm298JkWd"
+                  }}
+                />
+              </Left>
+              <Body>
+                <Text>{this.props.user.name}</Text>
+                <Text> {this.props.user.email}</Text>
+              </Body>
+              <Right>
+                <Button transparent onPress={this.logout}>
+                  <Text>Salir</Text>
+                </Button>
+              </Right>
+            </ListItem>
+          </List>
           <Card transparent>
             <CardItem>
               <Text style={{ fontSize: 22, color: "#1B2853" }}>Mi Perfil</Text>
