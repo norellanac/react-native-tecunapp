@@ -15,22 +15,22 @@ class FooterTabsNavigationIconText extends Component {
             vertical
             onPress={() => this.props.navigation.navigate("Home")}
           >
-            <Icon style={{ color: '#FFFFFF' }}  name="newspaper-o" type="FontAwesome" />
-            <Text style={{ color: '#FFFFFF' }}>Tecun News</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="newspaper" type="FontAwesome5" />
+            <Text style={{ color: '#FFFFFF' }}>Noticias</Text>
           </Button>
           <Button
             vertical
             onPress={() => this.props.navigation.navigate("Settings")}
           >
-            <Icon style={{ color: '#FFFFFF' }}  name="ticket" type="FontAwesome" />
-            <Text style={{ color: '#FFFFFF' }}>Tecun Club</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="hard-hat" type="FontAwesome5" />
+            <Text style={{ color: '#FFFFFF' }}>Tecun</Text>
           </Button>
           <Button
             vertical
             onPress={() => this.props.navigation.navigate("User")}
           >
-            <Icon style={{ color: '#FFFFFF' }}  name="users" type="FontAwesome5" />
-            <Text style={{ color: '#FFFFFF' }}>User</Text>
+            <Icon style={{ color: '#FFFFFF' }}  name="gamepad" type="FontAwesome5" />
+            <Text style={{ color: '#FFFFFF' }}>Juegos</Text>
           </Button>
         </FooterTab>
       </Footer>

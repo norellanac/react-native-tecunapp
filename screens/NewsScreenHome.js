@@ -1,19 +1,15 @@
 import React, { Component } from "react";
-import { Image, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
   Container,
   Content,
-  Card,
-  CardItem,
-  List,
-  ListItem,
+  View,
   Thumbnail,
   Icon,
   Text,
-  Left,
-  Body,
-  Right,
+  CardItem,
+  Card,
   Button
 } from "native-base";
 import { connect } from "react-redux";
@@ -21,11 +17,10 @@ import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "./../components/HeaderCustom";
 import { persistor } from "./../App";
-var screenWidth = Dimensions.get("window").width;
-var screenHeight = Dimensions.get("window").height;
+import { SliderBox } from "react-native-image-slider-box";
 
 class NewsScreenHome extends Component {
-  constructor(props) {
+  constructor() {
     super();
   }
   state = {
@@ -35,7 +30,12 @@ class NewsScreenHome extends Component {
     email: "",
     phone: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    images: [
+      "https://app.canjeaton.com/storage/users/cajeaton1.png",
+      "https://app.canjeaton.com/storage/users/cajeaton2.png",
+      "https://app.canjeaton.com/storage/users/cajeaton3.png",
+    ]
   };
 
   logout = async () => {
@@ -107,7 +107,7 @@ class NewsScreenHome extends Component {
           <Grid>
             <Col style={{ alignItems: "center", marginBottom: 15 }}>
               <Text style={{ color: "white" }}>
-                Las contraseñas no coinsiden
+                Las contraseñas no coinciden
               </Text>
             </Col>
           </Grid>
@@ -130,343 +130,206 @@ class NewsScreenHome extends Component {
     }
   };
 
+
   render() {
     //const { navigation } = this.props.navigation
+    var screenWidth = Dimensions.get("window").width - 2;
+    var hg = Dimensions.get("window").width - 120;
 
-    console.log("NewsScreenHome: ", this.props);
+    console.log("UserScreenProfile: ", this.props);
 
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-        <Grid style={{ margin: 2, width: screenWidth, elevation: 1 }}>
-              <Row>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              </Row>
-            </Grid>
-            <Grid style={{ margin: 2, width: screenWidth, elevation: 1 }}>
-              <Row>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              </Row>
-            </Grid>
-            <Grid style={{ margin: 2, width: screenWidth, elevation: 1 }}>
-              <Row>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              <Col>
-                  <Card>
-                    <CardItem style={{ backgroundColor: "transparent" }}>
-                      <Image
-                        source={require("../assets/images/dev.png")}
-                        style={{ width: screenWidth / 3, height: 150 }}
-                      />
-                    </CardItem>
-                    <CardItem footer bordered>
-                      <Grid>
-                        <Row>
-                          <Col>
-                            <Body>
-                              <Text
-                                style={{
-                                  alignItems: "center",
-                                  alignSelf: "center",
-                                  alignContent: "center",
-                                  fontWeight: "bold",
-                                  color: "#1B2853"
-                                }}
-                              >
-                                {"Cupon De Descuento"} ...
-                              </Text>
-                            </Body>
-                          </Col>
-                        </Row>
-                        <Col>
-                          <Body>
-                            <Text
-                              style={{
-                                color: "#EF5F2F",
-                                fontSize: 18,
-                                marginLeft: 10
-                              }}
-                            >
-                              <Icon
-                                type="MaterialCommunityIcons"
-                                name="sale"
-                                style={{ color: "blue", fontSize: 25 }}
-                              />
-                              {" 100"}
-                            </Text>
-                          </Body>
-                        </Col>
-                      </Grid>
-                    </CardItem>
-                  </Card>
-                </Col>
-              </Row>
-            </Grid>
-          <List>
-            <ListItem thumbnail>
-              <Left>
-                <Thumbnail
-                  square
-                  source={{
-                    uri:
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRN7USRtFiSwwrfqNMPm_kTcGJ4NkIX7xRy4ztZq4Acm298JkWd"
+          <View style={{ margin: 0 }}>
+            <SliderBox style={{ height: hg, width: screenWidth }}
+              images={this.state.images}
+              autoplay
+              circleLoop
+            />
+          </View>
+
+          <Card transparent>
+            <Button
+              transparent
+              vertical
+              onPress={() =>
+                this.props.navigation.navigate("AddressProfileRoute")
+              }
+            >
+              <CardItem style={{ marginTop: 0 }}>
+                <Grid
+                  style={{
+                    backgroundColor: "#F8FAFB",
+                    borderBottomLeftRadius: 5,
+                    borderTopLeftRadius: 5,
+                    borderBottomRightRadius: 5,
+                    borderTopRightRadius: 5
                   }}
-                />
-              </Left>
-              <Body>
-                <Text>{this.props.user.name}</Text>
-                <Text> {this.props.user.email}</Text>
-              </Body>
-              <Right>
-                <Button transparent onPress={this.logout}>
-                  <Text>Salir</Text>
-                </Button>
-              </Right>
-            </ListItem>
-          </List>
+                >
+                  <Col
+                    size={1}
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 15,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Icon
+                      type="FontAwesome5"
+                      name="rocket"
+                      style={{ marginLeft: 15, color: "#1c5988" }}
+                    />
+                  </Col>
+                  <Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+                    <Text>Oportunidades de crecimiento</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+
+            <Button
+              transparent
+              vertical
+              onPress={() =>
+                this.props.navigation.navigate("AwardsProfileRoute")
+              }
+            >
+              <CardItem>
+                <Grid
+                  style={{
+                    backgroundColor: "#F8FAFB",
+                    borderBottomLeftRadius: 5,
+                    borderTopLeftRadius: 5,
+                    borderBottomRightRadius: 5,
+                    borderTopRightRadius: 5
+                  }}
+                >
+                  <Col
+                    size={1}
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 15,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Icon
+                      type="FontAwesome5"
+                      name="map-marked-alt"
+                      style={{ marginLeft: 15, color: "#1c5988" }}
+                    />
+                  </Col>
+                  <Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+                    <Text>Ubicación de agencias</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+
+            <Button
+              transparent
+              vertical
+              onPress={() =>
+                this.props.navigation.navigate("SettingsProfileRoute")
+              }
+            >
+              <CardItem>
+                <Grid
+                  style={{
+                    backgroundColor: "#F8FAFB",
+                    borderBottomLeftRadius: 5,
+                    borderTopLeftRadius: 5,
+                    borderBottomRightRadius: 5,
+                    borderTopRightRadius: 5
+                  }}
+                >
+                  <Col
+                    size={1}
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 15,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Icon
+                      type="FontAwesome5"
+                      name="medal"
+                      style={{ marginLeft: 15, color: "#1c5988" }}
+                    />
+                  </Col>
+                  <Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+                    <Text>Colaboradores destacados</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+
+            <Button
+              transparent
+              vertical
+              onPress={() => this.props.navigation.navigate("HelpPageRoute")}
+            >
+              <CardItem>
+                <Grid
+                  style={{
+                    backgroundColor: "#F8FAFB",
+                    borderBottomLeftRadius: 5,
+                    borderTopLeftRadius: 5,
+                    borderBottomRightRadius: 5,
+                    borderTopRightRadius: 5
+                  }}
+                >
+                  <Col
+                    size={1}
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 15,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Icon
+                      type="FontAwesome5"
+                      name="phone"
+                      style={{ marginLeft: 15, color: "#1c5988" }}
+                    />
+                  </Col>
+                  <Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+                    <Text>Llama directo</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+              <CardItem>
+                <Grid
+                  style={{
+                    backgroundColor: "#F8FAFB",
+                    borderBottomLeftRadius: 5,
+                    borderTopLeftRadius: 5,
+                    borderBottomRightRadius: 5,
+                    borderTopRightRadius: 5
+                  }}
+                >
+                  <Col
+                    size={1}
+                    style={{
+                      marginTop: 15,
+                      marginBottom: 15,
+                      justifyContent: "center"
+                    }}
+                  >
+                    <Icon
+                      type="FontAwesome5"
+                      name="mail-bulk"
+                      style={{ marginLeft: 15, color: "#1c5988" }}
+                    />
+                  </Col>
+                  <Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+                    <Text>Gestiones RRHH</Text>
+                  </Col>
+                </Grid>
+              </CardItem>
+            </Button>
+          </Card>
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>

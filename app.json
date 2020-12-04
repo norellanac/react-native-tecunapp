@@ -9,7 +9,7 @@
       "web"
     ],
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "splash": {
@@ -17,6 +17,7 @@
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -24,11 +25,11 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.naorellana.gt.tecunapp",
+      "bundleIdentifier": "com.grupotecun.gtm.tecunapp",
       "supportsTablet": true
     },
     "android": {
-      "package": "com.naorellana.gt.tecunapp"
+      "package": "com.grupotecun.gtm.tecunapp"
     }
   }
 }

@@ -102,7 +102,7 @@ class UserScreenOptions extends Component {
           <Grid>
             <Col style={{ alignItems: "center", marginBottom: 15 }}>
               <Text style={{ color: "white" }}>
-                Las contraseñas no coinsiden
+                Las contraseñas no coinciden
               </Text>
             </Col>
           </Grid>

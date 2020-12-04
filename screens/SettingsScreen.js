@@ -85,7 +85,7 @@ class SettingsScreen extends Component {
 				<Row>
 					<Grid>
 						<Col style={{ alignItems: 'center', marginBottom: 15 }}>
-							<Text style={{ color: 'white' }}>Las contraseñas no coinsiden</Text>
+							<Text style={{ color: 'white' }}>Las contraseñas no coinciden</Text>
 						</Col>
 					</Grid>
 				</Row>
