@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Dimensions } from "react-native";
-import { Col, Grid, Row } from "react-native-easy-grid";
+import { withNavigation } from "react-navigation";
 import {
   Container,
   Content,
@@ -15,6 +15,7 @@ import {
   Button
 } from "native-base";
 import { connect } from "react-redux";
+import * as jobsActions from "../src/actions/jobsActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
@@ -27,6 +28,8 @@ class JobsScren extends Component {
   }
   state = {
     search: "",
+    jobs: "",
+    job: "",
   };
 
   logout = async () => {
@@ -38,33 +41,16 @@ class JobsScren extends Component {
     console.log("borró direccion");
   };
 
-  componentDidMount() {
-    console.log("");
+  async componentDidMount() {
+    
+    await this.props.getJobs(this.props.usuariosReducer.token);
+    console.log("jobs props", this.props);
+    this.setState({
+      jobs: await this.props.getJobs(this.props.usuariosReducer.token)
+    });
+    console.log("jobs state: ", this.state);
   }
 
-  userData = async () => {
-    let Dpi = this.state.dpi;
-    let Name = this.state.name;
-    let Lastname = this.state.lastname;
-    let Email = this.state.email;
-    let Phone = this.state.phone;
-    await this.props.logoutUser();
-    if (this.state.password === this.state.confirmPassword) {
-      var Password = this.state.password;
-      await this.props.registerUsers(
-        Dpi,
-        Name,
-        Lastname,
-        Email,
-        Phone,
-        Password
-      );
-    }
-    if (this.props.error == "") {
-      await this.props.traerToken(Email, Password);
-      await this.props.traerUser(this.props.token);
-    }
-  };
 
 
 
@@ -110,8 +96,18 @@ class JobsScren extends Component {
   }
 }
 
-const mapStateToProps = reducers => {
-  return reducers.usuariosReducer;
+
+
+const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
+  //return reducers.jobsReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { jobsReducer, usuariosReducer };
 };
 
-export default connect(mapStateToProps, loginActions)(JobsScren);
+const mapDispatchProps = {
+  ...jobsActions,
+  ...loginActions,
+};
+
+export default  withNavigation(
+  connect(mapStateToProps, mapDispatchProps)(JobsScren)
+);

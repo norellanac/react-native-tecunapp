@@ -80,6 +80,9 @@ class GamesScreen extends Component {
             <Container>
                 <HeaderCustom navigation={this.props.navigation} />
                 <Content>
+                    <Button transparent onPress={this.logout}>
+                        <Text>Salir</Text>
+                    </Button>
                     <Card transparent>
                         <CardItem>
                             <Body>

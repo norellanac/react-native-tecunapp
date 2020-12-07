@@ -171,7 +171,7 @@ class TeamScreen extends Component {
               transparent
               vertical
               onPress={() =>
-                this.props.navigation.navigate("SettingsProfileRoute")
+                this.props.navigation.navigate("SpecialTeamScreen")
               }
             >
               <CardItem>
@@ -208,7 +208,7 @@ class TeamScreen extends Component {
             <Button
               transparent
               vertical
-              onPress={() => this.props.navigation.navigate("HelpPageRoute")}
+              onPress={() => this.props.navigation.navigate("SpecialTeamScreen")}
             >
               <CardItem>
                 <Grid

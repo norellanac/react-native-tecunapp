@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from '../screens/HomeScreen'
 import GamesScreen from '../screens/GamesScreen'
 import TeamScreen from '../screens/TeamScreen'
+import SpecialTeamScreen from '../screens/SpecialTeamScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import JobsScreen from '../screens/JobsScren'
@@ -51,6 +52,11 @@ function MainStackNavigator() {
           name='TeamScreen' header='null'
           component={TeamScreen}
           options={{ title: 'TeamScreen' }}
+        />
+        <Stack.Screen
+          name='SpecialTeamScreen' header='null'
+          component={SpecialTeamScreen}
+          options={{ title: 'SpecialTeamScreen' }}
         />
         <Stack.Screen
           name='JobsScreen' header='null'
