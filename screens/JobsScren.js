@@ -1,10 +1,12 @@
 import React, { Component } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, Image } from "react-native";
+import { WebView } from 'react-native-webview';
 import { withNavigation } from "react-navigation";
 import {
   Container,
   Content,
   View,
+  Thumbnail,
   Form,
   Item,
   Input,
@@ -12,7 +14,10 @@ import {
   Text,
   CardItem,
   Card,
-  Button
+  Button,
+  Left,
+  Right,
+  Body,
 } from "native-base";
 import { connect } from "react-redux";
 import * as jobsActions from "../src/actions/jobsActions";
@@ -21,6 +26,7 @@ import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
+import Loading from "./../components/Loading";
 
 class JobsScren extends Component {
   constructor() {
@@ -32,6 +38,43 @@ class JobsScren extends Component {
     job: "",
   };
 
+
+  jobRecords = () => (
+
+    this.props.jobsReducer.jobs.map((job) => (
+      <Card style={{ flex: 0 }} key={job.id}>
+        <CardItem style={{ backgroundColor: "transparent" }}>
+          <Left>
+            <Thumbnail
+              style={{ backgroundColor: "black" }}
+              source={require("../assets/images/robot-dev.png")}
+            />
+            <Body>
+              <Text>{job.title}</Text>
+              <Text note>{job.created_at}</Text>
+            </Body>
+          </Left>
+        </CardItem>
+        <CardItem >
+          <Body>
+            <Text >{job.description}</Text>
+
+          </Body>
+        </CardItem>
+        <CardItem style={{justifyContent: "center"}}>
+          <Button transparent textStyle={{ color: "#87838B" }}>
+            <Icon name="user-tie" type="FontAwesome5" />
+            <Text>Aplicar </Text>
+          </Button>
+        </CardItem>
+      </Card>
+
+
+    ))
+  )
+
+
+
   logout = async () => {
     //await this.props.logoutUser();
     console.log("borró usuario");
@@ -41,8 +84,8 @@ class JobsScren extends Component {
     console.log("borró direccion");
   };
 
-  async componentDidMount() {
-    
+  async componentWillMount() {
+
     await this.props.getJobs(this.props.usuariosReducer.token);
     console.log("jobs props", this.props);
     this.setState({
@@ -57,10 +100,13 @@ class JobsScren extends Component {
 
   render() {
     //const { navigation } = this.props.navigation
-    var screenWidth = Dimensions.get("window").width - 2;
-    var hg = Dimensions.get("window").width - 120;
 
-    console.log("UserScreenProfile: ", this.props);
+    if (this.props.jobsReducer.cargando) {
+      console.log("tiene token");
+      return <Loading />
+    }
+
+    console.log("jobsProps: ", this.props);
 
     return (
       <Container>
@@ -88,6 +134,7 @@ class JobsScren extends Component {
 
           </Form>
 
+          {this.jobRecords()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -108,6 +155,6 @@ const mapDispatchProps = {
   ...loginActions,
 };
 
-export default  withNavigation(
+export default withNavigation(
   connect(mapStateToProps, mapDispatchProps)(JobsScren)
 );

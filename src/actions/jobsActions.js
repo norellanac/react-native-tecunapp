@@ -29,7 +29,7 @@ export const getJobs = tokenUsr => async dispatch => {
         if (response.ok) {
             dispatch({
                 type: getAllJobs,
-                payload: data.data,
+                payload: data.jobs,
                 cargando: false
             });
         }

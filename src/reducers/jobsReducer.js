@@ -6,8 +6,8 @@ import {
 } from '../types/jobsTypes';
 import { PURGE } from 'redux-persist';
 const INITIAL = {
-	jobs: [],
-	job: [],
+	jobs: undefined,
+	job: undefined,
 	cargando: false,
 	error: ''
 };
