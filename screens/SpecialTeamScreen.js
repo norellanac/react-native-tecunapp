@@ -93,7 +93,7 @@ class SpecialTeamScreen extends Component {
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-        <View style={{ margin: 0, marginTop: 150 }}>
+          <View style={{ margin: 0, marginTop: 150 }}>
             <SliderBox style={{ height: hg, width: screenWidth }}
               images={this.awardsUrlImage0()}
               autoplay
