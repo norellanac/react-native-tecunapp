@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     ...Platform.select({
       android: {
-        marginTop: StatusBar.currentHeight
+        //marginTop: StatusBar.currentHeight
       }
     })
   },

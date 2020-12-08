@@ -80,8 +80,6 @@ class TeamScreen extends Component {
     var screenWidth = Dimensions.get("window").width - 2;
     var hg = Dimensions.get("window").width - 120;
 
-    console.log("UserScreenProfile: ", this.props);
-
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />

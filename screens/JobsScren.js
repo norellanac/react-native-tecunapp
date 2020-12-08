@@ -46,7 +46,7 @@ class JobsScren extends Component {
         <CardItem style={{ backgroundColor: "transparent" }}>
           <Left>
             <Thumbnail
-              style={{ backgroundColor: "black" }}
+              style={{ backgroundColor: "#000000" }}
               source={require("../assets/images/robot-dev.png")}
             />
             <Body>
@@ -84,7 +84,7 @@ class JobsScren extends Component {
     console.log("borró direccion");
   };
 
-  async componentWillMount() {
+  async componentDidMount() {
 
     await this.props.getJobs(this.props.usuariosReducer.token);
     console.log("jobs props", this.props);
@@ -124,8 +124,8 @@ class JobsScren extends Component {
                 onChangeText={search => this.setState({ search })}
                 value={this.state.search}
                 placeholder="Plaza o Descripcion"
-                placeholderTextColor="black"
-                style={{ color: "Black" }}
+                placeholderTextColor="#000000"
+                style={{ color: "#000000" }}
               />
               <Button transparent onPress={() => this.props.navigation.navigate("JobsScreen")}>
                 <Icon name="search" type="FontAwesome5" />
