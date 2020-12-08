@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { Dimensions } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
@@ -13,95 +13,100 @@ import {
   Button
 } from "native-base";
 import { connect } from "react-redux";
+import { apiUrl } from '../App';
+import * as awardActions from "../src/actions/awardActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
+import { withNavigation } from "react-navigation";
+import Loading from "./../components/Loading";
 
-class SpecialTeam extends Component {
+class SpecialTeamScreen extends Component {
   constructor() {
     super();
   }
   state = {
-    dpi: "",
-    name: "",
-    lastname: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    images: [
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-    ]
+    awards: []
   };
 
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
-  };
-
-  componentDidMount() {
-    //console.log("");
+  async componentDidMount() {
+    await this.props.getAwards(this.props.usuariosReducer.token);
+    this.setState({
+      awards: await this.props.getAwards(this.props.usuariosReducer.token),
+    });
   }
 
-  userData = async () => {
-    let Dpi = this.state.dpi;
-    let Name = this.state.name;
-    let Lastname = this.state.lastname;
-    let Email = this.state.email;
-    let Phone = this.state.phone;
-    await this.props.logoutUser();
-    if (this.state.password === this.state.confirmPassword) {
-      var Password = this.state.password;
-      await this.props.registerUsers(
-        Dpi,
-        Name,
-        Lastname,
-        Email,
-        Phone,
-        Password
-      );
-    }
-    if (this.props.error == "") {
-      await this.props.traerToken(Email, Password);
-      await this.props.traerUser(this.props.token);
-    }
-  };
+  awardsUrlImage0(){
+    const pathImage = "http://157.55.181.102/storage/awards/";
+    var sliderImages = [];
+    var url = "";
+    this.props.awardReducer.awards.map((award) => {
+      if(award.type_id === 1){
+        url = award.url_image
+        sliderImages.push(pathImage+url);
+      }
+      //console.log("array imagenes: ",sliderImages);
+      
+
+    })
+    return sliderImages;
+  }
+
+  awardsUrlImage1(){
+    const pathImage = "http://157.55.181.102/storage/awards/";
+    var sliderImages = [];
+    var url = "";
+    this.props.awardReducer.awards.map((award) => {
+      if(award.type_id === 0){
+        url = award.url_image
+        sliderImages.push(pathImage+url);
+      }
+      //console.log("array imagenes: ",sliderImages);
+      
+
+    })
+    return sliderImages;
+  }
+
 
   render() {
-    //const { navigation } = this.props.navigation
-    var screenWidth = Dimensions.get("window").width - 2;
-    var hg = Dimensions.get("window").width - 120;
+    var screenWidth = Dimensions.get("window").width - 1;
+    var hg = Dimensions.get("window").width - 150;
 
-    console.log("UserScreenProfile: ", this.props);
+    if(this.props.awardReducer.cargando) {
+      return <Loading />
+    }
+
+    //console.log("imagenes slider: ", this.awardsUrlImage1());
+    /*console.log(this.awardsUrlImage0());
+    console.log(this.awardsUrlImage1());
+    console.log(pathImage);*/
+    //const { navigation } = this.props.navigation
+
+    //Url Api, pathImage y luego url_images para mostrar las imagenes
+
+    /*console.log("Intento de Awards prueba 1: ",this.props.awardReducer.awards);*/
 
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-          <View style={{ margin: 0 }}>
+        <View style={{ margin: 0, marginTop: 150 }}>
             <SliderBox style={{ height: hg, width: screenWidth }}
-              images={this.state.images}
+              images={this.awardsUrlImage0()}
               autoplay
               circleLoop
             />
           </View>
-
-          <View style={{ margin: 10 }}>
+          <View style={{ margin: 0, marginTop: 25 }}>
             <SliderBox style={{ height: hg, width: screenWidth }}
-              images={this.state.images}
+              images={this.awardsUrlImage1()}
               autoplay
               circleLoop
             />
           </View>
-
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>
@@ -109,8 +114,15 @@ class SpecialTeam extends Component {
   }
 }
 
-const mapStateToProps = reducers => {
-  return reducers.usuariosReducer;
-};
+const mapStateToProps = ({ awardReducer, usuariosReducer }) => {
+  return { awardReducer, usuariosReducer };
+}
 
-export default connect(mapStateToProps, loginActions)(SpecialTeam);
+const mapDispatchProps = {
+  ...awardActions,
+  ...loginActions,
+}
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchProps)(SpecialTeamScreen)
+);

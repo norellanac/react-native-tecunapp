@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
 import usuariosReducer from './usuariosReducer'
 import jobsReducer from './jobsReducer'
+import awardReducer from './awardReducer'
 
 /*import stickersReducer from './stickersReducer'
 import categoriesReducer from './categoriesReducer'
@@ -11,6 +12,7 @@ import historyGiftReducer from './historyGiftReducer'*/
 export default combineReducers({
     usuariosReducer,
     jobsReducer,
+    awardReducer,
     /*stickersReducer,
     categoriesReducer,
     giftReducer,
