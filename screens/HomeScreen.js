@@ -43,7 +43,7 @@ export default function HomeScreen(props) {
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
               <Thumbnail 
-              style={{ backgroundColor: "black" }}
+              style={{ backgroundColor: "#000000" }}
                 source={require("../assets/images/robot-dev.png")}
               />
               <Body>
@@ -81,7 +81,7 @@ export default function HomeScreen(props) {
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
               <Thumbnail 
-              style={{ backgroundColor: "black" }}
+              style={{ backgroundColor: "#000000" }}
                 source={require("../assets/images/robot-dev.png")}
               />
               <Body>

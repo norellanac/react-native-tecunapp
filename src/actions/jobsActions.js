@@ -43,12 +43,37 @@ export const getJobs = tokenUsr => async dispatch => {
     }
 };
 
-
-
-
-export const logoutUser = () => dispatch => {
-    /*dispara el evento y contacta al reducer  */
+export const getOneJob = search => async dispatch => {
     dispatch({
-        type: userLogout,
+        type: loadingJobs
     });
+    try {
+        const response = await fetch(`${apiUrl.link}/api/jobs`, {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+                Authorization: `Bearer ${search}`
+            }
+        });
+        const data = await response.json();
+        console.log("jobsAll: ", data);
+        console.log('response: ', response.ok);
+
+
+        if (response.ok) {
+            dispatch({
+                type: getJob,
+                payload: data.jobs,
+                cargando: false
+            });
+        }
+    } catch (error) {
+        console.log("error: ", error);
+        dispatch({
+            type: errorJob,
+            error: error.message,
+            cargando: false
+        });
+    }
 };

@@ -7,7 +7,7 @@ class FooterTabsNavigationIconText extends Component {
 
   render() {
     //const { navigation } = this.props.navigation
-    console.log("footer: ", this.props);
+    //console.log("footer: ", this.props);
     return (
       <Footer >
         <FooterTab style={{ backgroundColor: '#ed913b'}}>
