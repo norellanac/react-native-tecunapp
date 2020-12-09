@@ -1,4 +1,5 @@
 import {
+    idSearchJob,
     getAllJobs,
     getJob,
     loadingJobs,
@@ -43,7 +44,8 @@ export const getJobs = tokenUsr => async dispatch => {
     }
 };
 
-export const getOneJob = search => async dispatch => {
+
+export const getJobId = search => async dispatch => {
     dispatch({
         type: loadingJobs
     });
@@ -76,4 +78,12 @@ export const getOneJob = search => async dispatch => {
             cargando: false
         });
     }
+};
+
+export const setIdJobSearch = jobArray => async dispatch => {
+    dispatch({
+        type: idSearchJob,
+        payload: jobArray
+    });
+
 };

@@ -71,6 +71,11 @@ function MainStackNavigator() {
           component={JobsScreen}
           options={{ title: 'Empleos' }}
         />
+        <Stack.Screen
+          name='JobShowScreen' header='null'
+          component={JobShowScreen}
+          options={{ title: 'Empleos' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )

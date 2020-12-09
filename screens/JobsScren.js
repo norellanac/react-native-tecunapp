@@ -5,7 +5,7 @@ import { withNavigation } from "react-navigation";
 import {
   Container,
   Content,
-  View,
+  Spinner,
   Thumbnail,
   Form,
   Item,
@@ -34,44 +34,57 @@ class JobsScren extends Component {
   }
   state = {
     search: "",
-    jobs: [],
-    job: "",
+    jobId: null,
+  };
+
+  setIdSearchJob(jobArray) {
+    console.log("Array del job: ", jobArray);
+    console.log("Reducer del job: ", this.props.jobsReducer);
+    this.props.setIdJobSearch(jobArray);
+    this.props.navigation.navigate("JobShowScreen")
+  }
+
+
+  loadContent = () => {
+    if (this.props.jobsReducer.jobs) {
+      //console.log("jobs: ", this.props.jobsReducer.jobs);
+      return this.props.jobsReducer.jobs.map((job) => (
+        <Card style={{ flex: 0 }} key={job.id}>
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail
+                style={{ backgroundColor: "#000000" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
+              <Body>
+                <Text>{job.title}</Text>
+                <Text note>{job.created_at}</Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem >
+            <Body>
+              <Text >{job.description}</Text>
+
+            </Body>
+          </CardItem>
+          <CardItem style={{ justifyContent: "center" }}>
+            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
+              <Icon name="user-tie" type="FontAwesome5" />
+              <Text>Aplicar </Text>
+            </Button>
+          </CardItem>
+        </Card>
+
+
+      ))
+    } else {
+      return <Spinner color="blue" style={{ flex: 1 }} />;
+    }
   };
 
 
-  jobRecords = () => (
 
-    this.props.jobsReducer.jobs.map((job) => (
-      <Card style={{ flex: 0 }} key={job.id}>
-        <CardItem style={{ backgroundColor: "transparent" }}>
-          <Left>
-            <Thumbnail
-              style={{ backgroundColor: "#000000" }}
-              source={require("../assets/images/robot-dev.png")}
-            />
-            <Body>
-              <Text>{job.title}</Text>
-              <Text note>{job.created_at}</Text>
-            </Body>
-          </Left>
-        </CardItem>
-        <CardItem >
-          <Body>
-            <Text >{job.description}</Text>
-
-          </Body>
-        </CardItem>
-        <CardItem style={{justifyContent: "center"}}>
-          <Button transparent textStyle={{ color: "#87838B" }}>
-            <Icon name="user-tie" type="FontAwesome5" />
-            <Text>Aplicar </Text>
-          </Button>
-        </CardItem>
-      </Card>
-
-
-    ))
-  )
 
 
 
@@ -88,9 +101,6 @@ class JobsScren extends Component {
 
     await this.props.getJobs(this.props.usuariosReducer.token);
     console.log("jobs props", this.props);
-    this.setState({
-      jobs: await this.props.getJobs(this.props.usuariosReducer.token)
-    });
     console.log("jobs state: ", this.state);
   }
 
@@ -102,7 +112,7 @@ class JobsScren extends Component {
     //const { navigation } = this.props.navigation
 
     if (this.props.jobsReducer.cargando) {
-      console.log("tiene token");
+      console.log("jobsScreen: ", this.props);
       return <Loading />
     }
 
@@ -134,7 +144,7 @@ class JobsScren extends Component {
 
           </Form>
 
-          {this.jobRecords()}
+          {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
