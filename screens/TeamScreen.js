@@ -45,8 +45,11 @@ class TeamScreen extends Component {
     console.log("borró direccion");
   };
 
-  componentDidMount() {
-    console.log("");
+  async componentDidMount() {
+    await this.props.getAwards(this.props.usuariosReducer.token);
+    this.setState({
+      awards: await this.props.getAwards(this.props.usuariosReducer.token),
+    });
   }
 
   userData = async () => {
@@ -150,7 +153,7 @@ class TeamScreen extends Component {
             <Button
               transparent
               vertical
-              onPress={() => this.props.navigation.navigate("JobsScreen")}
+              onPress={() => this.props.navigation.navigate("StoreScreen")}
             >
               <CardItem>
                 <Grid

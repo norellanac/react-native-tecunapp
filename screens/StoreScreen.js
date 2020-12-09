@@ -20,29 +20,29 @@ import {
   Body,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
 import * as loginActions from "../src/actions/loginActions";
+import * as storeActions from '../src/actions/storeActions'
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
 import Loading from "./../components/Loading";
 
-class JobsScren extends Component {
+class StoreScreen extends Component {
   constructor() {
     super();
   }
   state = {
     search: "",
-    jobs: [],
-    job: "",
+    stores: [],
+    store: []
   };
 
 
-  jobRecords = () => (
+  /*storesItem = () => (
 
-    this.props.jobsReducer.jobs.map((job) => (
-      <Card style={{ flex: 0 }} key={job.id}>
+    this.props.storeReducer.stores.map((store) => (
+      <Card style={{ flex: 0 }} key={store.id}>
         <CardItem style={{ backgroundColor: "transparent" }}>
           <Left>
             <Thumbnail
@@ -50,14 +50,14 @@ class JobsScren extends Component {
               source={require("../assets/images/robot-dev.png")}
             />
             <Body>
-              <Text>{job.title}</Text>
-              <Text note>{job.created_at}</Text>
+              <Text>{store.title}</Text>
+              <Text note>{store.created_at}</Text>
             </Body>
           </Left>
         </CardItem>
         <CardItem >
           <Body>
-            <Text >{job.description}</Text>
+            <Text >{store.description}</Text>
 
           </Body>
         </CardItem>
@@ -72,41 +72,54 @@ class JobsScren extends Component {
 
     ))
   )
-
-
-
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
-  };
+  */
 
   async componentDidMount() {
-
-    await this.props.getJobs(this.props.usuariosReducer.token);
-    console.log("jobs props", this.props);
+    await this.props.getStores(this.props.usuariosReducer.token);
     this.setState({
-      jobs: await this.props.getJobs(this.props.usuariosReducer.token)
+        stores: await this.props.getStores(this.props.usuariosReducer.token)
     });
-    console.log("jobs state: ", this.state);
   }
 
+  loadContent = () => {
+    if (this.props.storeReducer.stores) {
+      console.log("jobs: ", this.props.storeReducer.stores);
+      return this.props.storeReducer.stores.map((store) => (
+        <Card style={{ flex: 0 }} key={store.id}>
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail
+                style={{ backgroundColor: "#000000" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
+              <Body>
+                <Text>{store.title}</Text>
+                <Text note>{store.created_at}</Text>
+              </Body>
+            </Left>
+          </CardItem>
+          <CardItem >
+            <Body>
+              <Text >{store.description}</Text>
+
+            </Body>
+          </CardItem>
+          <CardItem style={{ justifyContent: "center" }}>
+            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
+              <Icon name="user-tie" type="FontAwesome5" />
+              <Text>Aplicar </Text>
+            </Button>
+          </CardItem>
+        </Card>
 
 
-
+      ))
+    } else {
+      return <Spinner color="blue" style={{ flex: 1 }} />;
+    }
+  };
 
   render() {
-    //const { navigation } = this.props.navigation
-
-    if (this.props.jobsReducer.cargando) {
-      console.log("tiene token");
-      return <Loading />
-    }
-
-    console.log("jobsProps: ", this.props);
 
     return (
       <Container>
@@ -134,7 +147,7 @@ class JobsScren extends Component {
 
           </Form>
 
-          {this.jobRecords()}
+            { this.loadContent() }
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -145,16 +158,16 @@ class JobsScren extends Component {
 
 
 
-const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
-  //return reducers.jobsReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { jobsReducer, usuariosReducer };
+const mapStateToProps = ({ storeReducer, usuariosReducer }) => {
+  //return reducers.storeReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { storeReducer, usuariosReducer };
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
+  ...storeActions,
   ...loginActions,
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(JobsScren)
+  connect(mapStateToProps, mapDispatchProps)(StoreScreen)
 );
