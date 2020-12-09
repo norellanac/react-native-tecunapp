@@ -9,6 +9,7 @@ import SpecialTeamScreen from '../screens/SpecialTeamScreen'
 import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import JobsScreen from '../screens/JobsScren'
+import JobShowScreen from '../screens/JobShowScreen'
 
 const Stack = createStackNavigator()
 
@@ -61,6 +62,11 @@ function MainStackNavigator() {
         <Stack.Screen
           name='JobsScreen' header='null'
           component={JobsScreen}
+          options={{ title: 'Empleos' }}
+        />
+        <Stack.Screen
+          name='JobShowScreen' header='null'
+          component={JobShowScreen}
           options={{ title: 'Empleos' }}
         />
       </Stack.Navigator>
