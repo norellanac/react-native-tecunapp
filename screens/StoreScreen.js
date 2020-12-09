@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Image, Linking } from "react-native";
 import { WebView } from 'react-native-webview';
 import { withNavigation } from "react-navigation";
 import {
@@ -18,6 +18,7 @@ import {
   Left,
   Right,
   Body,
+  TouchableHighlight,
 } from "native-base";
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
@@ -93,21 +94,25 @@ class StoreScreen extends Component {
                 source={require("../assets/images/robot-dev.png")}
               />
               <Body>
-                <Text>{store.title}</Text>
-                <Text note>{store.created_at}</Text>
+                <Text>{store.name}</Text>
+                <Text note>{store.address}</Text>
+                <Text></Text>
+                <Text note>{store.schedule}</Text>
               </Body>
             </Left>
           </CardItem>
           <CardItem >
             <Body>
               <Text >{store.description}</Text>
-
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(`tel:${store.number}`)}  >
+                <Text>{ store.number }</Text>
+            </Button>
             </Body>
           </CardItem>
           <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
-              <Icon name="user-tie" type="FontAwesome5" />
-              <Text>Aplicar </Text>
+            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(store.maps)}  >
+              <Icon name="fa-waze" type="FontAwesome5" />
+              <Text>Waze</Text>
             </Button>
           </CardItem>
         </Card>
@@ -120,6 +125,10 @@ class StoreScreen extends Component {
   };
 
   render() {
+
+    if(this.props.storeReducer.cargando) {
+      return <Loading />
+    }
 
     return (
       <Container>

@@ -10,6 +10,7 @@ import LoginScreen from '../screens/LoginScreen'
 import RegisterScreen from '../screens/RegisterScreen'
 import JobsScreen from '../screens/JobsScren'
 import StoreScreen from '../screens/StoreScreen'
+import JobShowScreen from '../screens/JobShowScreen'
 
 const Stack = createStackNavigator()
 
@@ -63,7 +64,7 @@ function MainStackNavigator() {
         <Stack.Screen
           name='StoreScreen' header='null'
           component={StoreScreen}
-          options={{ title: 'StoreScreen' }}
+          options={{ title: 'Agencias' }}
         />
 
         <Stack.Screen
