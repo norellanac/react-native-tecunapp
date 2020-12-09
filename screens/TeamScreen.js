@@ -13,10 +13,13 @@ import {
   Button
 } from "native-base";
 import { connect } from "react-redux";
+import * as awardActions from "../src/actions/awardActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
+import { withNavigation } from "react-navigation";
+import Loading from "./../components/Loading";
 import { SliderBox } from "react-native-image-slider-box";
 
 class TeamScreen extends Component {
@@ -30,12 +33,7 @@ class TeamScreen extends Component {
     email: "",
     phone: "",
     password: "",
-    confirmPassword: "",
-    images: [
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-      "https://image.freepik.com/vector-gratis/genial-fondo-trabajadores-felices_23-2147616613.jpg",
-    ]
+    confirmPassword: ""
   };
 
   logout = async () => {
@@ -75,10 +73,30 @@ class TeamScreen extends Component {
     }
   };
 
+  awardsUrlImageActive(){
+    const pathImage = "http://157.55.181.102/storage/awards/";
+    var sliderImages = [];
+    var url = "";
+    this.props.awardReducer.awards.map((award) => {
+      if(award.active === 1){
+        url = award.url_image
+        sliderImages.push(pathImage+url);
+      }
+      //console.log("array imagenes: ",sliderImages);
+      
+
+    })
+    return sliderImages;
+  }
+
   render() {
     //const { navigation } = this.props.navigation
-    var screenWidth = Dimensions.get("window").width - 2;
-    var hg = Dimensions.get("window").width - 120;
+    var screenWidth = Dimensions.get("window").width - 1;
+    var hg = Dimensions.get("window").width - 150;
+
+    if(this.props.awardReducer.cargando) {
+      return <Loading />
+    }
 
     return (
       <Container>
@@ -86,7 +104,7 @@ class TeamScreen extends Component {
         <Content>
           <View style={{ margin: 0 }}>
             <SliderBox style={{ height: hg, width: screenWidth }}
-              images={this.state.images}
+              images={this.awardsUrlImageActive()}
               autoplay
               circleLoop
             />
@@ -275,8 +293,15 @@ class TeamScreen extends Component {
   }
 }
 
-const mapStateToProps = reducers => {
-  return reducers.usuariosReducer;
-};
+const mapStateToProps = ({ awardReducer, usuariosReducer }) => {
+  return { awardReducer, usuariosReducer };
+}
 
-export default connect(mapStateToProps, loginActions)(TeamScreen);
+const mapDispatchProps = {
+  ...awardActions,
+  ...loginActions,
+}
+
+export default withNavigation(
+  connect(mapStateToProps, mapDispatchProps)(TeamScreen)
+);
