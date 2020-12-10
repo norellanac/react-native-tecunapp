@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
     Container,
     Content,
     CardItem,
-    Body,
+    Fab,
     Text,
     Card,
     Button,
-    Image
+    Icon,
+    View
 } from "native-base";
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
@@ -71,8 +72,8 @@ class GamesScreen extends Component {
 
     render() {
         //const { navigation } = this.props.navigation
-        var screenWidth = Dimensions.get("window").width - 2;
-        var hg = Dimensions.get("window").width - 120;
+        var screenWidth = Dimensions.get("window").width;
+        var screenHeight = Dimensions.get("window").height;
 
         console.log("UserScreenProfile: ", this.props);
 
@@ -84,16 +85,48 @@ class GamesScreen extends Component {
                         <Text>Salir</Text>
                     </Button>
                     <Card transparent>
-                        <CardItem>
-                            <Body>
-                                <Text>
-                                    Imagen de la ruleta
-                                </Text>
-                            </Body>
+                        <CardItem cardBody>
+                            <Grid style={{ marginTop: 5 }}>
+                                <Col size={4} style={{ alignItems: "center" }}>
+                                    <CardItem cardBody>
+                                        <Grid style={{ marginTop: 50 }}>
+                                            <Col size={4} style={{ alignItems: "center" }}>
+                                                <Image
+                                                    source={{ uri: "https://lh3.googleusercontent.com/proxy/bkTwbMdwjkZQzC4Fhti-RqE9yg1Qa6Yzt6hP1qYGWCKMOppXHyhXy_Imz9TjozDuSCLGhSMLo0WAhFKX70ncvtp73pPhWiPEUs9tZJr_g0zZ1662h10NKiURj3kV61oTEY-q9NB-OmWfp9cYqwNQ7xF4tOXS-LY" }}
+                                                    style={{ width: screenWidth / 3, height: screenWidth / 3 }}
+                                                />
+                                            </Col>
+                                        </Grid>
+                                    </CardItem>
+                                </Col>
+                            </Grid>
                         </CardItem>
+                        <CardItem cardBody>
+                            <Grid style={{ marginTop: 5 }}>
+                                <Col size={4} style={{ alignItems: "center" }}>
+                                    <CardItem cardBody>
+                                        <Grid style={{ marginTop: 50 }}>
+                                            <Col size={4} style={{ alignItems: "center" }}>
+                                                <Image
+                                                    source={{ uri: "http://157.55.181.102/img/game/trivia.png" }}
+                                                    style={{ width: screenWidth / 2, height: screenHeight / 4 }}
+                                                />
+                                            </Col>
+                                        </Grid>
+                                    </CardItem>
+                                </Col>
+                            </Grid>
+                        </CardItem>
+
                     </Card>
+                    
+
+
                 </Content>
                 <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                <Button rounded style={{ backgroundColor: '#e3342f', right: 20, bottom: 80, position: "absolute", flex: 1, zIndex: -100 }}>
+                        <Icon name="bell" type="FontAwesome5" />
+                    </Button>
             </Container>
         );
     }
