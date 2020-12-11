@@ -13,6 +13,7 @@ import RegisterScreen from '../screens/RegisterScreen'
 import JobsScreen from '../screens/JobsScren'
 import StoreScreen from '../screens/StoreScreen'
 import JobShowScreen from '../screens/JobShowScreen'
+import HomeShowScreen from '../screens/HomeShowScreen'
 
 const Stack = createStackNavigator()
 
@@ -33,28 +34,31 @@ function MainStackNavigator() {
           component={LoginScreen}
           options={{ title: 'LoginScreen' }}
         />
+
         <Stack.Screen
           name='Register' header='null'
           component={RegisterScreen}
           options={{ title: 'RegisterScreen' }}
         />
 
-
         <Stack.Screen
           name='Home'
           component={Home}
           options={{ title: 'Home Screen' }}
         />
+
         <Stack.Screen
           name='PodcastScreen'
           component={PodcastScreen}
           options={{ title: 'PodcastScreen Screen' }}
         />
+
         <Stack.Screen
           name='FlashImagesScreen'
           component={FlashImagesScreen}
           options={{ title: 'FlashImagesScreen Screen' }}
         />
+
         <Stack.Screen
           name='User'
           component={GamesScreen}
@@ -62,11 +66,13 @@ function MainStackNavigator() {
             title: 'route.params.item.name'
           })}
         />
+
         <Stack.Screen
           name='TeamScreen' header='null'
           component={TeamScreen}
           options={{ title: 'TeamScreen' }}
         />
+
         <Stack.Screen
           name='SpecialTeamScreen' header='null'
           component={SpecialTeamScreen}
@@ -84,10 +90,17 @@ function MainStackNavigator() {
           component={JobsScreen}
           options={{ title: 'Empleos' }}
         />
+
         <Stack.Screen
           name='JobShowScreen' header='null'
           component={JobShowScreen}
           options={{ title: 'Empleos' }}
+        />
+
+        <Stack.Screen
+          name='HomeShowScreen' header='null'
+          component={HomeShowScreen}
+          options={{ title: 'Noticia' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
