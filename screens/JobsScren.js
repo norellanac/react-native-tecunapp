@@ -65,14 +65,11 @@ class JobsScren extends Component {
           <CardItem >
             <Body>
               <Text >{job.description}</Text>
-
+              <Button block transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
+                <Text>Aplicar </Text>
+                <Icon name="user-tie" type="FontAwesome5" />
+              </Button>
             </Body>
-          </CardItem>
-          <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
-              <Icon name="user-tie" type="FontAwesome5" />
-              <Text>Aplicar </Text>
-            </Button>
           </CardItem>
         </Card>
 

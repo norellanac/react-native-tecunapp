@@ -16,13 +16,13 @@ import Constants from "expo-constants";
 function HederPostSection(props) {
   return (
     <Header style={{ backgroundColor: '#ed913b'}}>
-      <Button transparent onPress={() => props.navigation.goBack()}>
+      <Button transparent onPress={() => props.navigation.navigate("Home")}>
           <Text style={{ color: '#ffffff'}}>Noticias</Text>
         </Button>
-        <Button transparent onPress={() => props.navigation.navigate("User")}>
+        <Button transparent onPress={() => props.navigation.navigate("PodcastScreen")}>
         <Text style={{ color: '#ffffff'}}>Podcast</Text>
         </Button>
-        <Button transparent onPress={() => props.navigation.navigate("User")}>
+        <Button transparent onPress={() => props.navigation.navigate("FlashImagesScreen")}>
         <Text style={{ color: '#ffffff'}}>Artes</Text>
         </Button>
     </Header>
