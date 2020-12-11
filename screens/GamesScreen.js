@@ -107,10 +107,11 @@ class GamesScreen extends Component {
                                     <CardItem cardBody>
                                         <Grid style={{ marginTop: 50 }}>
                                             <Col size={4} style={{ alignItems: "center" }}>
-                                                <Image
+                                                <Image 
                                                     source={{ uri: "http://157.55.181.102/img/game/trivia.png" }}
                                                     style={{ width: screenWidth / 2, height: screenHeight / 4 }}
                                                 />
+                                                <Button block primary onPress={() => this.props.navigation.navigate("GameShowScreen")}></Button>
                                             </Col>
                                         </Grid>
                                     </CardItem>
@@ -119,14 +120,11 @@ class GamesScreen extends Component {
                         </CardItem>
 
                     </Card>
-                    
+
 
 
                 </Content>
                 <FooterTabsNavigationIconText navigation={this.props.navigation} />
-                <Button rounded style={{ backgroundColor: '#e3342f', right: 20, bottom: 80, position: "absolute", flex: 1, zIndex: -100 }}>
-                        <Icon name="bell" type="FontAwesome5" />
-                    </Button>
             </Container>
         );
     }

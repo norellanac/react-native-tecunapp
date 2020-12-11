@@ -23,7 +23,7 @@ function HederPostSection(props) {
         <Text style={{ color: '#ffffff'}}>Podcast</Text>
         </Button>
         <Button transparent onPress={() => props.navigation.navigate("FlashImagesScreen")}>
-        <Text style={{ color: '#ffffff'}}>Artes</Text>
+        <Text style={{ color: '#ffffff'}}>Comunicados</Text>
         </Button>
     </Header>
   );

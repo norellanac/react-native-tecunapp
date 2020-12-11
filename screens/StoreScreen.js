@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Dimensions, Image, Linking } from "react-native";
-import { WebView } from 'react-native-webview';
+import { Col, Row, Grid } from 'react-native-easy-grid';
 import { withNavigation } from "react-navigation";
 import {
   Container,
@@ -78,7 +78,7 @@ class StoreScreen extends Component {
   async componentDidMount() {
     await this.props.getStores(this.props.usuariosReducer.token);
     this.setState({
-        stores: await this.props.getStores(this.props.usuariosReducer.token)
+      stores: await this.props.getStores(this.props.usuariosReducer.token)
     });
   }
 
@@ -104,16 +104,18 @@ class StoreScreen extends Component {
           <CardItem >
             <Body>
               <Text >{store.description}</Text>
-              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(`tel:${store.number}`)}  >
-                <Text>{ store.number }</Text>
-            </Button>
             </Body>
           </CardItem>
-          <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(store.maps)}  >
-              <Icon name="fa-waze" type="FontAwesome5" />
+          <CardItem style={{ justifyContent: "space-around" }}>
+            <Button primary rounded textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(store.maps)}  >
+              <Icon name="waze" type="MaterialCommunityIcons" />
               <Text>Waze</Text>
             </Button>
+            <Button success rounded textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(`tel:${store.number}`)}  >
+              <Icon name="phone" type="FontAwesome" />
+              <Text>{store.number}</Text>
+            </Button>
+
           </CardItem>
         </Card>
 
@@ -126,7 +128,7 @@ class StoreScreen extends Component {
 
   render() {
 
-    if(this.props.storeReducer.cargando) {
+    if (this.props.storeReducer.cargando) {
       return <Loading />
     }
 
@@ -156,7 +158,7 @@ class StoreScreen extends Component {
 
           </Form>
 
-            { this.loadContent() }
+          {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />

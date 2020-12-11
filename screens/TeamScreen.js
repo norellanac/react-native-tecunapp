@@ -227,7 +227,7 @@ class TeamScreen extends Component {
             <Button
               transparent
               vertical
-              onPress={() => this.props.navigation.navigate("SpecialTeamScreen")}
+              onPress={() => this.props.navigation.navigate("ProccessPeopleScreen")}
             >
               <CardItem>
                 <Grid

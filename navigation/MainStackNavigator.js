@@ -2,8 +2,15 @@ import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import Home from '../screens/HomeScreen'
+import Home from '../screens/PostsScreen'
+import PostsShowScreen from '../screens/PostsShowScreen'
 import PodcastScreen from '../screens/PodcastScreen'
+import PodcastShowScreen from '../screens/PodcastShowScreen'
+import ProccessPeopleScreen from '../screens/ProccessPeopleScreen'
+import ContactScreen from '../screens/ContactScreen'
+import GameShowScreen from '../screens/GameShowScreen'
+import DenounceScreen from '../screens/DenounceScreen'
+
 import FlashImagesScreen from '../screens/FlashImagesScreen'
 import GamesScreen from '../screens/GamesScreen'
 import TeamScreen from '../screens/TeamScreen'
@@ -56,8 +63,15 @@ function MainStackNavigator() {
           options={{ title: 'FlashImagesScreen Screen' }}
         />
         <Stack.Screen
-          name='User'
+          name='GamesScreen'
           component={GamesScreen}
+          options={({ route }) => ({
+            title: 'route.params.item.name'
+          })}
+        />
+        <Stack.Screen
+          name='GameShowScreen'
+          component={GameShowScreen}
           options={({ route }) => ({
             title: 'route.params.item.name'
           })}
@@ -87,6 +101,23 @@ function MainStackNavigator() {
         <Stack.Screen
           name='JobShowScreen' header='null'
           component={JobShowScreen}
+          options={{ title: 'Empleos' }}
+        />
+        <Stack.Screen
+          name='ContactScreen' header='null'
+          component={ContactScreen}
+          options={{ title: 'Empleos' }}
+        />
+
+        <Stack.Screen
+          name='DenounceScreen' header='null'
+          component={DenounceScreen}
+          options={{ title: 'Empleos' }}
+        />
+
+        <Stack.Screen
+          name='ProccessPeopleScreen' header='null'
+          component={ProccessPeopleScreen}
           options={{ title: 'Empleos' }}
         />
       </Stack.Navigator>
