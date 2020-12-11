@@ -133,23 +133,7 @@ class PodcastScreen extends Component {
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <HederPostSection navigation={this.props.navigation}></HederPostSection>
-        <Form>
-          <Picker
-            note
-            mode="dropdown"
-            style={{ width: "100%" }}
-            selectedValue={this.state.selected}
-            onValueChange={this.onValueChange.bind(this)}
-          >
-            <Picker.Item label="Wallet" value="key0" />
-            <Picker.Item label="ATM Card" value="key1" />
-            <Picker.Item label="Debit Card" value="key2" />
-            <Picker.Item label="Credit Card" value="key3" />
-            <Picker.Item label="Net Banking" value="key4" />
-          </Picker>
-        </Form>
         <Content>
-
           <Card style={{ flex: 0 }}>
             <CardItem style={{ backgroundColor: "transparent" }}>
               <Left>
@@ -176,7 +160,7 @@ class PodcastScreen extends Component {
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
                   <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
+                  <Text>1,926 </Text>
                 </Button>
               </Left>
               <Right>
@@ -214,7 +198,7 @@ class PodcastScreen extends Component {
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
                   <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
+                  <Text>1,926 </Text>
                 </Button>
               </Left>
               <Right>

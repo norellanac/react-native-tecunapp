@@ -20,13 +20,15 @@ import {
   Body,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
+import * as postActions from "../src/actions/postActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import HederPostSection from "../components/HederPostSection";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
+import { apiUrl } from '../App';
+
 import Loading from "./../components/Loading";
 
 class PostsScreen extends Component {
@@ -34,30 +36,35 @@ class PostsScreen extends Component {
     super();
   }
   state = {
-    search: "",
-    jobId: null,
+    posts: null,
+    postId: null,
     selected: "key1",
+    pathImage: apiUrl.link + "/storage/posts/",
+
   };
 
-  onValueChange(value: string) {
+  onValueChange(value) {
     this.setState({
       selected: value
     });
   }
 
-  setIdSearchJob(jobArray) {
-    console.log("Array del job: ", jobArray);
-    console.log("Reducer del job: ", this.props.jobsReducer);
-    this.props.setIdJobSearch(jobArray);
-    this.props.navigation.navigate("JobShowScreen")
+  setIdSearchNew(post) {
+    //console.log("Array del job: ", jobArray);
+    //console.log("Reducer del job: ", this.props.postReducer);
+    this.props.setIdNewSearch(post);
+    this.props.navigation.navigate("PostsShowScreen")
   }
 
 
   loadContent = () => {
-    if (this.props.jobsReducer.jobs) {
-      //console.log("jobs: ", this.props.jobsReducer.jobs);
-      return this.props.jobsReducer.jobs.map((job) => (
-        <Card style={{ flex: 0 }} key={job.id}>
+    var screenWidth = Dimensions.get("window").width;
+    var screenHeight = Dimensions.get("window").height;
+
+    if (this.props.postReducer.posts) {
+      //console.log("posts: ", this.props.postReducer.posts);
+      return this.props.postReducer.posts.map((post) => (
+        <Card style={{ flex: 0 }} key={post.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
               <Thumbnail
@@ -65,23 +72,35 @@ class PostsScreen extends Component {
                 source={require("../assets/images/robot-dev.png")}
               />
               <Body>
-                <Text>{job.title}</Text>
-                <Text note>{job.created_at}</Text>
+                <Text>{post.title}</Text>
+                <Text note>{post.created_at}</Text>
               </Body>
             </Left>
           </CardItem>
           <CardItem >
             <Body>
-              <Text >{job.description}</Text>
+              <Image  
+                source={{uri: this.state.pathImage + post.featured_image }}
+                style={{width: screenWidth - 20, height: 150}} 
+              />
+              <Text >{post.description}</Text>
 
             </Body>
           </CardItem>
-          <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
-              <Icon name="user-tie" type="FontAwesome5" />
-              <Text>Aplicar </Text>
-            </Button>
-          </CardItem>
+          <CardItem>
+              <Left>
+                <Button transparent textStyle={{ color: "#87838B" }}>
+                  <Icon name="like2" type="AntDesign" />
+                  <Text>{post.likes.length}</Text>
+                </Button>
+              </Left>
+              <Right>
+                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchNew(post)}>
+                  <Icon name="comment" type="FontAwesome" />
+                  <Text>Comentarios</Text>
+                </Button>
+              </Right>
+            </CardItem>
         </Card>
 
 
@@ -107,9 +126,9 @@ class PostsScreen extends Component {
 
   async componentDidMount() {
 
-    await this.props.getJobs(this.props.usuariosReducer.token);
-    console.log("jobs props", this.props);
-    console.log("jobs state: ", this.state);
+    await this.props.getNews(this.props.usuariosReducer.token);
+    //console.log("posts props", this.props);
+    //console.log("posts state: ", this.state);
   }
 
 
@@ -122,12 +141,12 @@ class PostsScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.jobsReducer.cargando) {
-      console.log("jobsScreen: ", this.props);
+    if (this.props.postReducer.cargando) {
+      //console.log("jobsScreen: ", this.props);
       return <Loading />
     }
 
-    console.log("jobsProps: ", this.props);
+    //console.log("jobsProps: ", this.props);
 
     return (
       <Container>
@@ -150,81 +169,7 @@ class PostsScreen extends Component {
         </Form>
         <Content>
 
-          <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nueva Publicación</Text>
-                  <Text note>April 15, 2020</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
-                <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
-                />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
-
-          <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nueva Publicación</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
-                <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
-                />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
+          {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -235,13 +180,13 @@ class PostsScreen extends Component {
 
 
 
-const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
-  //return reducers.jobsReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { jobsReducer, usuariosReducer };
+const mapStateToProps = ({ postReducer, usuariosReducer }) => {
+  //return reducers.postReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { postReducer, usuariosReducer };
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
+  ...postActions,
   ...loginActions,
 };
 

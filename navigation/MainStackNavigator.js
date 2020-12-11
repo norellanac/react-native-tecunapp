@@ -20,6 +20,7 @@ import RegisterScreen from '../screens/RegisterScreen'
 import JobsScreen from '../screens/JobsScren'
 import StoreScreen from '../screens/StoreScreen'
 import JobShowScreen from '../screens/JobShowScreen'
+import HomeShowScreen from '../screens/HomeShowScreen'
 
 const Stack = createStackNavigator()
 
@@ -40,28 +41,31 @@ function MainStackNavigator() {
           component={LoginScreen}
           options={{ title: 'LoginScreen' }}
         />
+
         <Stack.Screen
           name='Register' header='null'
           component={RegisterScreen}
           options={{ title: 'RegisterScreen' }}
         />
 
-
         <Stack.Screen
           name='Home'
           component={Home}
           options={{ title: 'Home Screen' }}
         />
+
         <Stack.Screen
           name='PodcastScreen'
           component={PodcastScreen}
           options={{ title: 'PodcastScreen Screen' }}
         />
+
         <Stack.Screen
           name='FlashImagesScreen'
           component={FlashImagesScreen}
           options={{ title: 'FlashImagesScreen Screen' }}
         />
+
         <Stack.Screen
           name='GamesScreen'
           component={GamesScreen}
@@ -69,6 +73,7 @@ function MainStackNavigator() {
             title: 'route.params.item.name'
           })}
         />
+
         <Stack.Screen
           name='GameShowScreen'
           component={GameShowScreen}
@@ -81,6 +86,7 @@ function MainStackNavigator() {
           component={TeamScreen}
           options={{ title: 'TeamScreen' }}
         />
+
         <Stack.Screen
           name='SpecialTeamScreen' header='null'
           component={SpecialTeamScreen}
@@ -98,6 +104,7 @@ function MainStackNavigator() {
           component={JobsScreen}
           options={{ title: 'Empleos' }}
         />
+
         <Stack.Screen
           name='JobShowScreen' header='null'
           component={JobShowScreen}
@@ -119,6 +126,12 @@ function MainStackNavigator() {
           name='ProccessPeopleScreen' header='null'
           component={ProccessPeopleScreen}
           options={{ title: 'Empleos' }}
+          />
+
+        <Stack.Screen
+          name='PostsShowScreen' header='null'
+          component={PostsShowScreen}
+          options={{ title: 'Noticia' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

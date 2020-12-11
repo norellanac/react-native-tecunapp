@@ -1,17 +1,18 @@
-import { getAllPost, getPost, getDocument, getImage, loadingPost, errorPost, categoryPost, commentPost, likeOrDislikeNews, deleteComment } from '../types/postType';
+import { getAllPost, getPost, getDocument, getImage, loadingPost, errorPost, categoryPost, commentPost, likeOrDislikeNews, deleteComment, idSearchNew} from '../types/postType';
 import { PURGE } from 'redux-persist';
 
 const INITIAL = {
-    posts = null,
-    post = null,
-    document = null,
-    image = null,
-    cargando = false,
-    error = '',
-    category = null,
-    comment = null,
-    likeOrDislike = null,
-    idDestroy = null
+    posts: [],
+    post: [],
+    document: [],
+    image: [],
+    cargando: false,
+    error: '',
+    category: [],
+    comment: [],
+    likeOrDislike: [],
+    idDestroy: [],
+    postId: null
 };
 
 
@@ -37,6 +38,8 @@ export default (state = INITIAL, action) => {
             return { ...state, likeOrDislike: action.payload, cargando: action.cargando };
         case deleteComment:
             return { ...state, idDestroy: action.payload.id, cargando: action.cargando };
+        case idSearchNew:
+            return { ...state, postId: action.payload.id, post: action.payload }
         case PURGE:
             return INITIAL;
         default:

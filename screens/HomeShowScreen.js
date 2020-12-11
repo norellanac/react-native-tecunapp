@@ -32,7 +32,7 @@ import { apiUrl } from '../App';
 
 import Loading from "./../components/Loading";
 
-class PostsShowScreen extends Component {
+class HomeScreen extends Component {
   constructor() {
     super();
   }
@@ -117,5 +117,5 @@ const mapDispatchProps = {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(PostsShowScreen)
+  connect(mapStateToProps, mapDispatchProps)(HomeScreen)
 );

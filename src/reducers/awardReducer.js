@@ -22,4 +22,4 @@ export default (state = INITIAL, action) => {
         default:
             return state;
     }
-};
+};  
