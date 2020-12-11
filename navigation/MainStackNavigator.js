@@ -61,6 +61,12 @@ function MainStackNavigator() {
         />
 
         <Stack.Screen
+          name='PodcastShowScreen'
+          component={PodcastShowScreen}
+          options={{ title: 'PodcastShowScreen Screen' }}
+        />
+
+        <Stack.Screen
           name='FlashImagesScreen'
           component={FlashImagesScreen}
           options={{ title: 'FlashImagesScreen Screen' }}

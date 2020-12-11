@@ -20,13 +20,15 @@ import {
   Body,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
+import * as podcastActions from "../src/actions/podcastActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import HederPostSection from "../components/HederPostSection";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
+import { apiUrl } from '../App';
+
 import Loading from "./../components/Loading";
 
 class PodcastScreen extends Component {
@@ -34,30 +36,38 @@ class PodcastScreen extends Component {
     super();
   }
   state = {
-    search: "",
-    jobId: null,
-    selected: "key1",
+    podcast: null,
+    podcastId: null,
+    selected: "selectedOptionListPodcastPodcast",
+    pathImage: apiUrl.link + "/storage/podcast/",
+
   };
 
-  onValueChange(value: string) {
+  onValueChange(value) {
     this.setState({
       selected: value
     });
   }
 
-  setIdSearchJob(jobArray) {
-    console.log("Array del job: ", jobArray);
-    console.log("Reducer del job: ", this.props.jobsReducer);
-    this.props.setIdJobSearch(jobArray);
-    this.props.navigation.navigate("JobShowScreen")
+  setIdPodcastSearch(podcast) {
+    //console.log("Array del job: ", jobArray);
+    //console.log("Reducer del job: ", this.props.podcastReducer);
+    this.props.setIdPodcastSearch(podcast);
+    this.props.navigation.navigate("PodcastShowScreen")
+  }
+  loadContentCategories = () => {
+    return this.props.podcastReducer.categories.map((category) => (
+      <Picker.Item label={category.name} value={category.id} />
+    ))
   }
 
-
   loadContent = () => {
-    if (this.props.jobsReducer.jobs) {
-      //console.log("jobs: ", this.props.jobsReducer.jobs);
-      return this.props.jobsReducer.jobs.map((job) => (
-        <Card style={{ flex: 0 }} key={job.id}>
+    var screenWidth = Dimensions.get("window").width;
+    var screenHeight = Dimensions.get("window").height;
+
+    if (this.props.podcastReducer.podcasts) {
+      return this.props.podcastReducer.podcasts.map((podcast) => (
+        <Card style={{ flex: 0 }} key={podcast.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
               <Thumbnail
@@ -65,23 +75,35 @@ class PodcastScreen extends Component {
                 source={require("../assets/images/robot-dev.png")}
               />
               <Body>
-                <Text>{job.title}</Text>
-                <Text note>{job.created_at}</Text>
+                <Text>{podcast.title}</Text>
+                <Text note>{podcast.created_at}</Text>
               </Body>
             </Left>
           </CardItem>
           <CardItem >
             <Body>
-              <Text >{job.description}</Text>
+              <Image  
+                source={{uri: this.state.pathImage + podcast.featured_image }}
+                style={{width: screenWidth - 20, height: 150}} 
+              />
+              <Text >{podcast.description}</Text>
 
             </Body>
           </CardItem>
-          <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
-              <Icon name="user-tie" type="FontAwesome5" />
-              <Text>Aplicar </Text>
-            </Button>
-          </CardItem>
+          <CardItem>
+              <Left>
+                <Button transparent textStyle={{ color: "#87838B" }}>
+                  <Icon name="like2" type="AntDesign" />
+                  <Text>{podcast.likes.length}</Text>
+                </Button>
+              </Left>
+              <Right>
+                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdPodcastSearch(podcast)}>
+                  <Icon name="comment" type="FontAwesome" />
+                  <Text>Comentarios</Text>
+                </Button>
+              </Right>
+            </CardItem>
         </Card>
 
 
@@ -90,10 +112,6 @@ class PodcastScreen extends Component {
       return <Spinner color="blue" style={{ flex: 1 }} />;
     }
   };
-
-
-
-
 
 
   logout = async () => {
@@ -107,14 +125,12 @@ class PodcastScreen extends Component {
 
   async componentDidMount() {
 
-    await this.props.getJobs(this.props.usuariosReducer.token);
-    console.log("jobs props", this.props);
-    console.log("jobs state: ", this.state);
+    await this.props.allPodcast(this.props.usuariosReducer.token);
+    //console.log("podcast props", this.props);
+    //console.log("podcast state: ", this.state);
   }
 
-
-
-
+ 
 
   render() {
     var screenWidth = Dimensions.get("window").width;
@@ -122,12 +138,14 @@ class PodcastScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.jobsReducer.cargando) {
-      console.log("jobsScreen: ", this.props);
+    if (this.props.podcastReducer.cargando) {
+      //console.log("jobsScreen: ", this.props);
       return <Loading />
     }
 
-    console.log("jobsProps: ", this.props);
+    console.log(this.props.podcastReducer);
+
+    //console.log("jobsProps: ", this.props);
 
     return (
       <Container>
@@ -141,90 +159,13 @@ class PodcastScreen extends Component {
             selectedValue={this.state.selected}
             onValueChange={this.onValueChange.bind(this)}
           >
-            <Picker.Item label="Wallet" value="key0" />
-            <Picker.Item label="ATM Card" value="key1" />
-            <Picker.Item label="Debit Card" value="key2" />
-            <Picker.Item label="Credit Card" value="key3" />
-            <Picker.Item label="Net Banking" value="key4" />
+            <Picker.Item label="Categorias" value="selectedOptionListPodcast" />
+            {this.loadContentCategories()}
           </Picker>
         </Form>
         <Content>
 
-          <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nuevo podcast</Text>
-                  <Text note>April 15, 2020</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
-                <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
-                />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
-
-          <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nueva Publicación</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
-                <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
-                />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 Likes</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
+          {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -235,13 +176,13 @@ class PodcastScreen extends Component {
 
 
 
-const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
-  //return reducers.jobsReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { jobsReducer, usuariosReducer };
+const mapStateToProps = ({ podcastReducer, usuariosReducer }) => {
+  //return reducers.podcastReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { podcastReducer, usuariosReducer };
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
+  ...podcastActions,
   ...loginActions,
 };
 

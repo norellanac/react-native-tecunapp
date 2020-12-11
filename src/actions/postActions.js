@@ -19,12 +19,14 @@ export const getNews = tokenUsr => async dispatch => {
 
         const data = await response.json();
         console.log("newsAll: ", data.posts);
+        console.log("categoriesPost: ", data.categories);
         console.log("Response:", response.ok);
 
         if (response.ok) {
             dispatch({
                 type: getAllPost,
                 payload: data.posts,
+                categories: data.categories,
                 cargando: false
             });
         }

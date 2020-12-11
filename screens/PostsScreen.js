@@ -38,7 +38,7 @@ class PostsScreen extends Component {
   state = {
     posts: null,
     postId: null,
-    selected: "key1",
+    selected: "selectedOptionList",
     pathImage: apiUrl.link + "/storage/posts/",
 
   };
@@ -55,14 +55,17 @@ class PostsScreen extends Component {
     this.props.setIdNewSearch(post);
     this.props.navigation.navigate("PostsShowScreen")
   }
-
+  loadContentCategories = () => {
+    return this.props.postReducer.categories.map((category) => (
+      <Picker.Item label={category.name} value={category.id} />
+    ))
+  }
 
   loadContent = () => {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
     if (this.props.postReducer.posts) {
-      //console.log("posts: ", this.props.postReducer.posts);
       return this.props.postReducer.posts.map((post) => (
         <Card style={{ flex: 0 }} key={post.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
@@ -111,10 +114,6 @@ class PostsScreen extends Component {
   };
 
 
-
-
-
-
   logout = async () => {
     //await this.props.logoutUser();
     console.log("borró usuario");
@@ -131,9 +130,7 @@ class PostsScreen extends Component {
     //console.log("posts state: ", this.state);
   }
 
-
-
-
+ 
 
   render() {
     var screenWidth = Dimensions.get("window").width;
@@ -145,6 +142,8 @@ class PostsScreen extends Component {
       //console.log("jobsScreen: ", this.props);
       return <Loading />
     }
+
+    console.log(this.props.postReducer);
 
     //console.log("jobsProps: ", this.props);
 
@@ -160,11 +159,8 @@ class PostsScreen extends Component {
             selectedValue={this.state.selected}
             onValueChange={this.onValueChange.bind(this)}
           >
-            <Picker.Item label="Wallet" value="key0" />
-            <Picker.Item label="ATM Card" value="key1" />
-            <Picker.Item label="Debit Card" value="key2" />
-            <Picker.Item label="Credit Card" value="key3" />
-            <Picker.Item label="Net Banking" value="key4" />
+            <Picker.Item label="Categorias" value="selectedOptionList" />
+            {this.loadContentCategories()}
           </Picker>
         </Form>
         <Content>

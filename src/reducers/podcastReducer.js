@@ -1,9 +1,9 @@
-import { getAllPost, getPost, getDocument, getImage, loadingPost, errorPost, categoryPost, commentPost, likeOrDislikeNews, deleteComment, idSearchNew} from '../types/postType';
+import { getAllPodcast, getPodcast, getDocument, getImage, loadingPodcast, errorPodcast, categoryPodcast, commentPodcast, likeOrDislikePodcast, deleteComment, idSearchPodcast} from '../types/podcastType';
 import { PURGE } from 'redux-persist';
 
 const INITIAL = {
-    posts: [],
-    post: [],
+    podcasts: [],
+    podcast: [],
     document: [],
     image: [],
     cargando: false,
@@ -12,35 +12,35 @@ const INITIAL = {
     comment: [],
     likeOrDislike: [],
     idDestroy: [],
-    postId: null,
+    podcastId: null,
     categories: []
 };
 
 
 export default (state = INITIAL, action) => {
     switch (action.type) {
-        case getAllPost:
-            return { ...state, posts: action.payload, categories: action.categories, cargando: action.cargando };
-        case loadingPost:
+        case getAllPodcast:
+            return { ...state, podcasts: action.payload, categories: action.categories, cargando: action.cargando };
+        case loadingPodcast:
             return { ...state, cargando: true };
-        case errorPost:
+        case errorPodcast:
             return { ...state, error: action.error, cargando: action.cargando };
-        case getPost:
-            return { ...state, post: action.payload.id, cargando: action.cargando, error: '' };
+        case getPodcast:
+            return { ...state, podcast: action.payload.id, cargando: action.cargando, error: '' };
         case getDocument:
             return { ...state, document: action.payload.featured_document, cargando: action.cargando };
         case getImage:
             return { ...state, image: action.payload.featured_image, cargando: action.cargando };
-        case commentPost:
+        case commentPodcast:
             return { ...state, comment: action.payload, cargando: action.cargando };
-        case categoryPost:
+        case categoryPodcast:
             return { ...state, category: action.payload.id, cargando: action.cargando };
-        case likeOrDislikeNews:
+        case likeOrDislikePodcast:
             return { ...state, likeOrDislike: action.payload, cargando: action.cargando };
         case deleteComment:
             return { ...state, idDestroy: action.payload.id, cargando: action.cargando };
-        case idSearchNew:
-            return { ...state, postId: action.payload.id, post: action.payload }
+        case idSearchPodcast:
+            return { ...state, podcastId: action.payload.id, podcast: action.payload }
         case PURGE:
             return INITIAL;
         default:

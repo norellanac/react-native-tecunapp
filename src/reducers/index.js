@@ -4,6 +4,7 @@ import jobsReducer from './jobsReducer'
 import awardReducer from './awardReducer'
 import storeReducer from './storeReducer'
 import postReducer from './postReducer'
+import podcastReducer from './podcastReducer'
 
 /*import stickersReducer from './stickersReducer'
 import categoriesReducer from './categoriesReducer'
@@ -17,6 +18,7 @@ export default combineReducers({
     awardReducer,
     storeReducer,
     postReducer,
+    podcastReducer,
     /*stickersReducer,
     categoriesReducer,
     giftReducer,
