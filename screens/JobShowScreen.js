@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Share, ScrollView } from "react-native";
 import { WebView } from 'react-native-webview';
+import HTML from "react-native-render-html";
 import { withNavigation } from "react-navigation";
 import {
     Container,
@@ -26,6 +27,7 @@ import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
+
 import Loading from "./../components/Loading";
 
 class JobShowScreen extends Component {
@@ -37,25 +39,27 @@ class JobShowScreen extends Component {
         jobId: null,
     };
 
-    setIdSearchJob(jobArray) {
-        console.log("Array del job: ", jobArray);
-        console.log("Reducer del job: ", this.props.jobsReducer);
-        this.props.setIdJobSearch(jobArray);
-    }
 
 
 
 
-
-
-
-    logout = async () => {
-        //await this.props.logoutUser();
-        console.log("borró usuario");
-        //await this.props.resetAddress();
-        await persistor.purge();
-        this.props.navigation.navigate("Login");
-        console.log("borró direccion");
+    shareMesage = async (text) => {
+        try {
+            const result = await Share.share({
+                message: text,
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
     };
 
     async componentDidMount() {
@@ -71,6 +75,7 @@ class JobShowScreen extends Component {
 
 
     render() {
+        var screenWidth = Dimensions.get("window").width;
         //const { navigation } = this.props.navigation
 
         if (this.props.jobsReducer.cargando) {
@@ -85,27 +90,6 @@ class JobShowScreen extends Component {
                 <HeaderCustom navigation={this.props.navigation} />
                 <Content>
 
-                    <Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20 }}>
-                        <Item rounded style={{ marginTop: 25 }}>
-                            <Icon
-                                type="MaterialCommunityIcons"
-                                name="lock-open-outline"
-                                style={{ color: "white", fontSize: 25 }}
-                            />
-                            <Input
-                                onChangeText={search => this.setState({ search })}
-                                value={this.state.search}
-                                placeholder="Plaza o Descripcion"
-                                placeholderTextColor="#000000"
-                                style={{ color: "#000000" }}
-                            />
-                            <Button transparent onPress={() => this.props.navigation.navigate("JobsScreen")}>
-                                <Icon name="search" type="FontAwesome5" />
-                            </Button>
-                        </Item>
-
-                    </Form>
-
                     <Card style={{ flex: 0 }} key={this.props.jobsReducer.job.id}>
                         <CardItem style={{ backgroundColor: "transparent" }}>
                             <Left>
@@ -119,19 +103,14 @@ class JobShowScreen extends Component {
                                 </Body>
                             </Left>
                         </CardItem>
-                        <CardItem >
-                            <Body>
-                                <Text >{this.props.jobsReducer.job.description}</Text>
-
-                            </Body>
-                        </CardItem>
-                        <CardItem style={{ justifyContent: "center" }}>
-                            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(this.props.jobsReducer.job)}>
-                                <Icon name="user-tie" type="FontAwesome5" />
-                                <Text>Aplicar </Text>
-                            </Button>
-                        </CardItem>
                     </Card>
+                    <ScrollView style={{ flex: 1 }}>
+                        <HTML source={{ html: this.props.jobsReducer.job.skils }} contentWidth={screenWidth} />
+                    </ScrollView>
+                    <Button style={{marginBottom: 3}} block success onPress={() => this.shareMesage(this.props.jobsReducer.job.public_link)} title="Share">
+                        <Text>Compartir</Text>
+                        <Icon name='whatsapp' type="FontAwesome" />
+                    </Button>
 
                 </Content>
                 <FooterTabsNavigationIconText navigation={this.props.navigation} />

@@ -29,7 +29,7 @@ import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
 import Loading from "./../components/Loading";
 
-class HomeScreen extends Component {
+class PodcastScreen extends Component {
   constructor() {
     super();
   }
@@ -158,7 +158,7 @@ class HomeScreen extends Component {
                   source={require("../assets/images/robot-dev.png")}
                 />
                 <Body>
-                  <Text>Nueva Publicación</Text>
+                  <Text>Nueva FlashImagesScreen</Text>
                   <Text note>April 15, 2020</Text>
                 </Body>
               </Left>
@@ -246,5 +246,5 @@ const mapDispatchProps = {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(HomeScreen)
+  connect(mapStateToProps, mapDispatchProps)(PodcastScreen)
 );

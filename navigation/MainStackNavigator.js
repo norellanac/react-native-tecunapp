@@ -3,6 +3,8 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import Home from '../screens/HomeScreen'
+import PodcastScreen from '../screens/PodcastScreen'
+import FlashImagesScreen from '../screens/FlashImagesScreen'
 import GamesScreen from '../screens/GamesScreen'
 import TeamScreen from '../screens/TeamScreen'
 import SpecialTeamScreen from '../screens/SpecialTeamScreen'
@@ -42,6 +44,16 @@ function MainStackNavigator() {
           name='Home'
           component={Home}
           options={{ title: 'Home Screen' }}
+        />
+        <Stack.Screen
+          name='PodcastScreen'
+          component={PodcastScreen}
+          options={{ title: 'PodcastScreen Screen' }}
+        />
+        <Stack.Screen
+          name='FlashImagesScreen'
+          component={FlashImagesScreen}
+          options={{ title: 'FlashImagesScreen Screen' }}
         />
         <Stack.Screen
           name='User'
