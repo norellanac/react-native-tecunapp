@@ -1,5 +1,6 @@
 import {
 	idSearchJob,
+	searchJobText,
 	getAllJobs,
 	getJob,
 	loadingJobs,
@@ -16,6 +17,8 @@ const INITIAL = {
 export default (state = INITIAL, action) => {
 	switch (action.type) {
 		case getAllJobs:
+			return { ...state, jobs: action.payload, cargando: action.cargando };
+		case searchJobText:
 			return { ...state, jobs: action.payload, cargando: action.cargando };
 		case loadingJobs:
 			return { ...state, cargando: true };

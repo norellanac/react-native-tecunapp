@@ -44,6 +44,11 @@ class JobsScren extends Component {
     this.props.navigation.navigate("JobShowScreen")
   }
 
+  searchTextJob(search, token) {
+    console.log("Busqueda del job: ", this.props.jobsReducer);
+    this.props.searchTextInJobs(search, token);
+  }
+
 
   loadContent = () => {
     if (this.props.jobsReducer.jobs) {
@@ -134,7 +139,7 @@ class JobsScren extends Component {
                 placeholderTextColor="#000000"
                 style={{ color: "#000000" }}
               />
-              <Button transparent onPress={() => this.props.navigation.navigate("JobsScreen")}>
+              <Button transparent onPress={() => this.searchTextJob(this.state.search, this.props.usuariosReducer.token)}>
                 <Icon name="search" type="FontAwesome5" />
               </Button>
             </Item>
