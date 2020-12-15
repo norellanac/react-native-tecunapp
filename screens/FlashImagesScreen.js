@@ -124,7 +124,14 @@ class PodcastScreen extends Component {
 
     if (this.props.jobsReducer.cargando) {
       console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     console.log("jobsProps: ", this.props);

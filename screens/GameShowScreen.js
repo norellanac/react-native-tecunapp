@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions , Image} from "react-native";
+import { Dimensions, Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
     Container,
@@ -98,7 +98,14 @@ class GameShowScreen extends Component {
         var hg = Dimensions.get("window").width - 150;
 
         if (this.props.awardReducer.cargando) {
-            return <Loading />
+            return (
+                <Container>
+                    <HeaderCustom navigation={this.props.navigation} />
+                    <HederPostSection navigation={this.props.navigation}></HederPostSection>
+                    < Loading />
+                    <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                </Container>
+            )
         }
 
         return (

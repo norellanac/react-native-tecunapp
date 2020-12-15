@@ -63,7 +63,14 @@ class HomeScreen extends Component {
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     //console.log("jobsProps: ", this.props);
@@ -72,31 +79,31 @@ class HomeScreen extends Component {
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-        <Card style={{ flex: 0 }} key={this.props.postReducer.post.id}>
+          <Card style={{ flex: 0 }} key={this.props.postReducer.post.id}>
             <CardItem style={{ backgroundColor: "transparent" }}>
-                <Left>
-                    <Thumbnail
-                        style={{ backgroundColor: "#000000" }}
-                        source={require("../assets/images/robot-dev.png")}
-                    />
-                    <Text>{this.props.postReducer.post.title}</Text>
-                </Left>
+              <Left>
+                <Thumbnail
+                  style={{ backgroundColor: "#000000" }}
+                  source={require("../assets/images/robot-dev.png")}
+                />
+                <Text>{this.props.postReducer.post.title}</Text>
+              </Left>
             </CardItem>
             <CardItem>
-                <Body>
-                    <Image  
-                        source={{uri: this.state.pathImage + this.props.postReducer.post.featured_image }}
-                        style={{width: screenWidth - 20, height: 150}} 
-                    />
-                    <Text note>{this.props.postReducer.post.created_at}</Text>
-                    <Text></Text>
-                    <Text>{ this.props.postReducer.post.description }</Text>
-                    <ScrollView style={{ flex: 1 }}>
-                        <HTML source={{ html: this.props.postReducer.post.content }} contentWidth={screenWidth} />
-                    </ScrollView>
-                </Body>
+              <Body>
+                <Image
+                  source={{ uri: this.state.pathImage + this.props.postReducer.post.featured_image }}
+                  style={{ width: screenWidth - 20, height: 150 }}
+                />
+                <Text note>{this.props.postReducer.post.created_at}</Text>
+                <Text></Text>
+                <Text>{this.props.postReducer.post.description}</Text>
+                <ScrollView style={{ flex: 1 }}>
+                  <HTML source={{ html: this.props.postReducer.post.content }} contentWidth={screenWidth} />
+                </ScrollView>
+              </Body>
             </CardItem>
-        </Card>
+          </Card>
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>

@@ -161,9 +161,10 @@ export const getShowPostCategory = (idPost, tokenUsr) => async dispatch => {
     }
 }
 
-export const setIdNewSearch = post => async dispatch => {
+export const setIdOneRecordAction = recordArray => async dispatch => {
     dispatch({
-        type: idSearchNew,
-        payload: post
+        type: getPost,
+        payload: recordArray
     });
-}
+
+};

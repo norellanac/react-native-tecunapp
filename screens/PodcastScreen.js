@@ -18,6 +18,7 @@ import {
   Left,
   Right,
   Body,
+  View,
 } from "native-base";
 import { connect } from "react-redux";
 import * as podcastActions from "../src/actions/podcastActions";
@@ -82,28 +83,28 @@ class PodcastScreen extends Component {
           </CardItem>
           <CardItem >
             <Body>
-              <Image  
-                source={{uri: this.state.pathImage + podcast.featured_image }}
-                style={{width: screenWidth - 20, height: 150}} 
+              <Image
+                source={{ uri: this.state.pathImage + podcast.featured_image }}
+                style={{ width: screenWidth - 20, height: 150 }}
               />
               <Text >{podcast.description}</Text>
 
             </Body>
           </CardItem>
           <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="like2" type="AntDesign" />
-                  <Text>{podcast.likes.length}</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdPodcastSearch(podcast)}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
+            <Left>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="like2" type="AntDesign" />
+                <Text>{podcast.likes.length}</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdPodcastSearch(podcast)}>
+                <Icon name="comment" type="FontAwesome" />
+                <Text>Comentarios</Text>
+              </Button>
+            </Right>
+          </CardItem>
         </Card>
 
 
@@ -130,7 +131,7 @@ class PodcastScreen extends Component {
     //console.log("podcast state: ", this.state);
   }
 
- 
+
 
   render() {
     var screenWidth = Dimensions.get("window").width;
@@ -140,7 +141,14 @@ class PodcastScreen extends Component {
 
     if (this.props.podcastReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     console.log(this.props.podcastReducer);

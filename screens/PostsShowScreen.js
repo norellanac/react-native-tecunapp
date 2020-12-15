@@ -44,8 +44,8 @@ class PostsShowScreen extends Component {
   };
 
   async componentDidMount() {
-    console.log(this.props.getNews(this.props.usuariosReducer.token));
-    this.props.getCategory(this.props.usuariosReducer.token); 
+    //console.log(this.props.getNews(this.props.usuariosReducer.token));
+    //this.props.getCategory(this.props.usuariosReducer.token); 
     //console.log("posts props", this.props);
     //console.log("posts state: ", this.state);
   }
@@ -64,7 +64,14 @@ class PostsShowScreen extends Component {
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     //console.log("jobsProps: ", this.props);

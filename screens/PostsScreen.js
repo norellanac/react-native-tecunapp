@@ -61,6 +61,13 @@ class PostsScreen extends Component {
     //console.log("posts state: ", this.state);
   };
 
+  setIdOneRecord(oneRecordArray) {
+    console.log("Array del registro: ", oneRecordArray);
+    console.log("Reducer del registro: ", this.props.jobsReducer);
+    this.props.setIdOneRecordAction(oneRecordArray);
+    this.props.navigation.navigate("PostsShowScreen")
+  }
+
   onValueChange(key) {
 
     this.state.selected = key;
@@ -96,49 +103,49 @@ class PostsScreen extends Component {
       return this.props.postReducer.posts.map((news) => (
         //console.log(news),
         <Card style={{ flex: 0 }} key={news.id}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>{news.title}</Text>
-                  <Text note>{news.created_at}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem >
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail
+                style={{ backgroundColor: "#000000" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
               <Body>
-                <Image  
-                  source={{uri: this.state.pathImage + news.featured_image }}
-                  style={{width: screenWidth - 20, height: 150}} 
-                />
-                <Text >{news.description}</Text>
-
+                <Text>{news.title}</Text>
+                <Text note>{news.created_at}</Text>
               </Body>
-            </CardItem>
+            </Left>
+          </CardItem>
+          <CardItem >
+            <Body>
+              <Image
+                source={{ uri: this.state.pathImage + news.featured_image }}
+                style={{ width: screenWidth - 20, height: 150 }}
+              />
+              <Text >{news.description}</Text>
+
+            </Body>
+          </CardItem>
           <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="like2" type="AntDesign" />
-                  <Text>{news.likes.length}</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showPosts(news.id)}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
+            <Left>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="like2" type="AntDesign" />
+                <Text>{news.likes.length}</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news)}>
+                <Icon name="comment" type="FontAwesome" />
+                <Text>Comentarios</Text>
+              </Button>
+            </Right>
+          </CardItem>
         </Card>
       ))
     } else {
       return <Spinner color="blue" style={{ flex: 1 }} />;
     }
   };
- 
+
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
@@ -149,7 +156,14 @@ class PostsScreen extends Component {
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     //console.log(this.props.postReducer);

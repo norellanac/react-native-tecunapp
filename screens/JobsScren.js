@@ -37,7 +37,7 @@ class JobsScren extends Component {
     jobId: null,
   };
 
-  setIdSearchJob(jobArray) {
+  setIdOneJob(jobArray) {
     console.log("Array del job: ", jobArray);
     console.log("Reducer del job: ", this.props.jobsReducer);
     this.props.setIdJobSearch(jobArray);
@@ -70,7 +70,7 @@ class JobsScren extends Component {
           <CardItem >
             <Body>
               <Text >{job.description}</Text>
-              <Button block transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
+              <Button block transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneJob(job)}>
                 <Text>Aplicar </Text>
                 <Icon name="user-tie" type="FontAwesome5" />
               </Button>

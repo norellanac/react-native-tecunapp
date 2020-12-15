@@ -76,17 +76,17 @@ class TeamScreen extends Component {
     }
   };
 
-  awardsUrlImageActive(){
+  awardsUrlImageActive() {
     const pathImage = "http://157.55.181.102/storage/awards/";
     var sliderImages = [];
     var url = "";
     this.props.awardReducer.awards.map((award) => {
-      if(award.active === 1){
+      if (award.active === 1) {
         url = award.url_image
-        sliderImages.push(pathImage+url);
+        sliderImages.push(pathImage + url);
       }
       //console.log("array imagenes: ",sliderImages);
-      
+
 
     })
     return sliderImages;
@@ -97,8 +97,14 @@ class TeamScreen extends Component {
     var screenWidth = Dimensions.get("window").width - 1;
     var hg = Dimensions.get("window").width - 150;
 
-    if(this.props.awardReducer.cargando) {
-      return <Loading />
+    if (this.props.awardReducer.cargando) {
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     return (

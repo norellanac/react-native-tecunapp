@@ -78,7 +78,14 @@ class ContactScreen extends Component {
         var hg = Dimensions.get("window").width - 150;
 
         if (this.props.awardReducer.cargando) {
-            return <Loading />
+            return (
+                <Container>
+                  <HeaderCustom navigation={this.props.navigation} />
+                  <HederPostSection navigation={this.props.navigation}></HederPostSection>
+                  < Loading />
+                  <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                </Container>
+              )
         }
 
         //console.log("imagenes slider: ", this.awardsUrlImage1());

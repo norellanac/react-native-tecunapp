@@ -55,10 +55,17 @@ class PostsCategoryScreen extends Component {
   };
 
   async componentDidMount() {
-    await this.props.getCategory(this.props.usuariosReducer.token);
+    //await this.props.getCategory(this.props.usuariosReducer.token);
     console.log("posts props", this.props.postReducer);
     //console.log("posts state: ", this.state);
   };
+
+  setIdOneRecord(oneRecordArray) {
+    console.log("Array del registro: ", oneRecordArray);
+    console.log("Reducer del registro: ", this.props.jobsReducer);
+    this.props.setIdOneRecordAction(oneRecordArray);
+    this.props.navigation.navigate("PostsShowScreen")
+  }
 
   onValueChange(key) {
 
@@ -67,17 +74,6 @@ class PostsCategoryScreen extends Component {
     this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
   }
 
-  setIdSearchNew(post) {
-    //console.log("Array del job: ", jobArray);
-    //console.log("Reducer del job: ", this.props.postReducer);
-    this.props.setIdNewSearch(post);
-    this.props.navigation.navigate("PostsShowScreen")
-  }
-
-  async showPostsCategory(idPost) {
-    await this.props.getShowPostCategory(idPost, this.props.usuariosReducer.token);
-    this.props.navigation.navigate("PostsShowScreen")
-  }
 
   loadContentCategories = () => {
     return this.props.postReducer.categories.map((categories) => (
@@ -90,10 +86,10 @@ class PostsCategoryScreen extends Component {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
-    if (this.props.postReducer.post) {
-        console.log("map posts: ", this.props.postReducer.post);
-      return this.props.postReducer.post.map((news) => (
-        console.log("El objecto como tal de news: ",news),
+    if (this.props.postReducer.posts) {
+      console.log("map posts largo: ", this.props.postReducer.post);
+      return this.props.postReducer.posts.map((news) => (
+        console.log("El objecto como tal de news: ", news),
         <Card style={{ flex: 0 }} key={news.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
@@ -109,28 +105,28 @@ class PostsCategoryScreen extends Component {
           </CardItem>
           <CardItem >
             <Body>
-              <Image  
-                source={{uri: this.state.pathImage + news.featured_image }}
-                style={{width: screenWidth - 20, height: 150}} 
+              <Image
+                source={{ uri: this.state.pathImage + news.featured_image }}
+                style={{ width: screenWidth - 20, height: 150 }}
               />
               <Text >{news.description}</Text>
 
             </Body>
           </CardItem>
           <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="like2" type="AntDesign" />
-                  <Text>{news.likes.length}</Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showPostsCategory(news.id)}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>Comentarios</Text>
-                </Button>
-              </Right>
-            </CardItem>
+            <Left>
+              <Button transparent textStyle={{ color: "#87838B" }}>
+                <Icon name="like2" type="AntDesign" />
+                <Text>{news.likes.length}</Text>
+              </Button>
+            </Left>
+            <Right>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news)}>
+                <Icon name="comment" type="FontAwesome" />
+                <Text>Comentarios</Text>
+              </Button>
+            </Right>
+          </CardItem>
         </Card>
 
 
@@ -139,7 +135,7 @@ class PostsCategoryScreen extends Component {
       return <Spinner color="blue" style={{ flex: 1 }} />;
     }
   };
- 
+
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
@@ -153,7 +149,14 @@ class PostsCategoryScreen extends Component {
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     //console.log(this.props.postReducer);
@@ -178,8 +181,8 @@ class PostsCategoryScreen extends Component {
         </Form>
         <Content>
 
-            <Text>{this.state.categoryPostName}</Text>
-            {this.loadContent()}
+          <Text>{this.state.categoryPostName}</Text>
+          {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />

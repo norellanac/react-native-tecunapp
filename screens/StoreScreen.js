@@ -129,7 +129,13 @@ class StoreScreen extends Component {
   render() {
 
     if (this.props.storeReducer.cargando) {
-      return <Loading />
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     return (

@@ -80,7 +80,14 @@ class JobShowScreen extends Component {
 
         if (this.props.jobsReducer.cargando) {
             console.log("jobsScreen: ", this.props);
-            return <Loading />
+            return (
+                <Container>
+                    <HeaderCustom navigation={this.props.navigation} />
+                    <HederPostSection navigation={this.props.navigation}></HederPostSection>
+                    < Loading />
+                    <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                </Container>
+            )
         }
 
         console.log("jobsProps: ", this.props);
@@ -107,7 +114,7 @@ class JobShowScreen extends Component {
                     <ScrollView style={{ flex: 1 }}>
                         <HTML source={{ html: this.props.jobsReducer.job.skils }} contentWidth={screenWidth} />
                     </ScrollView>
-                    <Button style={{marginBottom: 3}} block success onPress={() => this.shareMesage(this.props.jobsReducer.job.public_link)} title="Share">
+                    <Button style={{ marginBottom: 3 }} block success onPress={() => this.shareMesage(this.props.jobsReducer.job.public_link)} title="Share">
                         <Text>Compartir</Text>
                         <Icon name='whatsapp' type="FontAwesome" />
                     </Button>

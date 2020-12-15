@@ -38,33 +38,33 @@ class SpecialTeamScreen extends Component {
     });
   }
 
-  awardsUrlImage0(){
+  awardsUrlImage0() {
     const pathImage = "http://157.55.181.102/storage/awards/";
     var sliderImages = [];
     var url = "";
     this.props.awardReducer.awards.map((award) => {
-      if(award.type_id === 1){
+      if (award.type_id === 1) {
         url = award.url_image
-        sliderImages.push(pathImage+url);
+        sliderImages.push(pathImage + url);
       }
       //console.log("array imagenes: ",sliderImages);
-      
+
 
     })
     return sliderImages;
   }
 
-  awardsUrlImage1(){
+  awardsUrlImage1() {
     const pathImage = "http://157.55.181.102/storage/awards/";
     var sliderImages = [];
     var url = "";
     this.props.awardReducer.awards.map((award) => {
-      if(award.type_id === 0){
+      if (award.type_id === 0) {
         url = award.url_image
-        sliderImages.push(pathImage+url);
+        sliderImages.push(pathImage + url);
       }
       //console.log("array imagenes: ",sliderImages);
-      
+
 
     })
     return sliderImages;
@@ -75,8 +75,15 @@ class SpecialTeamScreen extends Component {
     var screenWidth = Dimensions.get("window").width - 1;
     var hg = Dimensions.get("window").width - 150;
 
-    if(this.props.awardReducer.cargando) {
-      return <Loading />
+    if (this.props.awardReducer.cargando) {
+      return (
+        <Container>
+          <HeaderCustom navigation={this.props.navigation} />
+          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          < Loading />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        </Container>
+      )
     }
 
     //console.log("imagenes slider: ", this.awardsUrlImage1());
