@@ -21,6 +21,7 @@ import JobsScreen from '../screens/JobsScren'
 import StoreScreen from '../screens/StoreScreen'
 import JobShowScreen from '../screens/JobShowScreen'
 import HomeShowScreen from '../screens/HomeShowScreen'
+import PostsCategoryScreen from '../screens/PostsCategoryScreen'
 
 const Stack = createStackNavigator()
 
@@ -138,6 +139,12 @@ function MainStackNavigator() {
           name='PostsShowScreen' header='null'
           component={PostsShowScreen}
           options={{ title: 'Noticia' }}
+        />
+
+        <Stack.Screen
+          name='PostsCategoryScreen' header='null'
+          component={PostsCategoryScreen}
+          options={{ title: 'Noticias' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

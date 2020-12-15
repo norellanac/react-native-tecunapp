@@ -9,3 +9,4 @@ export const likeOrDislikeNews = 'likeOrDislikeNews';
 export const commentPost = 'commentPost';
 export const deleteComment = 'deleteComment';
 export const idSearchNew = 'idSearchNew';
+export const showPost = 'showPost';

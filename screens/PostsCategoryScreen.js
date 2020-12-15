@@ -26,12 +26,11 @@ import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import HederPostSection from "../components/HederPostSection";
 import { persistor } from "../App";
-import { SliderBox } from "react-native-image-slider-box";
 import { apiUrl } from '../App';
 
 import Loading from "./../components/Loading";
 
-class PostsScreen extends Component {
+class PostsCategoryScreen extends Component {
   constructor() {
     super();
   }
@@ -42,7 +41,8 @@ class PostsScreen extends Component {
     more: 1,
     pathImage: apiUrl.link + "/storage/posts/",
     idCategory: 0,
-    category: ''
+    category: '',
+    categoryPostName: ''
   };
 
   logout = async () => {
@@ -55,9 +55,8 @@ class PostsScreen extends Component {
   };
 
   async componentDidMount() {
-    await this.props.getNews(this.props.usuariosReducer.token);
-    //await this.props.getIdCategory(this.state.idCategory);
-    //console.log("posts props", this.props);
+    await this.props.getCategory(this.props.usuariosReducer.token);
+    console.log("posts props", this.props.postReducer);
     //console.log("posts state: ", this.state);
   };
 
@@ -66,25 +65,24 @@ class PostsScreen extends Component {
     this.state.selected = key;
     this.state.idCategory = key;
     this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-    this.props.navigation.navigate("PostsCategoryScreen");
   }
 
-  setIdSearchNew(news) {
+  setIdSearchNew(post) {
     //console.log("Array del job: ", jobArray);
     //console.log("Reducer del job: ", this.props.postReducer);
-    this.props.setIdNewSearch(news);
+    this.props.setIdNewSearch(post);
     this.props.navigation.navigate("PostsShowScreen")
   }
 
-  async showPosts(idPost) {
-    await this.props.getShowPost(idPost);
+  async showPostsCategory(idPost) {
+    await this.props.getShowPostCategory(idPost, this.props.usuariosReducer.token);
     this.props.navigation.navigate("PostsShowScreen")
   }
 
   loadContentCategories = () => {
-    return this.props.postReducer.categories.map((category) => (
-      //console.log(category),
-      <Picker.Item label={category.name} value={category.id} key={category.id} />
+    return this.props.postReducer.categories.map((categories) => (
+      //console.log(categories),
+      <Picker.Item label={categories.name} value={categories.id} key={categories.id} />
     ))
   }
 
@@ -92,32 +90,33 @@ class PostsScreen extends Component {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
-    if (this.props.postReducer.posts) {
-      return this.props.postReducer.posts.map((news) => (
-        //console.log(news),
+    if (this.props.postReducer.post) {
+        console.log("map posts: ", this.props.postReducer.post);
+      return this.props.postReducer.post.map((news) => (
+        console.log("El objecto como tal de news: ",news),
         <Card style={{ flex: 0 }} key={news.id}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>{news.title}</Text>
-                  <Text note>{news.created_at}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem >
+          <CardItem style={{ backgroundColor: "transparent" }}>
+            <Left>
+              <Thumbnail
+                style={{ backgroundColor: "#000000" }}
+                source={require("../assets/images/robot-dev.png")}
+              />
               <Body>
-                <Image  
-                  source={{uri: this.state.pathImage + news.featured_image }}
-                  style={{width: screenWidth - 20, height: 150}} 
-                />
-                <Text >{news.description}</Text>
-
+                <Text>{news.title}</Text>
+                <Text note>{news.created_at}</Text>
               </Body>
-            </CardItem>
+            </Left>
+          </CardItem>
+          <CardItem >
+            <Body>
+              <Image  
+                source={{uri: this.state.pathImage + news.featured_image }}
+                style={{width: screenWidth - 20, height: 150}} 
+              />
+              <Text >{news.description}</Text>
+
+            </Body>
+          </CardItem>
           <CardItem>
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
@@ -126,13 +125,15 @@ class PostsScreen extends Component {
                 </Button>
               </Left>
               <Right>
-                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showPosts(news.id)}>
+                <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showPostsCategory(news.id)}>
                   <Icon name="comment" type="FontAwesome" />
                   <Text>Comentarios</Text>
                 </Button>
               </Right>
             </CardItem>
         </Card>
+
+
       ))
     } else {
       return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -142,6 +143,9 @@ class PostsScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
+    console.log(this.props);
+
+    this.state.categoryPostName = this.props.postReducer.categoryPostName;
 
     //console.log(this.state.idCategory);
 
@@ -174,7 +178,8 @@ class PostsScreen extends Component {
         </Form>
         <Content>
 
-          {this.loadContent()}
+            <Text>{this.state.categoryPostName}</Text>
+            {this.loadContent()}
 
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -196,5 +201,5 @@ const mapDispatchProps = {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(PostsScreen)
+  connect(mapStateToProps, mapDispatchProps)(PostsCategoryScreen)
 );

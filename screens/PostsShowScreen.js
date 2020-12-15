@@ -45,6 +45,7 @@ class PostsShowScreen extends Component {
 
   async componentDidMount() {
     console.log(this.props.getNews(this.props.usuariosReducer.token));
+    this.props.getCategory(this.props.usuariosReducer.token); 
     //console.log("posts props", this.props);
     //console.log("posts state: ", this.state);
   }
