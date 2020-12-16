@@ -59,7 +59,7 @@ class PostsShowScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
-
+    console.log("posts data: " , this.props.postReducer.post);
     //const { navigation } = this.props.navigation
 
     if (this.props.postReducer.cargando) {

@@ -61,8 +61,9 @@ class PodcastShowScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
+    console.log("podcast screen: ", this.props.podcastReducer);
+
     if (this.props.podcastReducer.cargando) {
-      //console.log("jobsScreen: ", this.props);
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -79,31 +80,48 @@ class PodcastShowScreen extends Component {
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-        <Card style={{ flex: 0 }} key={this.props.podcastReducer.podcast.id}>
+          <Card style={{ flex: 0 }} key={this.props.podcastReducer.podcast.id}>
             <CardItem style={{ backgroundColor: "transparent" }}>
-                <Left>
-                    <Thumbnail
-                        style={{ backgroundColor: "#000000" }}
-                        source={require("../assets/images/robot-dev.png")}
-                    />
-                    <Text>{this.props.podcastReducer.podcast.title}</Text>
-                </Left>
+              <Left>
+                <Thumbnail
+                  style={{ backgroundColor: "#000000" }}
+                  source={require("../assets/images/robot-dev.png")}
+                />
+                <Text>{this.props.podcastReducer.podcast.title}</Text>
+              </Left>
             </CardItem>
             <CardItem>
-                <Body>
-                    <Image  
-                        source={{uri: this.state.pathImage + this.props.podcastReducer.podcast.featured_image }}
-                        style={{width: screenWidth - 20, height: 150}} 
-                    />
-                    <Text note>{this.props.podcastReducer.podcast.created_at}</Text>
-                    <Text></Text>
-                    <Text>{ this.props.podcastReducer.podcast.description }</Text>
-                    <ScrollView style={{ flex: 1 }}>
-                        <HTML source={{ html: this.props.podcastReducer.podcast.content }} contentWidth={screenWidth} />
-                    </ScrollView>
-                </Body>
+              <Body>
+                <Image
+                  source={{ uri: this.state.pathImage + this.props.podcastReducer.podcast.featured_image }}
+                  style={{ width: screenWidth - 20, height: 150 }}
+                />
+                <Text note>{this.props.podcastReducer.podcast.created_at}</Text>
+                <Text></Text>
+                <Text>{this.props.podcastReducer.podcast.description}</Text>
+                <ScrollView style={{ flex: 1 }}>
+                  <HTML source={{ html: this.props.podcastReducer.podcast.content }} contentWidth={screenWidth} />
+                </ScrollView>
+
+              </Body>
             </CardItem>
-        </Card>
+          </Card>
+          <Text>test</Text>
+          <WebView
+            source={{ html: '<iframe src="https://open.spotify.com/embed-podcast/episode/40Ga1hhr0RDO0dvLhqbvM3" width="100%" height="232" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' }}
+            scalesPageToFit={true}
+            bounces={false}
+            javaScriptEnabled
+            style={{ height: 100 }}
+          />
+          <WebView
+            source={{ html: '<iframe width="100%" height="300" src="https://www.youtube.com/embed/SV6imUKuGQs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>' }}
+            scalesPageToFit={true}
+            bounces={false}
+            allowsFullscreenVideo={true}
+            javaScriptEnabled
+            style={{ height: 150 , marginBottom: 50}}
+          />
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>
