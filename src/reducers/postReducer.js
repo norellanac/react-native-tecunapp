@@ -1,9 +1,10 @@
-import { getAllPost, getPost, showPost, loadingPost, errorPost, categoryPost, commentPost, likeOrDislikeNews, deleteComment, idSearchNew } from '../types/postType';
+import { getAllPost, getPost, showPost, loadingPost, errorPost, categoryPost, showPostCategory, commentPost, likeOrDislikeNews, deleteComment, idSearchNew } from '../types/postType';
 import { PURGE } from 'redux-persist';
 
 const INITIAL = {
     posts: [],
     post: [],
+    postCategory: [],
     document: [],
     image: [],
     cargando: false,
@@ -11,7 +12,8 @@ const INITIAL = {
     idCategory: '',
     category: [],
     categories: [],
-    categoryPostName: '',
+    categoryPostName: [],
+    idCategory: '',
     comment: [],
     likeOrDislike: [],
     idDestroy: [],
@@ -28,8 +30,6 @@ export default (state = INITIAL, action) => {
             return { ...state, cargando: true };
         case errorPost:
             return { ...state, error: action.error, cargando: action.cargando };
-        case getPost:
-            return { ...state, post: action.payload, cargando: action.cargando, error: '', };
         case commentPost:
             return { ...state, comment: action.payload, cargando: action.cargando };
         case categoryPost:
@@ -37,15 +37,30 @@ export default (state = INITIAL, action) => {
                 ...state, posts: action.payload,
                 categories: action.categories,
                 categoryPostName: action.categoryPostName,
+                comment: action.comment,
+                idCategory: action.idCategory,
                 cargando: action.cargando
             };
         case showPost:
             return {
-                ...state, post: action.payload,
+                ...state, 
+                post: action.payload,
+                categoryPostName: action.categoryName,
+                cargando: action.cargando
+            };
+        case showPostCategory:
+            return {
+                ...state, 
+                postCategory: [],
+                postCategory: action.payload,
+                comment: [],
                 comment: action.comment,
+                categoryPostName: [],
                 categoryPostName: action.categoryPostName,
                 cargando: action.cargando
             };
+        case getPost:
+            return {...state, post: action.payload, comment: action.comment };
         case likeOrDislikeNews:
             return { ...state, likeOrDislike: action.payload, cargando: action.cargando };
         case deleteComment:

@@ -12,8 +12,10 @@ import {
   Picker,
   Input,
   Icon,
+  View,
   Text,
   CardItem,
+  Accordion,
   Card,
   Button,
   Left,
@@ -38,10 +40,47 @@ class PostsShowScreen extends Component {
   }
   state = {
     posts: null,
-    jobId: null,
-    pathImage: apiUrl.link + "/storage/posts/"
-
+    postId: null,
+    selected: 0,
+    more: 1,
+    pathImage: apiUrl.link + "/storage/posts/",
+    idCategory: 0,
+    category: '',
+    categoryPostName: ''
   };
+
+
+  _renderHeader(item, expanded) {
+    return (
+      <View style={{
+        flexDirection: "row",
+        padding: 10,
+        justifyContent: "space-between",
+        alignItems: "center" ,
+        backgroundColor: "#A9DAD6" }}>
+      <Text style={{ fontWeight: "600" }}>
+          {" "}{item.title}
+        </Text>
+        {expanded
+          ? <Icon style={{ fontSize: 18 }} name="remove-circle" />
+          : <Icon style={{ fontSize: 18 }} name="add-circle" />}
+      </View>
+    );
+  }
+  _renderContent(item) {
+    return (
+      <Text
+        style={{
+          backgroundColor: "#e3f1f1",
+          padding: 10,
+          fontStyle: "italic",
+        }}
+      >
+        {item.content}
+      </Text>
+    );
+  }
+
 
   async componentDidMount() {
     //console.log(this.props.getNews(this.props.usuariosReducer.token));
@@ -60,7 +99,20 @@ class PostsShowScreen extends Component {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
-    //const { navigation } = this.props.navigation
+    //console.log("Vista del post Show Desde la Category");
+    //console.log("Que trae el reducer: ", this.props.postReducer.post);
+
+    const post = Object.assign({}, this.props.postReducer.post);
+
+    console.log("Que trae post?: ", post);
+
+    //console.log("Que trae el reducer: ", this.props.postReducer);
+
+    const dataArray = [
+      { title: `Comentarios (${this.props.postReducer.post.comments.length}) `, content: "Lorem ipsum dolor sit amet" }
+    ];
+
+    //const { navigation } = this.props.navigation  
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
@@ -80,27 +132,35 @@ class PostsShowScreen extends Component {
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <Content>
-        <Card style={{ flex: 0 }} key={this.props.postReducer.post.id}>
+        <Card style={{ flex: 0 }} key={post.id}>
             <CardItem style={{ backgroundColor: "transparent" }}>
                 <Left>
                     <Thumbnail
                         style={{ backgroundColor: "#000000" }}
                         source={require("../assets/images/robot-dev.png")}
                     />
-                    <Text>{this.props.postReducer.post.title}</Text>
+                    <Text>{post.title}</Text>
                 </Left>
             </CardItem>
             <CardItem>
                 <Body>
                     <Image  
-                        source={{uri: this.state.pathImage + this.props.postReducer.post.featured_image }}
+                        source={{uri: this.state.pathImage + post.featured_image }}
                         style={{width: screenWidth - 20, height: 150}} 
                     />
-                    <Text note>{this.props.postReducer.post.created_at}</Text>
+                    <Text note>{post.created_at}</Text>
                     <Text></Text>
-                    <Text>{ this.props.postReducer.post.description }</Text>
+                    <Text>{ post.description }</Text>
                     <ScrollView style={{ flex: 1 }}>
-                        <HTML source={{ html: this.props.postReducer.post.content }} contentWidth={screenWidth} />
+                        <HTML source={{ html: post.content }} contentWidth={screenWidth} />
+                        <Text></Text>
+                        <Accordion
+                          dataArray={dataArray}
+                          animation={true}
+                          expanded={true}
+                          renderHeader={this._renderHeader}
+                          renderContent={this._renderContent}
+                        />
                     </ScrollView>
                 </Body>
             </CardItem>

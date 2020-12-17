@@ -68,6 +68,11 @@ class PostsScreen extends Component {
     this.props.navigation.navigate("PostsShowScreen")
   }
 
+  showNews(idPost) {
+    this.props.getShowPost(idPost, this.props.usuariosReducer.token);
+    this.props.navigation.navigate("PostsShowScreen")
+  }
+
   onValueChange(key) {
 
     this.state.selected = key;
@@ -133,7 +138,7 @@ class PostsScreen extends Component {
               </Button>
             </Left>
             <Right>
-              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news)}>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showNews(news.id)}>
                 <Icon name="comment" type="FontAwesome" />
                 <Text>Comentarios</Text>
               </Button>
