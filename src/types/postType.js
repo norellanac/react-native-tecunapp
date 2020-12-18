@@ -10,3 +10,4 @@ export const commentPost = 'commentPost';
 export const deleteComment = 'deleteComment';
 export const idSearchNew = 'idSearchNew';
 export const showPost = 'showPost';
+export const showPostCategory = 'showPostCategory';

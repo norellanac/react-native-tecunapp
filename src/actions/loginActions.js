@@ -2,6 +2,7 @@ import { loginTypes, cargandoLogin, errorLogin, getUser, userLogout, registerUse
 import { apiUrl } from './../../App';
 
 export const traerToken = (email, password) => async dispatch => {
+  console.log("Que trae email  y password?: ", email, password);
   dispatch({
     type: cargandoLogin
   });
@@ -21,6 +22,7 @@ export const traerToken = (email, password) => async dispatch => {
       },
       body: dataForm
     });
+    console.log("Que trae el response?: ",response);
     const data = await response.json();
     console.log("test: ", `${apiUrl.link}/api/oauth/token`);
     console.log('data: ', data);

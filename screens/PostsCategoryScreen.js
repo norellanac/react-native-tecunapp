@@ -37,12 +37,13 @@ class PostsCategoryScreen extends Component {
   state = {
     posts: null,
     postId: null,
-    selected: 0,
+    selected: '',
     more: 1,
     pathImage: apiUrl.link + "/storage/posts/",
-    idCategory: 0,
+    idCategory: '',
     category: '',
-    categoryPostName: ''
+    categoryPostName: '',
+    comment: []
   };
 
   logout = async () => {
@@ -51,20 +52,30 @@ class PostsCategoryScreen extends Component {
     //await this.props.resetAddress();
     await persistor.purge();
     this.props.navigation.navigate("Login");
-    console.log("borró direccion");
+    console.log("borró direccion");posts
   };
 
   async componentDidMount() {
     //await this.props.getCategory(this.props.usuariosReducer.token);
-    console.log("posts props", this.props.postReducer);
+    //console.log("posts props", this.props.postReducer);
     //console.log("posts state: ", this.state);
   };
 
-  setIdOneRecord(oneRecordArray) {
-    console.log("Array del registro: ", oneRecordArray);
-    console.log("Reducer del registro: ", this.props.jobsReducer);
-    this.props.setIdOneRecordAction(oneRecordArray);
-    this.props.navigation.navigate("PostsShowScreen")
+  showNew(idNew) {
+    //console.log("Que trae idNew: ", idNew);
+    this.props.navigation.navigate("PostsShowCategoryScreen")
+    this.props.navigation.navigate("PostsShowCategoryScreen")
+    this.props.navigation.navigate("PostsShowCategoryScreen")
+    this.props.getShowPostCategory(idNew, this.props.usuariosReducer.token);
+    
+  }
+
+  setIdOneRecord(oneRecordArray, commentPost) {
+    /*console.log("Array del registro: ", oneRecordArray);
+    console.log("Reducer del registro: ", this.props.jobsReducer);*/
+    this.props.setIdOneRecordAction(oneRecordArray, commentPost);
+    this.props.navigation.navigate("PostsShowCategoryScreen")
+    
   }
 
   onValueChange(key) {
@@ -86,10 +97,14 @@ class PostsCategoryScreen extends Component {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
+    //console.log("Que trae el reducer?: ", this.props.postReducer);
+
     if (this.props.postReducer.posts) {
-      console.log("map posts largo: ", this.props.postReducer.post);
+      //console.log("map posts largo: ", this.props.postReducer.post);
       return this.props.postReducer.posts.map((news) => (
-        console.log("El objecto como tal de news: ", news),
+        //console.log("El objecto como tal de news: ", news),
+        this.state.comment = this.props.postReducer.comment,
+        console.log("Que trae el comentario: ", this.state.comment),
         <Card style={{ flex: 0 }} key={news.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
@@ -121,7 +136,7 @@ class PostsCategoryScreen extends Component {
               </Button>
             </Left>
             <Right>
-              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news)}>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news, this.state.comment)}>
                 <Icon name="comment" type="FontAwesome" />
                 <Text>Comentarios</Text>
               </Button>
@@ -139,13 +154,15 @@ class PostsCategoryScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
-    console.log(this.props);
+    //console.log(this.props);
 
     this.state.categoryPostName = this.props.postReducer.categoryPostName;
 
     //console.log(this.state.idCategory);
 
     //const { navigation } = this.props.navigation
+
+    //console.log("Vista del post Category");
 
     if (this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
