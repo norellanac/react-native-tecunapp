@@ -8,9 +8,10 @@ import {
     Item,
     Icon,
     Text,
-    ListItem,
+    CardItem,
     Input,
     CheckBox,
+    Textarea,
     Body,
     Button
 } from "native-base";
@@ -80,11 +81,11 @@ class DenounceScreen extends Component {
         if (this.props.awardReducer.cargando) {
             return (
                 <Container>
-                  <HeaderCustom navigation={this.props.navigation} />
-                  < Loading />
-                  <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                    <HeaderCustom navigation={this.props.navigation} />
+                    < Loading />
+                    <FooterTabsNavigationIconText navigation={this.props.navigation} />
                 </Container>
-              )
+            )
         }
 
         //console.log("imagenes slider: ", this.awardsUrlImage1());
@@ -101,8 +102,30 @@ class DenounceScreen extends Component {
             <Container>
                 <HeaderCustom navigation={this.props.navigation} />
                 <Content>
+                    <CardItem style={{ backgroundColor: "transparent" }}>
+                        <Grid>
+                            <Col style={{ alignItems: "center" }}>
+                                <Text
+                                    style={{
+                                        fontSize: 30,
+                                        color: "#3490dc",
+                                        fontWeight: "bold"
+                                    }}
+                                >
+                                    Línea de denuncia
+                    </Text>
+                            </Col>
+                        </Grid>
+                    </CardItem>
                     <Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
-                        <Item rounded>
+                        <Item style={{ marginTop: 25 }}>
+                            <Textarea rowSpan={5}
+                                placeholderTextColor="#3490dc"
+                                style={{ color: "#3490dc" }}
+                                placeholder="En breve, describe lo que sucedió, dónde ocurrió el suceso y quiénes estuvieron involucrados. El Gerente de Ética le dará seguimiento a tu caso. " />
+
+                        </Item>
+                        <Item rounded style={{ marginTop: 25 }}>
                             <Icon
                                 type="FontAwesome"
                                 name="user-o"
@@ -116,36 +139,7 @@ class DenounceScreen extends Component {
                                 style={{ color: "#3490dc" }}
                             />
                         </Item>
-                        <Item rounded style={{ marginTop: 25 }}>
-                            <Icon
-                                type="SimpleLineIcons"
-                                name="people"
-                                style={{ color: "#3490dc", fontSize: 25 }}
-                            />
-                            <Input
-                                onChangeText={lastname => this.setState({ lastname })}
-                                value={this.state.lastname}
-                                placeholder="Apellido"
-                                placeholderTextColor="#3490dc"
-                                style={{ color: "#3490dc" }}
-                            />
-                        </Item>
-                        <Item rounded style={{ marginTop: 25 }}>
-                            <Icon
-                                type="MaterialCommunityIcons"
-                                name="numeric"
-                                style={{ color: "#3490dc", fontSize: 25 }}
-                            />
-                            <Input
-                                keyboardType="numeric"
-                                maxLength={13}
-                                onChangeText={dpi => this.setState({ dpi })}
-                                value={this.state.dpi}
-                                placeholder="Dpi"
-                                placeholderTextColor="#3490dc"
-                                style={{ color: "#3490dc" }}
-                            />
-                        </Item>
+
                         <Item rounded style={{ marginTop: 25 }}>
                             <Icon
                                 type="MaterialCommunityIcons"
@@ -176,71 +170,30 @@ class DenounceScreen extends Component {
                                 style={{ color: "#3490dc" }}
                             />
                         </Item>
-                        <Item rounded style={{ marginTop: 25 }}>
-                            <Icon
-                                type="SimpleLineIcons"
-                                name="lock"
-                                style={{ color: "#3490dc", fontSize: 25 }}
-                            />
-                            <Input
-                                textContentType="password"
-                                secureTextEntry={true}
-                                onChangeText={password => this.setState({ password })}
-                                value={this.state.password}
-                                placeholder="Contraseña"
-                                placeholderTextColor="#3490dc"
-                                style={{ color: "#3490dc" }}
-                            />
-                        </Item>
-                        <Item rounded style={{ marginTop: 25 }}>
-                            <Icon
-                                type="SimpleLineIcons"
-                                name="lock"
-                                style={{ color: "#3490dc", fontSize: 25 }}
-                            />
-                            <Input
-                                textContentType="password"
-                                secureTextEntry={true}
-                                onChangeText={confirmPassword =>
-                                    this.setState({ confirmPassword })
-                                }
-                                value={this.state.confirmPassword}
-                                placeholder="Confirmar contraseña"
-                                placeholderTextColor="#3490dc"
-                                style={{ color: "#3490dc" }}
-                            />
-                        </Item>
-                        <Content>
-                            <ListItem listBorderColor="transparent">
-                                <CheckBox
-                                    checked={this.state.checkTerm}
-                                    onPress={() => this.setState({ checkTerm: !this.state.checkTerm })}
-                                    color="#1B2853"
-                                />
-                                <Body>
-                                    <Button
-                                        transparent
-                                        uppercase={false}
-                                        vertical
-                                        onPress={() =>
-                                            Linking.openURL("http://10x.org/privacypolicy/")
-                                        }
+                        <Content style={{ marginTop: 20 }}>
+                            <Body>
+                                <Button
+                                    onPress={this.consultacaptcha}
+                                    rounded
+                                    danger
+                                    style={{
+                                        fontSize: 44,
+                                        color: "#3490dc"
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            textAlign: "center",
+                                            color: "#ffffff",
+                                            fontSize: 20,
+                                            marginRight: 35,
+                                            marginLeft: 35
+                                        }}
                                     >
-                                        <Text
-                                            uppercase={false}
-                                            style={{
-                                                fontSize: 15,
-                                                color: "#3490dc",
-                                                fontWeight: "bold",
-                                                textDecorationLine: "underline",
-                                                textTransform: "none"
-                                            }}
-                                        >
-                                            Aceptar Términos y condiciones
-                      </Text>
-                                    </Button>
-                                </Body>
-                            </ListItem>
+                                        Reportar
+        </Text>
+                                </Button>
+                            </Body>
                         </Content>
                     </Form>
 

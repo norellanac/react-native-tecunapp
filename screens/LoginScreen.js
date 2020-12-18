@@ -89,42 +89,43 @@ class LoginScreen extends Component {
 
   render() {
 
-  let screenWidth = Dimensions.get("window").width;
-  let screenHeight = Dimensions.get("window").height;
+    let screenWidth = Dimensions.get("window").width;
+    let screenHeight = Dimensions.get("window").height;
     if (this.props.usuariosReducer.user.name) {
       this.props.navigation.navigate("Home");
     }
     return (
       <Container style={{ backgroundColor: "#ed913b" }}>
-        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-          <Content>
-            <Card transparent>
-              <CardItem style={{ backgroundColor: "#ed913b" }}>
-                <Grid style={{ marginTop: 60 }}>
-                  <Col style={{ alignItems: "center" }}>
-                    <Image
-                      source={require("./../assets/images/robot-prod.png")}
-                      style={{ width: screenWidth-20, height: 165 }}
-                    />
-                  </Col>
-                </Grid>
-              </CardItem>
-              <CardItem style={{ backgroundColor: "#ed913b" }}>
-                <Grid>
-                  <Col style={{ alignItems: "center" }}>
-                    <Text
-                      style={{
-                        fontSize: 30,
-                        color: "white",
-                        fontWeight: "bold"
-                      }}
-                    >
-                      Bienvenido
+
+        <Content>
+          <Card transparent>
+            <CardItem style={{ backgroundColor: "#ed913b" }}>
+              <Grid style={{ marginTop: 60 }}>
+                <Col style={{ alignItems: "center" }}>
+                  <Image
+                    source={require("./../assets/images/robot-prod.png")}
+                    style={{ width: screenWidth - 20, height: 165 }}
+                  />
+                </Col>
+              </Grid>
+            </CardItem>
+            <CardItem style={{ backgroundColor: "#ed913b" }}>
+              <Grid>
+                <Col style={{ alignItems: "center" }}>
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      color: "white",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    Bienvenido
                     </Text>
-                  </Col>
-                </Grid>
-              </CardItem>
-            </Card>
+                </Col>
+              </Grid>
+            </CardItem>
+          </Card>
+          <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
             <Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20 }}>
               <Item rounded>
                 <Icon
@@ -159,83 +160,83 @@ class LoginScreen extends Component {
                 />
               </Item>
             </Form>
-            <Card transparent>
-              <CardItem style={{ backgroundColor: "#ed913b", marginTop: 20 }}>
-                <Grid>
-                  <Row>{this.ponerError()}</Row>
-                  <Row>{this.ponerContenido()}</Row>
-                </Grid>
-              </CardItem>
-              <CardItem style={{ backgroundColor: "#ed913b" }}>
-                <Grid>
-                  <Col style={{ alignItems: "center" }}>
-                    <Button
-                      transparent
-                      vertical
-                      onPress={() =>
-                        Linking.openURL(
-                          "http://app.canjeaton.com/password/reset"
-                        )
-                      }
+          </KeyboardAvoidingView>
+          <Card transparent>
+            <CardItem style={{ backgroundColor: "#ed913b", marginTop: 20 }}>
+              <Grid>
+                <Row>{this.ponerError()}</Row>
+                <Row>{this.ponerContenido()}</Row>
+              </Grid>
+            </CardItem>
+            <CardItem style={{ backgroundColor: "#ed913b" }}>
+              <Grid>
+                <Col style={{ alignItems: "center" }}>
+                  <Button
+                    transparent
+                    vertical
+                    onPress={() =>
+                      Linking.openURL(
+                        "http://app.canjeaton.com/password/reset"
+                      )
+                    }
+                  >
+                    <Text
+                      style={{
+                        fontSize: 13,
+                        color: "white",
+                        fontWeight: "bold",
+                        textDecorationLine: "underline",
+                        textTransform: "capitalize"
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontSize: 13,
-                          color: "white",
-                          fontWeight: "bold",
-                          textDecorationLine: "underline",
-                          textTransform: "capitalize"
-                        }}
-                      >
-                        Recuperar Contraseña
+                      Recuperar Contraseña
                       </Text>
-                    </Button>
-                  </Col>
-                </Grid>
-              </CardItem>
-              <CardItem style={{ backgroundColor: "#ed913b" }}>
-                <Grid>
-                  <Col style={{ alignItems: "center" }}>
-                    <Button
-                      transparent
-                      vertical
-                      onPress={() => this.props.navigation.navigate("Register")}
+                  </Button>
+                </Col>
+              </Grid>
+            </CardItem>
+            <CardItem style={{ backgroundColor: "#ed913b" }}>
+              <Grid>
+                <Col style={{ alignItems: "center" }}>
+                  <Button
+                    transparent
+                    vertical
+                    onPress={() => this.props.navigation.navigate("Register")}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        color: "white",
+                        fontWeight: "bold",
+                        textDecorationLine: "underline"
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          color: "white",
-                          fontWeight: "bold",
-                          textDecorationLine: "underline"
-                        }}
-                      >
-                        o registrate
+                      o registrate
                       </Text>
-                    </Button>
-                    <Button
-                      transparent
-                      vertical
-                      onPress={() =>
-                        this.props.navigation.navigate("HelpRoute")
-                      }
+                  </Button>
+                  <Button
+                    transparent
+                    vertical
+                    onPress={() =>
+                      this.props.navigation.navigate("HelpRoute")
+                    }
+                  >
+                    <Text
+                      style={{
+                        fontSize: 15,
+                        color: "white",
+                        fontWeight: "bold",
+                        textDecorationLine: "underline"
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontSize: 15,
-                          color: "white",
-                          fontWeight: "bold",
-                          textDecorationLine: "underline"
-                        }}
-                      >
-                        Ayuda
+                      Ayuda
                       </Text>
-                    </Button>
-                  </Col>
-                </Grid>
-              </CardItem>
-            </Card>
-          </Content>
-        </KeyboardAvoidingView>
+                  </Button>
+                </Col>
+              </Grid>
+            </CardItem>
+          </Card>
+        </Content>
       </Container>
     );
   }
