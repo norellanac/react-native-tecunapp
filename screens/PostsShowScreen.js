@@ -11,8 +11,11 @@ import {
   Form,
   Picker,
   Input,
+  List,
   Icon,
   View,
+  ListItem,
+  Item,
   Text,
   CardItem,
   Accordion,
@@ -39,14 +42,14 @@ class PostsShowScreen extends Component {
     super();
   }
   state = {
-    posts: null,
-    postId: null,
-    selected: 0,
-    more: 1,
+    postId: '',
+    postTitle: '',
+    postDescription: '',
+    postCreated: '',
+    postContent: '',
+    postImage: '',
     pathImage: apiUrl.link + "/storage/posts/",
-    idCategory: 0,
-    category: '',
-    categoryPostName: ''
+    message: [],
   };
 
 
@@ -56,9 +59,10 @@ class PostsShowScreen extends Component {
         flexDirection: "row",
         padding: 10,
         justifyContent: "space-between",
-        alignItems: "center" ,
-        backgroundColor: "#A9DAD6" }}>
-      <Text style={{ fontWeight: "600" }}>
+        alignItems: "center",
+        backgroundColor: "#A9DAD6"
+      }}>
+        <Text style={{ fontWeight: "600" }}>
           {" "}{item.title}
         </Text>
         {expanded
@@ -67,18 +71,14 @@ class PostsShowScreen extends Component {
       </View>
     );
   }
+
   _renderContent(item) {
     return (
-      <Text
-        style={{
-          backgroundColor: "#e3f1f1",
-          padding: 10,
-          fontStyle: "italic",
-        }}
-      >
+      <Content>
         {item.content}
-      </Text>
-    );
+        {item.inputComment}
+      </Content>
+    )
   }
 
 
@@ -95,27 +95,83 @@ class PostsShowScreen extends Component {
     var screenHeight = Dimensions.get("window").height;
   }
 
+  loadInfoComment() {
+    //console.log("Que trae esto: ",this.props.postReducer.post);
+    if (this.props.postReducer.post.comments) {
+      console.log("Que trae el reducer de coment ",this.props.postReducer.post.comments);
+      return this.props.postReducer.post.comments.map((comment) => (
+        //console.log("Que trae el postReducer.post: ", this.props.postReducer),
+        <List>
+          <ListItem avatar itemDivider>
+            <Left>
+              <Icon name="user" type="FontAwesome" />
+            </Left>  
+            <Body>
+              <Text note>{comment.user.name} {comment.user.lastname}</Text>
+              <Text>{comment.message}</Text>
+            </Body>
+            <Right>
+              {this.deleteComment(comment.user_id)}
+            </Right>
+          </ListItem>
+        </List>
+      ))
+    }
+  }
+
+  deleteComment(user_id) {
+    console.log("Si vino algo por cabecera? ",user_id);
+    if(user_id === this.props.usuariosReducer.user.id){
+      return(
+        <Button danger transparent onPress={() => this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}>
+          <Icon  name="delete" type="AntDesign" />
+        </Button>
+      )
+    }
+  }
+
+
+  uploadComment(post_id, message, token) {
+    let commentObject = {"post_id":post_id, "message":message};
+
+    this.props.uploadMessage(commentObject, token);
+    this.props.getShowPost(commentObject.post_id, token);
+    this.state.message = [];
+    this.props.navigation.navigate("PostsShowScreen");
+  }
+
+  inputComment() {
+    return (
+      <Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20, marginBottom: 20 }}>
+        <Item rounded style={{ marginTop: 25 }}>
+          <Input
+            onChangeText={message => this.setState({ message })}
+            value={this.state.message}
+            placeholder="Comentario"
+            placeholderTextColor="#000000"
+            style={{ color: "#000000" }}
+          />
+          <Button transparent onPress={() => this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}>
+            <Icon name="send" type="FontAwesome" />
+          </Button>
+        </Item>
+      </Form>
+    );
+  }
+
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
-    //console.log("Vista del post Show Desde la Category");
-    //console.log("Que trae el reducer: ", this.props.postReducer.post);
+    this.state.postId = this.props.postReducer.post.id;
 
     const post = Object.assign({}, this.props.postReducer.post);
 
-    console.log("Que trae post?: ", post);
-
-    //console.log("Que trae el reducer: ", this.props.postReducer);
-
     const dataArray = [
-      { title: `Comentarios (${this.props.postReducer.post.comments.length}) `, content: "Lorem ipsum dolor sit amet" }
-    ];
-
-    //const { navigation } = this.props.navigation  
+      { title: `Comentarios (${this.props.postReducer.post.comments.length})`, content: this.loadInfoComment(), inputComment: this.inputComment() }
+    ]; 
 
     if (this.props.postReducer.cargando) {
-      //console.log("jobsScreen: ", this.props);
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />

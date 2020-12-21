@@ -98,8 +98,8 @@ class PostsShowCategoryScreen extends Component {
   loadInfoComment() {
     //console.log("Que trae esto: ",this.props.postReducer.post);
     if (this.props.postReducer.post.comments) {
+      console.log("Que trae el reducer de coment ",this.props.postReducer.post.comments);
       return this.props.postReducer.post.comments.map((comment) => (
-        //console.log("Que trae el postReducer.post: ", this.props.postReducer),
         <List>
           <ListItem avatar itemDivider>
             <Left>
@@ -136,7 +136,7 @@ class PostsShowCategoryScreen extends Component {
             style={{ color: "#000000" }}
           />
           <Button transparent onPress={() => this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}>
-            <Icon name="search" type="FontAwesome5" />
+            <Icon name="send" type="FontAwesome" />
           </Button>
         </Item>
       </Form>
