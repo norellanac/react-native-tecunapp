@@ -233,7 +233,7 @@ class TeamScreen extends Component {
             <Button
               transparent
               vertical
-              onPress={() => this.props.navigation.navigate("ProccessPeopleScreen")}
+              onPress={() => this.props.navigation.navigate("ContactScreen")}
             >
               <CardItem>
                 <Grid
@@ -264,6 +264,12 @@ class TeamScreen extends Component {
                   </Col>
                 </Grid>
               </CardItem>
+            </Button>
+            <Button
+              transparent
+              vertical
+              onPress={() => this.props.navigation.navigate("ProccessPeopleScreen")}
+            >
               <CardItem>
                 <Grid
                   style={{

@@ -101,7 +101,6 @@ class GameShowScreen extends Component {
             return (
                 <Container>
                     <HeaderCustom navigation={this.props.navigation} />
-                    <HederPostSection navigation={this.props.navigation}></HederPostSection>
                     < Loading />
                     <FooterTabsNavigationIconText navigation={this.props.navigation} />
                 </Container>

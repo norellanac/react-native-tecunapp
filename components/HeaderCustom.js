@@ -2,7 +2,7 @@ import React from "react";
 import { View, Image, StyleSheet, SafeAreaView } from "react-native";
 import { connect } from "react-redux";
 import {
-  Container,
+  Text,
   Header,
   Left,
   Body,
@@ -12,10 +12,23 @@ import {
   Title
 } from "native-base";
 import Constants from "expo-constants";
+import { logoutUser } from "../src/actions/loginActions";
+import { persistor } from "../App";
 
 function HeaderCustom(props) {
+
+  logout = async () => {
+    //await this.props.logoutUser();
+    console.log("borró usuario");
+    //await this.props.resetAddress();
+    await persistor.purge();
+    props.navigation.navigate("Login");
+    console.log("borró direccion");
+  };
+
+  console.log("header: ", );
   return (
-    <Header style={{ backgroundColor: '#ed913b'}}>
+    <Header style={{ backgroundColor: '#ed913b' }}>
       <Left>
         <Button transparent onPress={() => props.navigation.goBack()}>
           <Icon name="arrow-back" />
@@ -27,18 +40,14 @@ function HeaderCustom(props) {
       <Right>
         <Button transparent onPress={() => props.navigation.navigate("User")}>
           <Icon name="user" type="FontAwesome" />
+          <Text style={{ color: "#ffffff" }}>{props.usuariosReducer.user.name} </Text>
         </Button>
+
         <Button
           transparent
-          onPress={() => props.navigation.navigate("Settings")}
+          onPress={() => logout()}
         >
-          <Icon name="notifications" type="MaterialIcons" />
-        </Button>
-        <Button
-          transparent
-          onPress={() => props.navigation.navigate("Settings")}
-        >
-          <Icon name="more" />
+          <Icon name="sign-out-alt" type="FontAwesome5" />
         </Button>
       </Right>
     </Header>
