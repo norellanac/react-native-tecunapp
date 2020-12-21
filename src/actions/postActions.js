@@ -182,6 +182,31 @@ export const setIdOneRecordAction = (recordArray, postComment) => async dispatch
     });
 };
 
+export const updatePostAfterComment = (post_id, tokenUsr) => async dispatch => {
+    dispatch({
+        type: loadingPost
+    });
+
+    const response = await fetch(`${apiUrl.link}/api/post/${post_id}`, {
+        method: "GET",
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+            Authorization: `Bearer ${tokenUsr}`
+        }
+    });
+
+    const data = await response.json();
+
+    dispatch({
+        type: showPost,
+        payload: data.post,
+        categoryName: data.categoryName,
+        cargando: false
+    });
+
+};
+
 export const uploadMessage = (comment, token) => async dispatch => {
     console.log("Este es token: ",token);
     console.log("En teoria este es el array de comment: ",comment);

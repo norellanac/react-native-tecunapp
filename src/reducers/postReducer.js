@@ -51,12 +51,10 @@ export default (state = INITIAL, action) => {
         case showPostCategory:
             return {
                 ...state, 
-                postCategory: [],
-                postCategory: action.payload,
-                comment: [],
-                comment: action.comment,
+                post: [],
                 categoryPostName: [],
-                categoryPostName: action.categoryPostName,
+                post: action.payload,
+                categoryPostName: action.categoryName,
                 cargando: action.cargando
             };
         case getPost:

@@ -83,7 +83,7 @@ class PostsShowCategoryScreen extends Component {
 
 
   async componentDidMount() {
-    this.props.navigation.navigate("PostsShowCategoryScreen")
+    //this.props.navigation.navigate("PostsShowCategoryScreen")
     //console.log(this.props.getNews(this.props.usuariosReducer.token));
     //this.props.getCategory(this.props.usuariosReducer.token); 
     //console.log("posts props", this.props);
@@ -119,7 +119,8 @@ class PostsShowCategoryScreen extends Component {
     let commentObject = {"post_id":post_id, "message":message};
 
     this.props.uploadMessage(commentObject, token);
-    this.props.getShowPost(post_id, token);
+    this.props.updatePostAfterComment(commentObject.post_id, token);
+    this.state.message = [];
     this.props.navigation.navigate("PostsShowCategoryScreen");
   }
 
