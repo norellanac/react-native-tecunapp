@@ -109,9 +109,23 @@ class PostsShowCategoryScreen extends Component {
               <Text note>{comment.user.name} {comment.user.lastname}</Text>
               <Text>{comment.message}</Text>
             </Body>
+            <Right>
+              {this.deleteComment(comment.user_id, comment.id)}
+            </Right>
           </ListItem>
         </List>
       ))
+    }
+  }
+
+  deleteComment(user_id, commentID) {
+    //console.log("Si vino algo por cabecera? ",user_id);
+    if(user_id === this.props.usuariosReducer.user.id){
+      return(
+        <Button danger transparent onPress={() => this.deleteMessage(commentID, this.props.usuariosReducer.token, this.state.postId)}>
+          <Icon  name="delete" type="AntDesign" />
+        </Button>
+      )
     }
   }
 
@@ -122,6 +136,14 @@ class PostsShowCategoryScreen extends Component {
     this.props.updatePostAfterComment(commentObject.post_id, token);
     this.state.message = [];
     this.props.navigation.navigate("PostsShowCategoryScreen");
+  }
+
+  deleteMessage(id, token, post_id) {
+    let deleteObject = {"id":id};
+    
+    this.props.deleteMessage(deleteObject, token);
+    this.props.getShowPost(post_id, token);
+    this.props.navigation.navigate("PostsShowScreen");
   }
 
   inputComment() {

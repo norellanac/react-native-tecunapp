@@ -16,11 +16,13 @@ export const getNews = tokenUsr => async dispatch => {
             }
         });
 
+        //console.log("Response:", response);
+
         const data = await response.json();
-        //console.log("Que trae data: ", data);
+        //console.log("Que trae data?: ", data);
         /*console.log("newsAll: ", data.posts);
-        console.log("categoriesPost: ", data.categories);
-        console.log("Response:", response.ok);*/
+        console.log("categoriesPost: ", data.categories);*/
+        //console.log("Response:", response);
 
         if (response.ok) {
             dispatch({
@@ -56,7 +58,7 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
         });
 
         const data = await response.json();
-        console.log("postCategory: ", data);
+        //console.log("postCategory: ", data);
         /*
         console.log("categoriesPost: ", data.categoryPostName);
         console.log("Response:", response.ok);*/
@@ -74,7 +76,7 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
         }
 
     } catch (error) {
-        console.log("Si llego aqui es porque hay error en la category", error.message);
+        //console.log("Si llego aqui es porque hay error en la category", error.message);
         dispatch({
             type: errorPost,
             error: error.message,
@@ -84,7 +86,7 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
 }
 
 export const getShowPost = (idPost, tokenUsr) => async dispatch => {
-    console.log("ID del post: ", idPost);
+    //console.log("ID del post: ", idPost);
     dispatch({
         type: loadingPost
     });
@@ -102,13 +104,13 @@ export const getShowPost = (idPost, tokenUsr) => async dispatch => {
         const data = await response.json();
         //const type = showPost;
         const post = Object.assign({}, data.post);
-        console.log("showData: ", data);
+        //console.log("showData: ", data);
         //console.log("showPost response: ", response);
 
-        console.log("Que trae DATA.POST: ", data.post);
-        console.log("Que trae POST: ", post);
+        //console.log("Que trae DATA.POST: ", data.post);
+        //console.log("Que trae POST: ", post);
 
-        console.log("Que trae el response: ",response);
+        //console.log("Que trae el response: ",response);
 
         if(response.ok){
             //console.log("test :" , data);
@@ -147,11 +149,11 @@ export const getShowPostCategory = (idPost, tokenUsr) => async dispatch => {
         });
 
         const data = await response.json();
-        console.log("showPost response: ", response);
+        //console.log("showPost response: ", response);
 
 
         if(response.ok){
-            console.log("test :" , data);
+            //console.log("test :" , data);
             dispatch({
                 type: showPostCategory,
                 payload: '',
@@ -165,7 +167,7 @@ export const getShowPostCategory = (idPost, tokenUsr) => async dispatch => {
         }
 
     } catch (error) {
-        console.log("Si llego aqui es porque hay error", error.message);
+        //console.log("Si llego aqui es porque hay error", error.message);
         dispatch({
             type: errorPost,
             error: error.message,
@@ -208,8 +210,8 @@ export const updatePostAfterComment = (post_id, tokenUsr) => async dispatch => {
 };
 
 export const uploadMessage = (comment, token) => async dispatch => {
-    console.log("Este es token: ",token);
-    console.log("En teoria este es el array de comment: ",comment);
+    //console.log("Este es token: ",token);
+    //console.log("En teoria este es el array de comment: ",comment);
     dispatch({
       type: loadingPost
     });
@@ -222,7 +224,7 @@ export const uploadMessage = (comment, token) => async dispatch => {
 
         let dataForm = "_method=" + encodeURIComponent("POST");
         dataForm += "&json=" + encodeURIComponent(comment);
-        console.log("Que trae data form: ",dataForm);
+        //console.log("Que trae data form: ",dataForm);
         const response = await fetch(`${apiUrl.link}/api/commentpost`, {
             method: "POST",
             headers: {
@@ -235,8 +237,8 @@ export const uploadMessage = (comment, token) => async dispatch => {
         });    
       const data = await response.json();  
 
-    console.log("Que trae Data: ",data);
-    console.log("Que trae REsponse: ",response);
+    //console.log("Que trae Data: ",data);
+    //console.log("Que trae REsponse: ",response);
 
       if (!response.ok) {
         dispatch({
@@ -250,7 +252,100 @@ export const uploadMessage = (comment, token) => async dispatch => {
           payload: data.comment,
           cargando: false
         });
-        console.log("Que trae Data", data);
+        //console.log("Que trae Data", data);
+      }
+    } catch (error) {
+      dispatch({
+        type: errorPost,
+        error: error.message,
+        cargando: false
+      });
+    }
+  };
+
+export const deleteMessage = (id, token) => async dispatch => {
+    dispatch({
+        type: loadingPost
+    });
+
+    try {
+        let json = JSON.stringify(id);
+        let params = 'json='+json;
+
+        let dataForm = "_method=" + encodeURIComponent("POST");
+        dataForm += "&json=" + encodeURIComponent(id);
+
+        const response = await fetch(`${apiUrl.link}/api/commentpost/${id.id}`, {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                Authorization: `Bearer ${token}`,
+                Params: `json ${dataForm}`,
+            },
+            body: params
+        });
+
+        const data = await response.json(); 
+
+        if(response.ok){
+            dispatch({
+                type: deleteComment,
+                cargando: false
+            });
+        }
+    } catch (error) {
+        dispatch({
+            type: errorPost,
+            error: error.message,
+            cargando: false
+        });
+    }
+};
+
+export const likeOrDislike = (likeObject, token) => async dispatch => {
+    //console.log("Este es token: ",token);
+    console.log("En teoria este es el array de likeObject: ",likeObject);
+    dispatch({
+      type: loadingPost
+    });
+    try {
+        /*console.log("Que trae el post_id: ",post_id);
+        console.log("Que trae el message: ",message);
+        console.log("Que trae el token: ",token);*/
+        let json = JSON.stringify(likeObject);
+        let params = 'json='+json;
+
+        let dataForm = "_method=" + encodeURIComponent("POST");
+        dataForm += "&json=" + encodeURIComponent(likeObject);
+        //console.log("Que trae data form: ",dataForm);
+        const response = await fetch(`${apiUrl.link}/api/likeordislikenews`, {
+            method: "POST",
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                Authorization: `Bearer ${token}`,
+                Params: `json ${dataForm}`,
+            },
+            body: params
+        });    
+      const data = await response.json();  
+
+        console.log("LLego aqui?:", data);
+
+      if (!response.ok) {
+        dispatch({
+          type: errorPost,
+          error: "Error Al publicar el like, " + response.status,
+          cargando: false
+        });
+      } else {
+        dispatch({
+          type: likeOrDislikeNews,
+          payload: data.message,
+          cargando: false
+        });
+        //console.log("Que trae Data", data);
       }
     } catch (error) {
       dispatch({

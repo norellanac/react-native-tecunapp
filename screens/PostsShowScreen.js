@@ -111,7 +111,7 @@ class PostsShowScreen extends Component {
               <Text>{comment.message}</Text>
             </Body>
             <Right>
-              {this.deleteComment(comment.user_id)}
+              {this.deleteComment(comment.user_id, comment.id)}
             </Right>
           </ListItem>
         </List>
@@ -119,11 +119,11 @@ class PostsShowScreen extends Component {
     }
   }
 
-  deleteComment(user_id) {
-    console.log("Si vino algo por cabecera? ",user_id);
+  deleteComment(user_id, commentID) {
+    //console.log("Si vino algo por cabecera? ",user_id);
     if(user_id === this.props.usuariosReducer.user.id){
       return(
-        <Button danger transparent onPress={() => this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}>
+        <Button danger transparent onPress={() => this.deleteMessage(commentID, this.props.usuariosReducer.token, this.state.postId)}>
           <Icon  name="delete" type="AntDesign" />
         </Button>
       )
@@ -137,6 +137,14 @@ class PostsShowScreen extends Component {
     this.props.uploadMessage(commentObject, token);
     this.props.getShowPost(commentObject.post_id, token);
     this.state.message = [];
+    this.props.navigation.navigate("PostsShowScreen");
+  }
+
+  deleteMessage(id, token, post_id) {
+    let deleteObject = {"id":id};
+    
+    this.props.deleteMessage(deleteObject, token);
+    this.props.getShowPost(post_id, token);
     this.props.navigation.navigate("PostsShowScreen");
   }
 

@@ -62,8 +62,8 @@ class PostsScreen extends Component {
   };
 
   setIdOneRecord(oneRecordArray) {
-    console.log("Array del registro: ", oneRecordArray);
-    console.log("Reducer del registro: ", this.props.jobsReducer);
+    //console.log("Array del registro: ", oneRecordArray);
+    //console.log("Reducer del registro: ", this.props.jobsReducer);
     this.props.setIdOneRecordAction(oneRecordArray);
     this.props.navigation.navigate("PostsShowScreen")
   }
@@ -74,11 +74,15 @@ class PostsScreen extends Component {
   }
 
   onValueChange(key) {
-
     this.state.selected = key;
     this.state.idCategory = key;
-    this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-    this.props.navigation.navigate("PostsCategoryScreen");
+
+    if(this.state.idCategory == 0){
+      this.props.getNews(this.props.usuariosReducer.token);
+    }else{
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+      this.props.navigation.navigate("PostsCategoryScreen");
+    }
   }
 
   setIdSearchNew(news) {
@@ -100,13 +104,67 @@ class PostsScreen extends Component {
     ))
   }
 
+  likePost(likeObject, token) {
+    let userID = this.props.usuariosReducer.user.id;
+    //console.log("Esto es lo que trae el objecto: ",likeObject);
+
+    if(userID != likeObject.userID){
+      this.props.likeOrDislike(likeObject, token);
+      this.props.getNews(token);
+      this.props.getNews(token);
+
+    }else{
+      if(userID == likeObject.userID && likeObject.reactionActive == 1){
+        this.props.likeOrDislike(likeObject, token);
+        this.props.getNews(token);
+        this.props.getNews(token);
+
+      }else{
+        this.props.likeOrDislike(likeObject, token);
+        this.props.getNews(token);
+        this.props.getNews(token);
+
+      }
+    }
+  }
+
+  buttonLike(news) {
+    let active = [];
+    let postID = news.id;
+    let user_id = '';
+    let token = this.props.usuariosReducer.token;
+    let userID = this.props.usuariosReducer.user.id;
+    let count = 0;
+    let likeObject = {};
+
+    news.likes.map((like) => {
+      user_id = like.user_id;
+      
+      if(like.user_id == userID){
+        likeObject = {"reactionActive":like.active, "postID":like.post_id, "userID":userID};
+        //console.log("Que es lo que trae esto cuando estra: ", likeObject);
+      }
+
+      if(like.active == 1){
+        count++
+      }
+    })
+
+    return(
+      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
+        <Icon name="like2" type="AntDesign" />
+        <Text>({count})</Text>
+      </Button>
+    )
+  }
+
   loadContent = () => {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
     if (this.props.postReducer.posts) {
       return this.props.postReducer.posts.map((news) => (
-        //console.log(news),
+        //console.log(this.props.postReducer.posts),
         <Card style={{ flex: 0 }} key={news.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
@@ -132,10 +190,8 @@ class PostsScreen extends Component {
           </CardItem>
           <CardItem>
             <Left>
-              <Button transparent textStyle={{ color: "#87838B" }}>
-                <Icon name="like2" type="AntDesign" />
-                <Text>{news.likes.length}</Text>
-              </Button>
+              {this.buttonLike(news)}
+              
             </Left>
             <Right>
               <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showNews(news.id)}>
@@ -154,7 +210,12 @@ class PostsScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
-
+    if (this.props.postReducer.posts.likes) {
+      var likeActive=this.props.postReducer.posts.likes.filter((record)=> {
+        
+      })
+      
+    }
     //console.log(this.state.idCategory);
 
     //const { navigation } = this.props.navigation

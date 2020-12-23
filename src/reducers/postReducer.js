@@ -62,7 +62,7 @@ export default (state = INITIAL, action) => {
         case likeOrDislikeNews:
             return { ...state, likeOrDislike: action.payload, cargando: action.cargando };
         case deleteComment:
-            return { ...state, idDestroy: action.payload.id, cargando: action.cargando };
+            return { ...state, cargando: action.cargando };
         case idSearchNew:
             return { ...state, postId: action.payload.id, post: action.payload }
         case PURGE:

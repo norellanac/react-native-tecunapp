@@ -82,7 +82,12 @@ class PostsCategoryScreen extends Component {
 
     this.state.selected = key;
     this.state.idCategory = key;
-    this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+    
+    if(this.state.idCategory == 0){
+      this.props.getNews(this.props.usuariosReducer.token);
+    }else{
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+    }
   }
 
 
