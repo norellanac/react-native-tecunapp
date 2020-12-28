@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Home from '../screens/PostsScreen'
 import PostsShowScreen from '../screens/PostsShowScreen'
 import PodcastScreen from '../screens/PodcastScreen'
+import PodcastsCategoryScreen from '../screens/PodcastCategoryScreen'
 import PodcastShowScreen from '../screens/PodcastShowScreen'
 import ProccessPeopleScreen from '../screens/ProccessPeopleScreen'
 import ContactScreen from '../screens/ContactScreen'
@@ -60,6 +61,12 @@ function MainStackNavigator() {
           name='PodcastScreen'
           component={PodcastScreen}
           options={{ title: 'PodcastScreen Screen' }}
+        />
+
+        <Stack.Screen
+          name='PodcastsCategoryScreen'
+          component={PodcastsCategoryScreen}
+          options={{ title: 'Categorias de podcast' }}
         />
 
         <Stack.Screen

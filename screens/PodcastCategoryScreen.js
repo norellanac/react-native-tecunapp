@@ -31,6 +31,7 @@ import { SliderBox } from "react-native-image-slider-box";
 import { apiUrl } from '../App';
 
 import Loading from "./../components/Loading";
+import { loadingPodcast } from "../src/types/podcastType";
 
 class PodcastScreen extends Component {
   constructor() {
@@ -42,7 +43,8 @@ class PodcastScreen extends Component {
     selected: 0,
     pathImage: apiUrl.link + "/storage/podcast/",
     idCategory: 0,
-    category: ''
+    category: '',
+    isWaitingMap: 0
   };
 
   logout = async () => {
@@ -55,8 +57,6 @@ class PodcastScreen extends Component {
   };
 
   async componentDidMount() {
-
-    await this.props.allPodcast(this.props.usuariosReducer.token);
     //console.log("podcast props", this.props);
     //console.log("podcast state: ", this.state);
   }
@@ -90,25 +90,28 @@ class PodcastScreen extends Component {
 
     if(userID != likeObject.userID){
       this.props.likeOrDislike(likeObject, token);
-      this.props.allPodcast(token);
-      this.props.allPodcast(token);
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 
     }else{
       if(userID == likeObject.userID && likeObject.reactionActive == 1){
         this.props.likeOrDislike(likeObject, token);
-        this.props.allPodcast(token);
-        this.props.allPodcast(token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 
       }else{
         this.props.likeOrDislike(likeObject, token);
-        this.props.allPodcast(token);
-        this.props.allPodcast(token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 
       }
     }
   }
 
   buttonLike(podcast) {
+    //Cambiamos el estado a 1 de la variable isWaitingMap
+    this.state.isWaitingMap = 1;
+
     let active = [];
     let podcastID = podcast.id;
     let user_id = '';
@@ -119,6 +122,8 @@ class PodcastScreen extends Component {
 
     podcast.likes.map((like) => {
       user_id = like.user_id;
+
+      //console.log("Que trae like?: ",like);
       
       if(like.user_id == userID){
         likeObject = {"reactionActive":like.active, "podcastID":like.podcast_id, "userID":userID};
@@ -127,10 +132,16 @@ class PodcastScreen extends Component {
         likeObject = {"reactionActive":1, "podcastID":podcastID, "userID":userID};
       }
 
+
+
       if(like.active == 1){
         count++
       }
     })
+
+    //Cambiamos nuevamente la variable para que pueda hacer el map de los reducer y no mostrar nada 
+    //hasta que se termine de hacer el map correctamente
+    this.state.isWaitingMap = 0;
 
     return(
       <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
@@ -143,6 +154,18 @@ class PodcastScreen extends Component {
   loadContent = () => {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
+
+    if (this.props.podcastReducer.cargando || this.state.isWaitingMap == 1) {
+        //console.log("jobsScreen: ", this.props);
+        return (
+          <Container>
+            <HeaderCustom navigation={this.props.navigation} />
+            <HederPostSection navigation={this.props.navigation}></HederPostSection>
+            < Loading />
+            <FooterTabsNavigationIconText navigation={this.props.navigation} />
+          </Container>
+        )
+      }
 
     if (this.props.podcastReducer.podcasts) {
       return this.props.podcastReducer.podcasts.map((podcast) => (
@@ -197,7 +220,7 @@ class PodcastScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.podcastReducer.cargando) {
+    if (this.props.podcastReducer.cargando || this.state.isWaitingMap == 1) {
       //console.log("jobsScreen: ", this.props);
       return (
         <Container>

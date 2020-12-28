@@ -7,3 +7,4 @@ export const likeOrDislikePodcast = 'likeOrDislikePodcast';
 export const commentPodcast = 'commentPodcast';
 export const deleteComment = 'deleteComment';
 export const idSearchPodcast= 'idSearchPodcast';
+export const showPodcast = 'showPodcast';

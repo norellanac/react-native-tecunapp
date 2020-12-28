@@ -61,13 +61,6 @@ class PostsScreen extends Component {
     //console.log("posts state: ", this.state);
   };
 
-  setIdOneRecord(oneRecordArray) {
-    //console.log("Array del registro: ", oneRecordArray);
-    //console.log("Reducer del registro: ", this.props.jobsReducer);
-    this.props.setIdOneRecordAction(oneRecordArray);
-    this.props.navigation.navigate("PostsShowScreen")
-  }
-
   showNews(idPost) {
     this.props.getShowPost(idPost, this.props.usuariosReducer.token);
     this.props.navigation.navigate("PostsShowScreen")
@@ -143,6 +136,8 @@ class PostsScreen extends Component {
       if(like.user_id == userID){
         likeObject = {"reactionActive":like.active, "postID":like.post_id, "userID":userID};
         //console.log("Que es lo que trae esto cuando estra: ", likeObject);
+      }else{
+        likeObject = {"reactionActive":1, "postID":postID, "userID":userID};
       }
 
       if(like.active == 1){

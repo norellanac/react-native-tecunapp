@@ -43,7 +43,8 @@ class PostsCategoryScreen extends Component {
     idCategory: '',
     category: '',
     categoryPostName: '',
-    comment: []
+    comment: [],
+    isWaitingMap: 0
   };
 
   logout = async () => {
@@ -90,6 +91,65 @@ class PostsCategoryScreen extends Component {
     }
   }
 
+  likePost(likeObject, token) {
+    let userID = this.props.usuariosReducer.user.id;
+    //console.log("Esto es lo que trae el objecto: ",likeObject);
+
+    if(userID != likeObject.userID){
+      this.props.likeOrDislike(likeObject, token);
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+
+    }else{
+      if(userID == likeObject.userID && likeObject.reactionActive == 1){
+        this.props.likeOrDislike(likeObject, token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+
+      }else{
+        this.props.likeOrDislike(likeObject, token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+      }
+    }
+  }
+
+  buttonLike(news) {
+    //Cambiamos el estado a 1 de la variable isWaitingMap
+    this.state.isWaitingMap = 1;
+
+    let active = [];
+    let postID = news.id;
+    let user_id = '';
+    let token = this.props.usuariosReducer.token;
+    let userID = this.props.usuariosReducer.user.id;
+    let count = 0;
+    let likeObject = {};
+
+    news.likes.map((like) => {
+      user_id = like.user_id;
+      
+      if(like.user_id == userID){
+        likeObject = {"reactionActive":like.active, "postID":like.post_id, "userID":userID};
+        //console.log("Que es lo que trae esto cuando estra: ", likeObject);
+      }
+
+      if(like.active == 1){
+        count++
+      }
+    })
+
+    //Cambiamos nuevamente la variable para que pueda hacer el map de los reducer y no mostrar nada 
+    //hasta que se termine de hacer el map correctamente
+    this.state.isWaitingMap = 0;
+
+    return(
+      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
+        <Icon name="like2" type="AntDesign" />
+        <Text>({count})</Text>
+      </Button>
+    )
+  }
 
   loadContentCategories = () => {
     return this.props.postReducer.categories.map((categories) => (
@@ -104,7 +164,7 @@ class PostsCategoryScreen extends Component {
 
     //console.log("Que trae el reducer?: ", this.props.postReducer);
 
-    if (this.props.postReducer.posts) {
+    if (this.props.postReducer.posts || this.state.isWaitingMap == 1) {
       //console.log("map posts largo: ", this.props.postReducer.post);
       return this.props.postReducer.posts.map((news) => (
         //console.log("El objecto como tal de news: ", news),
@@ -135,10 +195,7 @@ class PostsCategoryScreen extends Component {
           </CardItem>
           <CardItem>
             <Left>
-              <Button transparent textStyle={{ color: "#87838B" }}>
-                <Icon name="like2" type="AntDesign" />
-                <Text>{news.likes.length}</Text>
-              </Button>
+              {this.buttonLike(news)}
             </Left>
             <Right>
               <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news, this.state.comment)}>
@@ -169,7 +226,7 @@ class PostsCategoryScreen extends Component {
 
     //console.log("Vista del post Category");
 
-    if (this.props.postReducer.cargando) {
+    if (this.props.postReducer.cargando || this.state.isWaitingMap == 1) {
       //console.log("jobsScreen: ", this.props);
       return (
         <Container>
