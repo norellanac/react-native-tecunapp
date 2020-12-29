@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Image, Linking, KeyboardAvoidingView, Dimensions } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
-import a from "../components/HeaderCustom";
 import {
   Container,
   Content,
@@ -19,6 +18,7 @@ import {
 import { withNavigation } from "react-navigation";
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
+import * as userActions from "../src/actions/userActions";
 
 class LoginScreen extends Component {
   constructor(props) {
@@ -39,14 +39,9 @@ class LoginScreen extends Component {
     let Email = this.state.email;
     let Password = this.state.password;
     await this.props.traerToken(Email, Password);
-    await this.props.traerUser(this.props.usuariosReducer.token);
-    console.log("revision de token: ", this.props.usuariosReducer);
-    //await this.props.getAddress(this.props.usuariosReducer.token);
-    //await this.props.getAddress(this.props.usuariosReducer.token);
-    if (this.props.usuariosReducer.user.address_id) {
-      await this.props.getAddress(this.props.usuariosReducer.token);
-      console.log("trajo direccion");
-    }
+    console.log("revision de token: ", this.props);
+    await this.props.traerUser(this.props.loginReducer.token);
+    console.log("debe pasar el user: ", this.props);
     this.state.email = "";
     this.state.password = "";
   };
@@ -68,7 +63,7 @@ class LoginScreen extends Component {
               borderTopRightRadius: 20
             }}
           >
-            <Text style={{ fontWeight: "bold" }}> Ingreso </Text>
+            <Text style={{ fontWeight: "bold" }}> Ingresar </Text>
           </Button>
         </Col>
       </Grid>
@@ -76,7 +71,7 @@ class LoginScreen extends Component {
   };
 
   ponerError = () => {
-    if (this.props.usuariosReducer.error) {
+    if (this.props.loginReducer.error) {
       return (
         <Col style={{ alignItems: "center", marginBottom: 15 }}>
           <Text style={{ color: "white" }}>
@@ -91,7 +86,7 @@ class LoginScreen extends Component {
 
     let screenWidth = Dimensions.get("window").width;
     let screenHeight = Dimensions.get("window").height;
-    if (this.props.usuariosReducer.user.name) {
+    if (this.props.loginReducer.isAuth) {
       this.props.navigation.navigate("Home");
     }
     return (
@@ -242,12 +237,13 @@ class LoginScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ addressReducer, usuariosReducer }) => {
-  //return reducers.addressReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { addressReducer, usuariosReducer };
+const mapStateToProps = ({ loginReducer, usuariosReducer }) => {
+  //return reducers.loginReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { loginReducer, usuariosReducer };
 };
 
 const mapDispatchProps = {
-  ...loginActions
+  ...loginActions,
+  ...userActions
 };
 export default connect(mapStateToProps, mapDispatchProps)(LoginScreen);

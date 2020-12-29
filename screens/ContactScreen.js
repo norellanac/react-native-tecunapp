@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, Linking } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
     Container,
@@ -8,21 +8,20 @@ import {
     Item,
     Icon,
     Text,
-    ListItem,
+    Accordion,
     Input,
-    CheckBox,
+    View,
     CardItem,
     Body,
     Button
 } from "native-base";
 import { connect } from "react-redux";
-import { apiUrl } from '../App';
-import * as awardActions from "../src/actions/awardActions";
 import * as loginActions from "../src/actions/loginActions";
+import * as contactsActions from "../src/actions/contactsActions";
+import * as userActions from "../src/actions/userActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
-import { SliderBox } from "react-native-image-slider-box";
 import { withNavigation } from "react-navigation";
 import Loading from "./../components/Loading";
 
@@ -31,46 +30,79 @@ class ContactScreen extends Component {
         super();
     }
     state = {
-        awards: []
+        searchNombre: "",
+        searchDepartamento: "",
+        searchPais: "",
+        searchPuesto: "",
+        records: [],
+        dataArray: [
+            { title: "First Element", content: "Lorem ipsum dolor sit amet" },
+            { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
+            { title: "Third Element", content: "Lorem ipsum dolor sit amet" }
+        ]
+
     };
 
+    _renderHeader(item, expanded) {
+        return (
+            <View style={{
+                flexDirection: "row",
+                padding: 10,
+                justifyContent: "space-between",
+                alignItems: "center",
+                backgroundColor: "#F7F7F7"
+            }}>
+                <Text style={{ fontWeight: "600", color: "#3490dc" }}>
+                    {" "}{item.nombre}
+                </Text>
+                {expanded
+                    ? <Icon style={{ fontSize: 18 }} name="remove-circle" />
+                    : <Icon style={{ fontSize: 18 }} name="add-circle" />}
+            </View>
+        );
+    }
+    _renderContent(item) {
+        return (
+            <View>
+                <Text
+                    style={{
+                        backgroundColor: "#e3f1f1",
+                        padding: 10,
+                        fontStyle: "italic",
+                    }}
+                >
+                    {item.nombre}
+                </Text>
+                <Text
+                    style={{
+                        backgroundColor: "#e3f1f1",
+                        padding: 10,
+                        fontStyle: "italic",
+                    }}
+                >
+                    {item.departamento} | {item.puesto}
+                </Text>
+                <Button success  textStyle={{ color: "#87838B" }} 
+                onPress={() => Linking.openURL(`mailto:${item.correo}`)}  >
+                    <Icon name="phone" type="FontAwesome" />
+                    <Text>{item.correo}</Text>
+                </Button>
+                <Button success rounded textStyle={{ color: "#87838B" }} onPress={() => Linking.openURL(`tel:${item.comentarios}`)}  >
+                    <Icon name="phone" type="FontAwesome" />
+                    <Text>{item.comentarios}</Text>
+                </Button>
+            </View>
+        );
+    }
+
     async componentDidMount() {
-        await this.props.getAwards(this.props.usuariosReducer.token);
-        this.setState({
-            awards: await this.props.getAwards(this.props.usuariosReducer.token),
-        });
+        await this.props.clearContactsAction();
     }
-
-    awardsUrlImage0() {
-        const pathImage = "http://157.55.181.102/storage/awards/";
-        var sliderImages = [];
-        var url = "";
-        this.props.awardReducer.awards.map((award) => {
-            if (award.type_id === 1) {
-                url = award.url_image
-                sliderImages.push(pathImage + url);
-            }
-            //console.log("array imagenes: ",sliderImages);
-
-
-        })
-        return sliderImages;
-    }
-
-    awardsUrlImage1() {
-        const pathImage = "http://157.55.181.102/storage/awards/";
-        var sliderImages = [];
-        var url = "";
-        this.props.awardReducer.awards.map((award) => {
-            if (award.type_id === 0) {
-                url = award.url_image
-                sliderImages.push(pathImage + url);
-            }
-            //console.log("array imagenes: ",sliderImages);
-
-
-        })
-        return sliderImages;
+    async searchContactData(token) {
+        await this.props.searchContactsAction(this.state.searchNombre, this.state.searchDepartamento, this.state.searchPais, this.state.searchPuesto, token);
+        //await this.props.
+        console.log("entra a buscar en la pantalla: ", this.props.contactsReducer.contacts);
+        //this.props.navigation.navigate('ContactScreen');
     }
 
 
@@ -78,7 +110,7 @@ class ContactScreen extends Component {
         var screenWidth = Dimensions.get("window").width - 1;
         var hg = Dimensions.get("window").width - 150;
 
-        if (this.props.awardReducer.cargando) {
+        if (this.props.usuariosReducer.cargando) {
             return (
                 <Container>
                     <HeaderCustom navigation={this.props.navigation} />
@@ -88,15 +120,6 @@ class ContactScreen extends Component {
             )
         }
 
-        //console.log("imagenes slider: ", this.awardsUrlImage1());
-        /*console.log(this.awardsUrlImage0());
-        console.log(this.awardsUrlImage1());
-        console.log(pathImage);*/
-        //const { navigation } = this.props.navigation
-
-        //Url Api, pathImage y luego url_images para mostrar las imagenes
-
-        /*console.log("Intento de Awards prueba 1: ",this.props.awardReducer.awards);*/
 
         return (
             <Container>
@@ -118,7 +141,6 @@ class ContactScreen extends Component {
                         </Grid>
                     </CardItem>
                     <Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
-
                         <Item rounded style={{ marginTop: 25 }}>
                             <Icon
                                 type="SimpleLineIcons"
@@ -126,8 +148,8 @@ class ContactScreen extends Component {
                                 style={{ color: "#3490dc", fontSize: 25 }}
                             />
                             <Input
-                                onChangeText={lastname => this.setState({ lastname })}
-                                value={this.state.lastname}
+                                onChangeText={searchDepartamento => this.setState({ searchDepartamento })}
+                                value={this.state.searchDepartamento}
                                 placeholder="Departameto o area"
                                 placeholderTextColor="#3490dc"
                                 style={{ color: "#3490dc" }}
@@ -140,8 +162,8 @@ class ContactScreen extends Component {
                                 style={{ color: "#3490dc", fontSize: 25 }}
                             />
                             <Input
-                                onChangeText={name => this.setState({ name })}
-                                value={this.state.name}
+                                onChangeText={searchNombre => this.setState({ searchNombre })}
+                                value={this.state.searchNombre}
                                 placeholder="Apellidos, Nombres"
                                 placeholderTextColor="#3490dc"
                                 style={{ color: "#3490dc" }}
@@ -156,8 +178,8 @@ class ContactScreen extends Component {
                             <Input
                                 keyboardType="numeric"
                                 maxLength={13}
-                                onChangeText={dpi => this.setState({ dpi })}
-                                value={this.state.dpi}
+                                onChangeText={searchPais => this.setState({ searchPais })}
+                                value={this.state.searchPais}
                                 placeholder="Pais"
                                 placeholderTextColor="#3490dc"
                                 style={{ color: "#3490dc" }}
@@ -170,8 +192,8 @@ class ContactScreen extends Component {
                                 style={{ color: "#3490dc", fontSize: 25 }}
                             />
                             <Input
-                                onChangeText={email => this.setState({ email })}
-                                value={this.state.email}
+                                onChangeText={searchPuesto => this.setState({ searchPuesto })}
+                                value={this.state.searchPuesto}
                                 placeholder="Plaza o puesto"
                                 placeholderTextColor="#3490dc"
                                 style={{ color: "#3490dc" }}
@@ -180,7 +202,7 @@ class ContactScreen extends Component {
                         <Content style={{ marginTop: 20 }}>
                             <Body>
                                 <Button
-                                    onPress={this.consultacaptcha}
+                                    onPress={() => this.searchContactData(this.props.usuariosReducer.token)}
                                     rounded
                                     primary
                                     style={{
@@ -198,11 +220,21 @@ class ContactScreen extends Component {
                                         }}
                                     >
                                         Buscar
-        </Text>
+                                    </Text>
                                 </Button>
                             </Body>
                         </Content>
+                        <Content style={{ marginTop: 20 }}>
+                            <Accordion
+                                dataArray={this.props.contactsReducer.contacts}
+                                animation={true}
+                                expanded={true}
+                                renderHeader={this._renderHeader}
+                                renderContent={this._renderContent}
+                            />
+                        </Content>
                     </Form>
+
 
                 </Content>
                 <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -211,13 +243,14 @@ class ContactScreen extends Component {
     }
 }
 
-const mapStateToProps = ({ awardReducer, usuariosReducer }) => {
-    return { awardReducer, usuariosReducer };
+const mapStateToProps = ({ usuariosReducer, loginReducer, contactsReducer }) => {
+    return { usuariosReducer, loginReducer, contactsReducer };
 }
 
 const mapDispatchProps = {
-    ...awardActions,
     ...loginActions,
+    ...userActions,
+    ...contactsActions,
 }
 
 export default withNavigation(
