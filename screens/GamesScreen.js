@@ -9,14 +9,22 @@ import {
     Text,
     Card,
     Button,
+    ListItem,
+    Left,
+    Body,
+    Right,
+    TouchableHighlight,
+    TouchableOpacity,
     Icon,
     View
 } from "native-base";
 import { connect } from "react-redux";
 import * as loginActions from "../src/actions/loginActions";
+import * as questionActions from "../src/actions/questionActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
+import Loading from "./../components/Loading";
 import { SliderBox } from "react-native-image-slider-box";
 
 class GamesScreen extends Component {
@@ -29,7 +37,9 @@ class GamesScreen extends Component {
             "https://app.canjeaton.com/storage/users/cajeaton1.png",
             "https://app.canjeaton.com/storage/users/cajeaton2.png",
             "https://app.canjeaton.com/storage/users/cajeaton3.png",
-        ]
+        ],
+        pass: 1,
+        pass2: 0,
     };
 
     logout = async () => {
@@ -42,59 +52,116 @@ class GamesScreen extends Component {
     };
 
     componentDidMount() {
-        console.log("");
+        this.props.allScoreUser(this.props.usuariosReducer.token);
     }
 
-    userData = async () => {
-        let Dpi = this.state.dpi;
-        let Name = this.state.name;
-        let Lastname = this.state.lastname;
-        let Email = this.state.email;
-        let Phone = this.state.phone;
-        await this.props.logoutUser();
-        if (this.state.password === this.state.confirmPassword) {
-            var Password = this.state.password;
-            await this.props.registerUsers(
-                Dpi,
-                Name,
-                Lastname,
-                Email,
-                Phone,
-                Password
-            );
-        }
-        if (this.props.error == "") {
-            await this.props.traerToken(Email, Password);
-            await this.props.traerUser(this.props.token);
-        }
-    };
+    oneQuestion(){
+        this.props.oneQuestion(this.props.usuariosReducer.token);
+        this.props.navigation.navigate("GameShowScreen")
+    }
 
+    allScore(){
+        //console.log("Que viene en el score?: ",this.state.pass);
+        let count = 0;
+        let possitionArray = {1:"numeric-1", 2:"numeric-2", 3:"numeric-3", 4:"numeric-4", 5:"numeric-5"};
+        if(this.state.pass == 1) {
+            
+            return (this.props.questionReducer.score.map((pounts) => (
+                count++,
+                <ListItem icon>
+                    <Left>
+                        <Button style={{ backgroundColor: "#46a3ff" }}>
+                        <Icon
+                            type="MaterialCommunityIcons"
+                            name={possitionArray.[count]}
+                            style={{ marginLeft: 4, color: "#ffffff" }}
+                        />
+                        </Button>
+                    </Left>
+                    <Right>
+                        <Text>{pounts.user.name} {pounts.user.lastname}   </Text>
+                        <Text></Text>
+                        <Button style={{ backgroundColor: "#00b814", borderRadius: 20 }}>
+                            <Text>{pounts.points}</Text>
+                        </Button>
+                    </Right>
+                </ListItem>
+            )))
+        }
+    }
+
+    onValueChance(){
+        if(this.state.pass == 1){
+            this.setState({
+                pass: 0
+            });
+        }else{
+            this.setState({
+                pass: 1
+            });
+        }
+    }
 
     render() {
         //const { navigation } = this.props.navigation
         var screenWidth = Dimensions.get("window").width;
         var screenHeight = Dimensions.get("window").height;
 
-        console.log("UserScreenProfile: ", this.props);
+        //console.log("Como viene el state2 en el render? ", this.state.pass);
+        //console.log("Como viene el state2 en el render? ", this.state.pass2);
+
+        if (this.props.questionReducer.cargando) {
+            return (
+                <Container>
+                    <HeaderCustom navigation={this.props.navigation} />
+                        < Loading />
+                    <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                </Container>
+            )
+        };
 
         return (
             <Container>
                 <HeaderCustom navigation={this.props.navigation} />
                 <Content>
-                    <Button transparent onPress={this.logout}>
-                        <Text>Salir</Text>
-                    </Button>
                     <Card transparent>
                         <CardItem cardBody>
                             <Grid style={{ marginTop: 5 }}>
                                 <Col size={4} style={{ alignItems: "center" }}>
                                     <CardItem cardBody>
-                                        <Grid style={{ marginTop: 50 }}>
+                                        <Grid style={{ marginTop: 20 }}>
                                             <Col size={4} style={{ alignItems: "center" }}>
-                                                <Image
-                                                    source={{ uri: "https://lh3.googleusercontent.com/proxy/bkTwbMdwjkZQzC4Fhti-RqE9yg1Qa6Yzt6hP1qYGWCKMOppXHyhXy_Imz9TjozDuSCLGhSMLo0WAhFKX70ncvtp73pPhWiPEUs9tZJr_g0zZ1662h10NKiURj3kV61oTEY-q9NB-OmWfp9cYqwNQ7xF4tOXS-LY" }}
-                                                    style={{ width: screenWidth / 3, height: screenWidth / 3 }}
-                                                />
+                                                <Button
+                                                    transparent
+                                                    style={{width: screenWidth/3, height: screenHeight/6}}
+                                                    onPress={() => {this.onValueChance()}}
+                                                >
+                                                    <Image
+                                                        source={{ uri: "http://192.168.1.44:3000/img/game/trophy.png" }}
+                                                        style={{ width: screenWidth / 3, height: screenWidth /3 }}
+                                                    />
+                                                </Button>
+
+                                                {(() => {
+                                                    if (this.state.pass2 != 1) {
+
+                                                        return(
+                                                            <ListItem icon>
+                                                                <Left>
+                                                                    <Button style={{ backgroundColor: "#FF9501" }}>
+                                                                        <Icon active name="airplane" />
+                                                                    </Button>
+                                                                </Left>
+                                                                <Right>
+                                                                    <Text>Nombre</Text>
+                                                                    <Text>Puntos</Text>
+                                                                </Right>
+                                                            </ListItem>,
+                                                            this.allScore()
+                                                        )
+                                                    }
+                                                })()} 
+
                                             </Col>
                                         </Grid>
                                     </CardItem>
@@ -102,7 +169,7 @@ class GamesScreen extends Component {
                             </Grid>
                         </CardItem>
                         <CardItem cardBody>
-                            <Grid style={{ marginTop: 5 }}>
+                            <Grid style={{ marginTop: 10 }}>
                                 <Col size={4} style={{ alignItems: "center" }}>
                                     <CardItem cardBody>
                                         <Grid style={{ marginTop: 50 }}>
@@ -111,7 +178,17 @@ class GamesScreen extends Component {
                                                     source={{ uri: "http://157.55.181.102/img/game/trivia.png" }}
                                                     style={{ width: screenWidth / 2, height: screenHeight / 4 }}
                                                 />
-                                                <Button block primary onPress={() => this.props.navigation.navigate("GameShowScreen")}></Button>
+                                                <Button 
+                                                    onPress={() => this.oneQuestion() }
+                                                    style={{ width: screenWidth / 3, height: screenHeight / 13, borderRadius: 10 }}
+                                                >
+                                                <Icon
+                                                    type="Entypo"
+                                                    name="game-controller"
+                                                    style={{ marginLeft: 13, color: "#ffffff" }}
+                                                />
+                                                <Text style={{ color: "#ffffff", marginRight:15 }}>Jugar</Text>
+                                                </Button>
                                             </Col>
                                         </Grid>
                                     </CardItem>
@@ -130,8 +207,13 @@ class GamesScreen extends Component {
     }
 }
 
-const mapStateToProps = reducers => {
-    return reducers.usuariosReducer;
-};
+const mapStateToProps = ({ questionReducer, usuariosReducer }) => {
+    return { questionReducer, usuariosReducer };
+}
 
-export default connect(mapStateToProps, loginActions)(GamesScreen);
+const mapDispatchProps = {
+    ...questionActions,
+    ...loginActions,
+}
+
+export default connect(mapStateToProps, mapDispatchProps)(GamesScreen);
