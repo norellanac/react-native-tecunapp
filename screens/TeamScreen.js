@@ -17,7 +17,7 @@ import * as awardActions from "../src/actions/awardActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
-import { persistor } from "../App";
+import { persistor, apiUrl } from "../App";
 import { withNavigation } from "react-navigation";
 import Loading from "./../components/Loading";
 import { SliderBox } from "react-native-image-slider-box";
@@ -34,15 +34,6 @@ class TeamScreen extends Component {
     phone: "",
     password: "",
     confirmPassword: ""
-  };
-
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
   };
 
   async componentDidMount() {
@@ -75,6 +66,8 @@ class TeamScreen extends Component {
       await this.props.traerUser(this.props.token);
     }
   };
+
+  loadContent = () => {}
 
   awardsUrlImageActive() {
     const pathImage = "http://157.55.181.102/storage/awards/";

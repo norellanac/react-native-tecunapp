@@ -12,7 +12,7 @@ export const searchContactsAction = (searchNombre, searchDepartamento, searchPai
         dataForm += "&searchPais=" + encodeURIComponent(searchPais);
         dataForm += "&searchPuesto=" + encodeURIComponent(searchPuesto);
         console.log("form contacts:", dataForm);
-        const response = await fetch(`http://192.168.1.49:3000/api/contacts`, {
+        const response = await fetch(`${apiUrl.link}/api/contacts`, {
             method: "POST",
             headers: {
                 Accept: 'application/json',

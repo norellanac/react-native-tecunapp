@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from "react";
-import { Dimensions, Linking } from "react-native";
+import { Dimensions, Linking, Image } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
     Container,
@@ -13,6 +13,7 @@ import {
     View,
     CardItem,
     Body,
+    Card,
     Button
 } from "native-base";
 import { connect } from "react-redux";
@@ -21,7 +22,7 @@ import * as contactsActions from "../src/actions/contactsActions";
 import * as userActions from "../src/actions/userActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
-import { persistor } from "../App";
+import { persistor, apiUrl } from "../App";
 import { withNavigation } from "react-navigation";
 import Loading from "./../components/Loading";
 
@@ -34,7 +35,7 @@ class ContactScreen extends Component {
         searchDepartamento: "",
         searchPais: "",
         searchPuesto: "",
-        records: [],
+        isShowAlert: true,
         dataArray: [
             { title: "First Element", content: "Lorem ipsum dolor sit amet" },
             { title: "Second Element", content: "Lorem ipsum dolor sit amet" },
@@ -43,6 +44,35 @@ class ContactScreen extends Component {
 
     };
 
+    showError = () => {
+		if (this.props.contactsReducer.error && this.state.isShowAlert) {
+			return (
+				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
+					<CardItem style={{ backgroundColor: '#00B9D3' }}>
+						<Image
+							source={{ uri: `${apiUrl.link}/img/game/trivia.png` }}
+							style={{ width: 25, height: 25 }}
+						/>
+						<Col size={4}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 15,
+									fontWeight: 'bold',
+									color: '#fff'
+								}}
+							>
+								{this.props.contactsReducer.error}
+							</Text>
+						</Col>
+						<Button onPress={isShowAlert => this.setState({ isShowAlert:false })} transparent rounded>
+							<Icon name="close" />
+						</Button>
+					</CardItem>
+				</Card>
+			);
+		}
+	};
     _renderHeader(item, expanded) {
         return (
             <View style={{
@@ -124,6 +154,7 @@ class ContactScreen extends Component {
         return (
             <Container>
                 <HeaderCustom navigation={this.props.navigation} />
+                {this.showError()}
                 <Content>
                     <CardItem style={{ backgroundColor: "transparent" }}>
                         <Grid>
