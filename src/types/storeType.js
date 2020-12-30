@@ -1,4 +1,4 @@
-export const getStore = 'getJob';
+export const getStores = 'getStores';
 export const loadingStore = 'loadingStore';
 export const errorStore = 'errorStore';
-export const getAllStore = 'getAllStore';
+export const getAllStores = 'getAllStores';

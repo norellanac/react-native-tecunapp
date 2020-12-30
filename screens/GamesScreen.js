@@ -64,7 +64,7 @@ class GamesScreen extends Component {
         //console.log("Que viene en el score?: ",this.state.pass);
         let count = 0;
         let possitionArray = {1:"numeric-1", 2:"numeric-2", 3:"numeric-3", 4:"numeric-4", 5:"numeric-5"};
-        if(this.state.pass == 1) {
+        if(this.state.pass == 1 && this.props.questionReducer.score) {
             
             return (this.props.questionReducer.score.map((pounts) => (
                 count++,

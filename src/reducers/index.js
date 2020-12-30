@@ -6,6 +6,8 @@ import storeReducer from './storeReducer'
 import postReducer from './postReducer'
 import podcastReducer from './podcastReducer'
 import questionReducer from './questionReducer'
+import loginReducer from './loginReducer'
+import contactsReducer from './contactsReducer'
 
 /*import stickersReducer from './stickersReducer'
 import categoriesReducer from './categoriesReducer'
@@ -14,6 +16,7 @@ import addressReducer from './addressReducer'
 import historyGiftReducer from './historyGiftReducer'*/
 
 export default combineReducers({
+    loginReducer,
     usuariosReducer,
     jobsReducer,
     awardReducer,
@@ -21,6 +24,7 @@ export default combineReducers({
     postReducer,
     podcastReducer,
     questionReducer,
+    contactsReducer,
     /*stickersReducer,
     categoriesReducer,
     giftReducer,
