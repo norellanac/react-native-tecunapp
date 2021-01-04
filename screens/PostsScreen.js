@@ -132,12 +132,15 @@ class PostsScreen extends Component {
 
     news.likes.map((like) => {
       user_id = like.user_id;
+
+      if (like.user_id != userID) {
+        console.log("Que trae el user_id? ",like.user_id);
+        console.log("Que trae el userID? ",userID);
+      }
       
-      if(like.user_id == userID){
-        likeObject = {"reactionActive":like.active, "postID":like.post_id, "userID":userID};
-        //console.log("Que es lo que trae esto cuando estra: ", likeObject);
-      }else{
-        likeObject = {"reactionActive":1, "postID":postID, "userID":userID};
+      if(like.post_id === postID && like.user_id === userID){
+        likeObject = {"reactionActive":like.active, "postID":postID, "userID":userID};
+        console.log("Que es lo que trae esto cuando entra: ", likeObject);
       }
 
       if(like.active == 1){
@@ -215,7 +218,7 @@ class PostsScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.postReducer.cargando) {
+    if (this.props.postReducer.cargandoLike || this.props.postReducer.cargando) {
       //console.log("jobsScreen: ", this.props);
       return (
         <Container>

@@ -24,6 +24,7 @@ import { connect } from "react-redux";
 import * as jobsActions from "../src/actions/jobsActions";
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
+import * as DocumentPicker from 'expo-document-picker';
 import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
@@ -38,10 +39,6 @@ class JobShowScreen extends Component {
         search: "",
         jobId: null,
     };
-
-
-
-
 
     shareMesage = async (text) => {
         try {
@@ -69,10 +66,6 @@ class JobShowScreen extends Component {
 
         console.log("jobs state: ", this.state);
     }
-
-
-
-
 
     render() {
         var screenWidth = Dimensions.get("window").width;
@@ -112,13 +105,14 @@ class JobShowScreen extends Component {
                         </CardItem>
                     </Card>
                     <ScrollView style={{ flex: 1 }}>
+                        <Text style={{ marginLeft: 20 }}>{this.props.jobsReducer.job.description}</Text>
+                        <Text>  </Text>
                         <HTML source={{ html: this.props.jobsReducer.job.skils }} contentWidth={screenWidth} />
                     </ScrollView>
                     <Button style={{ marginBottom: 3 }} block success onPress={() => this.shareMesage(this.props.jobsReducer.job.public_link)} title="Share">
                         <Text>Compartir</Text>
                         <Icon name='whatsapp' type="FontAwesome" />
                     </Button>
-
                 </Content>
                 <FooterTabsNavigationIconText navigation={this.props.navigation} />
             </Container>

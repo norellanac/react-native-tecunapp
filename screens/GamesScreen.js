@@ -26,6 +26,7 @@ import HeaderCustom from "../components/HeaderCustom";
 import { persistor } from "../App";
 import Loading from "./../components/Loading";
 import { SliderBox } from "react-native-image-slider-box";
+import { apiUrl } from '../App';
 
 class GamesScreen extends Component {
     constructor() {
@@ -40,6 +41,7 @@ class GamesScreen extends Component {
         ],
         pass: 1,
         pass2: 0,
+        pathImage: apiUrl.link + "/img/game/"
     };
 
     logout = async () => {
@@ -53,6 +55,7 @@ class GamesScreen extends Component {
 
     componentDidMount() {
         this.props.allScoreUser(this.props.usuariosReducer.token);
+        console.log("Como viene el path: ", this.state.pathImage);
     }
 
     oneQuestion(){
@@ -137,7 +140,7 @@ class GamesScreen extends Component {
                                                     onPress={() => {this.onValueChance()}}
                                                 >
                                                     <Image
-                                                        source={{ uri: "http://192.168.1.44:3000/img/game/trophy.png" }}
+                                                        source={{ uri: this.state.pathImage + "trophy.png" }}
                                                         style={{ width: screenWidth / 3, height: screenWidth /3 }}
                                                     />
                                                 </Button>
@@ -175,7 +178,7 @@ class GamesScreen extends Component {
                                         <Grid style={{ marginTop: 50 }}>
                                             <Col size={4} style={{ alignItems: "center" }}>
                                                 <Image 
-                                                    source={{ uri: "http://157.55.181.102/img/game/trivia.png" }}
+                                                    source={{ uri:   this.state.pathImage + "trivia.png" }}
                                                     style={{ width: screenWidth / 2, height: screenHeight / 4 }}
                                                 />
                                                 <Button 
