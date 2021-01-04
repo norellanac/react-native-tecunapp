@@ -1,4 +1,4 @@
-import { getAllPost, getPost, showPostCategory, showPost, likeOrDislikeNews, loadingPost, errorPost, deleteComment, categoryPost, commentPost, idSearchNew } from '../types/postType';
+import { getAllPost, getPost, showPostCategory, loadingPostLike, showPost, likeOrDislikeNews, loadingPost, errorPost, deleteComment, categoryPost, commentPost, idSearchNew } from '../types/postType';
 import { apiUrl } from '../../App';
 
 export const getNews = tokenUsr => async dispatch => {
@@ -304,9 +304,6 @@ export const deleteMessage = (id, token) => async dispatch => {
 export const likeOrDislike = (likeObject, token) => async dispatch => {
     //console.log("Este es token: ",token);
     console.log("En teoria este es el array de likeObject: ",likeObject);
-    dispatch({
-      type: loadingPost
-    });
     try {
         /*console.log("Que trae el post_id: ",post_id);
         console.log("Que trae el message: ",message);
@@ -327,6 +324,10 @@ export const likeOrDislike = (likeObject, token) => async dispatch => {
             },
             body: params
         });    
+        dispatch({
+            type: loadingPostLike
+          });
+          
       const data = await response.json();  
 
         console.log("LLego aqui?:", data);
@@ -341,7 +342,7 @@ export const likeOrDislike = (likeObject, token) => async dispatch => {
         dispatch({
           type: likeOrDislikeNews,
           payload: data.message,
-          cargando: false
+          cargandoLike: false
         });
         //console.log("Que trae Data", data);
       }
