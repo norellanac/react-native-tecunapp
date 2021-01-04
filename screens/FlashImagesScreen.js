@@ -18,6 +18,7 @@ import {
   Left,
   Right,
   Body,
+  View,
 } from "native-base";
 import { connect } from "react-redux";
 import * as jobsActions from "../src/actions/jobsActions";
@@ -62,7 +63,7 @@ class PodcastScreen extends Component {
             <Left>
               <Thumbnail
                 style={{ backgroundColor: "#000000" }}
-                source={require("../assets/images/robot-dev.png")}
+                source={require("../assets/images/tecun/logo.png")}
               />
               <Body>
                 <Text>{job.title}</Text>
@@ -142,81 +143,52 @@ class PodcastScreen extends Component {
         <HederPostSection navigation={this.props.navigation}></HederPostSection>
         <Content>
           <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nueva FlashImagesScreen</Text>
-                  <Text note>April 15, 2020</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
+                <View>
                 <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
+                  source={{ uri: "http://192.168.1.49:3000/storage/pictures/5.jpg" }}
+                  style={{ width: screenWidth -4 , height: screenHeight-250, alignItems: "center" }}
                 />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
+                </View>
             <CardItem>
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 </Text>
+                  <Icon name="calendar" type="FontAwesome5" />
+                  <Text>28-12-2020 </Text>
                 </Button>
               </Left>
               <Right>
                 <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
+                  <Icon name="clock" type="FontAwesome5" />
+                  <Text>18:30</Text>
                 </Button>
               </Right>
             </CardItem>
           </Card>
 
           <Card style={{ flex: 0 }}>
-            <CardItem style={{ backgroundColor: "transparent" }}>
-              <Left>
-                <Thumbnail
-                  style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
-                />
-                <Body>
-                  <Text>Nueva Publicación</Text>
-                  <Text note>April 15, 2016</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "#181e26" }}>
-              <Body>
+                <View>
                 <Image
-                  source={require("../assets/images/robot-dev.png")}
-                  style={{ width: screenWidth - 20, height: 150 }}
+                  source={{ uri: "http://192.168.1.49:3000/storage/pictures/5.jpg" }}
+                  style={{ width: screenWidth -4 , height: screenHeight-250, alignItems: "center" }}
                 />
-                <Text style={{ color: "white" }}>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam eos nostrum delectus omnis...s</Text>
-              </Body>
-            </CardItem>
+                </View>
             <CardItem>
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="heart" type="FontAwesome" />
-                  <Text>1,926 </Text>
+                  <Icon name="calendar" type="FontAwesome5" />
+                  <Text>28-12-2020 </Text>
                 </Button>
               </Left>
               <Right>
                 <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="comment" type="FontAwesome" />
-                  <Text>1,926 Comentarios</Text>
+                  <Icon name="clock" type="FontAwesome5" />
+                  <Text>18:30</Text>
                 </Button>
               </Right>
             </CardItem>
           </Card>
 
+          
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>

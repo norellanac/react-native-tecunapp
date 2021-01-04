@@ -19,10 +19,8 @@ export const getNews = tokenUsr => async dispatch => {
         //console.log("Response:", response);
 
         const data = await response.json();
-        //console.log("Que trae data?: ", data);
-        /*console.log("newsAll: ", data.posts);
-        console.log("categoriesPost: ", data.categories);*/
-        //console.log("Response:", response);
+        console.log("post data?: ", data);
+        console.log("Response post:", response);
 
         if (response.ok) {
             dispatch({

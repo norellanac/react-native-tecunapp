@@ -45,19 +45,11 @@ class PostsScreen extends Component {
     category: ''
   };
 
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
-  };
 
   async componentDidMount() {
-    await this.props.getNews(this.props.usuariosReducer.token);
+      await this.props.getNews(this.props.loginReducer.token);
     //await this.props.getIdCategory(this.state.idCategory);
-    //console.log("posts props", this.props);
+    console.log("posts props", this.props);
     //console.log("posts state: ", this.state);
   };
 
@@ -260,9 +252,9 @@ class PostsScreen extends Component {
 
 
 
-const mapStateToProps = ({ postReducer, usuariosReducer }) => {
+const mapStateToProps = ({ postReducer, usuariosReducer, loginReducer }) => {
   //return reducers.postReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { postReducer, usuariosReducer };
+  return { postReducer, usuariosReducer, loginReducer };
 };
 
 const mapDispatchProps = {

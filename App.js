@@ -74,22 +74,22 @@ const styles = StyleSheet.create({
 const slides = [
   {
     key: "1",
-    title: "Hello All",
-    text: "Say something cool",
+    title: "Bienvenido",
+    text: "NUEVA APP TECUN",
     image: image1,
     backgroundColor: "#1D578A"
   },
   {
     key: "2",
-    title: " Be Cool",
-    text: "Other cool stuff",
+    title: "Novedades",
+    text: "Noticias y Podcast",
     image: image2,
     backgroundColor: "#E87823"
   },
   {
     key: "3",
-    title: "Let us Start",
-    text: "We are already cool!",
+    title: "Ingresa Al App",
+    text: "Utiliza tu correo y contraseña para ingresar!",
     image: image3,
     backgroundColor: "#181e26"
   }
