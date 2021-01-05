@@ -7,9 +7,6 @@ import {
   Content,
   Spinner,
   Thumbnail,
-  Form,
-  Picker,
-  Input,
   Icon,
   Text,
   CardItem,
@@ -21,16 +18,16 @@ import {
   View,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
-import * as loginActions from "../src/actions/loginActions";
+import * as userActions from "../src/actions/userActions";
+import * as pictureActions from "../src/actions/pictureActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import HederPostSection from "../components/HederPostSection";
-import { persistor } from "../App";
+import { persistor, apiUrl } from "../App";
 import { SliderBox } from "react-native-image-slider-box";
 import Loading from "./../components/Loading";
 
-class PodcastScreen extends Component {
+class FlashImagesScreen extends Component {
   constructor() {
     super();
   }
@@ -46,45 +43,36 @@ class PodcastScreen extends Component {
     });
   }
 
-  setIdSearchJob(jobArray) {
-    console.log("Array del job: ", jobArray);
-    console.log("Reducer del job: ", this.props.jobsReducer);
-    this.props.setIdJobSearch(jobArray);
-    this.props.navigation.navigate("JobShowScreen")
-  }
+  
 
 
-  loadContent = () => {
-    if (this.props.jobsReducer.jobs) {
-      //console.log("jobs: ", this.props.jobsReducer.jobs);
-      return this.props.jobsReducer.jobs.map((job) => (
-        <Card style={{ flex: 0 }} key={job.id}>
-          <CardItem style={{ backgroundColor: "transparent" }}>
-            <Left>
-              <Thumbnail
-                style={{ backgroundColor: "#000000" }}
-                source={require("../assets/images/tecun/logo.png")}
-              />
-              <Body>
-                <Text>{job.title}</Text>
-                <Text note>{job.created_at}</Text>
-              </Body>
-            </Left>
-          </CardItem>
-          <CardItem >
-            <Body>
-              <Text >{job.description}</Text>
-
-            </Body>
-          </CardItem>
-          <CardItem style={{ justifyContent: "center" }}>
-            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdSearchJob(job)}>
-              <Icon name="user-tie" type="FontAwesome5" />
-              <Text>Aplicar </Text>
-            </Button>
-          </CardItem>
-        </Card>
-
+  loadContent = (screenWidth, screenHeight) => {
+    
+    if (this.props.picturesReducer.pictures) {
+      //console.log("pictures: ", this.props.picturesReducer.pictures);
+      return this.props.picturesReducer.pictures.map((picture) => (
+        <Card style={{ flex: 0 }}>
+                <View>
+                <Image
+                  source={{ uri: `${apiUrl.link}/storage/pictures/${picture.featured_image}` }}
+                  style={{ width: screenWidth -4 , height: screenHeight-250, alignItems: "center" }}
+                />
+                </View>
+            <CardItem>
+              <Left>
+                <Button transparent textStyle={{ color: "#87838B" }}>
+                  <Icon name="calendar" type="FontAwesome5" />
+                  <Text>28-12-2020 </Text>
+                </Button>
+              </Left>
+              <Right>
+                <Button transparent textStyle={{ color: "#87838B" }}>
+                  <Icon name="clock" type="FontAwesome5" />
+                  <Text>18:30</Text>
+                </Button>
+              </Right>
+            </CardItem>
+          </Card>
 
       ))
     } else {
@@ -108,13 +96,10 @@ class PodcastScreen extends Component {
 
   async componentDidMount() {
 
-    await this.props.getJobs(this.props.usuariosReducer.token);
-    console.log("jobs props", this.props);
-    console.log("jobs state: ", this.state);
+    await this.props.getPicturesAction(this.props.usuariosReducer.token);
+    console.log("pictures props", this.props);
+    console.log("pictures state: ", this.state);
   }
-
-
-
 
 
   render() {
@@ -123,8 +108,8 @@ class PodcastScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.jobsReducer.cargando) {
-      console.log("jobsScreen: ", this.props);
+    if (this.props.picturesReducer.cargando) {
+      console.log("picturesScreen: ", this.props);
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -135,59 +120,15 @@ class PodcastScreen extends Component {
       )
     }
 
-    console.log("jobsProps: ", this.props);
+    console.log("picturesProps: ", this.props);
 
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
         <HederPostSection navigation={this.props.navigation}></HederPostSection>
         <Content>
-          <Card style={{ flex: 0 }}>
-                <View>
-                <Image
-                  source={{ uri: "http://192.168.1.49:3000/storage/pictures/5.jpg" }}
-                  style={{ width: screenWidth -4 , height: screenHeight-250, alignItems: "center" }}
-                />
-                </View>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="calendar" type="FontAwesome5" />
-                  <Text>28-12-2020 </Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="clock" type="FontAwesome5" />
-                  <Text>18:30</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
-
-          <Card style={{ flex: 0 }}>
-                <View>
-                <Image
-                  source={{ uri: "http://192.168.1.49:3000/storage/pictures/5.jpg" }}
-                  style={{ width: screenWidth -4 , height: screenHeight-250, alignItems: "center" }}
-                />
-                </View>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="calendar" type="FontAwesome5" />
-                  <Text>28-12-2020 </Text>
-                </Button>
-              </Left>
-              <Right>
-                <Button transparent textStyle={{ color: "#87838B" }}>
-                  <Icon name="clock" type="FontAwesome5" />
-                  <Text>18:30</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
-
+          
+          {this.loadContent(screenWidth, screenHeight)}
           
         </Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -198,16 +139,16 @@ class PodcastScreen extends Component {
 
 
 
-const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
-  //return reducers.jobsReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-  return { jobsReducer, usuariosReducer };
+const mapStateToProps = ({ picturesReducer, usuariosReducer }) => {
+  //return reducers.picturesReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+  return { picturesReducer, usuariosReducer };
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
-  ...loginActions,
+  ...pictureActions,
+  ...userActions,
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(PodcastScreen)
+  connect(mapStateToProps, mapDispatchProps)(FlashImagesScreen)
 );

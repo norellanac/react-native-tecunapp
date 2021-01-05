@@ -8,6 +8,7 @@ import podcastReducer from './podcastReducer'
 import questionReducer from './questionReducer'
 import loginReducer from './loginReducer'
 import contactsReducer from './contactsReducer'
+import picturesReducer from './picturesReducer'
 
 /*import stickersReducer from './stickersReducer'
 import categoriesReducer from './categoriesReducer'
@@ -25,6 +26,7 @@ export default combineReducers({
     podcastReducer,
     questionReducer,
     contactsReducer,
+    picturesReducer,
     /*stickersReducer,
     categoriesReducer,
     giftReducer,
