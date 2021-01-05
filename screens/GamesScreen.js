@@ -39,8 +39,7 @@ class GamesScreen extends Component {
             "https://app.canjeaton.com/storage/users/cajeaton2.png",
             "https://app.canjeaton.com/storage/users/cajeaton3.png",
         ],
-        pass: 1,
-        pass2: 0,
+        isDisplay: 0,
         pathImage: apiUrl.link + "/img/game/"
     };
 
@@ -64,10 +63,10 @@ class GamesScreen extends Component {
     }
 
     allScore(){
-        //console.log("Que viene en el score?: ",this.state.pass);
+        //console.log("Que viene en el score?: ",this.state.isDisplay);
         let count = 0;
         let possitionArray = {1:"numeric-1", 2:"numeric-2", 3:"numeric-3", 4:"numeric-4", 5:"numeric-5"};
-        if(this.state.pass == 1 && this.props.questionReducer.score) {
+        if(this.state.isDisplay == 1 && this.props.questionReducer.score) {
             
             return (this.props.questionReducer.score.map((pounts) => (
                 count++,
@@ -94,13 +93,13 @@ class GamesScreen extends Component {
     }
 
     onValueChance(){
-        if(this.state.pass == 1){
+        if(this.state.isDisplay == 1){
             this.setState({
-                pass: 0
+                isDisplay: 0
             });
         }else{
             this.setState({
-                pass: 1
+                isDisplay: 1
             });
         }
     }
@@ -110,8 +109,8 @@ class GamesScreen extends Component {
         var screenWidth = Dimensions.get("window").width;
         var screenHeight = Dimensions.get("window").height;
 
-        //console.log("Como viene el state2 en el render? ", this.state.pass);
-        //console.log("Como viene el state2 en el render? ", this.state.pass2);
+        //console.log("Como viene el state2 en el render? ", this.state.isDisplay);
+        //console.log("Como viene el state2 en el render? ", this.state.isDisplay2);
 
         if (this.props.questionReducer.cargando) {
             return (
@@ -146,8 +145,7 @@ class GamesScreen extends Component {
                                                 </Button>
 
                                                 {(() => {
-                                                    if (this.state.pass2 != 1) {
-
+                                                    if (this.state.isDisplay === 1) {
                                                         return(
                                                             <ListItem icon>
                                                                 <Left>

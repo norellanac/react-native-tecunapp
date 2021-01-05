@@ -88,7 +88,7 @@ const slides = [
   },
   {
     key: "3",
-    title: "Ingresa Al App",
+    title: "Ingresa al App",
     text: "Utiliza tu correo y contraseña para ingresar!",
     image: image3,
     backgroundColor: "#181e26"

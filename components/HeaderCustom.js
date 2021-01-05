@@ -38,7 +38,7 @@ function HeaderCustom(props) {
         <Title></Title>
       </Body>
       <Right>
-        <Button transparent onPress={() => props.navigation.navigate("User")}>
+        <Button transparent onPress={() => props.navigation.navigate("SettingsScreen")}>
           <Icon name="user" type="FontAwesome" />
           <Text style={{ color: "#ffffff" }}>{props.usuariosReducer.user.name} </Text>
         </Button>

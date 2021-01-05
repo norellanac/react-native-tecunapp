@@ -11,7 +11,7 @@ import ProccessPeopleScreen from '../screens/ProccessPeopleScreen';
 import ContactScreen from '../screens/ContactScreen';
 import GameShowScreen from '../screens/GameShowScreen';
 import DenounceScreen from '../screens/DenounceScreen';
-
+import SettingsScreen from '../screens/UserScreenProfile';
 import FlashImagesScreen from '../screens/FlashImagesScreen';
 import GamesScreen from '../screens/GamesScreen';
 import TeamScreen from '../screens/TeamScreen';
@@ -165,6 +165,12 @@ function MainStackNavigator() {
 					name="PostsCategoryScreen"
 					header="null"
 					component={PostsCategoryScreen}
+					options={{ title: 'Noticias' }}
+				/>
+				<Stack.Screen
+					name="SettingsScreen"
+					header="null"
+					component={SettingsScreen}
 					options={{ title: 'Noticias' }}
 				/>
 			</Stack.Navigator>
