@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Linking } from "react-native";
 import { View, Footer, FooterTab, Button, Icon, Text } from "native-base";
 class FooterTabsNavigationIconText extends Component {
   constructor(props) {
@@ -38,7 +39,9 @@ class FooterTabsNavigationIconText extends Component {
 
 
         <Button rounded style={{ backgroundColor: '#e3342f', right: 20, bottom: 80, position: "absolute", flex: 1, zIndex: 100 }}
-          onPress={() => this.props.navigation.navigate("DenounceScreen")}>
+          onPress={() =>
+            Linking.openURL("http://10x.org/privacypolicy/")
+          }>
           <Icon name="bell" type="FontAwesome5" />
         </Button>
       </View>

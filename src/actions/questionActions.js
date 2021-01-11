@@ -70,13 +70,14 @@ export const answerQuestion = (answerObject, token) => async dispatch => {
 
         const data = await response.json();
 
-        //console.log("Que trae dataAnswer?: ",data);
+        console.log("Que trae dataAnswer?: ",data);
         //console.log("Que trae uniquedObjectStatus?: ",data.uniquedObject.status);
 
         dispatch({
             type: messageAnswer,
             message: data.message,
             status: data.uniquedObject.status,
+            info: data.uniquedObject,
             cargando: false
         });
 

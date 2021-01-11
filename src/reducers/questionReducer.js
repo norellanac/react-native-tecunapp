@@ -11,6 +11,7 @@ const INITIAL = {
     status: '',
     error: '',
     message: '',
+    info: [],
     score: []
 };
 
@@ -30,7 +31,7 @@ export default (state = INITIAL, action) => {
                 cargando: action.cargando 
             };
         case messageAnswer:
-            return { ...state, message:action.message, status:action.status, cargando: action.cargando};
+            return { ...state, message:action.message, info:action.info, status:action.status, cargando: action.cargando};
         case scoreUser:
             return { ...state, score: action.score, cargando: action.cargando };
         case PURGE:

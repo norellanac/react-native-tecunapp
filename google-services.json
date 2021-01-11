@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "529080983200",
+    "project_id": "pushnotandroidtecun",
+    "storage_bucket": "pushnotandroidtecun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529080983200:android:901a843bcc4868cc15f3c5",
+        "android_client_info": {
+          "package_name": "com.grupotecun.gtm.tecunapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529080983200-8d8ga4e7kk676cft45djnu7rlcq90iga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5oWNPzplYLjs4GFSHqWLpnnkhKs_PHuk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529080983200-8d8ga4e7kk676cft45djnu7rlcq90iga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

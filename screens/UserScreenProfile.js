@@ -22,7 +22,7 @@ import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from './../components/HeaderCustom';
-import { persistor } from './../App';
+import { persistor, apiUrl } from './../App';
 import { withNavigation } from 'react-navigation';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -39,7 +39,9 @@ class UserScreenProfile extends Component {
 		setNotification: false,
 		phone: '',
 		password: '',
-		confirmPassword: ''
+		confirmPassword: '',
+		errorMessage: null,
+		isShowAlert: true
 	};
 
 	notificationListener;
@@ -55,9 +57,65 @@ class UserScreenProfile extends Component {
 	};
 
 	componentDidMount() {
-		console.log('revisa si tiene el token');
-    this.registerForPushNotificationsAsync();
+		if (Platform.OS === 'android' && !Constants.isDevice) {
+			this.setState({
+				errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
+			});
+		} else {
+			this.getTokenExpoNotificationsPush();
+		}
+		//this.registerForPushNotificationsAsync();
 	}
+
+	getTokenExpoNotificationsPush = async () => {
+		/*let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+		console.log('====================================');
+		console.log('status permisos: ', status);
+		console.log('====================================');
+		if (status !== 'granted') {
+			let { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+			this.setState({
+				errorMessage: 'Permission to access location was denied'
+			});
+		}
+		console.log('====================================');
+		console.log();
+		console.log('===================================='); */
+		let token;
+		if (Constants.isDevice) {
+			let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+			if (status !== 'granted') {
+				status = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+			}
+			if (status !== 'granted') {
+				this.setState({
+					errorMessage: 'Failed to get push token for push notification!'
+				});
+				return;
+			}
+			token = (await Notifications.getExpoPushTokenAsync()).data;
+			console.log(token);
+		} else {
+			this.setState({
+				errorMessage: 'Must use physical device for Push Notifications'
+			});
+		}
+
+		if (Platform.OS === 'android') {
+			Notifications.setNotificationChannelAsync('default', {
+				name: 'default',
+				importance: Notifications.AndroidImportance.MAX,
+				vibrationPattern: [ 0, 250, 250, 250 ],
+				lightColor: '#FF231F7C'
+			});
+		}
+
+		this.setState({ expoPushToken: token });
+		this.setState({
+			errorMessage: 'Debe tener token y error'
+		});
+		return token;
+	};
 
 	setNotification() {
 		Notifications.setNotificationHandler({
@@ -70,13 +128,13 @@ class UserScreenProfile extends Component {
 	}
 
 	async sendPushNotification(expoPushToken) {
-    this.setNotification();
+		this.setNotification();
 		const message = {
 			to: expoPushToken,
 			sound: 'default',
-			title: 'Original Title',
-			body: 'And here is the body!',
-			data: { data: 'goes here' }
+			title: 'Nuevo Contenido en la app',
+			body: 'Escucha este increible podcast!',
+			data: { data: 'Podcast de seguridad indistrial' }
 		};
 		await fetch('https://exp.host/--/api/v2/push/send', {
 			method: 'POST',
@@ -117,11 +175,70 @@ class UserScreenProfile extends Component {
 			});
 		}
 
-    this.setState({ expoPushToken: token });
+		this.setState({ expoPushToken: token });
 
 		return token;
 	}
 
+	showTokenAlert = () => {
+		if (this.state.expoPushToken && this.state.isShowAlert) {
+			return (
+				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
+					<CardItem style={{ backgroundColor: '#EB0101' }}>
+						<Image
+							source={{ uri: `${apiUrl.link}/img/game/trivia.png` }}
+							style={{ width: 25, height: 25 }}
+						/>
+						<Col size={4}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 15,
+									fontWeight: 'bold',
+									color: '#fff'
+								}}
+							>
+								{this.state.expoPushToken}
+							</Text>
+						</Col>
+						<Button onPress={(isShowAlert) => this.setState({ isShowAlert: false })} transparent rounded>
+							<Icon name="close" />
+						</Button>
+					</CardItem>
+				</Card>
+			);
+		}
+	};
+
+	showError = () => {
+		if (this.state.errorMessage && this.state.isShowAlert) {
+			return (
+				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
+					<CardItem style={{ backgroundColor: '#00B9D3' }}>
+						<Image
+							source={{ uri: `${apiUrl.link}/img/game/trivia.png` }}
+							style={{ width: 25, height: 25 }}
+						/>
+						<Col size={4}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 15,
+									fontWeight: 'bold',
+									color: '#fff'
+								}}
+							>
+								{this.state.errorMessage}
+							</Text>
+						</Col>
+						<Button onPress={(isShowAlert) => this.setState({ isShowAlert: false })} transparent rounded>
+							<Icon name="close" />
+						</Button>
+					</CardItem>
+				</Card>
+			);
+		}
+	};
 	ponerContenido = () => {
 		if (this.props.cargando) {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -129,42 +246,19 @@ class UserScreenProfile extends Component {
 		return <Grid />;
 	};
 
-	handleSubmit = () => {
-		if (this.state.password !== this.state.confirmPassword) {
-			return (
-				<Row>
-					<Grid>
-						<Col style={{ alignItems: 'center', marginBottom: 15 }}>
-							<Text style={{ color: 'white' }}>Las contraseñas no coinsiden</Text>
-						</Col>
-					</Grid>
-				</Row>
-			);
-		}
-	};
-
-	Erroruser = () => {
-		if (this.props.error != '') {
-			return (
-				<Row>
-					<Grid>
-						<Col style={{ alignItems: 'center', marginBottom: 15 }}>
-							<Text style={{ color: 'white' }}>{this.props.error}</Text>
-						</Col>
-					</Grid>
-				</Row>
-			);
-		}
-	};
 
 	render() {
 		//const { navigation } = this.props.navigation
 
 		console.log('ajustes: ', this.state);
 
+		console.log('revisa si tiene el token', Permissions);
+
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
+				{this.showError()}
+				{this.showTokenAlert()}
 				<Content>
 					<View style={{ backgroundColor: '#ed913b' }}>
 						<Grid style={{ marginBottom: 30, marginTop: 25 }}>
@@ -285,7 +379,7 @@ class UserScreenProfile extends Component {
 						<Button
 							transparent
 							vertical
-							onPress={() => this.props.navigation.navigate('AddressProfileRoute')}
+							onPress={() => this.sendPushNotification(this.state.expoPushToken)}
 						>
 							<CardItem style={{ marginTop: 10 }}>
 								<Grid
@@ -325,7 +419,7 @@ class UserScreenProfile extends Component {
 							</CardItem>
 						</Button>
 
-						<Button transparent vertical onPress={() => this.registerForPushNotificationsAsync()}>
+						<Button transparent vertical onPress={() => this.getTokenExpoNotificationsPush()}>
 							<CardItem>
 								<Grid
 									style={{
@@ -367,7 +461,9 @@ class UserScreenProfile extends Component {
 						<Button
 							transparent
 							vertical
-							onPress={() => this.props.navigation.navigate('SettingsProfileRoute')}
+							onPress={async () => {
+								await this.sendPushNotification(this.state.expoPushToken);
+							}}
 						>
 							<CardItem>
 								<Grid
@@ -394,7 +490,7 @@ class UserScreenProfile extends Component {
 										/>
 									</Col>
 									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Ajustes</Text>
+										<Text>OtraNotificacion</Text>
 									</Col>
 									<Col style={{ marginTop: 15, marginBottom: 15 }}>
 										<Icon
@@ -407,7 +503,13 @@ class UserScreenProfile extends Component {
 							</CardItem>
 						</Button>
 
-						<Button transparent vertical onPress={() => this.props.navigation.navigate('HelpPageRoute')}>
+						<Button
+							transparent
+							vertical
+							onPress={async () => {
+								await this.sendPushNotification(this.state.expoPushToken);
+							}}
+						>
 							<CardItem>
 								<Grid
 									style={{
@@ -433,7 +535,7 @@ class UserScreenProfile extends Component {
 										/>
 									</Col>
 									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Ayuda</Text>
+										<Text>Enviar Notificacion</Text>
 									</Col>
 									<Col style={{ marginTop: 15, marginBottom: 15 }}>
 										<Icon

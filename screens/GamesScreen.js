@@ -34,22 +34,8 @@ class GamesScreen extends Component {
     }
     state = {
         search: "",
-        images: [
-            "https://app.canjeaton.com/storage/users/cajeaton1.png",
-            "https://app.canjeaton.com/storage/users/cajeaton2.png",
-            "https://app.canjeaton.com/storage/users/cajeaton3.png",
-        ],
         isDisplay: 0,
         pathImage: apiUrl.link + "/img/game/"
-    };
-
-    logout = async () => {
-        //await this.props.logoutUser();
-        console.log("borró usuario");
-        //await this.props.resetAddress();
-        await persistor.purge();
-        this.props.navigation.navigate("Login");
-        console.log("borró direccion");
     };
 
     componentDidMount() {
@@ -103,6 +89,8 @@ class GamesScreen extends Component {
             });
         }
     }
+
+    
 
     render() {
         //const { navigation } = this.props.navigation
