@@ -40,7 +40,7 @@ class FooterTabsNavigationIconText extends Component {
 
         <Button rounded style={{ backgroundColor: '#e3342f', right: 20, bottom: 80, position: "absolute", flex: 1, zIndex: 100 }}
           onPress={() =>
-            Linking.openURL("http://10x.org/privacypolicy/")
+            Linking.openURL("http://www.denunciagrupotecun.com/")
           }>
           <Icon name="bell" type="FontAwesome5" />
         </Button>

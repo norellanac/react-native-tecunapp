@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image } from "react-native";
+import { Dimensions, Image,TouchableOpacity } from "react-native";
 import { Col, Grid, Row } from "react-native-easy-grid";
 import {
     Container,
@@ -14,7 +14,6 @@ import {
     Body,
     Right,
     TouchableHighlight,
-    TouchableOpacity,
     Icon,
     View
 } from "native-base";
@@ -121,16 +120,14 @@ class GamesScreen extends Component {
                                     <CardItem cardBody>
                                         <Grid style={{ marginTop: 20 }}>
                                             <Col size={4} style={{ alignItems: "center" }}>
-                                                <Button
-                                                    transparent
-                                                    style={{width: screenWidth/3, height: screenHeight/6}}
+                                                <TouchableOpacity
                                                     onPress={() => {this.onValueChance()}}
                                                 >
                                                     <Image
                                                         source={{ uri: this.state.pathImage + "trophy.png" }}
                                                         style={{ width: screenWidth / 3, height: screenWidth /3 }}
                                                     />
-                                                </Button>
+                                                </TouchableOpacity>
 
                                                 {(() => {
                                                     if (this.state.isDisplay === 1) {
@@ -169,7 +166,7 @@ class GamesScreen extends Component {
                                                 />
                                                 <Button 
                                                     onPress={() => this.oneQuestion() }
-                                                    style={{ width: screenWidth / 3, height: screenHeight / 13, borderRadius: 10 }}
+                                                    style={{ width: screenWidth / 3, height: screenHeight / 13, borderRadius: 10, alignSelf: "center" }}
                                                 >
                                                 <Icon
                                                     type="Entypo"

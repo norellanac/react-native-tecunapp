@@ -179,7 +179,7 @@ class PostsShowScreen extends Component {
       { title: `Comentarios (${this.props.postReducer.post.comments.length})`, content: this.loadInfoComment(), inputComment: this.inputComment() }
     ]; 
 
-    if (this.props.postReducer.cargando) {
+    if (this.props.postReducer.cargando || this.props.postReducer.post.comments==undefined) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -213,11 +213,9 @@ class PostsShowScreen extends Component {
                         style={{width: screenWidth - 20, height: 150}} 
                     />
                     <Text note>{post.created_at}</Text>
-                    <Text></Text>
                     <Text>{ post.description }</Text>
                     <ScrollView style={{ flex: 1 }}>
                         <HTML source={{ html: post.content }} contentWidth={screenWidth} />
-                        <Text></Text>
                         <Accordion
                           dataArray={dataArray}
                           animation={true}
