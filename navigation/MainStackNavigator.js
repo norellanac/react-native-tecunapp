@@ -25,6 +25,8 @@ import JobShowScreen from '../screens/JobShowScreen';
 import HomeShowScreen from '../screens/HomeShowScreen';
 import PostsCategoryScreen from '../screens/PostsCategoryScreen';
 import PostsShowCategoryScreen from '../screens/PostsShowCategoryScreen';
+import ProccessVacationScreen from '../screens/ProccessVacationScreen';
+import ProccessCertificateScreen from '../screens/ProccessCertificateScreen';
 
 const Stack = createStackNavigator();
 
@@ -167,6 +169,21 @@ function MainStackNavigator() {
 					component={PostsCategoryScreen}
 					options={{ title: 'Noticias' }}
 				/>
+
+				<Stack.Screen
+					name="ProccessCertificateScreen"
+					header="null"
+					component={ProccessCertificateScreen}
+					options={{ title: 'Vacaciones' }}
+				/>
+
+				<Stack.Screen
+					name="ProccessVacationScreen"
+					header="null"
+					component={ProccessVacationScreen}
+					options={{ title: 'Vacaciones' }}
+				/>
+
 				<Stack.Screen
 					name="SettingsScreen"
 					header="null"
