@@ -68,19 +68,6 @@ class UserScreenProfile extends Component {
 	}
 
 	getTokenExpoNotificationsPush = async () => {
-		/*let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-		console.log('====================================');
-		console.log('status permisos: ', status);
-		console.log('====================================');
-		if (status !== 'granted') {
-			let { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-			this.setState({
-				errorMessage: 'Permission to access location was denied'
-			});
-		}
-		console.log('====================================');
-		console.log();
-		console.log('===================================='); */
 		let token;
 		if (Constants.isDevice) {
 			let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
@@ -94,7 +81,8 @@ class UserScreenProfile extends Component {
 				return;
 			}
 			token = (await Notifications.getExpoPushTokenAsync()).data;
-			console.log(token);
+			this.props.sendPushTokenAction(token, this.props.usuariosReducer.user.id, this.props.usuariosReducer.token, );
+			console.log("push token: ",token);
 		} else {
 			this.setState({
 				errorMessage: 'Must use physical device for Push Notifications'

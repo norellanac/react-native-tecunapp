@@ -44,7 +44,7 @@ const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
 export const persistor = persistStore(store);
 
 export const apiUrl = {
-	link: "http://192.168.1.44:3000"
+	link: "http://tecunapp.com/"
 	//link: "http://192.168.1.44:3000"
 };
 //http://192.168.50.144:3000
