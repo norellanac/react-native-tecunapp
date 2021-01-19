@@ -36,11 +36,6 @@ class ProccessPeopleScreen extends Component {
     pathDocuemnt: apiUrl.link
   };
 
-  async componentDidMount() {
-
-    await this.props.getJobs(this.props.usuariosReducer.token);
-  }
-
   loadingVacation () {
     this.props.allCompany(this.props.usuariosReducer.token);
     this.props.navigation.navigate("ProccessVacationScreen")

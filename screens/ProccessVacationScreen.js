@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dimensions, Image, ScrollView } from "react-native";
+import { Dimensions, Image, ScrollView, Alert } from "react-native";
 import HTML from "react-native-render-html";
 import { withNavigation } from "react-navigation";
 import { Col, Grid, Row } from "react-native-easy-grid";
@@ -37,7 +37,7 @@ class ProccessVacationScreen extends Component {
     super();
   }
   state = {
-    showComments: false,
+    showData: false,
     newArray: [],
     company: "",
   };
@@ -49,22 +49,71 @@ class ProccessVacationScreen extends Component {
     return companies.map((itemName) => (
       //console.log("name ",itemName),
       //console.log(" other ", companies),
-      <View>
-        <Text>{itemName[0].name}</Text>
+
+      <Card
+        style={{
+          marginBottom: 15,
+        }}
+      >
+        <Grid>
+          <Col size={4} style={{ alignItems: "center" }}>
+            <Text
+              style={{
+                fontSize: 20,
+                justifyContent: "center",
+                fontFamily: "sans-serif-medium",
+              }}
+            >
+              {itemName[0].name}
+            </Text>
+          </Col>
+        </Grid>
+
         {(() => {
-                return itemName.map((item) => <Text>{item.departament}</Text>);
-              })()}
-      </View>
+          return itemName.map((item) => (
+            <ListItem
+              icon
+              onPress={() => this.mailVacation(item.email, item.departament)}
+            >
+              <Left>
+                <Button style={{ backgroundColor: "#0B0B61" }}>
+                  <Icon type="MaterialCommunityIcons" name="email-send" />
+                </Button>
+              </Left>
+              <Body>
+                <Text>{item.departament}</Text>
+              </Body>
+              <Right>
+                <Icon name="arrow-forward" />
+              </Right>
+            </ListItem>
+          ));
+        })()}
+      </Card>
     ));
   }
 
-  departament(objectDepartament) {
-    //console.log("object ",objectDepartament.departament);
+  mailVacation(emailVacation, message) {
+	//console.log("Que viene aqui? ", emailVacation, message);
+	
+	let mailUser = this.props.usuariosReducer.user.email;
+	let token = this.props.usuariosReducer.token;
 
-    return objectDepartament.map((item) => {
-      console.log("item ", item.departament);
-      <Text>{item.departament}</Text>;
-    });
+	let objectMail = {'email': emailVacation, 'emailUser': mailUser, 'departament':message};
+
+    Alert.alert(
+      message,
+	  `Al elegir la empresa, se envía un correo electronico al encargado de nomina. Para continuar con la solicitud sobre cuantos dias de vacaciones tienes, por favor presione Aceptar. Se eviará un correo electronico con tu información y se contactaran contigo lo mas pronto posible.`,
+      [
+        {
+          text: "Cancel",
+          //onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Acepart", onPress: () => this.props.mailVacation(objectMail, token) },
+      ],
+      { cancelable: false }
+    );
   }
 
   render() {
@@ -86,25 +135,7 @@ class ProccessVacationScreen extends Component {
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
-        <Content>
-          {this.loadingInfoName()}
-
-         {/*  {(() => {
-            return companies.map((itemName) => (
-              //console.log("name ",itemName),
-              //console.log(" other ", companies),
-              <View>
-                <Text>{itemName[0].name}</Text>
-                <Text>----------------------------</Text>
-                {(() => {
-                  return itemName.map((item) => (
-                    <Text>{item.departament}</Text>
-                  ));
-                })()}
-              </View>
-            ));
-          })()} */}
-        </Content>
+        <Content>{this.loadingInfoName()}</Content>
         <FooterTabsNavigationIconText navigation={this.props.navigation} />
       </Container>
     );
