@@ -63,7 +63,7 @@ class UserScreenProfile extends Component {
 			});
 		} else {
 			this.getTokenExpoNotificationsPush();
-		}
+		}		
 		//this.registerForPushNotificationsAsync();
 	}
 
@@ -81,8 +81,8 @@ class UserScreenProfile extends Component {
 				return;
 			}
 			token = (await Notifications.getExpoPushTokenAsync()).data;
-			this.props.sendPushTokenAction(token, this.props.usuariosReducer.user.id, this.props.usuariosReducer.token, );
-			console.log("push token: ",token);
+			this.props.sendPushTokenAction(token, this.props.usuariosReducer.user.id, this.props.usuariosReducer.token);
+			console.log('push token: ', token);
 		} else {
 			this.setState({
 				errorMessage: 'Must use physical device for Push Notifications'
@@ -234,8 +234,10 @@ class UserScreenProfile extends Component {
 		return <Grid />;
 	};
 
-
 	render() {
+		this.setState({
+			errorMessage: this.props.loginReducer.error
+		});
 		//const { navigation } = this.props.navigation
 
 		console.log('ajustes: ', this.state);
