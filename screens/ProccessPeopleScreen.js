@@ -20,7 +20,7 @@ import {
   Body,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
+import * as rrhhActions from '../src/actions/rrhhActions';
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
@@ -36,13 +36,9 @@ class ProccessPeopleScreen extends Component {
     pathDocuemnt: apiUrl.link
   };
 
-  async componentDidMount() {
-
-    await this.props.getJobs(this.props.usuariosReducer.token);
-  }
-
-  test() {
-    console.log("Hola mundo desde el boton");
+  loadingVacation () {
+    this.props.allCompany(this.props.usuariosReducer.token);
+    this.props.navigation.navigate("ProccessVacationScreen")
   }
 
   render() {
@@ -116,7 +112,7 @@ class ProccessPeopleScreen extends Component {
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
               <Button
-                onPress={() => this.props.navigation.navigate("ProccessVacationScreen") }
+                onPress={() => this.loadingVacation() }
                 style={{ backgroundColor: "#5FB404", width: screenWidth - 190, height: screenHeight / 17, borderRadius: 15 }}
               >
                 <Icon
@@ -136,7 +132,7 @@ class ProccessPeopleScreen extends Component {
                   source={{ uri: this.state.pathImage + "entrevista.png" }}
                   style={{ backgroundColor: "#CEF6EC", borderRadius: 20, width: screenWidth / 3, height: screenHeight / 6 }}
                 />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Otros procesos de Recursos Humanos </Text>
+                <Text note style={{ marginBottom: 8, marginTop: 8 }}>Constancia laboral</Text>
               </Body>
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
@@ -167,7 +163,7 @@ const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
+  ...rrhhActions,
   ...loginActions,
 };
 

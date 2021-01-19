@@ -9,6 +9,7 @@ import questionReducer from './questionReducer'
 import loginReducer from './loginReducer'
 import contactsReducer from './contactsReducer'
 import picturesReducer from './picturesReducer'
+import rrhhReducer from './rrhhReducer'
 
 /*import stickersReducer from './stickersReducer'
 import categoriesReducer from './categoriesReducer'
@@ -27,6 +28,7 @@ export default combineReducers({
     questionReducer,
     contactsReducer,
     picturesReducer,
+    rrhhReducer,
     /*stickersReducer,
     categoriesReducer,
     giftReducer,
