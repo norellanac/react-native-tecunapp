@@ -37,6 +37,34 @@ export const traerUser = tokenUsr => async dispatch => {
   }
 };
 
+
+export const sendPushTokenAction = (pushToken, userId, apiToken) => async dispatch => {
+
+  try {
+      let dataForm = "_method=" + encodeURIComponent("POST");
+      dataForm += "&token=" + encodeURIComponent(pushToken);
+      dataForm += "&user_id=" + encodeURIComponent(userId);
+      const response = await fetch(`${apiUrl.link}/api/device/token`, {
+          method: "POST",
+          headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+              Authorization: `Bearer ${apiToken}`,
+          },
+          body: dataForm
+      });
+
+      const data = await response.json();
+      console.log("enviando token a db: ", data);
+      console.log("respuesta de token server: ", response);
+      
+  } catch (error) {
+      console.log('====================================');
+      console.log(error);
+      console.log('====================================');
+  }
+};
+
 export const registerUsers = ( dpi, name, lastname, email, phone, password ) => async dispatch => {
   dispatch({
     type: loadingUser

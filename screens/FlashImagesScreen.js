@@ -62,7 +62,7 @@ class FlashImagesScreen extends Component {
               <Left>
                 <Button transparent textStyle={{ color: "#87838B" }}>
                   <Icon name="calendar" type="FontAwesome5" />
-                  <Text>28-12-2020 </Text>
+                  <Text>{`${picture.created_at}`} </Text>
                 </Button>
               </Left>
               <Right>

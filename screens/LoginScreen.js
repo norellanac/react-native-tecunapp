@@ -3,7 +3,7 @@ import { Image, Linking, KeyboardAvoidingView, Dimensions } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import { Container, Content, Text, Card, CardItem, Button, Icon, Form, Item, Input, Spinner } from 'native-base';
 
-import { withNavigation } from 'react-navigation';
+import {  apiUrl } from './../App';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
@@ -14,23 +14,63 @@ class LoginScreen extends Component {
 	}
 	state = {
 		email: '',
-		password: ''
+		password: '',
+		isShowAlert: true,
+		errorMessage: '',
+	};
+
+	showAlert = () => {
+		if (this.state.errorMessage && this.state.isShowAlert) {
+			return (
+				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
+					<CardItem style={{ backgroundColor: '#1B2853' }}>
+						<Image
+							source={{ uri: `${apiUrl.link}/img/not-found.png` }}
+							style={{ width: 25, height: 25 }}
+						/>
+						<Col size={4}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 15,
+									fontWeight: 'bold',
+									color: '#fff'
+								}}
+							>
+								{this.state.errorMessage}
+							</Text>
+						</Col>
+						<Button onPress={(isShowAlert) => this.setState({ isShowAlert: false })} transparent rounded>
+							<Icon name="close" />
+						</Button>
+					</CardItem>
+				</Card>
+			);
+		}
 	};
 
 	componentDidMount = async () => {
 		//this.props.getStates();
+		this.setState({ isShowAlert: true })
+		this.setState({ errorMessage: '' })
 	};
 
 	userData = async () => {
 		let Email = this.state.email;
 		let Password = this.state.password;
-		await this.props.traerToken(Email, Password);
-		await this.props.traerUser(this.props.loginReducer.token);
-		this.state.email = '';
-		this.state.password = '';
+		await this.props.ldapLoginRegister(Email, Password);
+		if (this.props.loginReducer.isLdap) {
+			await this.props.traerToken(Email, Password);
+			await this.props.traerUser(this.props.loginReducer.token);
+		}
+		this.setState({ password: '' });
+		if (this.props.loginReducer.error) {
+			this.setState({ isShowAlert: true })
+			this.setState({ errorMessage: this.props.loginReducer.error })
+		}
 	};
 	ponerContenido = () => {
-		if (this.props.cargando) {
+		if (this.props.loginReducer.cargando) {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
 		}
 		return (
@@ -71,8 +111,11 @@ class LoginScreen extends Component {
 		if (this.props.loginReducer.isAuth) {
 			this.props.navigation.navigate('Home');
 		}
+
+
 		return (
 			<Container style={{ backgroundColor: '#ed913b' }}>
+				{this.showAlert()}
 				<Content>
 					<Card transparent>
 						<CardItem style={{ backgroundColor: '#ed913b' }}>
@@ -110,7 +153,7 @@ class LoginScreen extends Component {
 									textContentType="emailAddress"
 									onChangeText={(email) => this.setState({ email })}
 									value={this.state.email}
-									placeholder="Correo ó Telefono"
+									placeholder="Correo"
 									placeholderTextColor="#FFFFFF"
 									style={{ color: 'white' }}
 								/>

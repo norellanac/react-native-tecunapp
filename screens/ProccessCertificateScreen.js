@@ -27,7 +27,7 @@ import HeaderCustom from "../components/HeaderCustom";
 import Loading from "./../components/Loading";
 import { apiUrl } from '../App';
 
-class ProccessPeopleScreen extends Component {
+class ProccessCertificateScreen extends Component {
   constructor() {
     super();
   }
@@ -58,10 +58,9 @@ class ProccessPeopleScreen extends Component {
             <CardItem style={{ backgroundColor: "white", alignItems: 'center' }}>
               <Body style={{ alignItems: 'center' }}>
                 <Image
-                  source={{ uri: this.state.pathImage + "seguro.png" }}
+                  source={{ uri: this.state.pathImage + "guatemala.png" }}
                   style={{ backgroundColor: "#CEF6EC", borderRadius: 20,  width: screenWidth / 3, height: screenHeight / 6 }}
                 />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Instructivo de seguro medico GyT </Text>
               </Body>
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
@@ -71,10 +70,10 @@ class ProccessPeopleScreen extends Component {
               >
                 <Icon
                     type="FontAwesome"
-                    name="cloud-download"
+                    name="send"
                     style={{ marginLeft: 13, color: "#ffffff" }}
                 />
-                <Text style={{ color: "#ffffff", marginRight:15 }}>Descargar</Text>
+                <Text style={{ color: "#ffffff", marginRight: 50 }}>Enviar</Text>
               </Button>
             </CardItem>
           </Card>
@@ -83,10 +82,9 @@ class ProccessPeopleScreen extends Component {
             <CardItem style={{ backgroundColor: "white", alignItems: 'center' }}>
               <Body style={{ alignItems: 'center' }}>
                 <Image
-                  source={{ uri: this.state.pathImage + "logo-irtra.org_.png" }}
+                  source={{ uri: this.state.pathImage + "el-salvador.png" }}
                   style={{ backgroundColor: "#CEF6EC", borderRadius: 20, width: screenWidth / 3, height: screenHeight / 6 }}
                 />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Formulario IRTRA </Text>
               </Body>
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
@@ -96,62 +94,39 @@ class ProccessPeopleScreen extends Component {
               >
                 <Icon
                     type="FontAwesome"
-                    name="cloud-download"
+                    name="send"
                     style={{ marginLeft: 13, color: "#ffffff" }}
                 />
-                <Text style={{ color: "#ffffff", marginRight:15 }}>Descargar</Text>
+                <Text style={{ color: "#ffffff", marginRight: 50 }}>Enviar</Text>
               </Button>
             </CardItem>
           </Card>
 
-          <Card style={{ flex: 0, }}>
+          <Card style={{ flex: 0, marginBottom: 15 }}>
             <CardItem style={{ backgroundColor: "white", alignItems: 'center' }}>
               <Body style={{ alignItems: 'center' }}>
                 <Image
-                  source={{ uri: this.state.pathImage + "piscina.png" }}
+                  source={{ uri: this.state.pathImage + "honduras.png" }}
                   style={{ backgroundColor: "#CEF6EC", borderRadius: 20, width: screenWidth / 3, height: screenHeight / 6 }}
                 />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Constacia de vacaciones </Text>
               </Body>
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
               <Button
-                onPress={() => this.props.navigation.navigate("ProccessVacationScreen") }
-                style={{ backgroundColor: "#5FB404", width: screenWidth - 190, height: screenHeight / 17, borderRadius: 15 }}
-              >
-                <Icon
-                    type="AntDesign"
-                    name="enter"
-                    style={{ color: "#ffffff" }}
-                />
-                <Text style={{ color: "#ffffff", marginRight: 50 }}>Ingresar</Text>
-              </Button>
-            </CardItem>
-          </Card>
-
-          <Card style={{ flex: 0, }}>
-            <CardItem style={{ backgroundColor: "white", alignItems: 'center' }}>
-              <Body style={{ alignItems: 'center' }}>
-                <Image
-                  source={{ uri: this.state.pathImage + "entrevista.png" }}
-                  style={{ backgroundColor: "#CEF6EC", borderRadius: 20, width: screenWidth / 3, height: screenHeight / 6 }}
-                />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Otros procesos de Recursos Humanos </Text>
-              </Body>
-            </CardItem>
-            <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
-              <Button
-                onPress={() => this.props.navigation.navigate("ProccessCertificateScreen") }
+                onPress={() => this.test() }
                 style={{ backgroundColor: "#5FB404", width: screenWidth / 2, height: screenHeight / 17, borderRadius: 15 }}
               >
                 <Icon
-                    type="AntDesign"
-                    name="enter"
+                    type="FontAwesome"
+                    name="send"
                     style={{ marginLeft: 13, color: "#ffffff" }}
                 />
-                <Text style={{ color: "#ffffff", marginRight: 50 }}>Ingresar</Text>
+                <Text style={{ color: "#ffffff", marginRight: 50 }}>Enviar</Text>
               </Button>
             </CardItem>
+          </Card>
+          <Card>
+
           </Card>
 
         </Content>
@@ -172,5 +147,5 @@ const mapDispatchProps = {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, mapDispatchProps)(ProccessPeopleScreen)
+  connect(mapStateToProps, mapDispatchProps)(ProccessCertificateScreen)
 );
