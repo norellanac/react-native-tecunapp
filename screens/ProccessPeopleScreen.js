@@ -20,7 +20,7 @@ import {
   Body,
 } from "native-base";
 import { connect } from "react-redux";
-import * as jobsActions from "../src/actions/jobsActions";
+import * as rrhhActions from '../src/actions/rrhhActions';
 import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
@@ -41,8 +41,9 @@ class ProccessPeopleScreen extends Component {
     await this.props.getJobs(this.props.usuariosReducer.token);
   }
 
-  test() {
-    console.log("Hola mundo desde el boton");
+  loadingVacation () {
+    this.props.allCompany(this.props.usuariosReducer.token);
+    this.props.navigation.navigate("ProccessVacationScreen")
   }
 
   render() {
@@ -116,7 +117,7 @@ class ProccessPeopleScreen extends Component {
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
               <Button
-                onPress={() => this.props.navigation.navigate("ProccessVacationScreen") }
+                onPress={() => this.loadingVacation() }
                 style={{ backgroundColor: "#5FB404", width: screenWidth - 190, height: screenHeight / 17, borderRadius: 15 }}
               >
                 <Icon
@@ -167,7 +168,7 @@ const mapStateToProps = ({ jobsReducer, usuariosReducer }) => {
 };
 
 const mapDispatchProps = {
-  ...jobsActions,
+  ...rrhhActions,
   ...loginActions,
 };
 
