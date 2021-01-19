@@ -106,14 +106,27 @@ class ProccessVacationScreen extends Component {
 	  `Al elegir la empresa, se envía un correo electronico al encargado de nomina. Para continuar con la solicitud sobre cuantos dias de vacaciones tienes, por favor presione Aceptar. Se eviará un correo electronico con tu información y se contactaran contigo lo mas pronto posible.`,
       [
         {
-          text: "Cancel",
-          //onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
+          text: "Cancelar",
+          //onPress: () => console.log("Cancelar Pressed"),
+          style: "cancelar",
         },
-        { text: "Acepart", onPress: () => this.props.mailVacation(objectMail, token) },
+        { text: "Aceptar", onPress: () => this.sendMailVacation(objectMail, token) },
       ],
       { cancelable: false }
     );
+  }
+
+  sendMailVacation(objectMail, token) {
+		this.props.mailVacation(objectMail, token)
+		Alert.alert(
+			'Correo enviado exitosamente',
+			`Constancia solicitada correctamente, pronto llegara un correo electronico a su bandeja de entradas para corroborar dicha informacion. `,
+			[
+			  { text: "Aceptar", onPress: () => this.props.navigation.navigate("ProccessVacationScreen")},
+			],
+			{ cancelable: false }
+		  );	  
+		
   }
 
   render() {

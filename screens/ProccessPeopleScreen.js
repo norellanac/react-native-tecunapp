@@ -132,7 +132,7 @@ class ProccessPeopleScreen extends Component {
                   source={{ uri: this.state.pathImage + "entrevista.png" }}
                   style={{ backgroundColor: "#CEF6EC", borderRadius: 20, width: screenWidth / 3, height: screenHeight / 6 }}
                 />
-                <Text note style={{ marginBottom: 8, marginTop: 8 }}> Otros procesos de Recursos Humanos </Text>
+                <Text note style={{ marginBottom: 8, marginTop: 8 }}>Constancia laboral</Text>
               </Body>
             </CardItem>
             <CardItem style={{ backgroundColor: "white", justifyContent: 'center' }}>
