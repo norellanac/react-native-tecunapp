@@ -3,6 +3,7 @@ import { Dimensions, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
+import { Linking } from "react-native";
 import {
 	Container,
 	Content,
@@ -13,6 +14,8 @@ import {
 	Icon,
 	View,
 	ListItem,
+	Grid,
+	Col,
 	Item,
 	Text,
 	CardItem,
@@ -66,7 +69,7 @@ class PostsShowScreen extends Component {
 	loadInfoComment() {
 		//console.log("Que trae esto: ",this.props.postReducer.post);
 		if (this.props.postReducer.post.comments && this.state.showComments == true) {
-			console.log('Que trae el reducer de coment ', this.props.postReducer.post.comments);
+			//console.log('Que trae el reducer de coment ', this.props.postReducer.post.comments);
 			return this.props.postReducer.post.comments.map((comment) => (
 				<List key={comment.id}>
 					<ListItem avatar>
@@ -163,9 +166,7 @@ class PostsShowScreen extends Component {
 			);
 		}
 
-		//console.log("jobsProps: ", this.props);
-
-		console.log("post ",post);
+		//console.log(post.featured_document);
 
 		return (
 			<Container>
@@ -192,9 +193,27 @@ class PostsShowScreen extends Component {
 								<View style={{ flex: 1 }}>
 									<HTML source={{ html: post.content }} contentWidth={screenWidth} />
 								</View>
+								{(() => {
 
-								
+									if (post.featured_document) {
+										return(
+											<Grid>
+												<Col size={4} style={{ alignItems: 'center' }}>
+													<Button
+														onPress={() =>
+															Linking.openURL(this.state.pathImage + post.featured_document)
+														}
+														style={{ backgroundColor: '#0B0B61' }}
+													>
+														<Icon name="cloud-download" type="FontAwesome" />
+														<Text note>Descargar documento adjunto</Text>
+													</Button> 
+												</Col>
+											</Grid>
+										)	
+									}
 
+								})()}
 							</Body>
 						</CardItem>
 						{(() => {

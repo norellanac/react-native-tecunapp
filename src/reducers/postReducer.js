@@ -15,7 +15,6 @@ const INITIAL = {
     categories: [],
     categoryPostName: [],
     idCategory: '',
-    comment: [],
     likeOrDislike: [],
     idDestroy: [],
     postId: null,
@@ -38,7 +37,6 @@ export default (state = INITIAL, action) => {
                 ...state, posts: action.payload,
                 categories: action.categories,
                 categoryPostName: action.categoryPostName,
-                comment: action.comment,
                 idCategory: action.idCategory,
                 cargando: action.cargando
             };

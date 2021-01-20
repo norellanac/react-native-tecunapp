@@ -35,120 +35,41 @@ class PostsCategoryScreen extends Component {
     super();
   }
   state = {
-    posts: null,
-    postId: null,
-    selected: '',
-    more: 1,
+    selected: 0,
     pathImage: apiUrl.link + "/storage/posts/",
-    idCategory: '',
-    category: '',
-    categoryPostName: '',
-    comment: [],
-    isWaitingMap: 0
+    idCategory: 0,
   };
 
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");posts
-  };
-
-  async componentDidMount() {
-    //await this.props.getCategory(this.props.usuariosReducer.token);
-    //console.log("posts props", this.props.postReducer);
-    //console.log("posts state: ", this.state);
-  };
-
-  showNew(idNew) {
-    //console.log("Que trae idNew: ", idNew);
-    this.props.navigation.navigate("PostsShowCategoryScreen")
-    this.props.navigation.navigate("PostsShowCategoryScreen")
-    this.props.navigation.navigate("PostsShowCategoryScreen")
-    this.props.getShowPostCategory(idNew, this.props.usuariosReducer.token);
-    
-  }
-
-  setIdOneRecord(oneRecordArray, commentPost) {
-    /*console.log("Array del registro: ", oneRecordArray);
-    console.log("Reducer del registro: ", this.props.jobsReducer);*/
-    this.props.setIdOneRecordAction(oneRecordArray, commentPost);
-    this.props.navigation.navigate("PostsShowCategoryScreen")
-    
+  showNews(idPost) {
+    this.props.getShowPost(idPost, this.props.usuariosReducer.token);
+    this.props.navigation.navigate("PostsShowScreen")
   }
 
   onValueChange(key) {
 
     this.state.selected = key;
     this.state.idCategory = key;
+
+    //console.log(key);
     
     if(this.state.idCategory == 0){
       this.props.getNews(this.props.usuariosReducer.token);
+      this.props.navigation.navigate("Home");
     }else{
       this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
     }
   }
 
-  likePost(likeObject, token) {
-    let userID = this.props.usuariosReducer.user.id;
-    //console.log("Esto es lo que trae el objecto: ",likeObject);
-
-    if(userID != likeObject.userID){
-      this.props.likeOrDislike(likeObject, token);
-      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-
-    }else{
-      if(userID == likeObject.userID && likeObject.reactionActive == 1){
-        this.props.likeOrDislike(likeObject, token);
-        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-
-      }else{
-        this.props.likeOrDislike(likeObject, token);
-        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-        this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-      }
-    }
-  }
-
-  buttonLike(news) {
-    //Cambiamos el estado a 1 de la variable isWaitingMap
-    this.state.isWaitingMap = 1;
-
-    let active = [];
-    let postID = news.id;
-    let user_id = '';
+  async likePost(postID) {
     let token = this.props.usuariosReducer.token;
-    let userID = this.props.usuariosReducer.user.id;
-    let count = 0;
-    let likeObject = {};
+    await this.props.likeOrDislike(postID, token);
 
-    news.likes.map((like) => {
-      user_id = like.user_id;
-      
-      if(like.user_id == userID){
-        likeObject = {"reactionActive":like.active, "postID":like.post_id, "userID":userID};
-        //console.log("Que es lo que trae esto cuando estra: ", likeObject);
-      }
-
-      if(like.active == 1){
-        count++
-      }
-    })
-
-    //Cambiamos nuevamente la variable para que pueda hacer el map de los reducer y no mostrar nada 
-    //hasta que se termine de hacer el map correctamente
-    this.state.isWaitingMap = 0;
-
-    return(
-      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
-        <Icon name="like2" type="AntDesign" />
-        <Text>({count})</Text>
-      </Button>
-    )
+    if (this.state.idCategory == 0) {
+      this.props.getNews(this.props.usuariosReducer.token);
+      this.props.navigation.navigate("PostsScreen");
+    }else{
+      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+    }
   }
 
   loadContentCategories = () => {
@@ -162,14 +83,9 @@ class PostsCategoryScreen extends Component {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
 
-    //console.log("Que trae el reducer?: ", this.props.postReducer);
-
-    if (this.props.postReducer.posts || this.state.isWaitingMap == 1) {
-      //console.log("map posts largo: ", this.props.postReducer.post);
+    if (this.props.postReducer.posts) {
       return this.props.postReducer.posts.map((news) => (
-        //console.log("El objecto como tal de news: ", news),
-        this.state.comment = this.props.postReducer.comment,
-        console.log("Que trae el comentario: ", this.state.comment),
+        //console.log(this.props.postReducer.posts),
         <Card style={{ flex: 0 }} key={news.id}>
           <CardItem style={{ backgroundColor: "transparent" }}>
             <Left>
@@ -195,18 +111,27 @@ class PostsCategoryScreen extends Component {
           </CardItem>
           <CardItem>
             <Left>
-              {this.buttonLike(news)}
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(news.id)}>
+              {(() => {
+
+                if (news.user_likes_new){
+                  return <Icon name="like1" type="AntDesign" />
+                }else{
+                  return <Icon name="like2" type="AntDesign" />
+                }
+
+              })()}
+                <Text>({news.likes.length})</Text>
+              </Button>
             </Left>
             <Right>
-              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.setIdOneRecord(news, this.state.comment)}>
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showNews(news.id)}>
                 <Icon name="comment" type="FontAwesome" />
                 <Text>Comentarios</Text>
               </Button>
             </Right>
           </CardItem>
         </Card>
-
-
       ))
     } else {
       return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -216,18 +141,10 @@ class PostsCategoryScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
-    //console.log(this.props);
 
     this.state.categoryPostName = this.props.postReducer.categoryPostName;
 
-    //console.log(this.state.idCategory);
-
-    //const { navigation } = this.props.navigation
-
-    //console.log("Vista del post Category");
-
-    if (this.props.postReducer.cargando || this.state.isWaitingMap == 1) {
-      //console.log("jobsScreen: ", this.props);
+    if (this.props.postReducer.cargando) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -237,10 +154,6 @@ class PostsCategoryScreen extends Component {
         </Container>
       )
     }
-
-    //console.log(this.props.postReducer);
-
-    //console.log("jobsProps: ", this.props);
 
     return (
       <Container>

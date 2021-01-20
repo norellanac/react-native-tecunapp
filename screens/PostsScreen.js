@@ -54,6 +54,7 @@ class PostsScreen extends Component {
   async onValueChange(key) {
     this.state.selected = key;
     this.state.idCategory = key;
+
     if(this.state.idCategory == 0){
       await this.props.getNews(this.props.usuariosReducer.token);
     }else{

@@ -32,7 +32,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 		//console.log("Response:", response);
 
 		const data = await response.json();
-			console.log('post data?: ', data);
+			//console.log('post data?: ', data);
 		//console.log('Response post:', response);
 
 		if (response.ok) {
@@ -53,7 +53,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 };
 
 export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
-	//console.log(`${idCategory}`);
+	console.log(`${idCategory}`);
 	dispatch({
 		type: loadingPost
 	});
@@ -69,9 +69,6 @@ export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
 
 		const data = await response.json();
 		//console.log("postCategory: ", data);
-		/*
-        console.log("categoriesPost: ", data.categoryPostName);
-        console.log("Response:", response.ok);*/
 
 		if (response.ok) {
 			dispatch({
@@ -79,7 +76,6 @@ export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
 				payload: data.posts,
 				categories: data.categories,
 				categoryPostName: data.categoryPodcastName,
-				comment: data.comments,
 				idCategory: data.idCategory,
 				cargando: false
 			});
@@ -131,7 +127,7 @@ export const getShowPost = (idPost, tokenUsr) => async (dispatch) => {
 			});
 		}
 	} catch (error) {
-		console.log('Si llego aqui es porque hay error en Show', error.message);
+		//console.log('Si llego aqui es porque hay error en Show', error.message);
 		dispatch({
 			type: errorPost,
 			error: error.message,
@@ -330,7 +326,7 @@ export const likeOrDislike = (postID, token) => async (dispatch) => {
 
 		const data = await response.json();
 
-		console.log('LLego aqui?:', data);
+		//console.log('LLego aqui?:', data);
 
 		if (!response.ok) {
 			dispatch({
