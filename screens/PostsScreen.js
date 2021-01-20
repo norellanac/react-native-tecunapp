@@ -108,7 +108,15 @@ class PostsScreen extends Component {
           <CardItem>
             <Left>
               <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(news.id)}>
-                <Icon name="like2" type="AntDesign" />
+              {(() => {
+
+                if (news.user_likes_new){
+                  return <Icon name="like1" type="AntDesign" />
+                }else{
+                  return <Icon name="like2" type="AntDesign" />
+                }
+
+              })()}
                 <Text>({news.likes.length})</Text>
               </Button>
             </Left>
