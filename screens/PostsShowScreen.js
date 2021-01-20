@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
+import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
 	Container,
@@ -164,6 +165,8 @@ class PostsShowScreen extends Component {
 
 		//console.log("jobsProps: ", this.props);
 
+		console.log("post ",post);
+
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
@@ -189,8 +192,28 @@ class PostsShowScreen extends Component {
 								<View style={{ flex: 1 }}>
 									<HTML source={{ html: post.content }} contentWidth={screenWidth} />
 								</View>
+
+								
+
 							</Body>
 						</CardItem>
+						{(() => {
+							if (post.featured_video) {
+								return(
+									<ScrollView style={{ flex: 1 }}>
+										<WebView
+										source={{ html: `<iframe width="100%" height="100%" src="${post.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>` }}
+										scalesPageToFit={true}
+										bounces={false}
+										allowsFullscreenVideo={true}
+										javaScriptEnabled
+										style={{ height: 250, marginBottom: 30 }}
+										/>
+									</ScrollView>
+									
+								)
+							}
+						})()}
 						<Button
 							iconLeft
 							info
@@ -207,7 +230,7 @@ class PostsShowScreen extends Component {
 							{this.loadInfoComment()}
 							{this.inputComment()}
 						</ScrollView>
-					</Card>
+					</Card>		
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
 			</Container>
