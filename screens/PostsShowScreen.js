@@ -54,7 +54,13 @@ class PostsShowScreen extends Component {
 		//console.log("posts state: ", this.state);
 	}
 
-	loadContent = () => {};
+	loadIcon = () => {
+		if (this.state.showComments) {
+			return 'arrow-up';
+		} else {
+			return 'arrow-down';
+		}
+	};
 
 	loadInfoComment() {
 		//console.log("Que trae esto: ",this.props.postReducer.post);
@@ -94,27 +100,25 @@ class PostsShowScreen extends Component {
 		}
 	}
 
-	uploadComment(post_id, message, token) {
+	uploadComment = async (post_id, message, token) => {
 		let commentObject = { post_id: post_id, message: message };
-
-		this.props.uploadMessage(commentObject, token);
-		this.props.getShowPost(commentObject.post_id, token);
-		this.state.message = [];
+		await this.props.uploadMessage(commentObject, token);
+		await this.props.getShowPost(commentObject.post_id, token);
+		this.setState({ message: [] })
 		this.props.navigation.navigate('PostsShowScreen');
-	}
+	};
 
-	deleteMessage(id, token, post_id) {
+	deleteMessage = async (id, token, post_id) => {
 		let deleteObject = { id: id };
-
-		this.props.deleteMessage(deleteObject, token);
-		this.props.getShowPost(post_id, token);
+		await this.props.deleteMessage(deleteObject, token);
+		await this.props.getShowPost(post_id, token);
 		this.props.navigation.navigate('PostsShowScreen');
-	}
+	};
 
 	inputComment() {
 		if (this.props.postReducer.post.comments && this.state.showComments == true) {
 			return (
-				<Form style={{ marginRight: 45, marginLeft: 45, marginTop: 10, marginBottom: 20 }}>
+				<Form style={{ marginRight: 15, marginLeft: 15, marginTop: 10, marginBottom: 20 }}>
 					<Item rounded style={{ marginTop: 25 }}>
 						<Input
 							onChangeText={(message) => this.setState({ message })}
@@ -123,18 +127,18 @@ class PostsShowScreen extends Component {
 							placeholderTextColor="#000000"
 							style={{ color: '#000000' }}
 						/>
-						<Button
-							transparent
-							onPress={() =>
-								this.uploadComment(
-									this.state.postId,
-									this.state.message,
-									this.props.usuariosReducer.token
-								)}
-						>
-							<Icon name="send" type="FontAwesome" />
-						</Button>
 					</Item>
+					<Button
+						iconLeft
+						info
+						rounded
+						style={{ alignSelf: 'center', marginTop: 15 }}
+						onPress={() =>
+							this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}
+					>
+						<Icon name="comment" type="FontAwesome" />
+						<Text>Publicar comentario</Text>
+					</Button>
 				</Form>
 			);
 		}
@@ -193,13 +197,16 @@ class PostsShowScreen extends Component {
 							block
 							onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
 						>
-							<Icon name="cog" />
-							<Text>Comentarios</Text>
+							<Icon name={this.loadIcon()} type="FontAwesome">
+								{' '}
+							</Icon>
+							<Text> Ver Comentarios</Text>
+							<Icon name="comments" type="FontAwesome" />
 						</Button>
 						<ScrollView>
-              {this.loadInfoComment()}
-              {this.inputComment()}
-            </ScrollView>
+							{this.loadInfoComment()}
+							{this.inputComment()}
+						</ScrollView>
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />

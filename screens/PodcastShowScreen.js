@@ -97,7 +97,6 @@ class PodcastShowScreen extends Component {
                   style={{ width: screenWidth - 20, height: 150 }}
                 />
                 <Text note>{this.props.podcastReducer.podcast.created_at}</Text>
-                <Text></Text>
                 <Text>{this.props.podcastReducer.podcast.description}</Text>
                 <ScrollView style={{ flex: 1 }}>
                   <HTML source={{ html: this.props.podcastReducer.podcast.content }} contentWidth={screenWidth} />
@@ -106,7 +105,6 @@ class PodcastShowScreen extends Component {
               </Body>
             </CardItem>
           </Card>
-          <Text>test</Text>
           <WebView
             source={{ html: '<iframe src="https://open.spotify.com/embed-podcast/episode/40Ga1hhr0RDO0dvLhqbvM3" width="100%" height="232" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' }}
             scalesPageToFit={true}

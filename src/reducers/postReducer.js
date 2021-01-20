@@ -30,7 +30,7 @@ export default (state = INITIAL, action) => {
         case loadingPost:
             return { ...state, cargando: true };
         case errorPost:
-            return { ...state, error: action.error, cargando: action.cargando };
+            return { ...state, error: action.error, cargando: action.cargando, cargandoLike: action.cargando };
         case commentPost:
             return { ...state, comment: action.payload, cargando: action.cargando };
         case categoryPost:
