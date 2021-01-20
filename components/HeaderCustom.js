@@ -31,7 +31,7 @@ function HeaderCustom(props) {
     <Header style={{ backgroundColor: '#ed913b' }}>
       <Left>
         <Button transparent onPress={() => props.navigation.goBack()}>
-          <Icon name="arrow-back" />
+          <Icon style={{ color: '#FFFFFF' }} name="arrow-back" />
         </Button>
       </Left>
       <Body>
@@ -39,7 +39,7 @@ function HeaderCustom(props) {
       </Body>
       <Right>
         <Button transparent onPress={() => props.navigation.navigate("SettingsScreen")}>
-          <Icon name="user" type="FontAwesome" />
+          <Icon style={{ color: '#FFFFFF' }} name="user" type="FontAwesome" />
           <Text style={{ color: "#ffffff" }}>{props.usuariosReducer.user.name} </Text>
         </Button>
 
@@ -47,7 +47,7 @@ function HeaderCustom(props) {
           transparent
           onPress={() => logout()}
         >
-          <Icon name="sign-out-alt" type="FontAwesome5" />
+          <Icon style={{ color: '#FFFFFF' }} name="sign-out-alt" type="FontAwesome5" />
         </Button>
       </Right>
     </Header>

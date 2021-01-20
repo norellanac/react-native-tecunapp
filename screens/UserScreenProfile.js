@@ -47,15 +47,6 @@ class UserScreenProfile extends Component {
 	notificationListener;
 	responseListener;
 
-	logout = async () => {
-		//await this.props.logoutUser();
-		console.log('borró usuario');
-		//await this.props.resetAddress();
-		await persistor.purge();
-		this.props.navigation.navigate('Login');
-		console.log('borró direccion');
-	};
-
 	componentDidMount() {
 		if (Platform.OS === 'android' && !Constants.isDevice) {
 			this.setState({
@@ -64,7 +55,6 @@ class UserScreenProfile extends Component {
 		} else {
 			this.getTokenExpoNotificationsPush();
 		}		
-		//this.registerForPushNotificationsAsync();
 	}
 
 	getTokenExpoNotificationsPush = async () => {
@@ -135,38 +125,6 @@ class UserScreenProfile extends Component {
 		});
 	}
 
-	async registerForPushNotificationsAsync() {
-		let token;
-		if (Constants.isDevice) {
-			const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-			let finalStatus = existingStatus;
-			if (existingStatus !== 'granted') {
-				const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-				finalStatus = status;
-			}
-			if (finalStatus !== 'granted') {
-				alert('Failed to get push token for push notification!');
-				return;
-			}
-			token = (await Notifications.getExpoPushTokenAsync()).data;
-			console.log(token);
-		} else {
-			alert('Must use physical device for Push Notifications');
-		}
-
-		if (Platform.OS === 'android') {
-			Notifications.setNotificationChannelAsync('default', {
-				name: 'default',
-				importance: Notifications.AndroidImportance.MAX,
-				vibrationPattern: [ 0, 250, 250, 250 ],
-				lightColor: '#FF231F7C'
-			});
-		}
-
-		this.setState({ expoPushToken: token });
-
-		return token;
-	}
 
 	showTokenAlert = () => {
 		if (this.state.expoPushToken && this.state.isShowAlert) {
@@ -227,22 +185,11 @@ class UserScreenProfile extends Component {
 			);
 		}
 	};
-	ponerContenido = () => {
-		if (this.props.cargando) {
-			return <Spinner color="blue" style={{ flex: 1 }} />;
-		}
-		return <Grid />;
-	};
 
 	render() {
-		this.setState({
-			errorMessage: this.props.loginReducer.error
-		});
 		//const { navigation } = this.props.navigation
 
 		console.log('ajustes: ', this.state);
-
-		console.log('revisa si tiene el token', Permissions);
 
 		return (
 			<Container>
