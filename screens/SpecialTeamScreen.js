@@ -28,7 +28,8 @@ class SpecialTeamScreen extends Component {
     super();
   }
   state = {
-    awards: []
+    awards: [],
+    pathImage: apiUrl.link + "/storage/awards/",
   };
 
   async componentDidMount() {
@@ -39,7 +40,7 @@ class SpecialTeamScreen extends Component {
   }
 
   awardsUrlImage0() {
-    const pathImage = "http://157.55.181.102/storage/awards/";
+    const pathImage = this.state.pathImage;
     var sliderImages = [];
     var url = "";
     this.props.awardReducer.awards.map((award) => {
@@ -55,7 +56,7 @@ class SpecialTeamScreen extends Component {
   }
 
   awardsUrlImage1() {
-    const pathImage = "http://157.55.181.102/storage/awards/";
+    const pathImage = this.state.pathImage;
     var sliderImages = [];
     var url = "";
     this.props.awardReducer.awards.map((award) => {

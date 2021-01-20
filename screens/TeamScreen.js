@@ -23,7 +23,8 @@ class TeamScreen extends Component {
 		email: '',
 		phone: '',
 		password: '',
-		confirmPassword: ''
+		confirmPassword: '',
+		pathImage: apiUrl.link + "/storage/awards/",
 	};
 
 	async componentDidMount() {
@@ -70,7 +71,7 @@ class TeamScreen extends Component {
 	};
 
 	awardsUrlImageActive() {
-		const pathImage = 'http://157.55.181.102/storage/awards/';
+		const pathImage = this.state.pathImage;
 		var sliderImages = [];
 		var url = '';
 		this.props.awardReducer.awards.map((award) => {

@@ -36,21 +36,14 @@ class PostsScreen extends Component {
     super();
   }
   state = {
-    posts: null,
-    postId: null,
     selected: 0,
-    more: 1,
     pathImage: apiUrl.link + "/storage/posts/",
     idCategory: 0,
-    category: ''
   };
 
 
   async componentDidMount() {
-      await this.props.getNews(this.props.loginReducer.token);
-    //await this.props.getIdCategory(this.state.idCategory);
-    console.log("posts props", this.props);
-    //console.log("posts state: ", this.state);
+    await this.props.getNews(this.props.usuariosReducer.token);
   };
 
   showNews(idPost) {
@@ -61,25 +54,12 @@ class PostsScreen extends Component {
   onValueChange(key) {
     this.state.selected = key;
     this.state.idCategory = key;
-
     if(this.state.idCategory == 0){
       this.props.getNews(this.props.usuariosReducer.token);
     }else{
       this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
       this.props.navigation.navigate("PostsCategoryScreen");
     }
-  }
-
-  setIdSearchNew(news) {
-    //console.log("Array del job: ", jobArray);
-    //console.log("Reducer del job: ", this.props.postReducer);
-    this.props.setIdNewSearch(news);
-    this.props.navigation.navigate("PostsShowScreen")
-  }
-
-  async showPosts(idPost) {
-    await this.props.getShowPost(idPost);
-    this.props.navigation.navigate("PostsShowScreen")
   }
 
   loadContentCategories = () => {
@@ -89,63 +69,10 @@ class PostsScreen extends Component {
     ))
   }
 
-  likePost(likeObject, token) {
-    let userID = this.props.usuariosReducer.user.id;
-    //console.log("Esto es lo que trae el objecto: ",likeObject);
-
-    if(userID != likeObject.userID){
-      this.props.likeOrDislike(likeObject, token);
-      this.props.getNews(token);
-      this.props.getNews(token);
-
-    }else{
-      if(userID == likeObject.userID && likeObject.reactionActive == 1){
-        this.props.likeOrDislike(likeObject, token);
-        this.props.getNews(token);
-        this.props.getNews(token);
-
-      }else{
-        this.props.likeOrDislike(likeObject, token);
-        this.props.getNews(token);
-        this.props.getNews(token);
-
-      }
-    }
-  }
-
-  buttonLike(news) {
-    let active = [];
-    let postID = news.id;
-    let user_id = '';
+  async likePost(postID) {
     let token = this.props.usuariosReducer.token;
-    let userID = this.props.usuariosReducer.user.id;
-    let count = 0;
-    let likeObject = {};
-
-    news.likes.map((like) => {
-      user_id = like.user_id;
-
-      if (like.user_id != userID) {
-        console.log("Que trae el user_id? ",like.user_id);
-        console.log("Que trae el userID? ",userID);
-      }
-      
-      if(like.post_id === postID && like.user_id === userID){
-        likeObject = {"reactionActive":like.active, "postID":postID, "userID":userID};
-        console.log("Que es lo que trae esto cuando entra: ", likeObject);
-      }
-
-      if(like.active == 1){
-        count++
-      }
-    })
-
-    return(
-      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
-        <Icon name="like2" type="AntDesign" />
-        <Text>({count})</Text>
-      </Button>
-    )
+    await this.props.likeOrDislike(postID, token);
+    await this.props.getNews(token);
   }
 
   loadContent = () => {
@@ -180,8 +107,10 @@ class PostsScreen extends Component {
           </CardItem>
           <CardItem>
             <Left>
-              {this.buttonLike(news)}
-              
+              <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(news.id)}>
+                <Icon name="like2" type="AntDesign" />
+                <Text>({news.likes.length})</Text>
+              </Button>
             </Left>
             <Right>
               <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showNews(news.id)}>
@@ -200,18 +129,8 @@ class PostsScreen extends Component {
   render() {
     var screenWidth = Dimensions.get("window").width;
     var screenHeight = Dimensions.get("window").height;
-    if (this.props.postReducer.posts.likes) {
-      var likeActive=this.props.postReducer.posts.likes.filter((record)=> {
-        
-      })
-      
-    }
-    //console.log(this.state.idCategory);
 
-    //const { navigation } = this.props.navigation
-
-    if (this.props.postReducer.cargandoLike || this.props.postReducer.cargando) {
-      //console.log("jobsScreen: ", this.props);
+    if (this.props.postReducer.cargando) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -221,10 +140,6 @@ class PostsScreen extends Component {
         </Container>
       )
     }
-
-    //console.log(this.props.postReducer);
-
-    //console.log("jobsProps: ", this.props);
 
     return (
       <Container>

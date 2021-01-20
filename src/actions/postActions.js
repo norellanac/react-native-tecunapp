@@ -32,8 +32,8 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 		//console.log("Response:", response);
 
 		const data = await response.json();
-		console.log('post data?: ', data);
-		console.log('Response post:', response);
+		//console.log('post data?: ', data);
+		//console.log('Response post:', response);
 
 		if (response.ok) {
 			dispatch({
@@ -308,22 +308,15 @@ export const deleteMessage = (id, token) => async (dispatch) => {
 	}
 };
 
-export const likeOrDislike = (likeObject, token) => async (dispatch) => {
-	//console.log("Este es token: ",token);
+export const likeOrDislike = (postID, token) => async (dispatch) => {
+	//console.log("Este es postID: ",postID);
 	dispatch({
-		type: loadingPostLike
+		type: loadingPost
 	});
-	console.log('En teoria este es el array de likeObject: ', likeObject);
 	try {
-		/*console.log("Que trae el post_id: ",post_id);
-        console.log("Que trae el message: ",message);
-        console.log("Que trae el token: ",token);*/
-		let json = JSON.stringify(likeObject);
-		let params = 'json=' + json;
 
 		let dataForm = '_method=' + encodeURIComponent('POST');
-		dataForm += '&json=' + encodeURIComponent(likeObject);
-		console.log("Que trae data form: ",dataForm);
+		dataForm += '&postID=' + encodeURIComponent(postID);
 		const response = await fetch(`${apiUrl.link}/api/likeordislikenews`, {
 			method: 'POST',
 			headers: {
@@ -349,7 +342,7 @@ export const likeOrDislike = (likeObject, token) => async (dispatch) => {
 			dispatch({
 				type: likeOrDislikeNews,
 				payload: data.message,
-				cargandoLike: false
+				cargando: false
 			});
 			//console.log("Que trae Data", data);
 		}
