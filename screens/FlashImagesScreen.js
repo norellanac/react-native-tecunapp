@@ -81,24 +81,8 @@ class FlashImagesScreen extends Component {
   };
 
 
-
-
-
-
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
-  };
-
   async componentDidMount() {
-
     await this.props.getPicturesAction(this.props.usuariosReducer.token);
-    console.log("pictures props", this.props);
-    console.log("pictures state: ", this.state);
   }
 
 

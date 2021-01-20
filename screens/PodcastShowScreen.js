@@ -85,7 +85,7 @@ class PodcastShowScreen extends Component {
               <Left>
                 <Thumbnail
                   style={{ backgroundColor: "#000000" }}
-                  source={require("../assets/images/robot-dev.png")}
+                  source={{ uri: `${apiUrl.link}/img/logo.png` }}
                 />
                 <Text>{this.props.podcastReducer.podcast.title}</Text>
               </Left>

@@ -51,13 +51,13 @@ class PostsScreen extends Component {
     this.props.navigation.navigate("PostsShowScreen")
   }
 
-  onValueChange(key) {
+  async onValueChange(key) {
     this.state.selected = key;
     this.state.idCategory = key;
     if(this.state.idCategory == 0){
-      this.props.getNews(this.props.usuariosReducer.token);
+      await this.props.getNews(this.props.usuariosReducer.token);
     }else{
-      this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+      await this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
       this.props.navigation.navigate("PostsCategoryScreen");
     }
   }
