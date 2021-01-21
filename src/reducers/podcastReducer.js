@@ -1,9 +1,10 @@
-import { getAllPodcast, showPodcast, commentPodcast, loadingPodcast, errorPodcast, categoryPodcast,  likeOrDislikePodcast, deleteComment, idSearchPodcast} from '../types/podcastType';
+import { getAllPodcast, getPodcast, showPodcast, loadingPodcast, loadingPodcastLike, errorPodcast, categoryPodcast, showPodcastCategory, commentPodcast, likeOrDislikePodcast, deleteComment, idSearchNew } from '../types/postType';
 import { PURGE } from 'redux-persist';
 
 const INITIAL = {
     podcasts: [],
     podcast: [],
+    postCategory: [],
     document: [],
     image: [],
     cargando: false,
@@ -13,8 +14,6 @@ const INITIAL = {
     categories: [],
     categoryPodcastName: [],
     idCategory: '',
-    comment: [],
-    object: [],
     likeOrDislike: [],
     idDestroy: [],
     podcastId: null,
@@ -37,9 +36,7 @@ export default (state = INITIAL, action) => {
                 ...state, podcasts: action.payload,
                 categories: action.categories,
                 categoryPodcastName: action.categoryPodcastName,
-                comment: action.comment,
                 idCategory: action.idCategory,
-                cargando: [],
                 cargando: action.cargando
             };
         case showPodcast:
@@ -49,16 +46,21 @@ export default (state = INITIAL, action) => {
                 categoryPodcastName: action.categoryName,
                 cargando: action.cargando
             };
-        case likeOrDislikePodcast:
-            return { 
+        case showPodcastCategory:
+            return {
                 ...state, 
-                likeOrDislike: action.payload, 
-                object: action.object, 
-                cargando: [],
-                cargando: action.cargando 
+                podcast: [],
+                categoryPostName: [],
+                podcast: action.payload,
+                categoryPodcastName: action.categoryName,
+                cargando: action.cargando
             };
+        case getPodcast:
+            return {...state, podcast: action.payload, comment: action.comment };
         case deleteComment:
             return { ...state, cargando: action.cargando };
+        case likeOrDislikePodcast:
+            return { ...state, likeOrDislike: action.payload, cargando: action.cargandoLike };
         case idSearchPodcast:
             return { ...state, podcastId: action.payload.id, podcast: action.payload }
         case PURGE:

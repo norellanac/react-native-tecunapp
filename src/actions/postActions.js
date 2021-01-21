@@ -29,8 +29,6 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 			}
 		});
 
-		//console.log("Response:", response);
-
 		const data = await response.json();
 			//console.log('post data?: ', data);
 		//console.log('Response post:', response);
@@ -53,7 +51,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 };
 
 export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
-	console.log(`${idCategory}`);
+	//console.log(`${idCategory}`);
 	dispatch({
 		type: loadingPost
 	});
@@ -68,7 +66,6 @@ export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
 		});
 
 		const data = await response.json();
-		//console.log("postCategory: ", data);
 
 		if (response.ok) {
 			dispatch({
@@ -330,13 +327,13 @@ export const likeOrDislike = (postID, token) => async (dispatch) => {
 
 		if (!response.ok) {
 			dispatch({
-				type: errorPost,
+				type: errorPodcast,
 				error: 'Error Al publicar el like, ' + response.status,
 				cargando: false
 			});
 		} else {
 			dispatch({
-				type: likeOrDislikeNews,
+				type: likeOrDislikePodcast,
 				payload: data.message,
 				cargando: false
 			});
