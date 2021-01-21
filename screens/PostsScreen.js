@@ -88,8 +88,7 @@ class PostsScreen extends Component {
             <Left>
               <Thumbnail
                 style={{ backgroundColor: "#000000" }}
-                source={require("../assets/images/robot-dev.png")}
-              />
+                source={{ uri: `${apiUrl.link}/img/logo.png` }}              />
               <Body>
                 <Text>{news.title}</Text>
                 <Text note>{news.created_at}</Text>

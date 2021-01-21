@@ -26,8 +26,6 @@ import * as loginActions from "../src/actions/loginActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
 import HederPostSection from "../components/HederPostSection";
-import { persistor } from "../App";
-import { SliderBox } from "react-native-image-slider-box";
 import { apiUrl } from '../App';
 
 import Loading from "./../components/Loading";
@@ -45,19 +43,11 @@ class PodcastScreen extends Component {
     category: ''
   };
 
-  logout = async () => {
-    //await this.props.logoutUser();
-    console.log("borró usuario");
-    //await this.props.resetAddress();
-    await persistor.purge();
-    this.props.navigation.navigate("Login");
-    console.log("borró direccion");
-  };
 
   async componentDidMount() {
 
     await this.props.allPodcast(this.props.usuariosReducer.token);
-    //console.log("podcast props", this.props);
+    console.log("podcast props", this.props.podcastReducer);
     //console.log("podcast state: ", this.state);
   }
 

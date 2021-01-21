@@ -3,7 +3,7 @@ import { Dimensions, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
-import { Linking } from "react-native";
+import { Linking } from 'react-native';
 import {
 	Container,
 	Content,
@@ -108,7 +108,7 @@ class PostsShowScreen extends Component {
 		let commentObject = { post_id: post_id, message: message };
 		await this.props.uploadMessage(commentObject, token);
 		await this.props.getShowPost(commentObject.post_id, token);
-		this.setState({ message: [] })
+		this.setState({ message: [] });
 		this.props.navigation.navigate('PostsShowScreen');
 	};
 
@@ -177,7 +177,7 @@ class PostsShowScreen extends Component {
 							<Left>
 								<Thumbnail
 									style={{ backgroundColor: '#000000' }}
-									source={require('../assets/images/robot-dev.png')}
+									source={{ uri: `${apiUrl.link}/img/logo.png` }}
 								/>
 								<Text>{post.title}</Text>
 							</Left>
@@ -194,43 +194,43 @@ class PostsShowScreen extends Component {
 									<HTML source={{ html: post.content }} contentWidth={screenWidth} />
 								</View>
 								{(() => {
-
 									if (post.featured_document) {
-										return(
+										return (
 											<Grid>
 												<Col size={4} style={{ alignItems: 'center' }}>
 													<Button
 														onPress={() =>
-															Linking.openURL(this.state.pathImage + post.featured_document)
-														}
+															Linking.openURL(
+																this.state.pathImage + post.featured_document
+															)}
 														style={{ backgroundColor: '#0B0B61' }}
 													>
 														<Icon name="cloud-download" type="FontAwesome" />
 														<Text note>Descargar documento adjunto</Text>
-													</Button> 
+													</Button>
 												</Col>
 											</Grid>
-										)	
+										);
 									}
-
 								})()}
 							</Body>
 						</CardItem>
 						{(() => {
 							if (post.featured_video) {
-								return(
+								return (
 									<ScrollView style={{ flex: 1 }}>
 										<WebView
-										source={{ html: `<iframe width="100%" height="100%" src="${post.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>` }}
-										scalesPageToFit={true}
-										bounces={false}
-										allowsFullscreenVideo={true}
-										javaScriptEnabled
-										style={{ height: 250, marginBottom: 30 }}
+											source={{
+												html: `<iframe width="100%" height="100%" src="${post.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
+											}}
+											scalesPageToFit={true}
+											bounces={false}
+											allowsFullscreenVideo={true}
+											javaScriptEnabled
+											style={{ height: 250, marginBottom: 30 }}
 										/>
 									</ScrollView>
-									
-								)
+								);
 							}
 						})()}
 						<Button
@@ -249,7 +249,7 @@ class PostsShowScreen extends Component {
 							{this.loadInfoComment()}
 							{this.inputComment()}
 						</ScrollView>
-					</Card>		
+					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
 			</Container>
