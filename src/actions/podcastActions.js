@@ -70,6 +70,8 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
 
         const data = await response.json();
 
+        console.log('Que trae data? ',data);
+
         if(response.ok){
             dispatch({
                 type: categoryPodcast,
@@ -153,6 +155,8 @@ export const updatePodcastAfterComment = (podcast_id, tokenUsr) => async (dispat
 };
 
 export const uploadMessage = (comment, token) => async dispatch => {
+
+    console.log("Comment ",comment);
     dispatch({
         type: loadingPodcast
     });
@@ -176,6 +180,8 @@ export const uploadMessage = (comment, token) => async dispatch => {
         });
 
         const data = await response.json();
+
+        console.log("data ",data);
 
         if (!response.ok) {
             dispatch({

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
+import { WebView } from 'react-native-webview';
+import { Linking } from "react-native";
 import { Audio } from 'expo-av';
 import { withNavigation } from 'react-navigation';
 import {
@@ -44,8 +46,11 @@ class PodcastShowScreen extends Component {
 		podcast: null,
 		jobId: null,
 		pathImage: apiUrl.link + '/storage/podcast/',
+		link: apiUrl.link,
 		showComments: false,
-		postId: ''
+		showSpotify: false,
+		showAudio: false,
+		podcastId: ''
 	};
 
 	async componentDidMount() {
@@ -62,9 +67,9 @@ class PodcastShowScreen extends Component {
 	};
 
 	loadInfoComment() {
-		//console.log("Que trae esto: ",this.props.podcastReducer.podcast);
+		//console.log("Que trae esto: ",this.props.podcastReducer.post);
 		if (this.props.podcastReducer.podcast.comments && this.state.showComments == true) {
-			//console.log('Que trae el reducer de coment ', this.props.podcastReducer.podcast.comments);
+			//console.log('Que trae el reducer de coment ', this.props.podcastReducer.post.comments);
 			return this.props.podcastReducer.podcast.comments.map((comment) => (
 				<List key={comment.id}>
 					<ListItem avatar>
@@ -91,7 +96,7 @@ class PodcastShowScreen extends Component {
 				<Button
 					danger
 					transparent
-					onPress={() => this.deleteMessage(commentID, this.props.usuariosReducer.token, this.state.postId)}
+					onPress={() => this.deleteMessage(commentID, this.props.usuariosReducer.token, this.state.podcastId)}
 				>
 					<Icon name="delete" type="AntDesign" />
 				</Button>
@@ -99,19 +104,19 @@ class PodcastShowScreen extends Component {
 		}
 	}
 
-	uploadComment = async (post_id, message, token) => {
-		let commentObject = { post_id: post_id, message: message };
+	uploadComment = async (podcast_id, message, token) => {
+		let commentObject = { podcast_id: podcast_id, message: message };
 		await this.props.uploadMessage(commentObject, token);
-		await this.props.getShowPodcast(commentObject.post_id, token);
+		await this.props.getShowPodcast(commentObject.podcast_id, token);
 		this.setState({ message: [] });
-		this.props.navigation.navigate('PostsShowScreen');
+		this.props.navigation.navigate('PodcastShowScreen');
 	};
 
-	deleteMessage = async (id, token, post_id) => {
+	deleteMessage = async (id, token, podcast_id) => {
 		let deleteObject = { id: id };
 		await this.props.deleteMessage(deleteObject, token);
-		await this.props.getShowPodcast(post_id, token);
-		this.props.navigation.navigate('PostsShowScreen');
+		await this.props.getShowPodcast(podcast_id, token);
+		this.props.navigation.navigate('PodcastShowScreen');
 	};
 
 	inputComment() {
@@ -133,7 +138,7 @@ class PodcastShowScreen extends Component {
 						rounded
 						style={{ alignSelf: 'center', marginTop: 15 }}
 						onPress={() =>
-							this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}
+							this.uploadComment(this.state.podcastId, this.state.message, this.props.usuariosReducer.token)}
 					>
 						<Icon name="comment" type="FontAwesome" />
 						<Text>Publicar comentario</Text>
@@ -146,16 +151,31 @@ class PodcastShowScreen extends Component {
 	async playSound() {
 		console.log('Loading Sound');
 		let sound = await Audio.Sound.createAsync(
-			{ uri: `https://file-examples-com.github.io/uploads/2017/11/file_example_MP3_700KB.mp3` },
+			{ uri: this.state.pathImage + this.props.podcastReducer.podcast.featured_audio },
 			{ shouldPlay: true }
 		);
 		console.log('Playing Sound', sound);
 	}
 
-	loadContent = () => {
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
-	};
+	inputSpotify() {
+		if (this.props.podcastReducer.podcast.featured_spotify && this.state.showSpotify == true) {
+			return (<WebView
+				source={{ html: `<iframe src="${this.props.podcastReducer.podcast.featured_spotify}" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>` }}
+				scalesPageToFit={true}
+				bounces={false}
+				javaScriptEnabled
+				style={{ height: 140 }}
+			/> )
+		}
+	}
+
+	inputAudio() {
+		if (this.props.podcastReducer.podcast.featured_audio && this.state.showAudio == true) {
+			return (<Button full title="Play Sound"  onPress={this.playSound()}>
+				<Text> Play</Text>
+			</Button>)
+		}
+	}
 
 	render() {
 		var screenWidth = Dimensions.get('window').width;
@@ -163,9 +183,11 @@ class PodcastShowScreen extends Component {
 
 		//const { navigation } = this.props.navigation
 
-		console.log('podcast screen: ', this.props.podcastReducer);
+		this.state.podcastId = this.props.podcastReducer.podcast.id;
 
-		if (this.props.podcastReducer.cargando) {
+		const podcast = Object.assign({}, this.props.podcastReducer.podcast);
+
+		if (this.props.podcastReducer.cargando || this.props.podcastReducer.podcast.comments == undefined) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
@@ -176,40 +198,124 @@ class PodcastShowScreen extends Component {
 			);
 		}
 
-		//console.log("jobsProps: ", this.props);
-
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<Card style={{ flex: 0 }} key={this.props.podcastReducer.podcast.id}>
+					<Card style={{ flex: 0 }} key={podcast.id}>
 						<CardItem style={{ backgroundColor: 'transparent' }}>
 							<Left>
 								<Thumbnail
 									style={{ backgroundColor: '#000000' }}
 									source={{ uri: `${apiUrl.link}/img/logo.png` }}
 								/>
-								<Text>{this.props.podcastReducer.podcast.title}</Text>
+								<Text>{podcast.title}</Text>
 							</Left>
 						</CardItem>
 						<CardItem>
 							<Body>
 								<Image
 									source={{
-										uri: this.state.pathImage + this.props.podcastReducer.podcast.featured_image
+										uri: this.state.pathImage + podcast.featured_image
 									}}
 									style={{ width: screenWidth - 20, height: 150 }}
 								/>
-								<Text note>{this.props.podcastReducer.podcast.created_at}</Text>
-								<Text>{this.props.podcastReducer.podcast.description}</Text>
+								<Text note>{podcast.created_at}</Text>
+							</Body>
+						</CardItem>
+						<CardItem>
+							<Left>
+								{(() => {
+									if (podcast.featured_spotify) {
+										return (<Button transparent textStyle={{ color: "#87838B" }}
+													onPress={(showSpotify) => this.setState({ showSpotify: !this.state.showSpotify })}
+												>
+													<Icon name="spotify" type="FontAwesome"></Icon>
+													<Text>Spotify</Text>
+												</Button>)
+									}
+								})()}
+							</Left>
+							<Body>
+								{(() => {
+									if (podcast.featured_audio) {
+										return (<Button transparent textStyle={{ color: "#87838B" }}
+													onPress={() =>
+														Linking.openURL(this.state.pathImage + podcast.featured_audio)
+										  }
+												>
+													<Icon name="file-download" type="FontAwesome5"></Icon>
+													<Text>Descargar</Text>
+												</Button>)
+									}
+								})()}
+							</Body>
+							<Right>
+							{(() => {
+									if (podcast.featured_audio) {
+										return (<Button transparent textStyle={{ color: "#87838B" }}
+													onPress={(showAudio) => this.setState({ showAudio: !this.state.showAudio })}
+												>
+													<Icon name="file-audio" type="FontAwesome5"></Icon>
+													<Text>Audio</Text>
+												</Button>)
+									}
+								})()}
+							</Right>
+						</CardItem>
+						<ScrollView>
+							{this.inputSpotify()}
+							{this.inputAudio()}
+						</ScrollView>
+						<CardItem>
+							<Body>
+								<Text>{podcast.description}</Text>
 								<ScrollView style={{ flex: 1 }}>
 									<HTML
-										source={{ html: this.props.podcastReducer.podcast.content }}
+										source={{ html: podcast.content }}
 										contentWidth={screenWidth}
 									/>
 								</ScrollView>
+								{(() => {
+									if (podcast.featured_document) {
+										return (
+											<Grid>
+												<Col size={4} style={{ alignItems: 'center' }}>
+													<Button
+														onPress={() =>
+															Linking.openURL(
+																this.state.pathImage + podcast.featured_document
+															)}
+														style={{ backgroundColor: '#0B0B61' }}
+													>
+														<Icon name="cloud-download" type="FontAwesome" />
+														<Text note>Descargar documento adjunto</Text>
+													</Button>
+												</Col>
+											</Grid>
+										);
+									}
+								})()}
 							</Body>
 						</CardItem>
+						{(() => {
+							if (podcast.featured_video) {
+								return (
+									<ScrollView style={{ flex: 1 }}>
+										<WebView
+											source={{
+												html: `<iframe width="100%" height="100%" src="${podcast.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
+											}}
+											scalesPageToFit={true}
+											bounces={false}
+											allowsFullscreenVideo={true}
+											javaScriptEnabled
+											style={{ height: 250, marginBottom: 30 }}
+										/>
+									</ScrollView>
+								);
+							}
+						})()}
 						<Button
 							iconLeft
 							info
@@ -227,7 +333,7 @@ class PodcastShowScreen extends Component {
 							{this.inputComment()}
 						</ScrollView>
 					</Card>
-					<Video
+					{/* <Video
 						source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
 						rate={1.0}
 						volume={1.0}
@@ -240,13 +346,14 @@ class PodcastShowScreen extends Component {
 
 					<Button full>
 						<Text>Hola mundo</Text>
-					</Button>
-					<Button full title="Play Sound" onPress={this.playSound}>
+					</Button> */}
+					{/* <Button full title="Play Sound" onPress={this.playSound}>
 						<Text> Play</Text>
-					</Button>
+					</Button> */}
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
 			</Container>
+			
 		);
 	}
 }
@@ -262,3 +369,12 @@ const mapDispatchProps = {
 };
 
 export default withNavigation(connect(mapStateToProps, mapDispatchProps)(PodcastShowScreen));
+
+/* <WebView
+		source={{ html: '<iframe src="https://open.spotify.com/embed-podcast/episode/40Ga1hhr0RDO0dvLhqbvM3" width="100%" height="100%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>' }}
+		scalesPageToFit={true}
+		bounces={false}
+		javaScriptEnabled
+		style={{ height: 140 }}
+	/> 
+*/
