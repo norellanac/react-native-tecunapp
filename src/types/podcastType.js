@@ -12,3 +12,4 @@ export const idSearchNew = 'idSearchNew';
 export const showPodcast = 'showPodcast';
 export const showPodcastCategory = 'showPodcastCategory';
 export const loadingPodcastLike = 'loadingPodcastLike';
+export const idSearchPodcast = 'idSearchPodcast';

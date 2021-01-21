@@ -1,4 +1,4 @@
-import { getAllPodcast, getPodcast, showPodcast, loadingPodcast, loadingPodcastLike, errorPodcast, categoryPodcast, showPodcastCategory, commentPodcast, likeOrDislikePodcast, deleteComment, idSearchNew } from '../types/postType';
+import { getAllPodcast, getPodcast, showPodcast, loadingPodcast, loadingPodcastLike, errorPodcast, categoryPodcast, showPodcastCategory, commentPodcast, likeOrDislikePodcast, deleteComment, idSearchPodcast } from '../types/podcastType';
 import { PURGE } from 'redux-persist';
 
 const INITIAL = {

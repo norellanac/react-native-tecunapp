@@ -24,7 +24,6 @@ import StoreShowScreen from '../screens/StoreShowScreen';
 import JobShowScreen from '../screens/JobShowScreen';
 import HomeShowScreen from '../screens/HomeShowScreen';
 import PostsCategoryScreen from '../screens/PostsCategoryScreen';
-import PostsShowCategoryScreen from '../screens/PostsShowCategoryScreen';
 import ProccessVacationScreen from '../screens/ProccessVacationScreen';
 import ProccessCertificateScreen from '../screens/ProccessCertificateScreen';
 
@@ -156,12 +155,6 @@ function MainStackNavigator() {
 					options={{ title: 'Noticia' }}
 				/>
 
-				<Stack.Screen
-					name="PostsShowCategoryScreen"
-					header="null"
-					component={PostsShowCategoryScreen}
-					options={{ title: 'Noticia' }}
-				/>
 
 				<Stack.Screen
 					name="PostsCategoryScreen"

@@ -46,9 +46,8 @@ class PodcastScreen extends Component {
 
   async componentDidMount() {
 
-    await this.props.allPodcast(this.props.usuariosReducer.token);
+    await this.props.getPodcasts(this.props.usuariosReducer.token);
     console.log("podcast props", this.props.podcastReducer);
-    //console.log("podcast state: ", this.state);
   }
 
   showPodcast(idPodcast) {
@@ -61,7 +60,7 @@ class PodcastScreen extends Component {
     this.state.idCategory = key;
 
     if(this.state.idCategory == 0){
-      this.props.allPodcast(this.props.usuariosReducer.token);
+      this.props.getPodcasts(this.props.usuariosReducer.token);
     }else{
       this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
       this.props.navigation.navigate("PodcastsCategoryScreen");
@@ -74,29 +73,12 @@ class PodcastScreen extends Component {
     ))
   }
 
-  likePost(likeObject, token) {
-    let userID = this.props.usuariosReducer.user.id;
-    //console.log("Esto es lo que trae el objecto: ",likeObject);
-
-    if(userID != likeObject.userID){
-      this.props.likeOrDislike(likeObject, token);
-      this.props.allPodcast(token);
-      this.props.allPodcast(token);
-
-    }else{
-      if(userID == likeObject.userID && likeObject.reactionActive == 1){
-        this.props.likeOrDislike(likeObject, token);
-        this.props.allPodcast(token);
-        this.props.allPodcast(token);
-
-      }else{
-        this.props.likeOrDislike(likeObject, token);
-        this.props.allPodcast(token);
-        this.props.allPodcast(token);
-
-      }
-    }
+  async likePodcast(id) {
+    let token = this.props.usuariosReducer.token;
+    await this.props.likeOrDislike(id, token);
+    await this.props.getPodcasts(token);
   }
+
 
   buttonLike(podcast) {
     let active = [];
@@ -123,7 +105,7 @@ class PodcastScreen extends Component {
     })
 
     return(
-      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePost(likeObject, token)}>
+      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePodcast(likeObject, token)}>
         <Icon name="like2" type="AntDesign" />
         <Text>({count})</Text>
       </Button>
@@ -160,9 +142,18 @@ class PodcastScreen extends Component {
             </Body>
           </CardItem>
           <CardItem>
-            <Left>
-              {this.buttonLike(podcast)}
-            </Left>
+            <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePodcast(podcast.id)}>
+              {(() => {
+
+                if (podcast.user_likes_new){
+                  return <Icon name="like1" type="AntDesign" />
+                }else{
+                  return <Icon name="like2" type="AntDesign" />
+                }
+
+              })()}
+                <Text>({podcast.likes.length})</Text>
+              </Button>
             <Right>
               <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.showPodcast(podcast.id)}>
                 <Icon name="comment" type="FontAwesome" />

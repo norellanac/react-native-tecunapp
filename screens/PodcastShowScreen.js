@@ -6,12 +6,16 @@ import { withNavigation } from 'react-navigation';
 import {
 	Container,
 	Content,
-	Spinner,
 	Thumbnail,
 	Form,
-	Picker,
 	Input,
+	List,
 	Icon,
+	View,
+	ListItem,
+	Grid,
+	Col,
+	Item,
 	Text,
 	CardItem,
 	Card,
@@ -39,13 +43,104 @@ class PodcastShowScreen extends Component {
 	state = {
 		podcast: null,
 		jobId: null,
-		pathImage: apiUrl.link + '/storage/podcast/'
+		pathImage: apiUrl.link + '/storage/podcast/',
+		showComments: false,
+		postId: ''
 	};
 
 	async componentDidMount() {
-		console.log(this.props.allPodcast(this.props.usuariosReducer.token));
-		//console.log("podcasts props", this.props);
+		console.log(this.props.getPodcasts(this.props.usuariosReducer.token));
+		console.log('podcasts reducer', this.props.podcastReducer);
 		//console.log("podcasts state: ", this.state);
+	}
+	loadIcon = () => {
+		if (this.state.showComments) {
+			return 'arrow-up';
+		} else {
+			return 'arrow-down';
+		}
+	};
+
+	loadInfoComment() {
+		//console.log("Que trae esto: ",this.props.podcastReducer.podcast);
+		if (this.props.podcastReducer.podcast.comments && this.state.showComments == true) {
+			//console.log('Que trae el reducer de coment ', this.props.podcastReducer.podcast.comments);
+			return this.props.podcastReducer.podcast.comments.map((comment) => (
+				<List key={comment.id}>
+					<ListItem avatar>
+						<Left>
+							<Icon name="user" type="FontAwesome" />
+						</Left>
+						<Body>
+							<Text>
+								{comment.user.name} {comment.user.lastname}
+							</Text>
+							<Text note>{comment.message}</Text>
+						</Body>
+						<Right>{this.deleteComment(comment.user_id, comment.id)}</Right>
+					</ListItem>
+				</List>
+			));
+		}
+	}
+
+	deleteComment(user_id, commentID) {
+		//console.log("Si vino algo por cabecera? ",user_id);
+		if (user_id === this.props.usuariosReducer.user.id) {
+			return (
+				<Button
+					danger
+					transparent
+					onPress={() => this.deleteMessage(commentID, this.props.usuariosReducer.token, this.state.postId)}
+				>
+					<Icon name="delete" type="AntDesign" />
+				</Button>
+			);
+		}
+	}
+
+	uploadComment = async (post_id, message, token) => {
+		let commentObject = { post_id: post_id, message: message };
+		await this.props.uploadMessage(commentObject, token);
+		await this.props.getShowPodcast(commentObject.post_id, token);
+		this.setState({ message: [] });
+		this.props.navigation.navigate('PostsShowScreen');
+	};
+
+	deleteMessage = async (id, token, post_id) => {
+		let deleteObject = { id: id };
+		await this.props.deleteMessage(deleteObject, token);
+		await this.props.getShowPodcast(post_id, token);
+		this.props.navigation.navigate('PostsShowScreen');
+	};
+
+	inputComment() {
+		if (this.props.podcastReducer.podcast.comments && this.state.showComments == true) {
+			return (
+				<Form style={{ marginRight: 15, marginLeft: 15, marginTop: 10, marginBottom: 20 }}>
+					<Item rounded style={{ marginTop: 25 }}>
+						<Input
+							onChangeText={(message) => this.setState({ message })}
+							value={this.state.message}
+							placeholder="Agregar un comentario"
+							placeholderTextColor="#000000"
+							style={{ color: '#000000' }}
+						/>
+					</Item>
+					<Button
+						iconLeft
+						info
+						rounded
+						style={{ alignSelf: 'center', marginTop: 15 }}
+						onPress={() =>
+							this.uploadComment(this.state.postId, this.state.message, this.props.usuariosReducer.token)}
+					>
+						<Icon name="comment" type="FontAwesome" />
+						<Text>Publicar comentario</Text>
+					</Button>
+				</Form>
+			);
+		}
 	}
 
 	async playSound() {
@@ -115,6 +210,22 @@ class PodcastShowScreen extends Component {
 								</ScrollView>
 							</Body>
 						</CardItem>
+						<Button
+							iconLeft
+							info
+							block
+							onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
+						>
+							<Icon name={this.loadIcon()} type="FontAwesome">
+								{' '}
+							</Icon>
+							<Text> Ver Comentarios</Text>
+							<Icon name="comments" type="FontAwesome" />
+						</Button>
+						<ScrollView>
+							{this.loadInfoComment()}
+							{this.inputComment()}
+						</ScrollView>
 					</Card>
 					<Video
 						source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}

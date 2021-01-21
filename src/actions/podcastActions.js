@@ -11,7 +11,7 @@ import {
 	categoryPodcast,
 	commentPodcast,
 	idSearchNew
-} from '../types/postType';
+} from '../types/podcastType';
 import { apiUrl } from '../../App';
 
 
@@ -242,7 +242,7 @@ export const deleteMessage = (id, token) => async dispatch => {
 export const likeOrDislike = (podcastID, token) => async (dispatch) => {
 	//console.log("Este es podcastID: ",podcastID);
 	dispatch({
-		type: loadingPost
+		type: loadingPodcast
 	});
 	try {
 
@@ -261,7 +261,7 @@ export const likeOrDislike = (podcastID, token) => async (dispatch) => {
 
 		const data = await response.json();
 
-		//console.log('LLego aqui?:', data);
+		console.log('LLego aqui?:', data);
 
 		if (!response.ok) {
 			dispatch({
