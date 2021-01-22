@@ -68,7 +68,6 @@ class FlashImagesScreen extends Component {
               <Right>
                 <Button transparent textStyle={{ color: "#87838B" }}>
                   <Icon name="clock" type="FontAwesome5" />
-                  <Text>18:30</Text>
                 </Button>
               </Right>
             </CardItem>

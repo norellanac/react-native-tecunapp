@@ -30,7 +30,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 		});
 
 		const data = await response.json();
-			//console.log('post data?: ', data);
+		console.log('post data?: ', data);
 		//console.log('Response post:', response);
 
 		if (response.ok) {
@@ -38,6 +38,12 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 				type: getAllPost,
 				payload: data.posts,
 				categories: data.categories,
+				cargando: false
+			});
+		} else {
+			dispatch({
+				type: errorPost,
+				error: "algo salio mal",
 				cargando: false
 			});
 		}
@@ -307,7 +313,6 @@ export const likeOrDislike = (postID, token) => async (dispatch) => {
 		type: loadingPost
 	});
 	try {
-
 		let dataForm = '_method=' + encodeURIComponent('POST');
 		dataForm += '&postID=' + encodeURIComponent(postID);
 		const response = await fetch(`${apiUrl.link}/api/likeordislikenews`, {

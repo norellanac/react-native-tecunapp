@@ -54,9 +54,10 @@ class UserScreenProfile extends Component {
 			});
 		} else {
 			this.getTokenExpoNotificationsPush();
-		}		
+		}
 	}
 
+	/**+++++++++++++NOTIFICACIONES+++++++++++++ */
 	getTokenExpoNotificationsPush = async () => {
 		let token;
 		if (Constants.isDevice) {
@@ -124,8 +125,7 @@ class UserScreenProfile extends Component {
 			body: JSON.stringify(message)
 		});
 	}
-
-
+	/**+++++++++++++NOTIFICACIONES+++++++++++++ */
 	showTokenAlert = () => {
 		if (this.state.expoPushToken && this.state.isShowAlert) {
 			return (
@@ -197,51 +197,14 @@ class UserScreenProfile extends Component {
 				{this.showError()}
 				{this.showTokenAlert()}
 				<Content>
-					<View style={{ backgroundColor: '#ed913b' }}>
-						<Grid style={{ marginBottom: 30, marginTop: 25 }}>
-							<Col style={{ alignItems: 'center' }}>
-								<Thumbnail
-									large
-									source={require('../assets/images/dev.png')}
-									style={{ backgroundColor: '#FFFFFF' }}
-								/>
-							</Col>
-							<Col>
-								<Text style={{ fontSize: 25, color: 'white', marginBottom: 15 }}>
-									<Icon
-										type="FontAwesome"
-										name="user"
-										style={{ color: 'white', fontSize: 25 }}
-									/>{' '}
-									{'name'}
-								</Text>
-								<Text style={{ color: 'white', marginBottom: 2 }} note>
-									<Icon type="FontAwesome" name="envelope" style={{ color: 'white', fontSize: 18 }} />
-									{'  '}
-									{'email'}
-								</Text>
-								<Text style={{ color: 'white' }} note>
-									<Icon type="FontAwesome" name="phone" style={{ color: 'white', fontSize: 20 }} />
-									{'  '}
-									{'phone'}
-								</Text>
-							</Col>
-						</Grid>
-					</View>
 					<List>
 						<ListItem thumbnail>
 							<Left>
-								<Thumbnail
-									square
-									source={{
-										uri:
-											'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRN7USRtFiSwwrfqNMPm_kTcGJ4NkIX7xRy4ztZq4Acm298JkWd'
-									}}
-								/>
+								<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
 							</Left>
 							<Body>
-								<Text>{this.props.usuariosReducer.name}</Text>
-								<Text> {this.props.usuariosReducer.email}</Text>
+								<Text note>{this.props.usuariosReducer.user.name}</Text>
+								<Text note> {this.props.usuariosReducer.user.email}</Text>
 							</Body>
 							<Right>
 								<Button transparent onPress={this.logout}>
@@ -274,7 +237,7 @@ class UserScreenProfile extends Component {
 											color: '#1c5988'
 										}}
 									>
-										{'100 '}
+										{'9'}
 										<Icon
 											type="Entypo"
 											name="trophy"
@@ -307,7 +270,7 @@ class UserScreenProfile extends Component {
 										<Icon type="Entypo" name="news" style={{ marginLeft: 15, color: '#1c5988' }} />
 									</Text>
 									<Text note style={{ textAlign: 'center', marginBottom: 10 }}>
-										Publicaciones
+										Puntos
 									</Text>
 								</Col>
 							</Grid>
