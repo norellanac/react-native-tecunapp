@@ -9,6 +9,8 @@ import PodcastsCategoryScreen from '../screens/PodcastCategoryScreen';
 import PodcastShowScreen from '../screens/PodcastShowScreen';
 import ProccessPeopleScreen from '../screens/ProccessPeopleScreen';
 import ContactScreen from '../screens/ContactScreen';
+import ContactCallScreen from '../screens/ContactCallScreen';
+import ContactChatScreen from '../screens/ContactChatScreen';
 import GameShowScreen from '../screens/GameShowScreen';
 import DenounceScreen from '../screens/DenounceScreen';
 import SettingsScreen from '../screens/UserScreenProfile';
@@ -131,6 +133,18 @@ function MainStackNavigator() {
 					name="ContactScreen"
 					header="null"
 					component={ContactScreen}
+					options={{ title: 'Empleos' }}
+				/>
+				<Stack.Screen
+					name="ContactChatScreen"
+					header="null"
+					component={ContactChatScreen}
+					options={{ title: 'Empleos' }}
+				/>
+				<Stack.Screen
+					name="ContactCallScreen"
+					header="null"
+					component={ContactCallScreen}
 					options={{ title: 'Empleos' }}
 				/>
 

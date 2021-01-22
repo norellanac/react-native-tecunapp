@@ -1,7 +1,24 @@
 import React, { Component, useEffect } from 'react';
-import { Dimensions, Linking, Image } from 'react-native';
+import { Dimensions, Linking, Image, TouchableOpacity } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
-import { Container, Content, Form, Item, Icon, Text, Input, View, CardItem, Body, Card, Button } from 'native-base';
+import {
+	Container,
+	Content,
+	Form,
+	Item,
+	Icon,
+	Text,
+	Input,
+	View,
+	CardItem,
+	Body,
+	Card,
+	Button,
+	ListItem,
+	Left,
+	Right,
+	Thumbnail
+} from 'native-base';
 import Accordion from 'react-native-collapsible/Accordion';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
@@ -9,7 +26,7 @@ import * as contactsActions from '../src/actions/contactsActions';
 import * as userActions from '../src/actions/userActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor, apiUrl } from '../App';
+import { screenHeight, apiUrl, screenWidth } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 
@@ -23,12 +40,9 @@ class ContactScreen extends Component {
 		searchPais: '',
 		searchPuesto: '',
 		isShowAlert: true,
+		showFavorites: false,
 		activeSections: [],
-		dataAcordion: [
-			{ title: 'First Element', content: 'Lorem ipsum dolor sit amet' },
-			{ title: 'Second Element', content: 'Lorem ipsum dolor sit amet' },
-			{ title: 'Third Element', content: 'Lorem ipsum dolor sit amet' }
-		]
+		pathImage: apiUrl.link + '/img/'
 	};
 
 	showError = () => {
@@ -60,67 +74,81 @@ class ContactScreen extends Component {
 			);
 		}
 	};
-	__renderHeader(item, expanded) {
-		return (
-			<View
-				style={{
-					flexDirection: 'row',
-					padding: 10,
-					justifyContent: 'space-between',
-					alignItems: 'center',
-					backgroundColor: '#F7F7F7'
-				}}
-			>
-				<Text style={{ fontWeight: '600', color: '#3490dc' }}> {item.nombre}</Text>
-				{expanded ? (
-					<Icon style={{ fontSize: 18 }} name="remove-circle" />
-				) : (
-					<Icon style={{ fontSize: 18 }} name="add-circle" />
-				)}
-			</View>
-		);
+	loadFAvorites() {
+		if (this.state.showFavorites == true) {
+			return (
+				<CardItem cardBody>
+					<Grid style={{ marginTop: 3 }}>
+						<Col size={4} style={{ alignItems: 'center' }}>
+							<CardItem cardBody>
+								<Grid style={{ marginTop: 20 }}>
+									<Col size={2} style={{ alignItems: 'center' }}>
+										<TouchableOpacity
+											onPress={() => {
+												this.props.navigation.navigate('ContactCallScreen');
+											}}
+										>
+											<Image
+												source={{ uri: this.state.pathImage + 'telephone.png' }}
+												style={{ width: screenWidth / 4, height: screenWidth / 4 }}
+											/>
+										</TouchableOpacity>
+									</Col>
+									<Col size={2} style={{ alignItems: 'center' }}>
+										<TouchableOpacity
+											onPress={() => {
+												this.props.navigation.navigate('ContactChatScreen');
+											}}
+										>
+											<Image
+												source={{ uri: this.state.pathImage + 'whatsapp.png' }}
+												style={{ width: screenWidth / 4, height: screenWidth / 4 }}
+											/>
+										</TouchableOpacity>
+									</Col>
+								</Grid>
+							</CardItem>
+						</Col>
+					</Grid>
+				</CardItem>
+			);
+		}
 	}
-	__renderContent(item) {
-		return (
-			<View>
-				<Text
-					style={{
-						backgroundColor: '#e3f1f1',
-						padding: 10,
-						fontStyle: 'italic'
-					}}
-				>
-					{item.nombre}
-				</Text>
-				<Text
-					style={{
-						backgroundColor: '#e3f1f1',
-						padding: 10,
-						fontStyle: 'italic'
-					}}
-				>
-					{item.departamento} | {item.puesto}
-				</Text>
-				<Button
-					success
-					textStyle={{ color: '#87838B' }}
-					onPress={() => Linking.openURL(`mailto:${item.correo}`)}
-				>
-					<Icon name="phone" type="FontAwesome" />
-					<Text>{item.correo}</Text>
-				</Button>
-				<Button
-					success
-					rounded
-					textStyle={{ color: '#87838B' }}
-					onPress={() => Linking.openURL(`tel:${item.comentarios}`)}
-				>
-					<Icon name="phone" type="FontAwesome" />
-					<Text>{item.comentarios}</Text>
-				</Button>
-			</View>
-		);
-	}
+
+	showContacts = () => {
+		if (this.props.contactsReducer.contacts) {
+			//console.log("posts: ", this.props.postReducer.posts);
+			return this.props.contactsReducer.contacts.map((record) => (
+				<ListItem thumbnail>
+					<Left>
+						<Thumbnail
+							square
+							style={{ backgroundColor: 'transparent' }}
+							source={{ uri: `${apiUrl.link}/img/logo.png` }}
+						/>
+					</Left>
+					<Body>
+						<Text>{record.nombre}</Text>
+						<Text note>{record.subDepartamento} - {record.puesto}  Ext: {record.extension}</Text>
+						<Button transparent onPress={() => Linking.openURL(`tel:=${record.numeroDirecto}`)}>
+							<Icon name="phone" type="FontAwesome" />
+							<Text>{record.numeroDirecto}</Text>
+						</Button>
+						<Button transparent onPress={() => Linking.openURL(`tel:=${record.celular}`)}>
+							<Icon name="mobile-phone" type="FontAwesome" />
+							<Text>{record.celular}</Text>
+						</Button>
+						<Button transparent onPress={() => Linking.openURL(`mailto:${record.correo}`)}>
+							<Icon name="email-send" type="MaterialCommunityIcons" />
+							<Text>{record.correo}</Text>
+						</Button>
+					</Body>
+				</ListItem>
+			));
+		} else {
+			return <Spinner color="blue" style={{ flex: 1 }} />;
+		}
+	};
 
 	_renderHeader = (section) => {
 		return (
@@ -135,7 +163,7 @@ class ContactScreen extends Component {
 			>
 				<Text style={{ fontWeight: '600', color: '#3490dc' }}> {section.nombre}</Text>
 				{1 ? (
-					<Icon style={{ fontSize: 18 }} name="remove-circle" />
+					<Icon style={{ fontSize: 18 }} name="caret-down" type="FontAwesome" />
 				) : (
 					<Icon style={{ fontSize: 18 }} name="add-circle" />
 				)}
@@ -143,46 +171,33 @@ class ContactScreen extends Component {
 		);
 	};
 
-	_renderContent = (section) => {
+	_renderContent = (record) => {
 		return (
-			<View>
-				<Text
-					style={{
-						backgroundColor: '#e3f1f1',
-						padding: 10,
-						fontStyle: 'italic'
-					}}
-				>
-					{section.nombre}
-				</Text>
-				<Text
-					style={{
-						backgroundColor: '#e3f1f1',
-						padding: 10,
-						fontStyle: 'italic'
-					}}
-				>
-					{section.departamento} | {section.puesto}
-				</Text>
-				<Button
-					success
-					textStyle={{ color: '#87838B' }}
-					onPress={() => Linking.openURL(`mailto:${section.correo}`)}
-				>
-					<Icon name="phone" type="FontAwesome" />
-					<Text>{section.correo}</Text>
-				</Button>
-				<Button
-					success
-					rounded
-					textStyle={{ color: '#87838B' }}
-					onPress={() => Linking.openURL(`tel:${section.comentarios}`)}
-				>
-					<Icon name="phone" type="FontAwesome" />
-					<Text>{section.comentarios}</Text>
-				</Button>
-			</View>
-		);
+			<ListItem thumbnail>
+					<Left>
+						<Thumbnail
+							square
+							style={{ backgroundColor: 'transparent' }}
+							source={{ uri: `${apiUrl.link}/img/logo.png` }}
+						/>
+					</Left>
+					<Body>
+						<Text note>{record.subDepartamento} - {record.puesto}  Ext: {record.extension}</Text>
+						<Button transparent onPress={() => Linking.openURL(`tel:${record.numeroDirecto}`)}>
+							<Icon name="phone" type="FontAwesome" />
+							<Text>{record.numeroDirecto}</Text>
+						</Button>
+						<Button transparent onPress={() => Linking.openURL(`tel:${record.celular}`)}>
+							<Icon name="mobile-phone" type="FontAwesome" />
+							<Text>{record.celular}</Text>
+						</Button>
+						<Button transparent onPress={() => Linking.openURL(`mailto:${record.correo}`)}>
+							<Icon name="email-send" type="MaterialCommunityIcons" />
+							<Text>{record.correo}</Text>
+						</Button>
+					</Body>
+				</ListItem>
+			);
 	};
 
 	_updateSections = (activeSections) => {
@@ -206,9 +221,6 @@ class ContactScreen extends Component {
 	}
 
 	render() {
-		var screenWidth = Dimensions.get('window').width - 1;
-		var hg = Dimensions.get('window').width - 150;
-
 		if (this.props.usuariosReducer.cargando) {
 			return (
 				<Container>
@@ -224,23 +236,56 @@ class ContactScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Grid>
-							<Col style={{ alignItems: 'center' }}>
-								<Text
-									style={{
-										fontSize: 30,
-										color: '#3490dc',
-										fontWeight: 'bold'
-									}}
-								>
-									Buscar contacto
-								</Text>
-							</Col>
-						</Grid>
-					</CardItem>
+					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
+						<Col style={{ alignItems: 'center' }}>
+							<Text
+								style={{
+									fontSize: 30,
+									color: '#3490dc',
+									fontWeight: 'bold'
+								}}
+							>
+								Contactos
+							</Text>
+						</Col>
+					</Grid>
+
+					<View style={{ marginTop: 20 }}>
+						<ListItem
+							icon
+							onPress={(showFavorites) => this.setState({ showFavorites: !this.state.showFavorites })}
+						>
+							<Left>
+								<Button style={{ backgroundColor: '#007AFF' }}>
+									<Icon active name="star" />
+								</Button>
+							</Left>
+							<Body>
+								<Text>Numeros Favoritos</Text>
+							</Body>
+							<Right>
+								<Icon active name="caret-down" type="FontAwesome" />
+							</Right>
+						</ListItem>
+					</View>
+
+					{this.loadFAvorites()}
+
+					<Grid style={{ backgroundColor: 'transparent', marginTop: 40 }}>
+						<Col style={{ alignItems: 'center' }}>
+							<Text
+								style={{
+									fontSize: 20,
+									color: '#3490dc',
+									fontWeight: 'bold'
+								}}
+							>
+								Buscar
+							</Text>
+						</Col>
+					</Grid>
 					<Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
-						<Item rounded style={{ marginTop: 25 }}>
+						<Item rounded style={{ marginTop: 15 }}>
 							<Icon type="SimpleLineIcons" name="people" style={{ color: '#3490dc', fontSize: 25 }} />
 							<Input
 								onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
@@ -250,7 +295,7 @@ class ContactScreen extends Component {
 								style={{ color: '#3490dc' }}
 							/>
 						</Item>
-						<Item rounded style={{ marginTop: 25 }}>
+						<Item rounded style={{ marginTop: 15 }}>
 							<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
 							<Input
 								onChangeText={(searchNombre) => this.setState({ searchNombre })}
@@ -260,7 +305,7 @@ class ContactScreen extends Component {
 								style={{ color: '#3490dc' }}
 							/>
 						</Item>
-						<Item rounded style={{ marginTop: 25 }}>
+						<Item rounded style={{ marginTop: 15 }}>
 							<Icon type="MaterialCommunityIcons" name="map" style={{ color: '#3490dc', fontSize: 25 }} />
 							<Input
 								keyboardType="numeric"
@@ -272,7 +317,7 @@ class ContactScreen extends Component {
 								style={{ color: '#3490dc' }}
 							/>
 						</Item>
-						<Item rounded style={{ marginTop: 25 }}>
+						<Item rounded style={{ marginTop: 15 }}>
 							<Icon
 								type="MaterialCommunityIcons"
 								name="email-outline"

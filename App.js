@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, Image, StyleSheet, View, Text, SafeAreaView, StatusBar } from 'react-native';
+import { Platform, Image, StyleSheet, View, Text, Dimensions, StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -119,6 +119,9 @@ const slides = [
 		bg: '#181e26'
 	}
 ];
+
+export const screenWidth = Dimensions.get('window').width;
+export const screenHeight = Dimensions.get("window").height;
 
 import MainStackNavigator from './navigation/MainStackNavigator';
 

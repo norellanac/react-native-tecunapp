@@ -38,9 +38,8 @@ class StoreScreen extends Component {
 
 	state = {
 		search: '',
-		isShowAlert: true,
+		isShowAlert: true
 	};
-	
 
 	async componentDidMount() {
 		await this.props.getAllStoresAction(this.props.usuariosReducer.token);
@@ -60,40 +59,39 @@ class StoreScreen extends Component {
 						<Left>
 							<Thumbnail
 								style={{ backgroundColor: '#000000' }}
-								source={require('../assets/images/robot-dev.png')}
+								source={{ uri: `${apiUrl.link}/img/logo.png` }}
 							/>
 							<Body>
 								<Text>{store.name}</Text>
 								<Text note>{store.address}</Text>
-								<Text />
 								<Text note>{store.schedule}</Text>
+								<Text note>{store.description}</Text>
 							</Body>
 						</Left>
 					</CardItem>
 					<CardItem>
-						<Body>
-							<Text>{store.description}</Text>
-						</Body>
-					</CardItem>
-					<CardItem style={{ justifyContent: 'space-around' }}>
-						<Button
-							primary
-							rounded
-							textStyle={{ color: '#87838B' }}
-							onPress={() => Linking.openURL(store.maps)}
-						>
-							<Icon name="waze" type="MaterialCommunityIcons" />
-							<Text>Waze</Text>
-						</Button>
-						<Button
-							success
-							rounded
-							textStyle={{ color: '#87838B' }}
-							onPress={() => Linking.openURL(`tel:${store.number}`)}
-						>
-							<Icon name="phone" type="FontAwesome" />
-							<Text>{store.number}</Text>
-						</Button>
+						<Left>
+							<Button
+								transparent
+								iconLeft
+								style={{ alignSelf: 'center' }}
+								onPress={() => Linking.openURL(store.maps)}
+							>
+								<Icon name="waze" type="MaterialCommunityIcons" />
+								<Text>Waze</Text>
+							</Button>
+						</Left>
+						<Right>
+							<Button
+								transparent
+								iconLeft
+								style={{ alignSelf: 'center' }}
+								onPress={() => Linking.openURL(`tel:${store.number}`)}
+							>
+								<Icon name="phone" type="FontAwesome" />
+								<Text>{store.number}</Text>
+							</Button>
+						</Right>
 					</CardItem>
 				</Card>
 			));
@@ -122,7 +120,7 @@ class StoreScreen extends Component {
 								{this.props.storeReducer.error}
 							</Text>
 						</Col>
-						<Button onPress={isShowAlert => this.setState({ isShowAlert:false })} transparent rounded>
+						<Button onPress={(isShowAlert) => this.setState({ isShowAlert: false })} transparent rounded>
 							<Icon name="close" />
 						</Button>
 					</CardItem>
@@ -147,12 +145,12 @@ class StoreScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20 }}>
-						<Item rounded style={{ marginTop: 25 }}>
+					<Form style={{ marginRight: 15, marginLeft: 15, marginTop: 15 }}>
+						<Item rounded >
 							<Icon
-								type="MaterialCommunityIcons"
-								name="lock-open-outline"
-								style={{ color: 'white', fontSize: 25 }}
+								type="FontAwesome5"
+								name="store"
+								style={{ color: 'black', fontSize: 25 }}
 							/>
 							<Input
 								onChangeText={(search) => this.setState({ search })}
