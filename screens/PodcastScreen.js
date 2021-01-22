@@ -47,7 +47,6 @@ class PodcastScreen extends Component {
   async componentDidMount() {
 
     await this.props.getPodcasts(this.props.usuariosReducer.token);
-    console.log("podcast props", this.props.podcastReducer);
   }
 
   showPodcast(idPodcast) {
@@ -77,39 +76,6 @@ class PodcastScreen extends Component {
     let token = this.props.usuariosReducer.token;
     await this.props.likeOrDislike(id, token);
     await this.props.getPodcasts(token);
-  }
-
-
-  buttonLike(podcast) {
-    let active = [];
-    let podcastID = podcast.id;
-    let user_id = '';
-    let token = this.props.usuariosReducer.token;
-    let userID = this.props.usuariosReducer.user.id;
-    let count = 0;
-    let likeObject = {};
-
-    podcast.likes.map((like) => {
-      user_id = like.user_id;
-      
-      if(like.user_id == userID){
-        likeObject = {"reactionActive":like.active, "podcastID":like.podcast_id, "userID":userID};
-        //console.log("Que es lo que trae esto cuando estra: ", likeObject);
-      }else{
-        likeObject = {"reactionActive":1, "podcastID":podcastID, "userID":userID};
-      }
-
-      if(like.active == 1){
-        count++
-      }
-    })
-
-    return(
-      <Button transparent textStyle={{ color: "#87838B" }} onPress={() => this.likePodcast(likeObject, token)}>
-        <Icon name="like2" type="AntDesign" />
-        <Text>({count})</Text>
-      </Button>
-    )
   }
 
   loadContent = () => {
@@ -189,10 +155,6 @@ class PodcastScreen extends Component {
         </Container>
       )
     }
-
-    //console.log(this.props.podcastReducer);
-
-    //console.log("jobsProps: ", this.props);
 
     return (
       <Container>
