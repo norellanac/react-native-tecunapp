@@ -4,6 +4,8 @@ import {
 	getAllJobs,
 	getJob,
 	loadingJobs,
+	applyDocument,
+	applyMessage,
 	errorJob
 } from '../types/jobsTypes';
 import { PURGE } from 'redux-persist';
@@ -11,6 +13,8 @@ const INITIAL = {
 	jobs: null,
 	job: null,
 	jobId: null,
+	document: null,
+	message: null,
 	cargando: false,
 	error: ''
 };
@@ -18,6 +22,10 @@ export default (state = INITIAL, action) => {
 	switch (action.type) {
 		case getAllJobs:
 			return { ...state, jobs: action.payload, cargando: action.cargando };
+		case applyDocument:
+			return { ...state, document: action.document, cargando: action.cargando };
+		case applyMessage:
+			return { ...state, message: action.message, cargando: action.cargando };
 		case searchJobText:
 			return { ...state, jobs: action.payload, cargando: action.cargando };
 		case loadingJobs:

@@ -1,5 +1,5 @@
 Arguments: 
-  /home/garysalazar/.nvm/versions/node/v14.13.1/bin/node /home/garysalazar/.nvm/versions/node/v14.13.1/bin/yarn add react-native-sound-playe
+  /home/garysalazar/.nvm/versions/node/v14.13.1/bin/node /home/garysalazar/.nvm/versions/node/v14.13.1/bin/yarn add react-native-fs --save
 
 PATH: 
   /home/garysalazar/.nvm/versions/node/v14.13.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
@@ -14,17 +14,8 @@ Platform:
   linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/react-native-sound-playe: Not found
-      at Request.params.callback [as _callback] (/home/garysalazar/.nvm/versions/node/v14.13.1/lib/node_modules/yarn/lib/cli.js:66988:18)
-      at Request.self.callback (/home/garysalazar/.nvm/versions/node/v14.13.1/lib/node_modules/yarn/lib/cli.js:140662:22)
-      at Request.emit (events.js:314:20)
-      at Request.<anonymous> (/home/garysalazar/.nvm/versions/node/v14.13.1/lib/node_modules/yarn/lib/cli.js:141634:10)
-      at Request.emit (events.js:314:20)
-      at IncomingMessage.<anonymous> (/home/garysalazar/.nvm/versions/node/v14.13.1/lib/node_modules/yarn/lib/cli.js:141556:12)
-      at Object.onceWrapper (events.js:420:28)
-      at IncomingMessage.emit (events.js:326:22)
-      at endReadableNT (_stream_readable.js:1252:12)
-      at processTicksAndRejections (internal/process/task_queues.js:80:21)
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:67:26)
 
 npm manifest: 
   {
@@ -56,6 +47,7 @@ npm manifest:
       "expo-av": "~8.7.0",
       "expo-constants": "~9.3.3",
       "expo-document-picker": "~8.4.1",
+      "expo-file-system": "~9.3.0",
       "expo-font": "~8.4.0",
       "expo-notifications": "~0.8.2",
       "expo-permissions": "~10.0.0",
