@@ -29,7 +29,7 @@ import HederPostSection from '../components/HederPostSection';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import { apiUrl } from '../App';
+import { apiUrl, screenHeight, screenWidth } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -115,9 +115,6 @@ class PostsScreen extends Component {
 
 	async componentDidMount() {
 		await this.props.getNews(this.props.loginReducer.token);
-    console.log('====================================');
-    console.log("se montó");
-    console.log('====================================');
 		if (Platform.OS === 'android' && !Constants.isDevice) {
 			this.setState({
 				errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
@@ -158,9 +155,6 @@ class PostsScreen extends Component {
 	}
 
 	loadContent = () => {
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
-
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
 				//console.log(this.props.postReducer.posts),
@@ -181,7 +175,7 @@ class PostsScreen extends Component {
 						<Body>
 							<Image
 								source={{ uri: this.state.pathImage + news.featured_image }}
-								style={{ width: screenWidth - 20, height: 150 }}
+								style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
 							/>
 							<Text>{news.description}</Text>
 						</Body>
@@ -201,8 +195,8 @@ class PostsScreen extends Component {
 						</Left>
 						<Right>
 							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.showNews(news.id)}>
-								<Icon name="comment" type="FontAwesome" />
-								<Text>Comentarios</Text>
+								<Icon name="book-reader" type="FontAwesome5" />
+								<Text>Leer más</Text>
 							</Button>
 						</Right>
 					</CardItem>
@@ -214,9 +208,6 @@ class PostsScreen extends Component {
 	};
 
 	render() {
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
-
 		if (this.props.postReducer.cargando) {
 			return (
 				<Container>
@@ -257,7 +248,7 @@ const mapStateToProps = ({ postReducer, usuariosReducer, loginReducer }) => {
 };
 
 const mapDispatchProps = {
-  ...userActions,
+	...userActions,
 	...postActions,
 	...loginActions
 };

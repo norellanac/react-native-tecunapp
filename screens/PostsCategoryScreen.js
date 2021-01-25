@@ -102,7 +102,7 @@ class PostsCategoryScreen extends Component {
 						<Body>
 							<Image
 								source={{ uri: this.state.pathImage + news.featured_image }}
-								style={{ width: screenWidth - 20, height: 150 }}
+								style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
 							/>
 							<Text>{news.description}</Text>
 						</Body>
@@ -122,8 +122,8 @@ class PostsCategoryScreen extends Component {
 						</Left>
 						<Right>
 							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.showNews(news.id)}>
-								<Icon name="comment" type="FontAwesome" />
-								<Text>Comentarios</Text>
+								<Icon name="book-reader" type="FontAwesome5" />
+								<Text>Leer más</Text>
 							</Button>
 						</Right>
 					</CardItem>

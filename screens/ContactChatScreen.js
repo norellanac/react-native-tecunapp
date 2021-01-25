@@ -68,7 +68,7 @@ class ContactChatScreen extends Component {
 	};
 
 	loadContent = () => {
-		if (this.props.contactsReducer.favorites.whatsapp) {
+		if (this.props.contactsReducer.favorites) {
 			//console.log("posts: ", this.props.postReducer.posts);
 			return this.props.contactsReducer.favorites.whatsapp.map((record) => (
 				<ListItem

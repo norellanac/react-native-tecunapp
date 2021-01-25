@@ -73,7 +73,7 @@ class ContactCallScreen extends Component {
 		console.log('====================================');
 		console.log(this.props.contactsReducer);
 		console.log('====================================');
-		if (this.props.contactsReducer.favorites.pbx) {
+		if (this.props.contactsReducer.favorites) {
 			//console.log("posts: ", this.props.postReducer.posts);
 			return this.props.contactsReducer.favorites.pbx.map((record) => (
 				<ListItem avatar key={record.id} onPress={() => Linking.openURL(`tel:${record.phone_one}`)}>

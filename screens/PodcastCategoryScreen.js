@@ -28,7 +28,7 @@ import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
 import { persistor } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
-import { apiUrl } from '../App';
+import { apiUrl, screenWidth } from '../App';
 
 import Loading from './../components/Loading';
 import { loadingPodcast } from '../src/types/podcastType';
@@ -66,7 +66,7 @@ class PodcastScreen extends Component {
 
 	loadContentCategories = () => {
 		return this.props.podcastReducer.categories.map((category) => (
-			<Picker.Item label={category.name} value={category.id} />
+			<Picker.Item label={category.name} value={category.id} key={category.id} />
 		));
 	};
 
@@ -82,8 +82,6 @@ class PodcastScreen extends Component {
 	}
 
 	loadContent = () => {
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
 
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
@@ -104,7 +102,7 @@ class PodcastScreen extends Component {
 						<Body>
 							<Image
 								source={{ uri: this.state.pathImage + podcast.featured_image }}
-								style={{ width: screenWidth - 20, height: 150 }}
+								style={{ width: screenWidth - 20, height: 250 }}
 							/>
 							<Text>{podcast.description}</Text>
 						</Body>
