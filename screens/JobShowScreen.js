@@ -154,9 +154,12 @@ class JobShowScreen extends Component {
         [{ text: "OK", onPress: () => console.log("OK Pressed") }],
         { cancelable: false }
       );
+
     } else {
 
       await this.props.apply(objectMessage, pdfNameToStore, token);
+
+      this.props.jobsReducer.document = null;
 
       if (this.props.jobsReducer.message) {
         Alert.alert(
