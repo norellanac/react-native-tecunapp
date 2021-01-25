@@ -13,8 +13,8 @@ const INITIAL = {
 	jobs: null,
 	job: null,
 	jobId: null,
-	document: null,
-	message: null,
+	document: '',
+	message: '',
 	cargando: false,
 	error: ''
 };
@@ -23,7 +23,7 @@ export default (state = INITIAL, action) => {
 		case getAllJobs:
 			return { ...state, jobs: action.payload, cargando: action.cargando };
 		case applyDocument:
-			return { ...state, document: action.document, cargando: action.cargando };
+			return { ...state, document: action.payload, cargando: action.cargando };
 		case applyMessage:
 			return { ...state, message: action.message, cargando: action.cargando };
 		case searchJobText:

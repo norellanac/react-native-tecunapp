@@ -133,30 +133,20 @@ export const searchTextInJobs = (search, token) => async (dispatch) => {
 export const UploadDocument = (objectDocument, email, token) => async (
   dispatch
 ) => {
-  console.log("Como vienen los elementos? ", objectDocument);
+  //console.log("Como vienen los elementos? ", objectDocument);
 
   dispatch({
     type: loadingJobs,
   });
 
   try {
-    console.log("entra a try");
+    /* Todo el objecto del documento lo descomprimimos en diferentespartes, asi como lo dan */
     let uri = objectDocument.uri;
     let nameStart = uri.indexOf("DocumentPicker/");
     let name = uri.substring(nameStart + 15, uri.length);
     let type = 'application/pdf';
 
-    /* let dataForm = '_method=' + encodeURIComponent('POST');
-		dataForm += '&document=' + encodeURIComponent(name);
-    dataForm += '&document=' + encodeURIComponent(objectDocument.name);
-    dataForm += '&document' + encodeURIComponent(uri);
-    dataForm += '&document' + encodeURIComponent('pdf');
-    dataForm += '&document' + encodeURIComponent(objectDocument.size);
-    dataForm += '&email' + encodeURIComponent(email); */
-
-    /* let dataForm = new FormData(objectDocument);
-    //dataForm.append(objectDocument); */
-
+    /* Creamos el objecto con las variables anteriores */
     let file = {
       uri,            // e.g. 'file:///path/to/file/image123.jpg'
       name,            // e.g. 'image123.jpg',
@@ -165,13 +155,8 @@ export const UploadDocument = (objectDocument, email, token) => async (
     
     const body = new FormData()
     body.append('document', file)
-    
-    /* fetch(url, {
-      method: 'POST',
-      body
-    }) */
 
-    console.log("Que viene en body ",body);
+    //console.log("Que viene en body ",body);
 
     const response = await fetch(`${apiUrl.link}/api/job/apply/upload/${email}`,
       {
@@ -182,13 +167,14 @@ export const UploadDocument = (objectDocument, email, token) => async (
           Authorization: `Bearer ${token}`,
           Params: `document ${body}`
         },
+        /* En el body del action pasamos todo el objecto  */
         body
       }
     );
 
     const data = await response.json();
 
-    console.log("Que trae data? ", data);
+    console.log("Que trae data del documento? ", data);
 
     if (!response.ok) {
       dispatch({
@@ -197,11 +183,70 @@ export const UploadDocument = (objectDocument, email, token) => async (
         cargando: false,
       });
     } else {
-      console.log("response file", response);
-
       dispatch({
         type: applyDocument,
-        payload: data.message,
+        payload: data.document,
+        cargando: false,
+      });
+    }
+  } catch (error) {
+    //console.log("catch file ", error);
+    dispatch({
+      type: errorJob,
+      error: error.message,
+      cargando: false,
+    });
+  }
+};
+
+
+export const apply = (objectMessage, pdfName, token) => async (
+  dispatch
+) => {
+
+  console.log("objectMessage ",objectMessage);
+
+  dispatch({
+    type: loadingJobs,
+  });
+
+  try {
+    
+    let dataForm = '_method=' + encodeURIComponent('POST');
+    dataForm += '&title=' + encodeURIComponent(objectMessage.title);
+    dataForm += '&name=' + encodeURIComponent(objectMessage.name);
+    dataForm += '&lastname=' + encodeURIComponent(objectMessage.lastname);
+    dataForm += '&email=' + encodeURIComponent(objectMessage.email);
+    dataForm += '&phone=' + encodeURIComponent(objectMessage.phone);
+    dataForm += '&emailCompany=' + encodeURIComponent(objectMessage.emailCompany);
+    dataForm += '&content=' + encodeURIComponent(objectMessage.content);
+    
+		const response = await fetch(`${apiUrl.link}/api/job/apply/mail/${pdfName}`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        Authorization: `Bearer ${token}`,
+        Params: `json ${dataForm}`
+			},
+			body: dataForm
+    });
+    
+    const data = await response.json();
+
+    console.log("Que trae data ",data);
+
+    if (!response.ok) {
+      dispatch({
+        type: errorJob,
+        error: "Error al enviar mensage, " + response.status,
+        cargando: false,
+      });
+    } else {
+
+      dispatch({
+        type: applyMessage,
+        message: data.message,
         cargando: false,
       });
     }
@@ -213,4 +258,4 @@ export const UploadDocument = (objectDocument, email, token) => async (
       cargando: false,
     });
   }
-};
+}
