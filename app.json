@@ -31,7 +31,7 @@
     },
     "android": {
       "package": "com.grupotecun.gtm.tecunapp",
-      "versionCode": 0,
+      "versionCode": 2,
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },
