@@ -57,6 +57,15 @@ class UserScreenProfile extends Component {
 		}
 	}
 
+	logout = async () => {
+		//await this.props.logoutUser();
+		console.log('borró usuario');
+		//await this.props.resetAddress();
+		await persistor.purge();
+		this.props.navigation.navigate('Login');
+		console.log('borró direccion');
+	};
+
 	/**+++++++++++++NOTIFICACIONES+++++++++++++ */
 	getTokenExpoNotificationsPush = async () => {
 		let token;
@@ -194,8 +203,6 @@ class UserScreenProfile extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				{this.showError()}
-				{this.showTokenAlert()}
 				<Content>
 					<List>
 						<ListItem thumbnail>
@@ -279,7 +286,7 @@ class UserScreenProfile extends Component {
 						<Button
 							transparent
 							vertical
-							onPress={() => this.sendPushNotification(this.state.expoPushToken)}
+							onPress={this.logout}
 						>
 							<CardItem style={{ marginTop: 10 }}>
 								<Grid
@@ -300,97 +307,13 @@ class UserScreenProfile extends Component {
 										}}
 									>
 										<Icon
-											type="FontAwesome"
-											name="map-marker"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Notificaion</Text>
-									</Col>
-									<Col style={{ marginTop: 15, marginBottom: 15 }}>
-										<Icon
-											type="FontAwesome5"
-											name="arrow-circle-right"
-											style={{ color: '#1c5988' }}
-										/>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button transparent vertical onPress={() => this.getTokenExpoNotificationsPush()}>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
 											type="Entypo"
-											name="back-in-time"
+											name="log-out"
 											style={{ marginLeft: 15, color: '#1c5988' }}
 										/>
 									</Col>
 									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Permisos App</Text>
-									</Col>
-									<Col style={{ marginTop: 15, marginBottom: 15 }}>
-										<Icon
-											type="FontAwesome5"
-											name="arrow-circle-right"
-											style={{ color: '#1c5988' }}
-										/>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button
-							transparent
-							vertical
-							onPress={async () => {
-								await this.sendPushNotification(this.state.expoPushToken);
-							}}
-						>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
-											type="FontAwesome"
-											name="cog"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>OtraNotificacion</Text>
+										<Text>Salir</Text>
 									</Col>
 									<Col style={{ marginTop: 15, marginBottom: 15 }}>
 										<Icon
@@ -435,7 +358,7 @@ class UserScreenProfile extends Component {
 										/>
 									</Col>
 									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Enviar Notificacion</Text>
+										<Text>Enviar Notificación</Text>
 									</Col>
 									<Col style={{ marginTop: 15, marginBottom: 15 }}>
 										<Icon
@@ -447,41 +370,6 @@ class UserScreenProfile extends Component {
 								</Grid>
 							</CardItem>
 						</Button>
-					</Card>
-
-					<Card>
-						<View
-							style={{
-								flex: 1,
-								alignItems: 'center',
-								justifyContent: 'space-around'
-							}}
-						>
-							<Text>Your expo push token: {this.state.expoPushToken}</Text>
-							<View style={{ alignItems: 'center', justifyContent: 'center' }}>
-								<Text>
-									Title: {this.state.notification &&
-										this.state.notification.request.content.title}{' '}
-								</Text>
-								<Text>
-									Body: {this.state.notification && this.state.notification.request.content.body}
-								</Text>
-								<Text>
-									Data:{' '}
-									{this.state.notification &&
-										JSON.stringify(this.state.notification.request.content.data)}
-								</Text>
-							</View>
-							<Button
-								primary
-								title="Press to Send Notification"
-								onPress={async () => {
-									await this.sendPushNotification(this.state.expoPushToken);
-								}}
-							>
-								<Text>Hola</Text>
-							</Button>
-						</View>
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />

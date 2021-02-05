@@ -52,12 +52,12 @@ class GamesScreen extends Component {
 			return (
 				<Grid
 					style={{
-                        backgroundColor: '#F8FAFB',
+						backgroundColor: '#F8FAFB',
 						borderBottomLeftRadius: 5,
 						borderTopLeftRadius: 5,
 						borderBottomRightRadius: 5,
 						borderTopRightRadius: 5,
-                        marginTop: 15
+						marginTop: 15
 					}}
 				>
 					<Col
@@ -93,12 +93,12 @@ class GamesScreen extends Component {
 					(
 						<Grid
 							style={{
-	
 								borderBottomLeftRadius: 5,
 								borderTopLeftRadius: 5,
 								borderBottomRightRadius: 5,
 								borderTopRightRadius: 5
 							}}
+							key={pounts.id}
 						>
 							<Col
 								size={1}

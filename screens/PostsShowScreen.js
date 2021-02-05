@@ -31,7 +31,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { apiUrl } from '../App';
+import { apiUrl, screenWidth } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -149,7 +149,6 @@ class PostsShowScreen extends Component {
 	}
 
 	render() {
-		var screenWidth = Dimensions.get('window').width;
 
 		this.state.postId = this.props.postReducer.post.id;
 
@@ -173,25 +172,37 @@ class PostsShowScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
 					<Card style={{ flex: 0 }} key={post.id}>
-						<CardItem style={{ backgroundColor: 'transparent' }}>
+						<ListItem thumbnail>
 							<Left>
 								<Thumbnail
-									style={{ backgroundColor: '#000000' }}
+									square
+									style={{ backgroundColor: 'transparent' }}
 									source={{ uri: `${apiUrl.link}/img/logo.png` }}
 								/>
-								<Text>{post.title}</Text>
 							</Left>
-						</CardItem>
+							<Body>
+								<Text>{post.title}</Text>
+							</Body>
+						</ListItem>
 						<CardItem>
 							<Body>
 								<Image
 									source={{ uri: this.state.pathImage + post.featured_image }}
-									style={{ width: screenWidth - 20, height: 150 }}
+									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 400 }}
 								/>
 								<Text note>{post.created_at}</Text>
 								<Text>{post.description}</Text>
 								<View style={{ flex: 1 }}>
-									<HTML source={{ html: post.content }} contentWidth={screenWidth} />
+									<WebView
+										source={{ html: post.content }}
+										scalesPageToFit={true}
+										bounces={false}
+										allowsFullscreenVideo={true}
+										javaScriptEnabled
+										mixedContentMode="always"
+										startInLoadingState={true}
+										allowsInlineMediaPlayback={true}
+									/>
 								</View>
 								{(() => {
 									if (post.featured_document) {
