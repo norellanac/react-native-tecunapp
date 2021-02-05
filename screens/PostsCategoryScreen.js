@@ -78,6 +78,14 @@ class PostsCategoryScreen extends Component {
 		));
 	};
 
+	showUserNameLikes(news) {
+		if (news.user_likes_new) {
+			return <Text>Tú y ({news.likes.length}) más</Text>
+		} else {
+			return (<Text>({news.likes.length})</Text>)
+		}
+	}
+
 	loadContent = () => {
 		var screenWidth = Dimensions.get('window').width;
 		var screenHeight = Dimensions.get('window').height;
@@ -117,7 +125,7 @@ class PostsCategoryScreen extends Component {
 										return <Icon name="like2" type="AntDesign" />;
 									}
 								})()}
-								<Text>({news.likes.length})</Text>
+								{this.showUserNameLikes(news)}
 							</Button>
 						</Left>
 						<Right>
@@ -140,12 +148,12 @@ class PostsCategoryScreen extends Component {
 
 		this.state.categoryPostName = this.props.postReducer.categoryPostName;
 
-		if (this.props.postReducer.cargando) {
+		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts ==null ) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<HederPostSection navigation={this.props.navigation} />
-					<Loading />
+					<Spinner color="blue" style={{ flex: 1 }} />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
 			);

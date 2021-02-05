@@ -17,7 +17,8 @@ import {
 	Button,
 	Left,
 	Right,
-	Body
+	Body,
+	View
 } from 'native-base';
 import { connect } from 'react-redux';
 import * as postActions from '../src/actions/postActions';
@@ -154,6 +155,14 @@ class PostsScreen extends Component {
 		await this.props.getNews(token);
 	}
 
+	showUserNameLikes(news) {
+		if (news.user_likes_new) {
+			return <Text>Tú y ({news.likes.length}) más</Text>
+		} else {
+			return (<Text>({news.likes.length})</Text>)
+		}
+	}
+
 	loadContent = () => {
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
@@ -185,12 +194,12 @@ class PostsScreen extends Component {
 							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.likePost(news.id)}>
 								{(() => {
 									if (news.user_likes_new) {
-										return <Icon name="like1" type="AntDesign" />;
+										return <Icon name="like1" type="AntDesign" />
 									} else {
-										return <Icon name="like2" type="AntDesign" />;
+										return <Icon name="like2" type="AntDesign" />
 									}
 								})()}
-								<Text>({news.likes.length})</Text>
+								{this.showUserNameLikes(news)}
 							</Button>
 						</Left>
 						<Right>
@@ -208,12 +217,12 @@ class PostsScreen extends Component {
 	};
 
 	render() {
-		if (this.props.postReducer.cargando) {
+		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts == null ) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<HederPostSection navigation={this.props.navigation} />
-					<Loading />
+					<Spinner color="blue" style={{ flex: 1 }} />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
 			);

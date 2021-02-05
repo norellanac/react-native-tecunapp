@@ -76,6 +76,14 @@ class PodcastScreen extends Component {
 		await this.props.getPodcasts(token);
 	}
 
+	showUserNameLikes(podcast) {
+		if (podcast.user_likes_new) {
+			return <Text>Tú y ({podcast.likes.length}) más</Text>
+		} else {
+			return (<Text>({podcast.likes.length})</Text>)
+		}
+	}
+
 	loadContent = () => {
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
@@ -114,7 +122,7 @@ class PodcastScreen extends Component {
 									return <Icon name="like2" type="AntDesign" />;
 								}
 							})()}
-							<Text>({podcast.likes.length})</Text>
+							{this.showUserNameLikes(podcast)}
 						</Button>
 						<Right>
 							<Button
@@ -140,7 +148,7 @@ class PodcastScreen extends Component {
 
 		//const { navigation } = this.props.navigation
 
-		if (this.props.podcastReducer.cargando) {
+		if (this.props.podcastReducer.podcasts == undefined || this.props.podcastReducer.podcasts == null) {
 			//console.log("jobsScreen: ", this.props);
 			return (
 				<Container>
