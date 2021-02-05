@@ -208,7 +208,7 @@ class PostsScreen extends Component {
 	};
 
 	render() {
-		if (this.props.postReducer.cargando) {
+		if (this.props.postReducer.cargando && !this.props.postReducer.posts) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />

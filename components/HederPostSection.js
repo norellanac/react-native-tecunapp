@@ -15,7 +15,7 @@ import Constants from "expo-constants";
 
 function HederPostSection(props) {
   return (
-    <Header style={{ backgroundColor: '#ed913b'}}>
+    <Header style={{ backgroundColor: '#1D578A'}}>
       <Button transparent onPress={() => props.navigation.navigate("Home")}>
           <Text style={{ color: '#ffffff'}}>Noticias</Text>
         </Button>

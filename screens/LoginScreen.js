@@ -3,10 +3,11 @@ import { Image, Linking, KeyboardAvoidingView, Dimensions } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import { Container, Content, Text, Card, CardItem, Button, Icon, Form, Item, Input, Spinner } from 'native-base';
 
-import {  apiUrl } from './../App';
+import { apiUrl } from './../App';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
+import PostsScreen from '../screens/PostsScreen';
 
 class LoginScreen extends Component {
 	constructor(props) {
@@ -16,7 +17,7 @@ class LoginScreen extends Component {
 		email: '',
 		password: '',
 		isShowAlert: true,
-		errorMessage: '',
+		errorMessage: ''
 	};
 
 	showAlert = () => {
@@ -24,10 +25,7 @@ class LoginScreen extends Component {
 			return (
 				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
 					<CardItem style={{ backgroundColor: '#1B2853' }}>
-						<Image
-							source={{ uri: `${apiUrl.link}/img/not-found.png` }}
-							style={{ width: 25, height: 25 }}
-						/>
+						<Image source={{ uri: `${apiUrl.link}/img/not-found.png` }} style={{ width: 25, height: 25 }} />
 						<Col size={4}>
 							<Text
 								style={{
@@ -51,8 +49,8 @@ class LoginScreen extends Component {
 
 	componentDidMount = async () => {
 		//this.props.getStates();
-		this.setState({ isShowAlert: true })
-		this.setState({ errorMessage: '' })
+		this.setState({ isShowAlert: true });
+		this.setState({ errorMessage: '' });
 	};
 
 	userData = async () => {
@@ -65,8 +63,8 @@ class LoginScreen extends Component {
 		}
 		this.setState({ password: '' });
 		if (this.props.loginReducer.error) {
-			this.setState({ isShowAlert: true })
-			this.setState({ errorMessage: this.props.loginReducer.error })
+			this.setState({ isShowAlert: true });
+			this.setState({ errorMessage: this.props.loginReducer.error });
 		}
 	};
 	ponerContenido = () => {
@@ -109,9 +107,8 @@ class LoginScreen extends Component {
 		let screenWidth = Dimensions.get('window').width;
 		let screenHeight = Dimensions.get('window').height;
 		if (this.props.loginReducer.isAuth) {
-			this.props.navigation.navigate('Home');
+			return <PostsScreen navigation={this.props.navigation} />;
 		}
-
 
 		return (
 			<Container style={{ backgroundColor: '#ed913b' }}>

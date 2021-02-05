@@ -12,7 +12,7 @@ class FooterTabsNavigationIconText extends Component {
     return (
       <View>
         <Footer >
-          <FooterTab style={{ backgroundColor: '#ed913b' }}>
+          <FooterTab style={{ backgroundColor: '#1D578A' }}>
             <Button
               vertical
               onPress={() => this.props.navigation.navigate("Home")}
@@ -37,13 +37,6 @@ class FooterTabsNavigationIconText extends Component {
           </FooterTab>
         </Footer>
 
-
-        <Button rounded style={{ backgroundColor: '#e3342f', right: 20, bottom: 80, position: "absolute", flex: 1, zIndex: 100 }}
-          onPress={() =>
-            Linking.openURL("http://www.denunciagrupotecun.com/")
-          }>
-          <Icon name="bell" type="FontAwesome5" />
-        </Button>
       </View>
 
     );
