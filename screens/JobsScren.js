@@ -104,7 +104,7 @@ class JobsScren extends Component {
 
 	render() {
 		//const { navigation } = this.props.navigation
-
+		/*
 		if (this.props.jobsReducer.cargando) {
 			console.log('jobsScreen: ', this.props);
 			return (
@@ -114,9 +114,7 @@ class JobsScren extends Component {
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
 			);
-		}
-
-		console.log('jobsProps: ', this.props);
+		}*/
 
 		return (
 			<Container>

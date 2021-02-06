@@ -130,7 +130,7 @@ class StoreScreen extends Component {
 	};
 
 	render() {
-		if (this.props.storeReducer.cargando) {
+		if (this.props.storeReducer.cargando && !this.props.storeReducer) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />

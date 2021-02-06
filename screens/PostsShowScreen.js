@@ -47,7 +47,7 @@ class PostsShowScreen extends Component {
 		postContent: '',
 		postImage: '',
 		pathImage: apiUrl.link + '/storage/posts/',
-		message: [],
+		message: '',
 		showComments: false
 	};
 
@@ -154,7 +154,7 @@ class PostsShowScreen extends Component {
 
 		const post = Object.assign({}, this.props.postReducer.post);
 
-		if (this.props.postReducer.cargando || this.props.postReducer.post.comments == undefined) {
+		/*if (this.props.postReducer.cargando || this.props.postReducer.post.comments == undefined) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
@@ -163,7 +163,7 @@ class PostsShowScreen extends Component {
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
 			);
-		}
+		}*/
 
 		//console.log(post.featured_document);
 

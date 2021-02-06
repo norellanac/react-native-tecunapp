@@ -1,5 +1,5 @@
 import React from 'react';
-import { Linking, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { Linking, BackHandler, StyleSheet, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Text, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 import Constants from 'expo-constants';
@@ -16,11 +16,33 @@ function HeaderCustom(props) {
 		console.log('borró direccion');
 	};
 
-	console.log('header: ');
+	exitApp = () => {
+		Alert.alert(
+			'Salir',
+			'Cerrar aplicación',
+			[
+				{
+					text: 'No',
+					onPress: () => console.log('Cancel Pressed'),
+					style: 'cancel'
+				},
+				{ text: 'Si', onPress: () => BackHandler.exitApp() }
+			],
+			{ cancelable: false }
+		);
+	};
+
+	handleGoBack = () => {
+		if (props.navigation.canGoBack()) {
+			props.navigation.goBack();
+		} else {
+			exitApp();
+		}
+	};
 	return (
-		<Header style={{ backgroundColor: '#ed913b' }}>
+		<Header style={{ backgroundColor: '#1D578A' }}>
 			<Left>
-				<Button transparent onPress={() => props.navigation.goBack()}>
+				<Button transparent onPress={() => handleGoBack()}>
 					<Icon style={{ color: '#FFFFFF' }} name="arrow-back" />
 				</Button>
 			</Left>
@@ -31,10 +53,6 @@ function HeaderCustom(props) {
 				<Button transparent onPress={() => props.navigation.navigate('SettingsScreen')}>
 					<Icon style={{ color: '#FFFFFF' }} name="user" type="FontAwesome" />
 					<Text style={{ color: '#ffffff' }}>{props.usuariosReducer.user.name} </Text>
-				</Button>
-
-				<Button transparent onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}>
-					<Icon name="bell" type="FontAwesome5" />
 				</Button>
 			</Right>
 		</Header>

@@ -125,6 +125,8 @@ class PostsScreen extends Component {
 		}
 	}
 
+	
+
 	showNews(idPost) {
 		this.props.getShowPost(idPost, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PostsShowScreen');

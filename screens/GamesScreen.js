@@ -150,7 +150,7 @@ class GamesScreen extends Component {
 		//console.log("Como viene el state2 en el render? ", this.state.isDisplay);
 		//console.log("Como viene el state2 en el render? ", this.state.isDisplay2);
 
-		if (this.props.questionReducer.cargando) {
+		if (this.props.questionReducer.cargando && !this.props.questionReducer) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />

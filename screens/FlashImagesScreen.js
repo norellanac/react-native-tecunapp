@@ -91,7 +91,7 @@ class FlashImagesScreen extends Component {
 
     //const { navigation } = this.props.navigation
 
-    if (this.props.picturesReducer.cargando) {
+    /*if (this.props.picturesReducer.cargando) {
       console.log("picturesScreen: ", this.props);
       return (
         <Container>
@@ -101,7 +101,7 @@ class FlashImagesScreen extends Component {
           <FooterTabsNavigationIconText navigation={this.props.navigation} />
         </Container>
       )
-    }
+    }*/
 
     console.log("picturesProps: ", this.props);
 

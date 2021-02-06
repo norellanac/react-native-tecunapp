@@ -245,7 +245,7 @@ class PodcastShowScreen extends Component {
 
 		const podcast = Object.assign({}, this.props.podcastReducer.podcast);
 
-		if (this.props.podcastReducer.cargando || this.props.podcastReducer.podcast.comments == undefined) {
+		if (this.props.podcastReducer.cargando && this.props.podcastReducer.podcast.comments == undefined) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
