@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions, Image, Linking } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -33,7 +33,7 @@ class ProccessPeopleScreen extends Component {
 	}
 	state = {
 		pathImage: apiUrl.link + '/img/',
-		pathDocuemnt: apiUrl.link
+		pathDocument: apiUrl.link + '/files/'
 	};
 
 	loadingVacation() {
@@ -55,13 +55,12 @@ class ProccessPeopleScreen extends Component {
 								<Image
 									source={{ uri: this.state.pathImage + 'seguro.png' }}
 									style={{
-										backgroundColor: '#CEF6EC',
 										borderRadius: 20,
 										width: screenWidth / 3,
 										height: screenHeight / 6
 									}}
 								/>
-								<Text note style={{ marginBottom: 8, marginTop: 8 }}>
+								<Text style={{ marginBottom: 8, marginTop: 8 }}>
 									{' '}
 									Instructivo de seguro medico GyT
 								</Text>
@@ -70,9 +69,9 @@ class ProccessPeopleScreen extends Component {
 						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
 							<Button
 								iconLeft
-								onPress={() => this.test()}
+								onPress={() => Linking.openURL(this.state.pathDocument + 'InstructivoSeguromédicoGyT.pdf')}
 								style={{
-									backgroundColor: '#5FB404',
+									backgroundColor: '#FA8258',
 									width: screenWidth / 2,
 									height: screenHeight / 17,
 									borderRadius: 15
@@ -94,13 +93,12 @@ class ProccessPeopleScreen extends Component {
 								<Image
 									source={{ uri: this.state.pathImage + 'logo-irtra.org_.png' }}
 									style={{
-										backgroundColor: '#CEF6EC',
 										borderRadius: 20,
 										width: screenWidth / 3,
 										height: screenHeight / 6
 									}}
 								/>
-								<Text note style={{ marginBottom: 8, marginTop: 8 }}>
+								<Text style={{ marginBottom: 8, marginTop: 8 }}>
 									{' '}
 									Formulario IRTRA{' '}
 								</Text>
@@ -109,9 +107,9 @@ class ProccessPeopleScreen extends Component {
 						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
 							<Button
 								iconLeft
-								onPress={() => this.test()}
+								onPress={() => Linking.openURL(this.state.pathDocument + 'formularioIrtra.doc')}
 								style={{
-									backgroundColor: '#5FB404',
+									backgroundColor: '#FA8258',
 									width: screenWidth / 2,
 									height: screenHeight / 17,
 									borderRadius: 15
@@ -133,15 +131,14 @@ class ProccessPeopleScreen extends Component {
 								<Image
 									source={{ uri: this.state.pathImage + 'piscina.png' }}
 									style={{
-										backgroundColor: '#CEF6EC',
 										borderRadius: 20,
 										width: screenWidth / 3,
 										height: screenHeight / 6
 									}}
 								/>
-								<Text note style={{ marginBottom: 8, marginTop: 8 }}>
+								<Text style={{ marginBottom: 8, marginTop: 8 }}>
 									{' '}
-									Constacia de vacaciones{' '}
+									Mis días de vacaciones{' '}
 								</Text>
 							</Body>
 						</CardItem>
@@ -150,7 +147,7 @@ class ProccessPeopleScreen extends Component {
 								iconLeft
 								onPress={() => this.loadingVacation()}
 								style={{
-									backgroundColor: '#5FB404',
+									backgroundColor: '#FA8258',
 									width: screenWidth - 190,
 									height: screenHeight / 17,
 									borderRadius: 15
@@ -168,13 +165,12 @@ class ProccessPeopleScreen extends Component {
 								<Image
 									source={{ uri: this.state.pathImage + 'entrevista.png' }}
 									style={{
-										backgroundColor: '#CEF6EC',
 										borderRadius: 20,
 										width: screenWidth / 3,
 										height: screenHeight / 6
 									}}
 								/>
-								<Text note style={{ marginBottom: 8, marginTop: 8 }}>
+								<Text style={{ marginBottom: 8, marginTop: 8 }}>
 									Constancia laboral
 								</Text>
 							</Body>
@@ -184,7 +180,7 @@ class ProccessPeopleScreen extends Component {
 								iconLeft
 								onPress={() => this.props.navigation.navigate('ProccessCertificateScreen')}
 								style={{
-									backgroundColor: '#5FB404',
+									backgroundColor: '#FA8258',
 									width: screenWidth / 2,
 									height: screenHeight / 17,
 									borderRadius: 15

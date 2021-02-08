@@ -131,7 +131,7 @@ class PodcastScreen extends Component {
 								onPress={() => this.showPodcast(podcast.id)}
 							>
 								<Icon name="book-reader" type="FontAwesome5" />
-								<Text>Leer más</Text>
+								<Text>Escuchar más</Text>
 							</Button>
 						</Right>
 					</CardItem>

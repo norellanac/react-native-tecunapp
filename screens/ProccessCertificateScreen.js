@@ -97,7 +97,7 @@ class ProccessCertificateScreen extends Component {
     let hn = "hnd";
     let paisHn = "Honduras";
 
-    if (this.props.rrhhReducer.cargando) {
+    /* if (this.props.rrhhReducer.cargando) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -106,7 +106,7 @@ class ProccessCertificateScreen extends Component {
           <FooterTabsNavigationIconText navigation={this.props.navigation} />
         </Container>
       );
-    }
+    } */
 
     return (
       <Container>
@@ -129,10 +129,10 @@ class ProccessCertificateScreen extends Component {
                   onPress={() => this.mailCertificate(gt, paisGT)}
                   style={{
                     alignSelf: "center",
-                    backgroundColor: "#5FB404",
+                    backgroundColor: "#FA8258",
                     width: screenWidth / 2,
                     height: screenHeight / 17,
-                    borderRadius: 15,
+                    borderRadius: 20,
                   }}
                 >
                   <Icon
@@ -165,10 +165,10 @@ class ProccessCertificateScreen extends Component {
                   onPress={() => this.mailCertificate(sv, paisSV)}
                   style={{
                     alignSelf: "center",
-                    backgroundColor: "#5FB404",
+                    backgroundColor: "#FA8258",
                     width: screenWidth / 2,
                     height: screenHeight / 17,
-                    borderRadius: 15,
+                    borderRadius: 20,
                   }}
                 >
                   <Icon
@@ -201,10 +201,10 @@ class ProccessCertificateScreen extends Component {
                   onPress={() => this.mailCertificate(hn, paisHn)}
                   style={{
                     alignSelf: "center",
-                    backgroundColor: "#5FB404",
+                    backgroundColor: "#FA8258",
                     width: screenWidth / 2,
                     height: screenHeight / 17,
-                    borderRadius: 15,
+                    borderRadius: 20,
                   }}
                 >
                   <Icon

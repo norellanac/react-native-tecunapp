@@ -208,37 +208,36 @@ class JobShowScreen extends Component {
               </Left>
             </CardItem>
           </Card>
-          <ScrollView style={{ flex: 1 }}>
-            <Text style={{ marginLeft: 20 }}>
+          <ScrollView style={{ flex: 1, marginLeft: 15, marginRight: 15 }}>
+            <Text>
               {this.props.jobsReducer.job.description}
             </Text>
-            <Text> </Text>
             <HTML
               source={{ html: this.props.jobsReducer.job.skils }}
               contentWidth={screenWidth}
             />
           </ScrollView>
-          <Button
-            style={{ marginBottom: 3 }}
-            block
-            success
-            onPress={() =>
-              this.shareMesage(this.props.jobsReducer.job.public_link)
-            }
-            title="Share"
-          >
-            <Text>Compartir</Text>
-            <Icon name="whatsapp" type="FontAwesome" />
-          </Button>
+          <View style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}>
+            <Button
+              style={{ marginBottom: 3, borderRadius: 15, backgroundColor: "#FA8258" }}
+              block
+              onPress={() =>
+                this.shareMesage(this.props.jobsReducer.job.public_link)
+              }
+              title="Share"
+            >
+              <Text>Compartir</Text>
+              <Icon name="whatsapp" type="FontAwesome" />
+            </Button>
+          </View>
           <Form style={{ marginLeft: 10, marginRight: 10, marginTop: 20 }}>
             <Button
-              style={{ marginBottom: 3 }}
+              style={{ marginBottom: 5, borderRadius: 15, backgroundColor: "#FA8258" }}
               block
-              success
               onPress={this._pickDocument}
             >
               <Text>Adjuntar pdf</Text>
-              <Icon name="pdf" type="FontAwesome" />
+              <Icon name="document-attach" type="Ionicons" />
             </Button>
             <Textarea
               rowSpan={5}
@@ -246,7 +245,7 @@ class JobShowScreen extends Component {
               value={this.state.content}
               bordered
               style={{ borderRadius: 15 }}
-              placeholder="Contestar preguntas"
+              placeholder="Comentarios"
             />
 
             <Button
@@ -255,6 +254,7 @@ class JobShowScreen extends Component {
                 marginTop: 10,
                 marginBottom: 5,
                 marginLeft: screenWidth / 4 + 18,
+                backgroundColor: "#FA8258"
               }}
               onPress={() => this.sendMessage()}
             >

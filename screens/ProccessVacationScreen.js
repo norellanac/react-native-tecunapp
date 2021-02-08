@@ -76,7 +76,7 @@ class ProccessVacationScreen extends Component {
               onPress={() => this.mailVacation(item.email, item.departament)}
             >
               <Left>
-                <Button style={{ backgroundColor: "#0B0B61" }}>
+                <Button style={{ backgroundColor: "#FA8258" }}>
                   <Icon type="MaterialCommunityIcons" name="email-send" />
                 </Button>
               </Left>
@@ -103,7 +103,7 @@ class ProccessVacationScreen extends Component {
 
     Alert.alert(
       message,
-	  `Al elegir la empresa, se envía un correo electronico al encargado de nomina. Para continuar con la solicitud sobre cuantos dias de vacaciones tienes, por favor presione Aceptar. Se eviará un correo electronico con tu información y se contactaran contigo lo mas pronto posible.`,
+	    `Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.`,
       [
         {
           text: "Cancelar",
@@ -119,8 +119,8 @@ class ProccessVacationScreen extends Component {
   sendMailVacation(objectMail, token) {
 		this.props.mailVacation(objectMail, token)
 		Alert.alert(
-			'Correo enviado exitosamente',
-			`Constancia solicitada correctamente, pronto llegara un correo electronico a su bandeja de entradas para corroborar dicha informacion. `,
+			'Solicitud enviada',
+			`Constancia solicitada correctamente. `,
 			[
 			  { text: "Aceptar", onPress: () => this.props.navigation.navigate("ProccessVacationScreen")},
 			],
@@ -134,7 +134,7 @@ class ProccessVacationScreen extends Component {
     var screenHeight = Dimensions.get("window").height;
     const companies = this.props.rrhhReducer.company;
 
-    if (this.props.rrhhReducer.cargando) {
+    /* if (this.props.rrhhReducer.cargando) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -143,7 +143,7 @@ class ProccessVacationScreen extends Component {
           <FooterTabsNavigationIconText navigation={this.props.navigation} />
         </Container>
       );
-    }
+    } */
 
     return (
       <Container>
