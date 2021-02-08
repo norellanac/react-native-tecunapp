@@ -257,11 +257,11 @@ class ContactScreen extends Component {
 						>
 							<Left>
 								<Button style={{ backgroundColor: '#007AFF' }}>
-									<Icon active name="star" />
+									<Icon active name="address-book" type="FontAwesome5" />
 								</Button>
 							</Left>
 							<Body>
-								<Text>Numeros Favoritos</Text>
+								<Text>Numeros Fracuentes</Text>
 							</Body>
 							<Right>
 								<Icon active name="caret-down" type="FontAwesome" />
@@ -308,7 +308,6 @@ class ContactScreen extends Component {
 						<Item rounded style={{ marginTop: 15 }}>
 							<Icon type="MaterialCommunityIcons" name="map" style={{ color: '#3490dc', fontSize: 25 }} />
 							<Input
-								keyboardType="numeric"
 								maxLength={13}
 								onChangeText={(searchPais) => this.setState({ searchPais })}
 								value={this.state.searchPais}

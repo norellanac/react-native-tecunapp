@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-import { Image, KeyboardAvoidingView } from 'react-native';
+import { Image, Linking, KeyboardAvoidingView } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
@@ -329,9 +329,7 @@ class UserScreenProfile extends Component {
 						<Button
 							transparent
 							vertical
-							onPress={async () => {
-								await this.sendPushNotification(this.state.expoPushToken);
-							}}
+							onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
 						>
 							<CardItem>
 								<Grid
@@ -352,13 +350,13 @@ class UserScreenProfile extends Component {
 										}}
 									>
 										<Icon
-											type="MaterialIcons"
-											name="help"
+											type="FontAwesome"
+											name="warning"
 											style={{ marginLeft: 15, color: '#1c5988' }}
 										/>
 									</Col>
 									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Enviar Notificación</Text>
+										<Text>Línea de denuncia</Text>
 									</Col>
 									<Col style={{ marginTop: 15, marginBottom: 15 }}>
 										<Icon

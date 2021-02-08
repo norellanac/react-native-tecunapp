@@ -357,10 +357,10 @@ class PodcastShowScreen extends Component {
 															Linking.openURL(
 																this.state.pathImage + podcast.featured_document
 															)}
-														style={{ backgroundColor: '#0B0B61' }}
+														style={{ borderRadius: 20, backgroundColor: '#FA8258' }}
 													>
 														<Icon name="cloud-download" type="FontAwesome" />
-														<Text note>Descargar documento adjunto</Text>
+														<Text>Descargar documento adjunto</Text>
 													</Button>
 												</Col>
 											</Grid>

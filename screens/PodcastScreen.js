@@ -110,28 +110,30 @@ class PodcastScreen extends Component {
 						</Body>
 					</CardItem>
 					<CardItem>
-						<Button
-							transparent
-							textStyle={{ color: '#87838B' }}
-							onPress={() => this.likePodcast(podcast.id)}
-						>
-							{(() => {
-								if (podcast.user_likes_new) {
-									return <Icon name="like1" type="AntDesign" />;
-								} else {
-									return <Icon name="like2" type="AntDesign" />;
-								}
-							})()}
-							{this.showUserNameLikes(podcast)}
-						</Button>
+						<Left>
+							<Button
+								transparent
+								textStyle={{ color: '#87838B' }}
+								onPress={() => this.likePodcast(podcast.id)}
+							>
+								{(() => {
+									if (podcast.user_likes_new) {
+										return <Icon name="like1" type="AntDesign" />;
+									} else {
+										return <Icon name="like2" type="AntDesign" />;
+									}
+								})()}
+								{this.showUserNameLikes(podcast)}
+							</Button>
+						</Left>
 						<Right>
 							<Button
 								transparent
 								textStyle={{ color: '#87838B' }}
 								onPress={() => this.showPodcast(podcast.id)}
 							>
-								<Icon name="book-reader" type="FontAwesome5" />
-								<Text>Escuchar más</Text>
+								<Icon name="music" type="FontAwesome" />
+								<Text>Escuchar</Text>
 							</Button>
 						</Right>
 					</CardItem>
