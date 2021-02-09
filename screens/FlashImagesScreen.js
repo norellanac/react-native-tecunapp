@@ -96,7 +96,7 @@ class FlashImagesScreen extends Component {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
-          <HederPostSection navigation={this.props.navigation}></HederPostSection>
+          <HederPostSection navigation={this.props.navigation} screen={3}></HederPostSection>
           < Loading />
           <FooterTabsNavigationIconText navigation={this.props.navigation} />
         </Container>
@@ -108,7 +108,7 @@ class FlashImagesScreen extends Component {
     return (
       <Container>
         <HeaderCustom navigation={this.props.navigation} />
-        <HederPostSection navigation={this.props.navigation}></HederPostSection>
+        <HederPostSection navigation={this.props.navigation} screen={3}></HederPostSection>
         <Content>
           
           {this.loadContent(screenWidth, screenHeight)}

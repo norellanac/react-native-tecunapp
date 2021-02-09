@@ -223,7 +223,7 @@ class PostsScreen extends Component {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
-					<HederPostSection navigation={this.props.navigation} />
+					<HederPostSection navigation={this.props.navigation} screen={1} />
 					<Spinner color="blue" style={{ flex: 1 }} />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
@@ -233,7 +233,7 @@ class PostsScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				<HederPostSection navigation={this.props.navigation} />
+				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Form>
 					<Picker
 						note

@@ -83,14 +83,13 @@ class PodcastScreen extends Component {
 
 	showUserNameLikes(podcast) {
 		if (podcast.user_likes_new) {
-			return <Text>Tú y ({podcast.likes.length}) más</Text>
+			return <Text>Tú y ({podcast.likes.length}) más</Text>;
 		} else {
-			return (<Text>({podcast.likes.length})</Text>)
+			return <Text>({podcast.likes.length})</Text>;
 		}
 	}
 
 	loadContent = () => {
-
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
 				<Card style={{ flex: 0 }} key={podcast.id}>
@@ -154,12 +153,15 @@ class PodcastScreen extends Component {
 
 		//const { navigation } = this.props.navigation
 
-		if (this.props.podcastReducer.podcasts == undefined || this.props.podcastReducer.podcasts == null || this.state.isWaitingMap == 1) {
+		if (
+			this.props.podcastReducer.podcasts == undefined ||
+			this.props.podcastReducer.podcasts == null ||
+			this.state.isWaitingMap == 1
+		) {
 			//console.log("jobsScreen: ", this.props);
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
-					<HederPostSection navigation={this.props.navigation} />
 					<Loading />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
@@ -173,7 +175,7 @@ class PodcastScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				<HederPostSection navigation={this.props.navigation} />
+				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Form>
 					<Picker
 						note

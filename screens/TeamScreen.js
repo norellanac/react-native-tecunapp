@@ -226,42 +226,6 @@ class TeamScreen extends Component {
 								</Grid>
 							</CardItem>
 						</Button>
-
-						<Button
-							transparent
-							vertical
-							onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
-						>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
-											type="FontAwesome"
-											name="warning"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Línea de denuncia</Text>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
