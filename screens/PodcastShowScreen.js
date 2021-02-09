@@ -343,8 +343,11 @@ class PodcastShowScreen extends Component {
 						<CardItem>
 							<Body>
 								<Text>{podcast.description}</Text>
-								<ScrollView style={{ flex: 1 }}>
-									<HTML source={{ html: podcast.content }} contentWidth={screenWidth} />
+								<ScrollView>
+								<HTML
+									source={{ html: podcast.content.replace(/line-height:107%|line-height: 107%;|\n/g, " ") }}
+									contentWidth={screenWidth}
+								/>
 								</ScrollView>
 								{(() => {
 									if (podcast.featured_document) {

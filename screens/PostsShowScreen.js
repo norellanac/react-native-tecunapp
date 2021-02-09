@@ -153,6 +153,11 @@ class PostsShowScreen extends Component {
 		this.state.postId = this.props.postReducer.post.id;
 
 		const post = Object.assign({}, this.props.postReducer.post);
+		/* const classText = `class="MsoNormal"`;
+		const styleText = `style="text-align:justify"`;
+		const styleText2 = `style="font-size: 12pt; line-height: 107%;`;
+		console.log(post.content.replace(/line-height:107%|line-height: 107%;|\n/g, " ")); */
+		/* post.content.replace(/class="MsoNormal"|style="text-align:justify"|line-height:107%|line-height: 107%;|\n/g, "") */
 
 		/*if (this.props.postReducer.cargando || this.props.postReducer.post.comments == undefined) {
 			return (
@@ -163,8 +168,6 @@ class PostsShowScreen extends Component {
 				</Container>
 			);
 		}*/
-
-		//console.log(post.featured_document);
 
 		return (
 			<Container>
@@ -191,18 +194,16 @@ class PostsShowScreen extends Component {
 								/>
 								<Text note>{post.created_at}</Text>
 								<Text>{post.description}</Text>
-								<View style={{ flex: 1 }}>
-									<WebView
-										source={{ html: post.content }}
-										scalesPageToFit={true}
-										bounces={false}
-										allowsFullscreenVideo={true}
-										javaScriptEnabled
-										mixedContentMode="always"
-										startInLoadingState={true}
-										allowsInlineMediaPlayback={true}
-									/>
-								</View>
+								{/* <Text>{post.content.replace()}</Text> */}
+								<ScrollView>
+								<HTML
+									source={{ html: post.content.replace(/line-height:107%|line-height: 107%;|\n/g, " ") }}
+									contentWidth={screenWidth}
+								/>
+								</ScrollView>
+								{/* <View style={{ flex: 1 }}>
+									<Text>{post.content.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+								</View> */}
 								{(() => {
 									if (post.featured_document) {
 										return (
@@ -213,10 +214,13 @@ class PostsShowScreen extends Component {
 															Linking.openURL(
 																this.state.pathImage + post.featured_document
 															)}
-														style={{ backgroundColor: '#0B0B61' }}
+														style={{ 
+															backgroundColor: '#FA8258',
+															borderRadius: 20 
+														}}
 													>
 														<Icon name="cloud-download" type="FontAwesome" />
-														<Text note>Descargar documento adjunto</Text>
+														<Text>Descargar documento adjunto</Text>
 													</Button>
 												</Col>
 											</Grid>

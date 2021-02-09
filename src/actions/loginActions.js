@@ -62,9 +62,11 @@ export const traerToken = (email, password) => async (dispatch) => {
 		let dataForm = '_method=' + encodeURIComponent('POST');
 		dataForm += '&grant_type=' + encodeURIComponent('password');
 		dataForm += '&client_id=' + encodeURIComponent('2');
-		dataForm += '&client_secret=' + encodeURIComponent('fkygOeugMPcJTeOimNRwZdcfRTiJUSwf8nxmF0mQ');
+		dataForm += '&client_secret=' + encodeURIComponent('YjN2irWCkuwe3nnv9QFRISXfWmPDAaKzjjoB5cnw');
 		dataForm += '&username=' + encodeURIComponent(email);
 		dataForm += '&password=' + encodeURIComponent("@ppT3cun$3cre7");
+
+		/* MyClientSecret: YjN2irWCkuwe3nnv9QFRISXfWmPDAaKzjjoB5cnw */
 
 		const response = await fetch(`${apiUrl.link}/oauth/token`, {
 			method: 'POST',

@@ -179,7 +179,7 @@ class JobShowScreen extends Component {
 
     //console.log("jobsReducer? ", this.props.jobsReducer);
 
-    if (this.props.jobsReducer.cargando) {
+    /* if (this.props.jobsReducer.cargando) {
       return (
         <Container>
           <HeaderCustom navigation={this.props.navigation} />
@@ -188,7 +188,7 @@ class JobShowScreen extends Component {
           <FooterTabsNavigationIconText navigation={this.props.navigation} />
         </Container>
       );
-    }
+    } */
 
     return (
       <Container>
