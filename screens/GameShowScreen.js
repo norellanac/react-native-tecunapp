@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Dimensions, Image, Alert } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
-import { Container, Content, Body, Thumbnail, Icon, Text, CardItem, Card, Button } from 'native-base';
+import { Container, Content, Body, Spinner, Icon, Text, CardItem, Card, Button } from 'native-base';
 import { connect } from 'react-redux';
 import * as questionActions from '../src/actions/questionActions';
 import * as loginActions from '../src/actions/loginActions';
@@ -25,18 +25,13 @@ class GameShowScreen extends Component {
 		count: 0
 	};
 
-	logout = async () => {
-		//await this.props.logoutUser();
-		console.log('borró usuario');
-		//await this.props.resetAddress();
-		await persistor.purge();
-		this.props.navigation.navigate('Login');
-		console.log('borró direccion');
-	};
 
 	async componentDidMount() {
 		this.state.count++;
 		console.log('Como va CountDidMount?: ', this.state.count);
+		console.log('====================================');
+		console.log(this.props.questionReducer);
+		console.log('====================================');
 	}
 
 	textQuestion() {
@@ -64,7 +59,7 @@ class GameShowScreen extends Component {
 			this.props.answerQuestion(answerObject, this.state.token);
 
 			if (this.props.questionReducer.cargando) {
-				<Loading />;
+				<Spinner color="blue" style={{ flex: 1 }} />
 			}
 
 			this.props.oneQuestion(this.state.token);
@@ -73,14 +68,15 @@ class GameShowScreen extends Component {
 
 	forceExit(status) {
 		if (status === 'F') {
-			Alert.alert(
+			//validaba si era la tercer vez jugando para mostrar resultados
+			/* Alert.alert(
 				'Resultados',
 				`Has respondido correctamente ${this.props.questionReducer.info.questionTrue} preguntas de 3`,
 				[
 					{ text: 'OK', onPress: () => console.log('OK Pressed') }
 				],
 				{ cancelable: false }
-			);
+			); */
 
 			//alert(`${this.props.questionReducer.info.questionTrue} correctas de 3`);
 			this.props.questionReducer.status = '';
@@ -92,8 +88,6 @@ class GameShowScreen extends Component {
 
 	render() {
 		var screenWidth = Dimensions.get('window').width - 1;
-		var hg = Dimensions.get('window').width - 150;
-
 		{
 			this.forceExit(this.props.questionReducer.status);
 		}
@@ -102,7 +96,7 @@ class GameShowScreen extends Component {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
-					<Loading />
+					<Spinner color="blue" style={{ flex: 1 }} />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
 			);

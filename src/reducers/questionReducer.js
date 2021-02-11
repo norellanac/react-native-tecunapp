@@ -18,7 +18,7 @@ const INITIAL = {
 export default (state = INITIAL, action) => {
     switch(action.type) {
         case loadingQuestion:
-            return { ...state, cargando: true };
+            return { ...state, cargando: true, error: '' };
         case errorQuestion:
             return { ...state, error: action.error, cargando: action.cargando };
         case getQuestion:
@@ -31,9 +31,9 @@ export default (state = INITIAL, action) => {
                 cargando: action.cargando 
             };
         case messageAnswer:
-            return { ...state, message:action.message, info:action.info, status:action.status, cargando: action.cargando};
+            return { ...state, message:action.message, info:action.info, status:action.status, cargando: action.cargando, error: ''};
         case scoreUser:
-            return { ...state, score: action.score, cargando: action.cargando };
+            return { ...state, score: action.score, cargando: action.cargando , error: ''};
         case PURGE:
             return INITIAL;
         default:
