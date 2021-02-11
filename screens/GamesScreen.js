@@ -181,6 +181,25 @@ class GamesScreen extends Component {
 														style={{ width: screenWidth / 3, height: screenWidth / 3 }}
 													/>
 												</TouchableOpacity>
+												<Button
+													onPress={() => {
+														this.onValueChance();
+													}}
+													style={{
+														marginTop: 10,
+														width: screenWidth / 3,
+														height: screenHeight / 13,
+														borderRadius: 10,
+														alignSelf: 'center'
+													}}
+												>
+													<Icon
+														type="Entypo"
+														name="game-controller"
+														style={{ marginLeft: 13, color: '#ffffff' }}
+													/>
+													<Text style={{ color: '#ffffff', marginRight: 15 }}>Top</Text>
+												</Button>
 												{this.allScoreTitle()}
 												{this.allScore()}
 											</Col>
@@ -197,7 +216,7 @@ class GamesScreen extends Component {
 											<Col size={4} style={{ alignItems: 'center' }}>
 												<Image
 													source={{ uri: this.state.pathImage + 'trivia.png' }}
-													style={{ width: screenWidth / 2, height: screenHeight / 4 }}
+													style={{ width: screenWidth / 2, height: screenWidth / 2 }}
 												/>
 												<Button
 													onPress={() => this.oneQuestion()}
@@ -213,7 +232,7 @@ class GamesScreen extends Component {
 														name="game-controller"
 														style={{ marginLeft: 13, color: '#ffffff' }}
 													/>
-													<Text style={{ color: '#ffffff', marginRight: 15 }}>Jugar</Text>
+													<Text style={{ color: '#ffffff', marginRight: 15 }}>Trivia</Text>
 												</Button>
 											</Col>
 										</Grid>

@@ -53,15 +53,15 @@ class ProccessPeopleScreen extends Component {
 						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
-									source={{ uri: this.state.pathImage + 'seguro.png' }}
+									source={{ uri: this.state.pathImage + 'seguro.jpg' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
-										height: screenHeight / 6
+										width: screenWidth / 2,
+										height: screenHeight / 4,
+										resizeMode:'center',
 									}}
 								/>
-								<Text style={{ marginBottom: 8, marginTop: 8 }}>
-									{' '}
+								<Text>
 									Instructivo de seguro medico GyT
 								</Text>
 							</Body>
@@ -94,13 +94,13 @@ class ProccessPeopleScreen extends Component {
 									source={{ uri: this.state.pathImage + 'logo-irtra.org_.png' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
-										height: screenHeight / 6
+										width: screenWidth / 2,
+										height: screenHeight / 4,
+										resizeMode:'center',
 									}}
 								/>
-								<Text style={{ marginBottom: 8, marginTop: 8 }}>
-									{' '}
-									Formulario IRTRA{' '}
+								<Text>
+									Formulario IRTRA
 								</Text>
 							</Body>
 						</CardItem>
@@ -129,16 +129,16 @@ class ProccessPeopleScreen extends Component {
 						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
-									source={{ uri: this.state.pathImage + 'piscina.png' }}
+									source={{ uri: this.state.pathImage + 'piscina.jpg' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
-										height: screenHeight / 6
+										width: screenWidth / 2,
+										height: screenHeight / 4,
+										resizeMode:'center',
 									}}
 								/>
-								<Text style={{ marginBottom: 8, marginTop: 8 }}>
-									{' '}
-									Mis días de vacaciones{' '}
+								<Text>
+									Mis días de vacaciones
 								</Text>
 							</Body>
 						</CardItem>
@@ -163,14 +163,15 @@ class ProccessPeopleScreen extends Component {
 						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
-									source={{ uri: this.state.pathImage + 'entrevista.png' }}
+									source={{ uri: this.state.pathImage + 'certificado.jpg' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
-										height: screenHeight / 6
+										width: screenWidth / 2,
+										height: screenHeight / 4,
+										resizeMode:'center',
 									}}
 								/>
-								<Text style={{ marginBottom: 8, marginTop: 8 }}>
+								<Text>
 									Constancia laboral
 								</Text>
 							</Body>

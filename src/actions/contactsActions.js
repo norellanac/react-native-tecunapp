@@ -1,7 +1,7 @@
 import { loadingContacts, getAllContacts, errorContacts, clearContacts, favorites } from '../types/contactsTypes';
 import { apiUrl } from './../../App';
 
-export const searchContactsAction = (searchNombre, searchDepartamento, searchPais, searchPuesto, token) => async (
+export const searchContactsAction = (searchNombre,searchApellido, searchDepartamento, searchPais, searchPuesto, token) => async (
 	dispatch
 ) => {
 	dispatch({
@@ -10,6 +10,7 @@ export const searchContactsAction = (searchNombre, searchDepartamento, searchPai
 	try {
 		let dataForm = '_method=' + encodeURIComponent('POST');
 		dataForm += '&searchNombre=' + encodeURIComponent(searchNombre);
+		dataForm += '&searchApellido=' + encodeURIComponent(searchApellido);
 		dataForm += '&searchDepartamento=' + encodeURIComponent(searchDepartamento);
 		dataForm += '&searchPais=' + encodeURIComponent(searchPais);
 		dataForm += '&searchPuesto=' + encodeURIComponent(searchPuesto);

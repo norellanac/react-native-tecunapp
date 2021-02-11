@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { Dimensions, Linking, Image, TouchableOpacity } from 'react-native';
+import { ScrollView, Linking, Image, TouchableOpacity, Alert } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
@@ -17,7 +17,8 @@ import {
 	ListItem,
 	Left,
 	Right,
-	Thumbnail
+	Thumbnail,
+	Spinner
 } from 'native-base';
 import Accordion from 'react-native-collapsible/Accordion';
 import { connect } from 'react-redux';
@@ -36,10 +37,12 @@ class ContactScreen extends Component {
 	}
 	state = {
 		searchNombre: '',
+		searchApellido: '',
 		searchDepartamento: '',
 		searchPais: '',
 		searchPuesto: '',
 		isShowAlert: true,
+		isShowResult: false,
 		showFavorites: false,
 		activeSections: [],
 		pathImage: apiUrl.link + '/img/'
@@ -116,37 +119,35 @@ class ContactScreen extends Component {
 	}
 
 	showContacts = () => {
-		if (this.props.contactsReducer.contacts) {
-			//console.log("posts: ", this.props.postReducer.posts);
-			return this.props.contactsReducer.contacts.map((record) => (
-				<ListItem thumbnail>
-					<Left>
-						<Thumbnail
-							square
-							style={{ backgroundColor: 'transparent' }}
-							source={{ uri: `${apiUrl.link}/img/logo.png` }}
-						/>
-					</Left>
-					<Body>
-						<Text>{record.nombre}</Text>
-						<Text note>{record.subDepartamento} - {record.puesto}  Ext: {record.extension}</Text>
-						<Button transparent onPress={() => Linking.openURL(`tel:=${record.numeroDirecto}`)}>
-							<Icon name="phone" type="FontAwesome" />
-							<Text>{record.numeroDirecto}</Text>
-						</Button>
-						<Button transparent onPress={() => Linking.openURL(`tel:=${record.celular}`)}>
-							<Icon name="mobile-phone" type="FontAwesome" />
-							<Text>{record.celular}</Text>
-						</Button>
-						<Button transparent onPress={() => Linking.openURL(`mailto:${record.correo}`)}>
-							<Icon name="email-send" type="MaterialCommunityIcons" />
-							<Text>{record.correo}</Text>
-						</Button>
-					</Body>
-				</ListItem>
-			));
-		} else {
+		if (this.props.contactsReducer.cargando) {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
+		}
+		console.log('state: ', this.state);
+		if (this.props.contactsReducer.contacts.length > 0) {
+			return (
+				<Accordion
+					sections={this.props.contactsReducer.contacts}
+					activeSections={this.state.activeSections}
+					renderSectionTitle={this._renderSectionTitle}
+					renderHeader={this._renderHeader}
+					renderContent={this._renderContent}
+					onChange={this._updateSections}
+				/>
+			);
+		} else {
+			if (this.state.isShowResult && !this.props.contactsReducer.cargando) {
+				Alert.alert(
+					`No hay coincidencias`,
+					`Realiza una nueva busqueda`,
+					[
+						{
+							text: 'Cerrar', 
+							onPress: () => this.setState({ isShowResult: false })
+						}
+					],
+					{ cancelable: false }
+				);
+			}
 		}
 	};
 
@@ -174,30 +175,32 @@ class ContactScreen extends Component {
 	_renderContent = (record) => {
 		return (
 			<ListItem thumbnail>
-					<Left>
-						<Thumbnail
-							square
-							style={{ backgroundColor: 'transparent' }}
-							source={{ uri: `${apiUrl.link}/img/logo.png` }}
-						/>
-					</Left>
-					<Body>
-						<Text note>{record.subDepartamento} - {record.puesto}  Ext: {record.extension}</Text>
-						<Button transparent onPress={() => Linking.openURL(`tel:${record.numeroDirecto}`)}>
-							<Icon name="phone" type="FontAwesome" />
-							<Text>{record.numeroDirecto}</Text>
-						</Button>
-						<Button transparent onPress={() => Linking.openURL(`tel:${record.celular}`)}>
-							<Icon name="mobile-phone" type="FontAwesome" />
-							<Text>{record.celular}</Text>
-						</Button>
-						<Button transparent onPress={() => Linking.openURL(`mailto:${record.correo}`)}>
-							<Icon name="email-send" type="MaterialCommunityIcons" />
-							<Text>{record.correo}</Text>
-						</Button>
-					</Body>
-				</ListItem>
-			);
+				<Left>
+					<Thumbnail
+						square
+						style={{ backgroundColor: 'transparent' }}
+						source={{ uri: `${apiUrl.link}/img/logo.png` }}
+					/>
+				</Left>
+				<Body>
+					<Text note>
+						{record.subDepartamento} - {record.puesto} Ext: {record.extension}
+					</Text>
+					<Button transparent onPress={() => Linking.openURL(`tel:${record.numeroDirecto}`)}>
+						<Icon name="phone" type="FontAwesome" />
+						<Text>{record.numeroDirecto}</Text>
+					</Button>
+					<Button transparent onPress={() => Linking.openURL(`tel:${record.celular}`)}>
+						<Icon name="mobile-phone" type="FontAwesome" />
+						<Text>{record.celular}</Text>
+					</Button>
+					<Button transparent onPress={() => Linking.openURL(`mailto:${record.correo}`)}>
+						<Icon name="email-send" type="MaterialCommunityIcons" />
+						<Text>{record.correo}</Text>
+					</Button>
+				</Body>
+			</ListItem>
+		);
 	};
 
 	_updateSections = (activeSections) => {
@@ -210,6 +213,7 @@ class ContactScreen extends Component {
 	async searchContactData(token) {
 		await this.props.searchContactsAction(
 			this.state.searchNombre,
+			this.state.searchApellido,
 			this.state.searchDepartamento,
 			this.state.searchPais,
 			this.state.searchPuesto,
@@ -235,7 +239,7 @@ class ContactScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
-				<Content>
+				<ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
 					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
 						<Col style={{ alignItems: 'center' }}>
 							<Text
@@ -261,7 +265,7 @@ class ContactScreen extends Component {
 								</Button>
 							</Left>
 							<Body>
-								<Text>Numeros Fracuentes</Text>
+								<Text>Numeros Frecuentes</Text>
 							</Body>
 							<Right>
 								<Icon active name="caret-down" type="FontAwesome" />
@@ -284,89 +288,106 @@ class ContactScreen extends Component {
 							</Text>
 						</Col>
 					</Grid>
-					<Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
-						<Item rounded style={{ marginTop: 15 }}>
-							<Icon type="SimpleLineIcons" name="people" style={{ color: '#3490dc', fontSize: 25 }} />
-							<Input
-								onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
-								value={this.state.searchDepartamento}
-								placeholder="Departameto o area"
-								placeholderTextColor="#3490dc"
-								style={{ color: '#3490dc' }}
-							/>
-						</Item>
-						<Item rounded style={{ marginTop: 15 }}>
-							<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
-							<Input
-								onChangeText={(searchNombre) => this.setState({ searchNombre })}
-								value={this.state.searchNombre}
-								placeholder="Apellidos, Nombres"
-								placeholderTextColor="#3490dc"
-								style={{ color: '#3490dc' }}
-							/>
-						</Item>
-						<Item rounded style={{ marginTop: 15 }}>
-							<Icon type="MaterialCommunityIcons" name="map" style={{ color: '#3490dc', fontSize: 25 }} />
-							<Input
-								maxLength={13}
-								onChangeText={(searchPais) => this.setState({ searchPais })}
-								value={this.state.searchPais}
-								placeholder="Pais"
-								placeholderTextColor="#3490dc"
-								style={{ color: '#3490dc' }}
-							/>
-						</Item>
-						<Item rounded style={{ marginTop: 15 }}>
-							<Icon
-								type="MaterialCommunityIcons"
-								name="email-outline"
-								style={{ color: '#3490dc', fontSize: 25 }}
-							/>
-							<Input
-								onChangeText={(searchPuesto) => this.setState({ searchPuesto })}
-								value={this.state.searchPuesto}
-								placeholder="Plaza o puesto"
-								placeholderTextColor="#3490dc"
-								style={{ color: '#3490dc' }}
-							/>
-						</Item>
-						<Content style={{ marginTop: 20 }}>
-							<Body>
-								<Button
-									onPress={() => this.searchContactData(this.props.usuariosReducer.token)}
-									rounded
-									primary
-									style={{
-										fontSize: 44,
-										color: '#3490dc'
-									}}
-								>
-									<Text
+					<View>
+						<Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Input
+									onChangeText={(searchNombre) => this.setState({ searchNombre })}
+									value={this.state.searchNombre}
+									placeholder="Nombres"
+									placeholderTextColor="#3490dc"
+									style={{ color: '#3490dc' }}
+								/>
+							</Item>
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Input
+									onChangeText={(searchApellido) => this.setState({ searchApellido })}
+									value={this.state.searchApellido}
+									placeholder="Apellidos"
+									placeholderTextColor="#3490dc"
+									style={{ color: '#3490dc' }}
+								/>
+							</Item>
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="SimpleLineIcons" name="people" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Input
+									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
+									value={this.state.searchDepartamento}
+									placeholder="Departameto o area"
+									placeholderTextColor="#3490dc"
+									style={{ color: '#3490dc' }}
+								/>
+							</Item>
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="MaterialCommunityIcons"
+									name="map"
+									style={{ color: '#3490dc', fontSize: 25 }}
+								/>
+								<Input
+									maxLength={13}
+									onChangeText={(searchPais) => this.setState({ searchPais })}
+									value={this.state.searchPais}
+									placeholder="Pais"
+									placeholderTextColor="#3490dc"
+									style={{ color: '#3490dc' }}
+								/>
+							</Item>
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="MaterialCommunityIcons"
+									name="email-outline"
+									style={{ color: '#3490dc', fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(searchPuesto) => this.setState({ searchPuesto })}
+									value={this.state.searchPuesto}
+									placeholder="Plaza o puesto"
+									placeholderTextColor="#3490dc"
+									style={{ color: '#3490dc' }}
+								/>
+							</Item>
+							<Content style={{ marginTop: 20 }}>
+								<Body>
+									<Button
+										onPress={() => {
+											this.setState({ isShowResult: true });
+											this.searchContactData(this.props.usuariosReducer.token);
+										}}
+										rounded
+										primary
 										style={{
-											textAlign: 'center',
-											color: '#ffffff',
-											fontSize: 20,
-											marginRight: 35,
-											marginLeft: 35
+											fontSize: 44,
+											color: '#3490dc'
 										}}
 									>
-										Buscar
-									</Text>
-								</Button>
-							</Body>
-						</Content>
-						<Content style={{ marginTop: 20 }}>
-							<Accordion
-								sections={this.props.contactsReducer.contacts}
-								activeSections={this.state.activeSections}
-								renderSectionTitle={this._renderSectionTitle}
-								renderHeader={this._renderHeader}
-								renderContent={this._renderContent}
-								onChange={this._updateSections}
-							/>
-						</Content>
-					</Form>
-				</Content>
+										<Text
+											style={{
+												textAlign: 'center',
+												color: '#ffffff',
+												fontSize: 20,
+												marginRight: 35,
+												marginLeft: 35
+											}}
+										>
+											Buscar
+										</Text>
+									</Button>
+								</Body>
+							</Content>
+							<Content
+								style={{ marginTop: 20 }}
+								onContentSizeChange={() => {
+									this.scrollView.scrollToEnd();
+								}}
+							>
+								{this.showContacts()}
+							</Content>
+						</Form>
+					</View>
+				</ScrollView>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
 			</Container>
 		);

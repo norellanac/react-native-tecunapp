@@ -15,7 +15,7 @@ export default (state = INITIAL, action) => {
 		case favorites:
 			return { ...state, favorites: action.payload, cargando: action.cargando, error: '' };
 		case clearContacts:
-			return { ...state, contacts: [] };
+			return { ...state, contacts: [], cargando: false, error: '' };
 		case PURGE:
 			return INITIAL;
 		default:
