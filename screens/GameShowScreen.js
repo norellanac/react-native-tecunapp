@@ -25,72 +25,51 @@ class GameShowScreen extends Component {
 		count: 0
 	};
 
-
 	async componentDidMount() {
 		this.state.count++;
-		console.log('Como va CountDidMount?: ', this.state.count);
-		console.log('====================================');
-		console.log(this.props.questionReducer);
-		console.log('====================================');
 	}
 
 	textQuestion() {
 		if (this.props.questionReducer.question == undefined) {
-			return (
-				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
-					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
-				</Container>
-			);
+			return <Spinner color="blue" style={{ flex: 1 }} />;
 		}
 
 		return this.props.questionReducer.question.map((trivia) => <Text>{trivia.description}</Text>);
 	}
 
-	answerQuestion(question_id, flag) {
-		this.state.token = this.props.usuariosReducer.token;
-		this.state.userID = this.props.usuariosReducer.user.id;
-		let answerObject = { item: 1, questionID: question_id, flag: flag, user_id: this.state.userID };
-
+	answerQuestion(answId, flag) {
+		let colorAlert;
+		let textShow;
 		//console.log("Que tiene el answerObject: ",answerObject);
-
-		if (this.props.questionReducer.status != 'F' || this.props.questionReducer.status != '') {
-			this.props.answerQuestion(answerObject, this.state.token);
-
-			if (this.props.questionReducer.cargando) {
-				<Spinner color="blue" style={{ flex: 1 }} />
-			}
-
-			this.props.oneQuestion(this.state.token);
+		if (answId == this.props.questionReducer.correcId.id) {
+			colorAlert = 'success';
+			textShow = '¡Respuesta correcta! ';
+		} else {
+			colorAlert = 'danger';
+			textShow = 'Error, la respesta es: ';
 		}
-	}
 
-	forceExit(status) {
-		if (status === 'F') {
-			//validaba si era la tercer vez jugando para mostrar resultados
-			/* Alert.alert(
-				'Resultados',
-				`Has respondido correctamente ${this.props.questionReducer.info.questionTrue} preguntas de 3`,
-				[
-					{ text: 'OK', onPress: () => console.log('OK Pressed') }
-				],
-				{ cancelable: false }
-			); */
-
-			//alert(`${this.props.questionReducer.info.questionTrue} correctas de 3`);
-			this.props.questionReducer.status = '';
-			this.props.oneQuestion(this.state.token);
-			this.props.allScoreUser(this.props.usuariosReducer.token);
-			this.props.navigation.navigate('GamesScreen');
+		this.props.answerQuestionAction(flag, this.props.usuariosReducer.token);
+		Alert.alert(
+			`${textShow}`,
+			this.props.questionReducer.correcId.reply,
+			[
+				{
+					text: 'Cancel',
+					onPress: () => console.log('Cancel Pressed'),
+					style: 'cancel'
+				},
+				{ text: 'OK', onPress: () => this.props.oneQuestion(this.props.usuariosReducer.token) }
+			],
+			{ cancelable: false }
+		);
+		if (this.props.questionReducer.cargando) {
+			<Spinner color="blue" style={{ flex: 1 }} />;
 		}
 	}
 
 	render() {
 		var screenWidth = Dimensions.get('window').width - 1;
-		{
-			this.forceExit(this.props.questionReducer.status);
-		}
 
 		if (this.props.questionReducer.cargando || this.props.questionReducer.answerArray == undefined) {
 			return (
@@ -124,7 +103,7 @@ class GameShowScreen extends Component {
 								return (
 									<Container>
 										<HeaderCustom navigation={this.props.navigation} />
-										<Loading />
+										<Spinner color="blue" style={{ flex: 1 }} />
 										<FooterTabsNavigationIconText navigation={this.props.navigation} />
 									</Container>
 								);
@@ -135,7 +114,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answer1.question_id,
+												this.props.questionReducer.answer1.id,
 												this.props.questionReducer.answer1.flag
 											)}
 									>
@@ -189,7 +168,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answer2.question_id,
+												this.props.questionReducer.answer2.id,
 												this.props.questionReducer.answer2.flag
 											)}
 									>
@@ -235,7 +214,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answerArray[0].question_id,
+												this.props.questionReducer.answerArray[0].id,
 												this.props.questionReducer.answerArray[0].flag
 											)}
 									>
@@ -281,7 +260,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answerArray[1].question_id,
+												this.props.questionReducer.answerArray[1].id,
 												this.props.questionReducer.answerArray[1].flag
 											)}
 									>
@@ -327,7 +306,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answerArray[2].question_id,
+												this.props.questionReducer.answerArray[2].id,
 												this.props.questionReducer.answerArray[2].flag
 											)}
 									>
@@ -373,7 +352,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answerArray[3].question_id,
+												this.props.questionReducer.answerArray[3].id,
 												this.props.questionReducer.answerArray[3].flag
 											)}
 									>
@@ -419,7 +398,7 @@ class GameShowScreen extends Component {
 										vertical
 										onPress={() =>
 											this.answerQuestion(
-												this.props.questionReducer.answerArray[4].question_id,
+												this.props.questionReducer.answerArray[4].id,
 												this.props.questionReducer.answerArray[4].flag
 											)}
 									>

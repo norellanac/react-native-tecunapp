@@ -37,9 +37,8 @@ class GamesScreen extends Component {
 		pathImage: apiUrl.link + '/img/game/'
 	};
 
-	componentDidMount() {
-		this.props.allScoreUser(this.props.usuariosReducer.token);
-		console.log('Como viene el path: ', this.state.pathImage);
+	async componentDidMount() {
+		await this.props.topScoreAction(this.props.usuariosReducer.token);
 	}
 
 	oneQuestion() {
@@ -130,7 +129,8 @@ class GamesScreen extends Component {
 		}
 	}
 
-	onValueChance() {
+	async onPressChange() {
+		await this.props.topScoreAction(this.props.usuariosReducer.token);
 		if (this.state.isDisplay == 1) {
 			this.setState({
 				isDisplay: 0
@@ -146,9 +146,6 @@ class GamesScreen extends Component {
 		//const { navigation } = this.props.navigation
 		var screenWidth = Dimensions.get('window').width;
 		var screenHeight = Dimensions.get('window').height;
-
-		//console.log("Como viene el state2 en el render? ", this.state.isDisplay);
-		//console.log("Como viene el state2 en el render? ", this.state.isDisplay2);
 
 		if (this.props.questionReducer.cargando && !this.props.questionReducer) {
 			return (
@@ -173,7 +170,7 @@ class GamesScreen extends Component {
 											<Col size={4} style={{ alignItems: 'center' }}>
 												<TouchableOpacity
 													onPress={() => {
-														this.onValueChance();
+														this.onPressChange();
 													}}
 												>
 													<Image
@@ -183,7 +180,7 @@ class GamesScreen extends Component {
 												</TouchableOpacity>
 												<Button
 													onPress={() => {
-														this.onValueChance();
+														this.onPressChange();
 													}}
 													style={{
 														marginTop: 10,

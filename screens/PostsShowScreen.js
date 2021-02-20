@@ -149,7 +149,6 @@ class PostsShowScreen extends Component {
 	}
 
 	render() {
-
 		this.state.postId = this.props.postReducer.post.id;
 
 		const post = Object.assign({}, this.props.postReducer.post);
@@ -196,10 +195,21 @@ class PostsShowScreen extends Component {
 								<Text>{post.description}</Text>
 								{/* <Text>{post.content.replace()}</Text> */}
 								<ScrollView>
-								<HTML
-									source={{ html: post.content.replace(/line-height:107%|line-height: 107%;|\n/g, " ") }}
-									contentWidth={screenWidth}
-								/>
+									{(() => {
+										if (post.content) {
+											return (
+												<HTML
+													source={{
+														html: post.content.replace(
+															/line-height:107%|line-height: 107%;|\n/g,
+															' '
+														)
+													}}
+													contentWidth={screenWidth}
+												/>
+											);
+										}
+									})()}
 								</ScrollView>
 								{/* <View style={{ flex: 1 }}>
 									<Text>{post.content.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
@@ -214,9 +224,9 @@ class PostsShowScreen extends Component {
 															Linking.openURL(
 																this.state.pathImage + post.featured_document
 															)}
-														style={{ 
+														style={{
 															backgroundColor: '#FA8258',
-															borderRadius: 20 
+															borderRadius: 20
 														}}
 													>
 														<Icon name="cloud-download" type="FontAwesome" />
@@ -253,9 +263,7 @@ class PostsShowScreen extends Component {
 							block
 							onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
 						>
-							<Icon name={this.loadIcon()} type="FontAwesome">
-								{' '}
-							</Icon>
+							<Icon name={this.loadIcon()} type="FontAwesome" />
 							<Text> Ver Comentarios</Text>
 							<Icon name="comments" type="FontAwesome" />
 						</Button>

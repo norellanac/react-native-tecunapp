@@ -6,7 +6,7 @@ import {
 	List,
 	ListItem,
 	Content,
-	View,
+	Badge,
 	Thumbnail,
 	Icon,
 	Text,
@@ -20,6 +20,7 @@ import {
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
+import * as questionActions from '../src/actions/questionActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from './../components/HeaderCustom';
 import { persistor, apiUrl } from './../App';
@@ -44,16 +45,112 @@ class UserScreenProfile extends Component {
 		isShowAlert: true
 	};
 
-	notificationListener;
-	responseListener;
-
-	componentDidMount() {
+	async componentDidMount() {
+		await this.props.allScoreActions(this.props.usuariosReducer.token);
 		if (Platform.OS === 'android' && !Constants.isDevice) {
 			this.setState({
 				errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!'
 			});
 		} else {
 			this.getTokenExpoNotificationsPush();
+		}
+	}
+
+	allScoreTitle() {
+		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
+			return (
+				<Grid
+					style={{
+						backgroundColor: '#F8FAFB',
+						borderBottomLeftRadius: 5,
+						borderTopLeftRadius: 5,
+						borderBottomRightRadius: 5,
+						borderTopRightRadius: 5,
+						marginTop: 15
+					}}
+				>
+					<Col
+						size={1}
+						style={{
+							marginTop: 5,
+							marginBottom: 5,
+							justifyContent: 'center',
+							marginLeft: 15
+						}}
+					>
+						<Text>#</Text>
+					</Col>
+					<Col size={3} style={{ marginTop: 5, marginBottom: 5 }}>
+						<Text>Nombre</Text>
+					</Col>
+					<Col size={1} style={{ marginTop: 5, marginBottom: 5, marginLeft: 15 }}>
+						<Text>Puntos</Text>
+					</Col>
+				</Grid>
+			);
+		}
+	}
+
+	allScore() {
+		//console.log("Que viene en el score?: ",this.state.isDisplay);
+		let count = 0;
+		let color = '#F8FAFB';
+		let idUserScore = this.props.questionReducer.userScore.id;
+		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
+			return this.props.questionReducer.score.map(
+				(pounts) => (
+					count++,
+					(
+						<Grid
+							style={{
+								backgroundColor: idUserScore==pounts.id? '#E87823' : 'transparent',
+								borderBottomLeftRadius: 5,
+								borderTopLeftRadius: 5,
+								borderBottomRightRadius: 5,
+								borderTopRightRadius: 5
+							}}
+							key={pounts.id}
+						>
+							<Col
+								size={1}
+								style={{
+									marginTop: 5,
+									marginBottom: 5,
+									justifyContent: 'center',
+									marginLeft: 5
+								}}
+							>
+								<Badge success>
+									<Text>{count}</Text>
+								</Badge>
+							</Col>
+							<Col size={3} style={{ marginTop: 5, marginBottom: 5 }}>
+								<Text>
+									{pounts.user.name} {pounts.user.lastname}
+								</Text>
+							</Col>
+							<Col size={1} style={{ marginTop: 5, marginBottom: 5, marginLeft: 15 }}>
+								<Badge primary>
+									<Text>{pounts.points}</Text>
+								</Badge>
+							</Col>
+						</Grid>
+					)
+				)
+			);
+		}
+	}
+
+	async onPressChange() {
+		await this.props.topScoreAction(this.props.usuariosReducer.token);
+		if (this.state.isDisplay == 1) {
+			this.setState({
+				isDisplay: 0
+			});
+		} else {
+			this.setState({
+				isDisplay: 1
+			});
 		}
 	}
 
@@ -196,9 +293,7 @@ class UserScreenProfile extends Component {
 	};
 
 	render() {
-		//const { navigation } = this.props.navigation
-
-		console.log('ajustes: ', this.state);
+		console.log('perfil: ', this.props.questionReducer);
 
 		return (
 			<Container>
@@ -213,81 +308,14 @@ class UserScreenProfile extends Component {
 								<Text note>{this.props.usuariosReducer.user.name}</Text>
 								<Text note> {this.props.usuariosReducer.user.email}</Text>
 							</Body>
-							<Right>
-								<Button transparent onPress={this.logout}>
-									<Text>Salir</Text>
-								</Button>
-							</Right>
 						</ListItem>
 					</List>
 					<Card transparent>
 						<CardItem>
 							<Text style={{ fontSize: 22, color: '#1B2853' }}>Mi Perfil</Text>
 						</CardItem>
-						<CardItem>
-							<Grid>
-								<Col
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 7,
-										borderTopLeftRadius: 7,
-										borderWidth: 0.5,
-										borderColor: '#E6E7E8'
-									}}
-								>
-									<Text
-										style={{
-											textAlign: 'center',
-											fontSize: 20,
-											fontWeight: 'bold',
-											marginTop: 10,
-											color: '#1c5988'
-										}}
-									>
-										{'9'}
-										<Icon
-											type="Entypo"
-											name="trophy"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Text>
-									<Text note style={{ textAlign: 'center', marginBottom: 10 }}>
-										Ranking
-									</Text>
-								</Col>
-								<Col
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomRightRadius: 7,
-										borderTopRightRadius: 7,
-										borderWidth: 0.5,
-										borderColor: '#E6E7E8'
-									}}
-								>
-									<Text
-										style={{
-											textAlign: 'center',
-											fontSize: 20,
-											fontWeight: 'bold',
-											marginTop: 10,
-											color: '#1c5988'
-										}}
-									>
-										{'50  '}
-										<Icon type="Entypo" name="news" style={{ marginLeft: 15, color: '#1c5988' }} />
-									</Text>
-									<Text note style={{ textAlign: 'center', marginBottom: 10 }}>
-										Puntos
-									</Text>
-								</Col>
-							</Grid>
-						</CardItem>
-
-						<Button
-							transparent
-							vertical
-							onPress={this.logout}
-						>
+						
+						<Button transparent vertical onPress={this.logout}>
 							<CardItem style={{ marginTop: 10 }}>
 								<Grid
 									style={{
@@ -368,6 +396,53 @@ class UserScreenProfile extends Component {
 								</Grid>
 							</CardItem>
 						</Button>
+
+						<Button
+							transparent
+							vertical
+							onPress={() => {
+								this.onPressChange();
+							}}
+						>
+							<CardItem>
+								<Grid
+									style={{
+										backgroundColor: '#F8FAFB',
+										borderBottomLeftRadius: 5,
+										borderTopLeftRadius: 5,
+										borderBottomRightRadius: 5,
+										borderTopRightRadius: 5
+									}}
+								>
+									<Col
+										size={1}
+										style={{
+											marginTop: 15,
+											marginBottom: 15,
+											justifyContent: 'center'
+										}}
+									>
+										<Icon
+											type="Entypo"
+											name="trophy"
+											style={{ marginLeft: 15, color: '#1c5988' }}
+										/>
+									</Col>
+									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
+										<Text>Puntuacion General</Text>
+									</Col>
+									<Col style={{ marginTop: 15, marginBottom: 15 }}>
+										<Icon
+											type="FontAwesome5"
+											name="arrow-circle-right"
+											style={{ color: '#1c5988' }}
+										/>
+									</Col>
+								</Grid>
+							</CardItem>
+						</Button>
+						{this.allScoreTitle()}
+						{this.allScore()}
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} />
@@ -376,13 +451,14 @@ class UserScreenProfile extends Component {
 	}
 }
 
-const mapStateToProps = ({ postReducer, usuariosReducer, loginReducer }) => {
-	//return reducers.postReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
-	return { postReducer, usuariosReducer, loginReducer };
+const mapStateToProps = ({ questionReducer, usuariosReducer, loginReducer }) => {
+	//return reducers.questionReducer; /*   DE TODOS LOS REDUCERS MAPEAMOS el reducer de usuarios devolvera los suauiros en los props del componente */
+	return { questionReducer, usuariosReducer, loginReducer };
 };
 
 const mapDispatchProps = {
 	...userActions,
+	...questionActions,
 	...loginActions
 };
 

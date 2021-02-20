@@ -344,10 +344,21 @@ class PodcastShowScreen extends Component {
 							<Body>
 								<Text>{podcast.description}</Text>
 								<ScrollView>
-								<HTML
-									source={{ html: podcast.content.replace(/line-height:107%|line-height: 107%;|\n/g, " ") }}
-									contentWidth={screenWidth}
-								/>
+									{(() => {
+										if (podcast.featured_document) {
+											return (
+												<HTML
+													source={{
+														html: podcast.content.replace(
+															/line-height:107%|line-height: 107%;|\n/g,
+															' '
+														)
+													}}
+													contentWidth={screenWidth}
+												/>
+											);
+										}
+									})()}
 								</ScrollView>
 								{(() => {
 									if (podcast.featured_document) {
