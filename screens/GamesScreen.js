@@ -129,7 +129,7 @@ class GamesScreen extends Component {
 		}
 	}
 
-	async onPressChange() {
+	async onValueChance() {
 		await this.props.topScoreAction(this.props.usuariosReducer.token);
 		if (this.state.isDisplay == 1) {
 			this.setState({
@@ -152,7 +152,7 @@ class GamesScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={3} />
 				</Container>
 			);
 		}
@@ -170,7 +170,7 @@ class GamesScreen extends Component {
 											<Col size={4} style={{ alignItems: 'center' }}>
 												<TouchableOpacity
 													onPress={() => {
-														this.onPressChange();
+														this.onValueChance();
 													}}
 												>
 													<Image
@@ -180,7 +180,7 @@ class GamesScreen extends Component {
 												</TouchableOpacity>
 												<Button
 													onPress={() => {
-														this.onPressChange();
+														this.onValueChance();
 													}}
 													style={{
 														marginTop: 10,
@@ -239,7 +239,7 @@ class GamesScreen extends Component {
 						</CardItem>
 					</Card>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={3} />
 			</Container>
 		);
 	}

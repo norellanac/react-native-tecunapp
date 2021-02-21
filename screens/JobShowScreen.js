@@ -185,7 +185,7 @@ class JobShowScreen extends Component {
           <HeaderCustom navigation={this.props.navigation} />
           <HederPostSection navigation={this.props.navigation} />
           <Loading />
-          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
         </Container>
       );
     } */
@@ -263,7 +263,7 @@ class JobShowScreen extends Component {
             </Button>
           </Form>
         </Content>
-        <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
       </Container>
     );
   }

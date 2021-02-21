@@ -185,7 +185,7 @@ class UserScreenOptions extends Component {
             </CardItem>
           </Card>
         </Content>
-        <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
       </Container>
     );
   }

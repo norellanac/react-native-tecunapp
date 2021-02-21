@@ -148,7 +148,7 @@ class ProccessVacationScreen extends Component {
           <HeaderCustom navigation={this.props.navigation} />
           <HederPostSection navigation={this.props.navigation} />
           <Loading />
-          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
         </Container>
       );
     } */
@@ -157,7 +157,7 @@ class ProccessVacationScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>{this.loadingInfoName()}</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

@@ -230,7 +230,7 @@ class ContactScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 				</Container>
 			);
 		}
@@ -388,7 +388,7 @@ class ContactScreen extends Component {
 						</Form>
 					</View>
 				</ScrollView>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}

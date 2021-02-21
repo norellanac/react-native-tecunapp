@@ -163,7 +163,7 @@ class PodcastScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}
@@ -189,7 +189,7 @@ class PodcastScreen extends Component {
 					</Picker>
 				</Form>
 				<Content>{this.loadContent()}</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

@@ -153,7 +153,7 @@ class PostsCategoryScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Spinner color="blue" style={{ flex: 1 }} />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}
@@ -178,7 +178,7 @@ class PostsCategoryScreen extends Component {
 					<Text>{this.state.categoryPostName}</Text>
 					{this.loadContent()}
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

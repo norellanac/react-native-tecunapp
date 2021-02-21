@@ -1,10 +1,10 @@
 import React from 'react';
-import { Linking, BackHandler, StyleSheet, Alert } from 'react-native';
+import { Linking, BackHandler, TouchableOpacity, Alert, Pressable, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import { Text, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
+import { Text, Header, Left, Body, Right, Button, Icon, View, Badge } from 'native-base';
 import Constants from 'expo-constants';
 import { logoutUser } from '../src/actions/loginActions';
-import { persistor } from '../App';
+import { persistor, myStyles } from '../App';
 
 function HeaderCustom(props) {
 	logout = async () => {
@@ -40,51 +40,52 @@ function HeaderCustom(props) {
 		}
 	};
 	return (
-		<Header style={{ backgroundColor: '#1D578A' }}>
+		<Header style={{ backgroundColor: myStyles.bg1 }}>
 			<Left>
-				<Button transparent onPress={() => handleGoBack()}>
-					<Icon style={{ color: '#FFFFFF' }} name="arrow-back" />
-				</Button>
+				<TouchableOpacity
+					onPress={() => handleGoBack()}
+					style={({ pressed }) => [
+						{
+							backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'transparent'
+						}
+					]}
+				>
+					<View style={{ backgroundColor: myStyles.light, borderRadius: 60, marginLeft: 10, padding: 3 }}>
+						<Icon style={{ color: myStyles.bg2 }} name="arrow-back" />
+					</View>
+				</TouchableOpacity>
 			</Left>
-			<Body>
-				<Title />
-			</Body>
 			<Right>
-				<Button transparent onPress={() => props.navigation.navigate('SettingsScreen')}>
-					<Icon style={{ color: '#FFFFFF' }} name="user" type="FontAwesome" />
-					<Text style={{ color: '#ffffff' }}>{props.usuariosReducer.user.name} </Text>
-				</Button>
+				<TouchableOpacity transparent onPress={() => props.navigation.navigate('SettingsScreen')}>
+					<Text uppercase={false} style={{ color: myStyles.light }}>
+						Hola{' '}
+						<Text uppercase={false} style={{ color: myStyles.light, fontWeight: 'bold', marginLeft: -10 }}>
+							{props.usuariosReducer.user.name}
+						</Text>
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => props.navigation.navigate('SettingsScreen')}>
+					<View
+						style={{
+							backgroundColor: myStyles.light,
+							borderRadius: 60,
+							marginLeft: 10,
+							alignSelf: 'center',
+							height: 35,
+							width: 35
+						}}
+					>
+						<Icon
+							style={{ color: myStyles.bg1, fontSize: 25, marginLeft: 8, paddingVertical: 5 }}
+							name="user"
+							type="FontAwesome"
+						/>
+					</View>
+				</TouchableOpacity>
 			</Right>
 		</Header>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		paddingTop: 15,
-		paddingBottom: 8,
-		elevation: 2
-	},
-	iconContainer: {
-		flexDirection: 'row'
-	},
-	logo: {
-		width: 41,
-		height: 35,
-		resizeMode: 'contain'
-	},
-	textPoints: {
-		fontSize: 20,
-		color: '#EC4C17',
-		fontWeight: 'bold',
-		paddingVertical: 5
-	},
-	statusBar: {
-		height: Constants.statusBarHeight
-	}
-});
 
 const MapStateToProps = ({ usuariosReducer }) => {
 	return {

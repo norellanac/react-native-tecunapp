@@ -157,7 +157,7 @@ class UserScreen extends Component {
             </ListItem>
           </List>
         </Content>
-        <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
       </Container>
     );
   }

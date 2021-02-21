@@ -31,7 +31,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { apiUrl, screenWidth } from '../App';
+import { apiUrl, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -129,7 +129,7 @@ class PostsShowScreen extends Component {
 							value={this.state.message}
 							placeholder="Agregar un comentario"
 							placeholderTextColor="#000000"
-							style={{ color: '#000000' }}
+							style={{ color: myStyles.dark }}
 						/>
 					</Item>
 					<Button
@@ -163,7 +163,7 @@ class PostsShowScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}*/
@@ -172,108 +172,112 @@ class PostsShowScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<Card style={{ flex: 0 }} key={post.id}>
-						<ListItem thumbnail>
-							<Left>
-								<Thumbnail
-									square
-									style={{ backgroundColor: 'transparent' }}
-									source={{ uri: `${apiUrl.link}/img/logo.png` }}
-								/>
-							</Left>
-							<Body>
-								<Text>{post.title}</Text>
-							</Body>
-						</ListItem>
-						<CardItem>
-							<Body>
-								<Image
-									source={{ uri: this.state.pathImage + post.featured_image }}
-									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 400 }}
-								/>
-								<Text note>{post.created_at}</Text>
-								<Text>{post.description}</Text>
-								{/* <Text>{post.content.replace()}</Text> */}
-								<ScrollView>
+					<View>
+						<Image
+							source={{ uri: this.state.pathImage + post.featured_image }}
+							style={{ width: screenWidth, minHeight: 250, maxHeight: 400 }}
+						/>
+						<View style={{ backgroundColor: myStyles.bg2 }}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 20,
+									fontWeight: 'bold',
+									color: myStyles.light,
+									paddingVertical: 8
+								}}
+							>
+								{post.title}
+							</Text>
+						</View>
+						<Card style={{ flex: 0, marginTop: 0 }} key={post.id}>
+							<CardItem>
+								<Body>
+									<Text note>{post.created_at}</Text>
+									<Text>{post.description}</Text>
+									{/* <Text>{post.content.replace()}</Text> */}
+									<ScrollView>
+										{(() => {
+											if (post.content) {
+												return (
+													<HTML
+														source={{
+															html: post.content.replace(
+																/line-height:107%|line-height: 107%;|\n/g,
+																' '
+															)
+														}}
+														contentWidth={screenWidth}
+													/>
+												);
+											}
+										})()}
+									</ScrollView>
+									{/* <View style={{ flex: 1 }}>
+									<Text>{post.content.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
+								</View> */}
 									{(() => {
-										if (post.content) {
+										if (post.featured_document) {
 											return (
-												<HTML
-													source={{
-														html: post.content.replace(
-															/line-height:107%|line-height: 107%;|\n/g,
-															' '
-														)
-													}}
-													contentWidth={screenWidth}
-												/>
+												<Grid>
+													<Col size={4} style={{ alignItems: 'center' }}>
+														<Button
+															onPress={() =>
+																Linking.openURL(
+																	this.state.pathImage + post.featured_document
+																)}
+															style={{
+																backgroundColor: myStyles.bg1,
+																borderRadius: 20,
+																alignSelf: 'center'
+															}}
+														>
+															<Icon name="cloud-download" type="FontAwesome" />
+															<Text>Documento</Text>
+														</Button>
+													</Col>
+												</Grid>
 											);
 										}
 									})()}
-								</ScrollView>
-								{/* <View style={{ flex: 1 }}>
-									<Text>{post.content.replace(/<\/?[^>]+(>|$)/g, "")}</Text>
-								</View> */}
-								{(() => {
-									if (post.featured_document) {
-										return (
-											<Grid>
-												<Col size={4} style={{ alignItems: 'center' }}>
-													<Button
-														onPress={() =>
-															Linking.openURL(
-																this.state.pathImage + post.featured_document
-															)}
-														style={{
-															backgroundColor: '#FA8258',
-															borderRadius: 20
-														}}
-													>
-														<Icon name="cloud-download" type="FontAwesome" />
-														<Text>Descargar documento adjunto</Text>
-													</Button>
-												</Col>
-											</Grid>
-										);
-									}
-								})()}
-							</Body>
-						</CardItem>
-						{(() => {
-							if (post.featured_video) {
-								return (
-									<ScrollView style={{ flex: 1 }}>
-										<WebView
-											source={{
-												html: `<iframe width="100%" height="100%" src="${post.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
-											}}
-											scalesPageToFit={true}
-											bounces={false}
-											allowsFullscreenVideo={true}
-											javaScriptEnabled
-											style={{ height: 250, marginBottom: 30 }}
-										/>
-									</ScrollView>
-								);
-							}
-						})()}
-						<Button
-							iconLeft
-							info
-							block
-							onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
-						>
-							<Icon name={this.loadIcon()} type="FontAwesome" />
-							<Text> Ver Comentarios</Text>
-							<Icon name="comments" type="FontAwesome" />
-						</Button>
-						<ScrollView>
-							{this.loadInfoComment()}
-							{this.inputComment()}
-						</ScrollView>
-					</Card>
+								</Body>
+							</CardItem>
+							{(() => {
+								if (post.featured_video) {
+									return (
+										<ScrollView style={{ flex: 1 }}>
+											<WebView
+												source={{
+													html: `<iframe width="100%" height="100%" src="${post.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
+												}}
+												scalesPageToFit={true}
+												bounces={false}
+												allowsFullscreenVideo={true}
+												javaScriptEnabled
+												style={{ height: 250, marginBottom: 30 }}
+											/>
+										</ScrollView>
+									);
+								}
+							})()}
+							<Button
+								iconLeft
+								info
+								block
+								onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
+							>
+								<Icon name={this.loadIcon()} type="FontAwesome" />
+								<Text> Ver Comentarios</Text>
+								<Icon name="comments" type="FontAwesome" />
+							</Button>
+							<ScrollView>
+								{this.loadInfoComment()}
+								{this.inputComment()}
+							</ScrollView>
+						</Card>
+					</View>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

@@ -66,7 +66,7 @@ class SpecialTeamScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}
@@ -115,7 +115,7 @@ class SpecialTeamScreen extends Component {
 						/>
 					</View>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

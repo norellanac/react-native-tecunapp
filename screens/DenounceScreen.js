@@ -83,7 +83,7 @@ class DenounceScreen extends Component {
                 <Container>
                     <HeaderCustom navigation={this.props.navigation} />
                     < Loading />
-                    <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                    <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
                 </Container>
             )
         }
@@ -198,7 +198,7 @@ class DenounceScreen extends Component {
                     </Form>
 
                 </Content>
-                <FooterTabsNavigationIconText navigation={this.props.navigation} />
+                <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
             </Container>
         );
     }

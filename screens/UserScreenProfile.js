@@ -445,7 +445,7 @@ class UserScreenProfile extends Component {
 						{this.allScore()}
 					</Card>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

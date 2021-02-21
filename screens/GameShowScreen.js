@@ -76,7 +76,7 @@ class GameShowScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Spinner color="blue" style={{ flex: 1 }} />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}
@@ -104,7 +104,7 @@ class GameShowScreen extends Component {
 									<Container>
 										<HeaderCustom navigation={this.props.navigation} />
 										<Spinner color="blue" style={{ flex: 1 }} />
-										<FooterTabsNavigationIconText navigation={this.props.navigation} />
+										<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 									</Container>
 								);
 							} else {
@@ -158,7 +158,7 @@ class GameShowScreen extends Component {
 									<Container>
 										<HeaderCustom navigation={this.props.navigation} />
 										<Loading />
-										<FooterTabsNavigationIconText navigation={this.props.navigation} />
+										<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 									</Container>
 								);
 							} else {
@@ -437,7 +437,7 @@ class GameShowScreen extends Component {
 						})()}
 					</Card>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

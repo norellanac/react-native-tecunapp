@@ -148,7 +148,7 @@ class HomeScreen extends Component {
           <HeaderCustom navigation={this.props.navigation} />
           <HederPostSection navigation={this.props.navigation}></HederPostSection>
           < Loading />
-          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
         </Container>
       )
     }
@@ -179,7 +179,7 @@ class HomeScreen extends Component {
           {this.loadContent()}
 
         </Content>
-        <FooterTabsNavigationIconText navigation={this.props.navigation} />
+        <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
       </Container>
     );
   }

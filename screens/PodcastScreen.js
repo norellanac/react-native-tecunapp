@@ -78,9 +78,9 @@ class PodcastScreen extends Component {
 
 	showUserNameLikes(podcast) {
 		if (podcast.user_likes_new) {
-			return <Text>Tú y ({podcast.likes.length}) más</Text>
+			return <Text>Tú y ({podcast.likes.length}) más</Text>;
 		} else {
-			return (<Text>({podcast.likes.length})</Text>)
+			return <Text>({podcast.likes.length})</Text>;
 		}
 	}
 
@@ -157,7 +157,7 @@ class PodcastScreen extends Component {
 					<HeaderCustom navigation={this.props.navigation} />
 					<HederPostSection navigation={this.props.navigation} screen={2} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />{' '}
 				</Container>
 			);
 		}
@@ -179,7 +179,7 @@ class PodcastScreen extends Component {
 					</Picker>
 				</Form>
 				<Content>{this.loadContent()}</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

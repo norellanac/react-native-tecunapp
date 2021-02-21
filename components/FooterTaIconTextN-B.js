@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Linking } from "react-native";
+import {myStyles} from '../App'
 import { View, Footer, FooterTab, Button, Icon, Text } from "native-base";
 class FooterTabsNavigationIconText extends Component {
   constructor(props) {
@@ -12,27 +13,27 @@ class FooterTabsNavigationIconText extends Component {
     return (
       <View>
         <Footer >
-          <FooterTab style={{ backgroundColor: '#1D578A' }}>
+          <FooterTab style={{ backgroundColor: myStyles.light }}>
             <Button
               vertical
               onPress={() => this.props.navigation.navigate("Home")}
             >
-              <Icon style={{ color: '#FFFFFF' }} name="newspaper" type="FontAwesome5" />
-              <Text style={{ color: '#FFFFFF' }}>Noticias</Text>
+              <Icon style={{ color: this.props.tab==1 ? myStyles.bg2 : '#6c757d' }} name="newspaper" type="FontAwesome5" />
+              <Text style={{ color: this.props.tab==1 ? myStyles.bg2 : '#6c757d' }}>Noticias</Text>
             </Button>
             <Button
               vertical
               onPress={() => this.props.navigation.navigate("TeamScreen")}
             >
-              <Icon style={{ color: '#FFFFFF' }} name="hard-hat" type="FontAwesome5" />
-              <Text style={{ color: '#FFFFFF' }}>Tecun</Text>
+              <Icon style={{ color: this.props.tab==2 ? myStyles.bg2 : '#6c757d' }} name="hard-hat" type="FontAwesome5" />
+              <Text style={{ color: this.props.tab==2 ? myStyles.bg2 : '#6c757d' }}>Tecun</Text>
             </Button>
             <Button
               vertical
               onPress={() => this.props.navigation.navigate("GamesScreen")}
             >
-              <Icon style={{ color: '#FFFFFF' }} name="gamepad" type="FontAwesome5" />
-              <Text style={{ color: '#FFFFFF' }}>Juegos</Text>
+              <Icon style={{ color: this.props.tab==3 ? myStyles.bg2 : '#6c757d' }} name="gamepad" type="FontAwesome5" />
+              <Text style={{ color: this.props.tab==3 ? myStyles.bg2 : '#6c757d' }}>Juegos</Text>
             </Button>
           </FooterTab>
         </Footer>

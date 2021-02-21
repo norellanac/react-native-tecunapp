@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Pressable, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -30,7 +30,7 @@ import HederPostSection from '../components/HederPostSection';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
-import { apiUrl, screenHeight, screenWidth } from '../App';
+import { apiUrl, screenHeight, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -125,8 +125,6 @@ class PostsScreen extends Component {
 		}
 	}
 
-	
-
 	showNews(idPost) {
 		this.props.getShowPost(idPost, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PostsShowScreen');
@@ -159,9 +157,9 @@ class PostsScreen extends Component {
 
 	showUserNameLikes(news) {
 		if (news.user_likes_new) {
-			return <Text>Tú y ({news.likes.length}) más</Text>
+			return <Text>Tú y ({news.likes.length}) más</Text>;
 		} else {
-			return (<Text>({news.likes.length})</Text>)
+			return <Text>({news.likes.length})</Text>;
 		}
 	}
 
@@ -169,49 +167,45 @@ class PostsScreen extends Component {
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
 				//console.log(this.props.postReducer.posts),
-				<Card style={{ flex: 0 }} key={news.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={{ uri: `${apiUrl.link}/img/logo.png` }}
-							/>
-							<Body>
-								<Text>{news.title}</Text>
-								<Text note>{news.created_at}</Text>
-							</Body>
-						</Left>
-					</CardItem>
+				<Pressable onPress={() => this.showNews(news.id)} key={news.id}>
+				<Card style={{ flex: 0 }}  >
 					<CardItem>
 						<Body>
 							<Image
 								source={{ uri: this.state.pathImage + news.featured_image }}
 								style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
 							/>
-							<Text>{news.description}</Text>
+							<Text
+								style={{
+									fontSize: 20,
+									fontWeight: 'bold',
+									color: myStyles.bg1,
+									paddingVertical: 8
+								}}
+							>
+								{news.title}
+							</Text>
 						</Body>
 					</CardItem>
-					<CardItem>
+					<CardItem style={{marginTop:-25}}>
 						<Left>
+							<Text note>{news.created_at}</Text>
+						</Left>
+						<Right>
 							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.likePost(news.id)}>
 								{(() => {
 									if (news.user_likes_new) {
-										return <Icon name="like1" type="AntDesign" />
+										return <Icon name="like1" type="AntDesign" />;
 									} else {
-										return <Icon name="like2" type="AntDesign" />
+										return <Icon name="like2" type="AntDesign" />;
 									}
 								})()}
 								{this.showUserNameLikes(news)}
 							</Button>
-						</Left>
-						<Right>
-							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.showNews(news.id)}>
-								<Icon name="book-reader" type="FontAwesome5" />
-								<Text>Leer más</Text>
-							</Button>
 						</Right>
 					</CardItem>
 				</Card>
+				</Pressable>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -219,13 +213,13 @@ class PostsScreen extends Component {
 	};
 
 	render() {
-		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts == null ) {
+		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts == null) {
 			return (
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<HederPostSection navigation={this.props.navigation} screen={1} />
 					<Spinner color="blue" style={{ flex: 1 }} />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
 			);
 		}
@@ -233,6 +227,10 @@ class PostsScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
+				<Image
+					source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+					style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+				/>
 				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Form>
 					<Picker
@@ -247,7 +245,7 @@ class PostsScreen extends Component {
 					</Picker>
 				</Form>
 				<Content>{this.loadContent()}</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>
 		);
 	}

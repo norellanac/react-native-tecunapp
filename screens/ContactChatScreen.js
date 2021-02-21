@@ -107,7 +107,7 @@ class ContactChatScreen extends Component {
 				<Container>
 					<HeaderCustom navigation={this.props.navigation} />
 					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 				</Container>
 			);
 		}
@@ -134,7 +134,7 @@ class ContactChatScreen extends Component {
 					<View style={{ marginTop: 20 }} />
 					{this.loadContent()}
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}

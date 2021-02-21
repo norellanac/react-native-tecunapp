@@ -45,13 +45,21 @@ export const persistor = persistStore(store);
 
 export const apiUrl = {
 	//link: "http://192.168.1.44:3000"
-	//link: "http://tecunapp.com/" 
-	link: "http://192.168.0.10:3000"
+	//link: "http://tecunapp.com/"
+	link: 'http://192.168.0.10:3000'
 };
 //http://192.168.50.144:3000
 //http://172.18.0.3:3000
 //redux persisting
 /*/*******redux persist storage*****/
+
+export const myStyles = {
+	bg1: '#1D578A',
+	bg2: '#E87823',
+	bg3: '#181e26',
+	light: '#ffffff',
+	dark: '#000000',
+};
 
 const styles = StyleSheet.create({
 	container: {
@@ -122,7 +130,7 @@ const slides = [
 ];
 
 export const screenWidth = Dimensions.get('window').width;
-export const screenHeight = Dimensions.get("window").height;
+export const screenHeight = Dimensions.get('window').height;
 
 import MainStackNavigator from './navigation/MainStackNavigator';
 

@@ -161,7 +161,7 @@ class SettingsScreen extends Component {
               </Right>
             </ListItem>
           </Content>
-          <FooterTabsNavigationIconText navigation={this.props.navigation} />
+          <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
         </Container>
     );
 	}

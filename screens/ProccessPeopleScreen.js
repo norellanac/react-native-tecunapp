@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, Linking } from 'react-native';
+import { Dimensions, Image, Linking, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { Col, Grid, Row } from 'react-native-easy-grid';
 import { withNavigation } from 'react-navigation';
 import {
 	Container,
 	Content,
 	Spinner,
-	Thumbnail,
+	View,
 	Form,
 	Picker,
 	Input,
@@ -25,7 +26,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import Loading from './../components/Loading';
-import { apiUrl } from '../App';
+import { apiUrl, myStyles } from '../App';
 
 class ProccessPeopleScreen extends Component {
 	constructor() {
@@ -49,151 +50,188 @@ class ProccessPeopleScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
-							<Body style={{ alignItems: 'center' }}>
-								<Image
-									source={{ uri: this.state.pathImage + 'seguro.jpg' }}
-									style={{
-										borderRadius: 20,
-										width: screenWidth / 2,
-										height: screenHeight / 4,
-										resizeMode:'center',
-									}}
-								/>
-								<Text>
-									Instructivo de seguro medico GyT
-								</Text>
-							</Body>
-						</CardItem>
-						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
-							<Button
-								iconLeft
-								onPress={() => Linking.openURL(this.state.pathDocument + 'InstructivoSeguromédicoGyT.pdf')}
+				<View style={{ backgroundColor: myStyles.bg2 }}>
+							<Text
 								style={{
-									backgroundColor: '#FA8258',
-									width: screenWidth / 2,
-									height: screenHeight / 17,
-									borderRadius: 15
+									textAlign: 'center',
+									fontSize: 30,
+									fontWeight: 'bold',
+									color: myStyles.light,
+									paddingVertical: 8
 								}}
 							>
-								<Icon
-									type="FontAwesome"
-									name="cloud-download"
-									style={{ marginLeft: 13, color: '#ffffff' }}
-								/>
-								<Text style={{ color: '#ffffff', marginRight: 15 }}>Descargar</Text>
-							</Button>
-						</CardItem>
-					</Card>
-
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
-							<Body style={{ alignItems: 'center' }}>
-								<Image
-									source={{ uri: this.state.pathImage + 'logo-irtra.org_.png' }}
-									style={{
-										borderRadius: 20,
-										width: screenWidth / 2,
-										height: screenHeight / 4,
-										resizeMode:'center',
-									}}
-								/>
-								<Text>
-									Formulario IRTRA
-								</Text>
-							</Body>
-						</CardItem>
-						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
-							<Button
-								iconLeft
-								onPress={() => Linking.openURL(this.state.pathDocument + 'formularioIrtra.doc')}
-								style={{
-									backgroundColor: '#FA8258',
-									width: screenWidth / 2,
-									height: screenHeight / 17,
-									borderRadius: 15
-								}}
-							>
-								<Icon
-									type="FontAwesome"
-									name="cloud-download"
-									style={{ marginLeft: 13, color: '#ffffff' }}
-								/>
-								<Text style={{ color: '#ffffff', marginRight: 15 }}>Descargar</Text>
-							</Button>
-						</CardItem>
-					</Card>
-
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
-							<Body style={{ alignItems: 'center' }}>
-								<Image
-									source={{ uri: this.state.pathImage + 'piscina.jpg' }}
-									style={{
-										borderRadius: 20,
-										width: screenWidth / 2,
-										height: screenHeight / 4,
-										resizeMode:'center',
-									}}
-								/>
-								<Text>
-									Mis días de vacaciones
-								</Text>
-							</Body>
-						</CardItem>
-						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
-							<Button
-								iconLeft
-								onPress={() => this.loadingVacation()}
-								style={{
-									backgroundColor: '#FA8258',
-									width: screenWidth - 190,
-									height: screenHeight / 17,
-									borderRadius: 15
-								}}
-							>
-								<Icon type="MaterialCommunityIcons" name="email-send" style={{ color: '#ffffff' }} />
-								<Text style={{ color: '#ffffff', marginRight: 50 }}>Consultar</Text>
-							</Button>
-						</CardItem>
-					</Card>
-
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
-							<Body style={{ alignItems: 'center' }}>
-								<Image
-									source={{ uri: this.state.pathImage + 'certificado.jpg' }}
-									style={{
-										borderRadius: 20,
-										width: screenWidth / 2,
-										height: screenHeight / 4,
-										resizeMode:'center',
-									}}
-								/>
-								<Text>
-									Constancia laboral
-								</Text>
-							</Body>
-						</CardItem>
-						<CardItem style={{ backgroundColor: 'white', justifyContent: 'center' }}>
-							<Button
-								iconLeft
-								onPress={() => this.props.navigation.navigate('ProccessCertificateScreen')}
-								style={{
-									backgroundColor: '#FA8258',
-									width: screenWidth / 2,
-									height: screenHeight / 17,
-									borderRadius: 15
-								}}
-							>
-								<Icon type="MaterialCommunityIcons" name="email-send" style={{ color: '#ffffff' }} />
-								<Text style={{ color: '#ffffff', marginRight: 50 }}>Solicitar</Text>
-							</Button>
-						</CardItem>
-					</Card>
+								Gestiones de recursos humanos
+							</Text>
+						</View>
+					<View>
+						<Grid>
+							<Col>
+								<TouchableOpacity
+									onPress={() =>
+										Linking.openURL(this.state.pathDocument + 'InstructivoSeguromédicoGyT.pdf')}
+								>
+									<Card
+										style={{
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
+										}}
+									>
+										<Image
+											source={{
+												uri: this.state.pathImage + 'seguro.jpg'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
+										/>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Instructivo de seguro medico GyT
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+							<Col>
+								<TouchableOpacity
+									onPress={() => Linking.openURL(this.state.pathDocument + 'formularioIrtra.doc')}
+								>
+									<Card
+										style={{
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
+										}}
+									>
+										<Image
+											source={{
+												uri: this.state.pathImage + 'logo-irtra.org_.png'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
+										/>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Descargar Formulario IRTRA
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+						</Grid>
+						<Grid>
+							<Col>
+								<TouchableOpacity onPress={() => this.loadingVacation()}>
+									<Card
+										style={{
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
+										}}
+									>
+										<Image
+											source={{
+												uri: this.state.pathImage + 'piscina.jpg'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
+										/>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Consultar mis días de vacaciones
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+							<Col>
+								<TouchableOpacity
+									onPress={() => this.props.navigation.navigate('ProccessCertificateScreen')}
+								>
+									<Card
+										style={{
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
+										}}
+									>
+										<Image
+											source={{ uri: this.state.pathImage + 'certificado.jpg' }}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
+										/>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Solicitar constancia laboral
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+						</Grid>
+					</View>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}

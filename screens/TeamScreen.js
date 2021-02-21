@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
-import { Dimensions, Linking } from 'react-native';
+import { Dimensions, Image, TouchableOpacity } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
-import { Container, Content, View, Spinner, Thumbnail, Icon, Text, CardItem, Card, Button } from 'native-base';
+import {
+	Container,
+	Content,
+	View,
+	Spinner,
+	Thumbnail,
+	Icon,
+	Text,
+	CardItem,
+	Card,
+	Button,
+	Left,
+	Right,
+	Body
+} from 'native-base';
 import { connect } from 'react-redux';
 import * as awardActions from '../src/actions/awardActions';
 import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor, apiUrl } from '../App';
+import { persistor, apiUrl, myStyles } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 import { SliderBox } from 'react-native-image-slider-box';
@@ -94,141 +108,168 @@ class TeamScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
 					{this.loadContent()}
-
-					<Card transparent>
-						<Button transparent vertical onPress={() => this.props.navigation.navigate('JobsScreen')}>
-							<CardItem style={{ marginTop: 0 }}>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
+					<View>
+						<Grid>
+							<Col>
+								<TouchableOpacity onPress={() => this.props.navigation.navigate('JobsScreen')}>
+									<Card
 										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
 										}}
 									>
-										<Icon
-											type="FontAwesome5"
-											name="rocket"
-											style={{ marginLeft: 15, color: '#1c5988' }}
+										<Image
+											source={{ uri: 'https://image.freepik.com/vector-gratis/smm-promocion-internet-publicidad-online-anuncio-investigacion-mercado-crecimiento-ventas-comercializador-personaje-dibujos-animados-portatil-altavoz-ilustracion-metafora-concepto-aislado-vector_335657-2849.jpg' }}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
 										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Oportunidades de crecimiento</Text>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button transparent vertical onPress={() => this.props.navigation.navigate('StoreScreen')}>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Oportunidades de crecimiento
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+							<Col>
+								<TouchableOpacity onPress={() => this.props.navigation.navigate('StoreScreen')}>
+									<Card
 										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
 										}}
 									>
-										<Icon
-											type="FontAwesome5"
-											name="map-marked-alt"
-											style={{ marginLeft: 15, color: '#1c5988' }}
+										<Image
+											source={{
+												uri:
+													'https://image.freepik.com/vector-gratis/mensajero-profesional-que-entrega-pedido-ilustracion-plana-scooter_74855-14494.jpg'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
 										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Ubicación de agencias</Text>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button transparent vertical onPress={() => this.props.navigation.navigate('ContactScreen')}>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Ubicación de agencias
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+						</Grid>
+						<Grid>
+							<Col>
+								<TouchableOpacity onPress={() => this.props.navigation.navigate('ContactScreen')}>
+									<Card
 										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
 										}}
 									>
-										<Icon
-											type="FontAwesome5"
-											name="phone"
-											style={{ marginLeft: 15, color: '#1c5988' }}
+										<Image
+											source={{
+												uri:
+													'https://image.freepik.com/vector-gratis/ilustracion-concepto-llamando_114360-1823.jpg'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
 										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Llama directo</Text>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-						<Button
-							transparent
-							vertical
-							onPress={() => this.props.navigation.navigate('ProccessPeopleScreen')}
-						>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Llama directo
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+							<Col>
+								<TouchableOpacity onPress={() => this.props.navigation.navigate('ProccessPeopleScreen')}>
+									<Card
 										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
 										}}
 									>
-										<Icon
-											type="FontAwesome5"
-											name="mail-bulk"
-											style={{ marginLeft: 15, color: '#1c5988' }}
+										<Image
+											source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
 										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Gestiones RRHH</Text>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-					</Card>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Gestiones RRHH
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+						</Grid>
+					</View>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}
