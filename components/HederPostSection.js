@@ -1,76 +1,87 @@
 import React from 'react';
-import { View, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { connect } from 'react-redux';
 import { Text, Header, Left, Body, Right, Button, Icon, Title } from 'native-base';
 import Constants from 'expo-constants';
+import { myStyles } from '../App';
 
 function HederPostSection(props) {
-	if (props.screen === 1) {
-		return (
-			<Header noShadow style={{ backgroundColor: 'transparent' }}>
-				<Button
+	exitApp = () => {
+		Alert.alert(
+			'Salir',
+			'Cerrar aplicación',
+			[
+				{
+					text: 'No',
+					onPress: () => console.log('Cancel Pressed'),
+					style: 'cancel'
+				},
+				{ text: 'Si', onPress: () => BackHandler.exitApp() }
+			],
+			{ cancelable: false }
+		);
+	};
+
+	handleGoBack = () => {
+		if (props.navigation.canGoBack()) {
+			props.navigation.goBack();
+		} else {
+			exitApp();
+		}
+	};
+	return (
+		<Header noShadow style={{ backgroundColor: myStyles.bg1 }}>
+			<Left>
+				<TouchableOpacity onPress={() => handleGoBack()}>
+					<View style={{ backgroundColor: myStyles.light, borderRadius: 60, marginLeft: 0, padding: 3 }}>
+						<Icon style={{ color: myStyles.bg2 }} name="arrow-back" />
+					</View>
+				</TouchableOpacity>
+			</Left>
+			<Right>
+				<TouchableOpacity
 					transparent
 					onPress={() => props.navigation.navigate('Home')}
 					style={{
-						borderBottomColor: '#E87823',
+						borderBottomColor: props.screen == 1 ? myStyles.bg2 : 'transparent',
 						borderBottomWidth: 2
 					}}
 				>
-					<Text style={{ color: '#E87823' }}>Noticias</Text>
-				</Button>
-				<Button transparent onPress={() => props.navigation.navigate('PodcastScreen')}>
-					<Text style={{ color: '#E87823' }}>Podcast</Text>
-				</Button>
-				<Button transparent onPress={() => props.navigation.navigate('FlashImagesScreen')}>
-					<Text style={{ color: '#E87823' }}>¿Sabías que?</Text>
-				</Button>
-			</Header>
-		);
-	}
-	if (props.screen === 2) {
-		return (
-			<Header noShadow style={{ backgroundColor: 'transparent' }}>
-				<Button transparent onPress={() => props.navigation.navigate('Home')}>
-					<Text style={{ color: '#E87823' }}>Noticias</Text>
-				</Button>
-				<Button
-					transparent
+					<Text
+						style={{ color: myStyles.light, margin: 10, fontWeight: props.screen == 1 ? 'bold' : 'normal' }}
+					>
+						Noticias{' '}
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
 					style={{
-						borderBottomColor: '#E87823',
+						borderBottomColor: props.screen == 2 ? myStyles.bg2 : 'transparent',
 						borderBottomWidth: 2
 					}}
 					onPress={() => props.navigation.navigate('PodcastScreen')}
 				>
-					<Text style={{ color: '#E87823' }}>Podcast</Text>
-				</Button>
-				<Button transparent onPress={() => props.navigation.navigate('FlashImagesScreen')}>
-					<Text style={{ color: '#E87823' }}>¿Sabías que?</Text>
-				</Button>
-			</Header>
-		);
-	}
-	if (props.screen === 3) {
-		return (
-			<Header noShadow style={{ backgroundColor: 'transparent' }}>
-				<Button transparent onPress={() => props.navigation.navigate('Home')}>
-					<Text style={{ color: '#E87823' }}>Noticias</Text>
-				</Button>
-				<Button transparent onPress={() => props.navigation.navigate('PodcastScreen')}>
-					<Text style={{ color: '#E87823' }}>Podcast</Text>
-				</Button>
-				<Button
-					transparent
+					<Text
+						style={{ color: myStyles.light, margin: 10, fontWeight: props.screen == 2 ? 'bold' : 'normal' }}
+					>
+						Podcast
+					</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
 					style={{
-						borderBottomColor: '#E87823',
+						borderBottomColor: props.screen == 3 ? myStyles.bg2 : 'transparent',
 						borderBottomWidth: 2
 					}}
 					onPress={() => props.navigation.navigate('FlashImagesScreen')}
 				>
-					<Text style={{ color: '#E87823' }}>¿Sabías que?</Text>
-				</Button>
-			</Header>
-		);
-	}
+					<Text
+						style={{ color: myStyles.light, margin: 10, fontWeight: props.screen == 3 ? 'bold' : 'normal' }}
+					>
+						¿Sabías que?
+					</Text>
+				</TouchableOpacity>
+			</Right>
+		</Header>
+	);
 }
 
 const styles = StyleSheet.create({

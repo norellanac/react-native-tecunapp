@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView } from 'react-native';
+import { TouchableOpacity, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
@@ -7,7 +7,8 @@ import { Linking } from 'react-native';
 import {
 	Container,
 	Content,
-	Thumbnail,
+	Footer,
+	Header,
 	Form,
 	Input,
 	List,
@@ -121,6 +122,7 @@ class PostsShowScreen extends Component {
 
 	inputComment() {
 		if (this.props.postReducer.post.comments && this.state.showComments == true) {
+			//solo queda de ejemplo, ya no se utiliza esta funcion
 			return (
 				<Form style={{ marginRight: 15, marginLeft: 15, marginTop: 10, marginBottom: 20 }}>
 					<Item rounded style={{ marginTop: 25 }}>
@@ -161,7 +163,7 @@ class PostsShowScreen extends Component {
 		/*if (this.props.postReducer.cargando || this.props.postReducer.post.comments == undefined) {
 			return (
 				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
+					<HederPostSection navigation={this.props.navigation} screen={1} />
 					<Loading />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
@@ -170,7 +172,7 @@ class PostsShowScreen extends Component {
 
 		return (
 			<Container>
-				<HeaderCustom navigation={this.props.navigation} />
+				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Content>
 					<View>
 						<Image
@@ -272,12 +274,33 @@ class PostsShowScreen extends Component {
 							</Button>
 							<ScrollView>
 								{this.loadInfoComment()}
-								{this.inputComment()}
 							</ScrollView>
 						</Card>
 					</View>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+				<Header searchBar rounded style={{ backgroundColor: myStyles.light }}>
+					<Item>
+						<Input
+							onChangeText={(message) => this.setState({ message })}
+							value={this.state.message}
+							placeholder="Añade un comentario"
+							placeholderTextColor="#000000"
+							style={{ color: myStyles.dark }}
+						/>
+
+						<TouchableOpacity
+							style={{ alignSelf: 'center', marginTop: 15 }}
+							onPress={() =>
+								this.uploadComment(
+									this.state.postId,
+									this.state.message,
+									this.props.usuariosReducer.token
+								)}
+						>
+							<Text>Publicar</Text>
+						</TouchableOpacity>
+					</Item>
+				</Header>
 			</Container>
 		);
 	}

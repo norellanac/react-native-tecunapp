@@ -161,7 +161,7 @@ class PodcastScreen extends Component {
 			//console.log("jobsScreen: ", this.props);
 			return (
 				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
+					<HederPostSection navigation={this.props.navigation} screen={2} />
 					<Loading />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
@@ -174,8 +174,7 @@ class PodcastScreen extends Component {
 
 		return (
 			<Container>
-				<HeaderCustom navigation={this.props.navigation} />
-				<HederPostSection navigation={this.props.navigation} screen={1} />
+				<HederPostSection navigation={this.props.navigation} screen={2} />
 				<Form>
 					<Picker
 						note

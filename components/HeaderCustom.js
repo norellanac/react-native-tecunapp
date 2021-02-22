@@ -44,11 +44,6 @@ function HeaderCustom(props) {
 			<Left>
 				<TouchableOpacity
 					onPress={() => handleGoBack()}
-					style={({ pressed }) => [
-						{
-							backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'transparent'
-						}
-					]}
 				>
 					<View style={{ backgroundColor: myStyles.light, borderRadius: 60, marginLeft: 10, padding: 3 }}>
 						<Icon style={{ color: myStyles.bg2 }} name="arrow-back" />

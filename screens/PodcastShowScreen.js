@@ -248,7 +248,7 @@ class PodcastShowScreen extends Component {
 		if (this.props.podcastReducer.cargando && this.props.podcastReducer.podcast.comments == undefined) {
 			return (
 				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
+					<HederPostSection navigation={this.props.navigation} screen={2} />
 					<Loading />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} />
 				</Container>
@@ -257,7 +257,7 @@ class PodcastShowScreen extends Component {
 
 		return (
 			<Container>
-				<HeaderCustom navigation={this.props.navigation} />
+				<HederPostSection navigation={this.props.navigation} screen={2} />
 				<Content>
 					<Card style={{ flex: 0 }} key={podcast.id}>
 						<ListItem thumbnail>

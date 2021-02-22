@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions, Image, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -25,8 +25,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { persistor } from '../App';
-import { apiUrl } from '../App';
+import { apiUrl, persistor, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -80,9 +79,9 @@ class PostsCategoryScreen extends Component {
 
 	showUserNameLikes(news) {
 		if (news.user_likes_new) {
-			return <Text>Tú y ({news.likes.length}) más</Text>
+			return <Text>Tú y ({news.likes.length}) más</Text>;
 		} else {
-			return (<Text>({news.likes.length})</Text>)
+			return <Text>({news.likes.length})</Text>;
 		}
 	}
 
@@ -92,50 +91,49 @@ class PostsCategoryScreen extends Component {
 
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
-				//console.log(this.props.postReducer.posts),
-				<Card style={{ flex: 0 }} key={news.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={{ uri: `${apiUrl.link}/img/logo.png` }}
-							/>
+				<TouchableOpacity onPress={() => this.showNews(news.id)} key={news.id}>
+					<Card style={{ flex: 0 }}>
+						<CardItem>
 							<Body>
-								<Text>{news.title}</Text>
-								<Text note>{news.created_at}</Text>
+								<Image
+									source={{ uri: this.state.pathImage + news.featured_image }}
+									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
+								/>
+								<Text
+									style={{
+										fontSize: 20,
+										fontWeight: 'bold',
+										color: myStyles.bg1,
+										paddingVertical: 8
+									}}
+								>
+									{news.title}
+								</Text>
 							</Body>
-						</Left>
-					</CardItem>
-					<CardItem>
-						<Body>
-							<Image
-								source={{ uri: this.state.pathImage + news.featured_image }}
-								style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
-							/>
-							<Text>{news.description}</Text>
-						</Body>
-					</CardItem>
-					<CardItem>
-						<Left>
-							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.likePost(news.id)}>
-								{(() => {
-									if (news.user_likes_new) {
-										return <Icon name="like1" type="AntDesign" />;
-									} else {
-										return <Icon name="like2" type="AntDesign" />;
-									}
-								})()}
-								{this.showUserNameLikes(news)}
-							</Button>
-						</Left>
-						<Right>
-							<Button transparent textStyle={{ color: '#87838B' }} onPress={() => this.showNews(news.id)}>
-								<Icon name="book-reader" type="FontAwesome5" />
-								<Text>Leer más</Text>
-							</Button>
-						</Right>
-					</CardItem>
-				</Card>
+						</CardItem>
+						<CardItem style={{ marginTop: -25 }}>
+							<Left>
+								<Text note>{news.created_at}</Text>
+							</Left>
+							<Right>
+								<Button
+									transparent
+									textStyle={{ color: '#87838B' }}
+									onPress={() => this.likePost(news.id)}
+								>
+									{(() => {
+										if (news.user_likes_new) {
+											return <Icon name="like1" type="AntDesign" />;
+										} else {
+											return <Icon name="like2" type="AntDesign" />;
+										}
+									})()}
+									{this.showUserNameLikes(news)}
+								</Button>
+							</Right>
+						</CardItem>
+					</Card>
+				</TouchableOpacity>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -148,10 +146,10 @@ class PostsCategoryScreen extends Component {
 
 		this.state.categoryPostName = this.props.postReducer.categoryPostName;
 
-		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts ==null ) {
+		if (this.props.postReducer.posts == undefined || this.props.postReducer.posts == null) {
 			return (
 				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
+					<HederPostSection navigation={this.props.navigation} screen={1} />
 					<Spinner color="blue" style={{ flex: 1 }} />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 				</Container>
@@ -160,8 +158,7 @@ class PostsCategoryScreen extends Component {
 
 		return (
 			<Container>
-				<HeaderCustom navigation={this.props.navigation} />
-				<HederPostSection navigation={this.props.navigation} screen={1}/>
+				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Form>
 					<Picker
 						note
