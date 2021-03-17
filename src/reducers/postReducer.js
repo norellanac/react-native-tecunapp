@@ -50,14 +50,14 @@ export default (state = INITIAL, action) => {
         case showPostCategory:
             return {
                 ...state, 
-                post: [],
+                post: [], 
                 categoryPostName: [],
                 post: action.payload,
                 categoryPostName: action.categoryName,
                 cargando: action.cargando
             };
         case getPost:
-            return {...state, post: action.payload, comment: action.comment };
+            return {...state, post: action.payload };
         case loadingPostLike:
             return { ...state, cargandoLike: true };
         case likeOrDislikeNews:

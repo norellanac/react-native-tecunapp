@@ -47,14 +47,23 @@ class FlashImagesScreen extends Component {
 		if (this.props.picturesReducer.pictures) {
 			//console.log("pictures: ", this.props.picturesReducer.pictures);
 			return this.props.picturesReducer.pictures.map((picture) => (
-				<Card style={{ flex: 0 }} key={picture.id}>
+				<Card
+					style={{
+						flex: 0,
+						borderRadius: 15,
+						marginVertical: 10,
+						marginLeft: 10,
+						marginRight: 10
+					}}
+					key={picture.id}
+				>
 					<View>
 						<Image
 							source={{ uri: `${apiUrl.link}/storage/pictures/${picture.featured_image}` }}
-							style={{ width: screenWidth - 4, height: screenHeight - 250, alignItems: 'center' }}
+							style={{ width: screenWidth - 20, height: screenHeight - 250, alignItems: 'center' }}
 						/>
 					</View>
-					<CardItem>
+					<CardItem style={{borderRadius: 15,}}>
 						<Left>
 							<Button transparent textStyle={{ color: '#87838B' }}>
 								<Icon name="calendar" type="FontAwesome5" />

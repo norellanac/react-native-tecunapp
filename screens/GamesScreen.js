@@ -22,7 +22,7 @@ import * as loginActions from '../src/actions/loginActions';
 import * as questionActions from '../src/actions/questionActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor } from '../App';
+import { persistor, myStyles } from '../App';
 import Loading from './../components/Loading';
 import { SliderBox } from 'react-native-image-slider-box';
 import { apiUrl } from '../App';
@@ -187,7 +187,8 @@ class GamesScreen extends Component {
 														width: screenWidth / 3,
 														height: screenHeight / 13,
 														borderRadius: 10,
-														alignSelf: 'center'
+														alignSelf: 'center',
+														backgroundColor: myStyles.bg2,
 													}}
 												>
 													<Icon
@@ -221,7 +222,8 @@ class GamesScreen extends Component {
 														width: screenWidth / 3,
 														height: screenHeight / 13,
 														borderRadius: 10,
-														alignSelf: 'center'
+														alignSelf: 'center',
+														backgroundColor: myStyles.bg2
 													}}
 												>
 													<Icon

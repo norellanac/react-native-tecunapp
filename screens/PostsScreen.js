@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Pressable, Image } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -125,8 +125,10 @@ class PostsScreen extends Component {
 		}
 	}
 
-	showNews(idPost) {
-		this.props.getShowPost(idPost, this.props.usuariosReducer.token);
+	showNews(news) {
+		//pasar el array
+		this.props.passOneRecord(news);
+		this.props.getShowPost(news.id, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PostsShowScreen');
 	}
 
@@ -157,9 +159,9 @@ class PostsScreen extends Component {
 
 	showUserNameLikes(news) {
 		if (news.user_likes_new) {
-			return <Text>Tú y ({news.likes.length}) más</Text>;
+			return <Text>{news.likes.length}</Text>;
 		} else {
-			return <Text>({news.likes.length})</Text>;
+			return <Text>{news.likes.length}</Text>;
 		}
 	}
 
@@ -167,13 +169,21 @@ class PostsScreen extends Component {
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
 				//console.log(this.props.postReducer.posts),
-				<Pressable onPress={() => this.showNews(news.id)} key={news.id}>
-					<Card style={{ flex: 0 }}>
-						<CardItem>
+				<TouchableOpacity onPress={() => this.showNews(news)} key={news.id} >
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem style={{ borderRadius: 15 }}>
 							<Body>
 								<Image
 									source={{ uri: this.state.pathImage + news.featured_image }}
-									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
+									style={{ borderRadius: 15, width: screenWidth - 50, minHeight: 250, maxHeight: 500 }}
 								/>
 								<Text
 									style={{
@@ -187,7 +197,7 @@ class PostsScreen extends Component {
 								</Text>
 							</Body>
 						</CardItem>
-						<CardItem style={{ marginTop: -25 }}>
+						<CardItem style={{ marginTop: -25, borderRadius: 15 }}>
 							<Left>
 								<Text note>{news.created_at}</Text>
 							</Left>
@@ -199,9 +209,9 @@ class PostsScreen extends Component {
 								>
 									{(() => {
 										if (news.user_likes_new) {
-											return <Icon name="like1" type="AntDesign" />;
+											return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
 										} else {
-											return <Icon name="like2" type="AntDesign" />;
+											return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
 										}
 									})()}
 									{this.showUserNameLikes(news)}
@@ -209,7 +219,7 @@ class PostsScreen extends Component {
 							</Right>
 						</CardItem>
 					</Card>
-				</Pressable>
+				</TouchableOpacity>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;

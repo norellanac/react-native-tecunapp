@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Share, Image, Linking, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -7,7 +7,9 @@ import {
 	Content,
 	Spinner,
 	Thumbnail,
-	Form,
+	List,
+	ListItem,
+	View,
 	Item,
 	Input,
 	Icon,
@@ -16,15 +18,16 @@ import {
 	Card,
 	Button,
 	Left,
-	Right,
-	Body
+	Header,
+	Body,
+	Right
 } from 'native-base';
 import { connect } from 'react-redux';
 import * as jobsActions from '../src/actions/jobsActions';
 import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor } from '../App';
+import { persistor, myStyles } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -35,6 +38,25 @@ class JobsScren extends Component {
 	state = {
 		search: '',
 		jobId: null
+	};
+
+	shareMesage = async (text) => {
+		try {
+			const result = await Share.share({
+				message: text
+			});
+			if (result.action === Share.sharedAction) {
+				if (result.activityType) {
+					// shared with activity type of result.activityType
+				} else {
+					// shared
+				}
+			} else if (result.action === Share.dismissedAction) {
+				// dismissed
+			}
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 
 	setIdOneJob(jobArray) {
@@ -53,34 +75,30 @@ class JobsScren extends Component {
 		if (this.props.jobsReducer.jobs) {
 			//console.log("jobs: ", this.props.jobsReducer.jobs);
 			return this.props.jobsReducer.jobs.map((job) => (
-				<Card style={{ flex: 0 }} key={job.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={require('../assets/images/robot-dev.png')}
-							/>
-							<Body>
-								<Text>{job.title}</Text>
-								<Text note>{job.created_at}</Text>
-							</Body>
-						</Left>
-					</CardItem>
-					<CardItem>
+				<TouchableOpacity onPress={() => Linking.openURL(job.public_link)}>
+					<ListItem thumbnail onPress={() => Linking.openURL(job.public_link)} key={job.id}>
 						<Body>
-							<Text>{job.description}</Text>
-							<Button
-								block
-								transparent
-								textStyle={{ color: '#87838B' }}
-								onPress={() => this.setIdOneJob(job)}
+							<Text
+								style={{
+									fontSize: 15,
+									fontWeight: 'bold',
+									color: myStyles.bg1,
+									paddingVertical: 8
+								}}
 							>
-								<Text>Aplicar </Text>
-								<Icon name="user-tie" type="FontAwesome5" />
-							</Button>
+								{job.title}
+							</Text>
+							<Text note numberOfLines={5}>
+								{job.description}
+							</Text>
 						</Body>
-					</CardItem>
-				</Card>
+						<Right>
+							<Button transparent onPress={() => this.shareMesage(job.public_link)}>
+								<Icon name="share-alt-square" type="FontAwesome" />
+							</Button>
+						</Right>
+					</ListItem>
+				</TouchableOpacity>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -120,32 +138,40 @@ class JobsScren extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20 }}>
-						<Item rounded style={{ marginTop: 25 }}>
-							<Icon
-								type="MaterialCommunityIcons"
-								name="lock-open-outline"
-								style={{ color: 'white', fontSize: 25 }}
-							/>
-							<Input
-								onChangeText={(search) => this.setState({ search })}
-								value={this.state.search}
-								placeholder="Plaza o Descripcion"
-								placeholderTextColor="#000000"
-								style={{ color: '#000000' }}
-							/>
-							<Button
-								transparent
-								onPress={() => this.searchTextJob(this.state.search, this.props.usuariosReducer.token)}
-							>
-								<Icon name="search" type="FontAwesome5" />
-							</Button>
-						</Item>
-					</Form>
-
-					{this.loadContent()}
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Oportunidades de crecimiento
+						</Text>
+					</View>
+					<List>{this.loadContent()}</List>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+
+				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
+					<Item>
+						<Input
+							onChangeText={(search) => this.setState({ search })}
+							value={this.state.search}
+							placeholder="Plaza o Descripcion"
+							placeholderTextColor="#000000"
+							style={{ color: '#000000' }}
+						/>
+
+						<TouchableOpacity
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							onPress={() => this.searchTextJob(this.state.search, this.props.usuariosReducer.token)}
+						>
+							<Text>Buscar</Text>
+						</TouchableOpacity>
+					</Item>
+				</Header>
 			</Container>
 		);
 	}

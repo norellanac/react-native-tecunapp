@@ -8,7 +8,7 @@ import {
 	Spinner,
 	Thumbnail,
 	Form,
-	Picker,
+	View,
 	Input,
 	Icon,
 	Text,
@@ -26,7 +26,7 @@ import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
 import Loading from './../components/Loading';
-import { apiUrl } from '../App';
+import { apiUrl, myStyles } from '../App';
 
 class ProccessCertificateScreen extends Component {
 	constructor() {
@@ -124,8 +124,29 @@ class ProccessCertificateScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Constancia laboral
+						</Text>
+					</View>
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'guatemala.png' }}
@@ -139,7 +160,7 @@ class ProccessCertificateScreen extends Component {
 									onPress={() => this.mailCertificate(gt, paisGT)}
 									style={{
 										alignSelf: 'center',
-										backgroundColor: '#FA8258',
+										backgroundColor: myStyles.bg2,
 										width: screenWidth / 2,
 										height: screenHeight / 17,
 										borderRadius: 20
@@ -152,8 +173,16 @@ class ProccessCertificateScreen extends Component {
 						</CardItem>
 					</Card>
 
-					<Card style={{ flex: 0 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'el-salvador.png' }}
@@ -167,7 +196,7 @@ class ProccessCertificateScreen extends Component {
 									onPress={() => this.mailCertificate(sv, paisSV)}
 									style={{
 										alignSelf: 'center',
-										backgroundColor: '#FA8258',
+										backgroundColor: myStyles.bg2,
 										width: screenWidth / 2,
 										height: screenHeight / 17,
 										borderRadius: 20
@@ -180,8 +209,16 @@ class ProccessCertificateScreen extends Component {
 						</CardItem>
 					</Card>
 
-					<Card style={{ flex: 0, marginBottom: 15 }}>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center' }}>
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'honduras.png' }}
@@ -195,7 +232,7 @@ class ProccessCertificateScreen extends Component {
 									onPress={() => this.mailCertificate(hn, paisHn)}
 									style={{
 										alignSelf: 'center',
-										backgroundColor: '#FA8258',
+										backgroundColor: myStyles.bg2,
 										width: screenWidth / 2,
 										height: screenHeight / 17,
 										borderRadius: 20

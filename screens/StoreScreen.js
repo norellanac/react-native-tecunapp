@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, Linking } from 'react-native';
+import { TouchableOpacity, Image, Linking } from 'react-native';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import { withNavigation } from 'react-navigation';
 import {
 	Container,
 	Content,
 	View,
+	Header,
 	Thumbnail,
 	Form,
 	Item,
@@ -19,7 +20,7 @@ import {
 	Right,
 	Spinner,
 	Body,
-	TouchableHighlight
+	ListItem
 } from 'native-base';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
@@ -27,7 +28,7 @@ import * as storeActions from '../src/actions/storeActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import NotificationHeader from '../components/NotificationHeader';
-import { persistor, apiUrl } from '../App';
+import { persistor, apiUrl, myStyles } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -54,45 +55,72 @@ class StoreScreen extends Component {
 		if (this.props.storeReducer.stores) {
 			console.log('tiendas: ', this.props.storeReducer);
 			return this.props.storeReducer.stores.map((store) => (
-				<Card style={{ flex: 0 }} key={store.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
+				<Card
+					style={{
+						flex: 0,
+						borderRadius: 15,
+						marginVertical: 10,
+						marginLeft: 10,
+						marginRight: 10
+					}}
+					key={store.id}
+				>
+					<CardItem style={{ backgroundColor: 'transparent', borderRadius: 15 }}>
 						<Left>
 							<Thumbnail
 								style={{ backgroundColor: '#000000' }}
 								source={{ uri: `${apiUrl.link}/img/logo.png` }}
 							/>
 							<Body>
-								<Text>{store.name}</Text>
+								<Text
+									style={{
+										fontSize: 18,
+										fontWeight: 'bold',
+										color: myStyles.bg1,
+										paddingVertical: 8
+									}}
+								>
+									{store.name}
+								</Text>
 								<Text note>{store.address}</Text>
 								<Text note>{store.schedule}</Text>
 								<Text note>{store.description}</Text>
 							</Body>
 						</Left>
 					</CardItem>
-					<CardItem>
-						<Left>
-							<Button
-								transparent
-								iconLeft
-								style={{ alignSelf: 'center' }}
-								onPress={() => Linking.openURL(store.maps)}
-							>
-								<Icon name="waze" type="MaterialCommunityIcons" />
-								<Text>Waze</Text>
-							</Button>
-						</Left>
-						<Right>
-							<Button
-								transparent
-								iconLeft
-								style={{ alignSelf: 'center' }}
-								onPress={() => Linking.openURL(`tel:${store.number}`)}
-							>
-								<Icon name="phone" type="FontAwesome" />
-								<Text>{store.number}</Text>
-							</Button>
-						</Right>
-					</CardItem>
+					<ListItem>
+						<TouchableOpacity
+							transparent
+							iconLeft
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							onPress={() => Linking.openURL(store.maps)}
+						>
+							<Text>
+								<Icon name="waze" type="MaterialCommunityIcons" /> waze
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							transparent
+							iconLeft
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							onPress={() => Linking.openURL(store.maps)}
+						>
+							<Text>
+								<Icon name="google-maps" type="MaterialCommunityIcons" /> Maps
+							</Text>
+						</TouchableOpacity>
+						<TouchableOpacity
+							iconLeft
+							transparent
+							style={{ alignSelf: 'center', marginHorizontal: 20 }}
+							onPress={() => Linking.openURL(`tel:${store.number}`)}
+						>
+							<Text>
+								<Icon name="phone" type="FontAwesome" /> {store.number}
+							</Text>
+						</TouchableOpacity>
+						<Right />
+					</ListItem>
 				</Card>
 			));
 		} else {
@@ -145,32 +173,40 @@ class StoreScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<Form style={{ marginRight: 15, marginLeft: 15, marginTop: 15 }}>
-						<Item rounded >
-							<Icon
-								type="FontAwesome5"
-								name="store"
-								style={{ color: 'black', fontSize: 25 }}
-							/>
-							<Input
-								onChangeText={(search) => this.setState({ search })}
-								value={this.state.search}
-								placeholder="Dirección o agencia"
-								placeholderTextColor="#000000"
-								style={{ color: '#000000' }}
-							/>
-							<Button
-								transparent
-								onPress={() => this.searchStores(this.state.search, this.props.usuariosReducer.token)}
-							>
-								<Icon name="search" type="FontAwesome5" />
-							</Button>
-						</Item>
-					</Form>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Ubicación de agencias
+						</Text>
+					</View>
 
 					{this.loadContent()}
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
+					<Item>
+						<Input
+							onChangeText={(search) => this.setState({ search })}
+							value={this.state.search}
+							placeholder="Dirección o agencia"
+							placeholderTextColor="#000000"
+							style={{ color: '#000000' }}
+						/>
+
+						<TouchableOpacity
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							onPress={() => this.searchStores(this.state.search, this.props.usuariosReducer.token)}
+						>
+							<Text>Buscar</Text>
+						</TouchableOpacity>
+					</Item>
+				</Header>
 			</Container>
 		);
 	}

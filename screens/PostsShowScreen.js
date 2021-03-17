@@ -278,7 +278,7 @@ class PostsShowScreen extends Component {
 						</Card>
 					</View>
 				</Content>
-				<Header searchBar rounded style={{ backgroundColor: myStyles.light }}>
+				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
 					<Item>
 						<Input
 							onChangeText={(message) => this.setState({ message })}
@@ -289,7 +289,7 @@ class PostsShowScreen extends Component {
 						/>
 
 						<TouchableOpacity
-							style={{ alignSelf: 'center', marginTop: 15 }}
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
 							onPress={() =>
 								this.uploadComment(
 									this.state.postId,

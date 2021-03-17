@@ -39,8 +39,9 @@ class PostsCategoryScreen extends Component {
 		idCategory: 0
 	};
 
-	showNews(idPost) {
-		this.props.getShowPost(idPost, this.props.usuariosReducer.token);
+	showNews(news) {
+		this.props.passOneRecord(news);
+		this.props.getShowPost(news.id, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PostsShowScreen');
 	}
 
@@ -64,7 +65,7 @@ class PostsCategoryScreen extends Component {
 
 		if (this.state.idCategory == 0) {
 			this.props.getNews(this.props.usuariosReducer.token);
-			this.props.navigation.navigate('Home');
+			//this.props.navigation.navigate('Home');
 		} else {
 			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 		}
@@ -79,9 +80,9 @@ class PostsCategoryScreen extends Component {
 
 	showUserNameLikes(news) {
 		if (news.user_likes_new) {
-			return <Text>Tú y ({news.likes.length}) más</Text>;
+			return <Text>{news.likes.length}</Text>;
 		} else {
-			return <Text>({news.likes.length})</Text>;
+			return <Text>{news.likes.length}</Text>;
 		}
 	}
 
@@ -91,13 +92,25 @@ class PostsCategoryScreen extends Component {
 
 		if (this.props.postReducer.posts) {
 			return this.props.postReducer.posts.map((news) => (
-				<TouchableOpacity onPress={() => this.showNews(news.id)} key={news.id}>
-					<Card style={{ flex: 0 }}>
-						<CardItem>
+				<TouchableOpacity onPress={() => this.showNews(news)} key={news.id}>
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem
+							style={{
+								borderRadius: 15
+							}}
+						>
 							<Body>
 								<Image
 									source={{ uri: this.state.pathImage + news.featured_image }}
-									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
+									style={{ width: screenWidth - 50, minHeight: 250, maxHeight: 500 }}
 								/>
 								<Text
 									style={{
@@ -111,7 +124,7 @@ class PostsCategoryScreen extends Component {
 								</Text>
 							</Body>
 						</CardItem>
-						<CardItem style={{ marginTop: -25 }}>
+						<CardItem style={{ marginTop: -25, borderRadius: 15 }}>
 							<Left>
 								<Text note>{news.created_at}</Text>
 							</Left>
@@ -123,9 +136,9 @@ class PostsCategoryScreen extends Component {
 								>
 									{(() => {
 										if (news.user_likes_new) {
-											return <Icon name="like1" type="AntDesign" />;
+											return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
 										} else {
-											return <Icon name="like2" type="AntDesign" />;
+											return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
 										}
 									})()}
 									{this.showUserNameLikes(news)}

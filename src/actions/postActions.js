@@ -43,7 +43,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 		} else {
 			dispatch({
 				type: errorPost,
-				error: "algo salio mal",
+				error: 'algo salio mal',
 				cargando: false
 			});
 		}
@@ -91,6 +91,13 @@ export const getCategory = (idCategory, tokenUsr) => async (dispatch) => {
 			cargando: false
 		});
 	}
+};
+
+export const passOneRecord = (record) => async (dispatch) => {
+	dispatch({
+		type: getPost,
+		payload: record
+	});
 };
 
 export const getShowPost = (idPost, tokenUsr) => async (dispatch) => {

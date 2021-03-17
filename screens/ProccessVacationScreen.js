@@ -28,7 +28,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { apiUrl } from '../App';
+import { apiUrl, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -42,20 +42,20 @@ class ProccessVacationScreen extends Component {
 		company: ''
 	};
 
-  componentDidMount(){
-    Alert.alert(
-      `Consultar mis vacaciones`,
-      `Elige la empresa a la que perteneces para consultar cuantos días de
+	componentDidMount() {
+		Alert.alert(
+			`Consultar mis vacaciones`,
+			`Elige la empresa a la que perteneces para consultar cuantos días de
       vacaciones tienes disponibles`,
-      [
-        {
-          text: 'Cerrar'
-        }
-      ],
-      { cancelable: false }
-    );
-  }
-  
+			[
+				{
+					text: 'Cerrar'
+				}
+			],
+			{ cancelable: false }
+		);
+	}
+
 	loadingInfoName() {
 		const companies = this.props.rrhhReducer.company;
 		let count = 0;
@@ -69,13 +69,15 @@ class ProccessVacationScreen extends Component {
 					marginBottom: 15
 				}}
 			>
-				<Grid>
+				<Grid style={{backgroundColor: myStyles.bg2}}>
 					<Col size={4} style={{ alignItems: 'center' }}>
 						<Text
 							style={{
-								fontSize: 20,
-								justifyContent: 'center',
-								fontFamily: 'sans-serif-medium'
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 2
 							}}
 						>
 							{itemName[0].name}
@@ -87,7 +89,7 @@ class ProccessVacationScreen extends Component {
 					return itemName.map((item) => (
 						<ListItem key={item.id} icon onPress={() => this.mailVacation(item.email, item.departament)}>
 							<Left>
-								<Button style={{ backgroundColor: '#FA8258' }}>
+								<Button style={{ backgroundColor: myStyles.bg1 }}>
 									<Icon type="MaterialCommunityIcons" name="email-send" />
 								</Button>
 							</Left>

@@ -27,7 +27,7 @@ import * as contactsActions from '../src/actions/contactsActions';
 import * as userActions from '../src/actions/userActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { screenHeight, apiUrl, screenWidth } from '../App';
+import { myStyles, apiUrl, screenWidth } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 
@@ -141,7 +141,7 @@ class ContactScreen extends Component {
 					`Realiza una nueva busqueda`,
 					[
 						{
-							text: 'Cerrar', 
+							text: 'Cerrar',
 							onPress: () => this.setState({ isShowResult: false })
 						}
 					],
@@ -162,7 +162,7 @@ class ContactScreen extends Component {
 					backgroundColor: '#F7F7F7'
 				}}
 			>
-				<Text style={{ fontWeight: '600', color: '#3490dc' }}> {section.nombre}</Text>
+				<Text style={{ fontWeight: '600', color: myStyles.bg1 }}> {section.nombre}</Text>
 				{1 ? (
 					<Icon style={{ fontSize: 18 }} name="caret-down" type="FontAwesome" />
 				) : (
@@ -240,19 +240,19 @@ class ContactScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
-					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
-						<Col style={{ alignItems: 'center' }}>
-							<Text
-								style={{
-									fontSize: 30,
-									color: '#3490dc',
-									fontWeight: 'bold'
-								}}
-							>
-								Contactos
-							</Text>
-						</Col>
-					</Grid>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 18
+							}}
+						>
+							Contactos
+						</Text>
+					</View>
 
 					<View style={{ marginTop: 20 }}>
 						<ListItem
@@ -280,7 +280,7 @@ class ContactScreen extends Component {
 							<Text
 								style={{
 									fontSize: 20,
-									color: '#3490dc',
+									color: myStyles.bg1,
 									fontWeight: 'bold'
 								}}
 							>
@@ -291,62 +291,62 @@ class ContactScreen extends Component {
 					<View>
 						<Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchNombre) => this.setState({ searchNombre })}
 									value={this.state.searchNombre}
 									placeholder="Nombres"
-									placeholderTextColor="#3490dc"
-									style={{ color: '#3490dc' }}
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchApellido) => this.setState({ searchApellido })}
 									value={this.state.searchApellido}
 									placeholder="Apellidos"
-									placeholderTextColor="#3490dc"
-									style={{ color: '#3490dc' }}
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="SimpleLineIcons" name="people" style={{ color: '#3490dc', fontSize: 25 }} />
+								<Icon type="SimpleLineIcons" name="people" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
 									value={this.state.searchDepartamento}
 									placeholder="Departameto o area"
-									placeholderTextColor="#3490dc"
-									style={{ color: '#3490dc' }}
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
 									type="MaterialCommunityIcons"
 									name="map"
-									style={{ color: '#3490dc', fontSize: 25 }}
+									style={{ color: myStyles.bg1, fontSize: 25 }}
 								/>
 								<Input
 									maxLength={13}
 									onChangeText={(searchPais) => this.setState({ searchPais })}
 									value={this.state.searchPais}
 									placeholder="Pais"
-									placeholderTextColor="#3490dc"
-									style={{ color: '#3490dc' }}
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
 									type="MaterialCommunityIcons"
 									name="email-outline"
-									style={{ color: '#3490dc', fontSize: 25 }}
+									style={{ color: myStyles.bg1, fontSize: 25 }}
 								/>
 								<Input
 									onChangeText={(searchPuesto) => this.setState({ searchPuesto })}
 									value={this.state.searchPuesto}
 									placeholder="Plaza o puesto"
-									placeholderTextColor="#3490dc"
-									style={{ color: '#3490dc' }}
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							<Content style={{ marginTop: 20 }}>
@@ -357,10 +357,9 @@ class ContactScreen extends Component {
 											this.searchContactData(this.props.usuariosReducer.token);
 										}}
 										rounded
-										primary
 										style={{
 											fontSize: 44,
-											color: '#3490dc'
+											backgroundColor: myStyles.bg3
 										}}
 									>
 										<Text
