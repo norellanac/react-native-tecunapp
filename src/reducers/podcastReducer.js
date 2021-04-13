@@ -13,6 +13,7 @@ const INITIAL = {
     category: [],
     categories: [],
     categoryPodcastName: [],
+    likePodcast: [],
     idCategory: '',
     likeOrDislike: [],
     idDestroy: [],
@@ -44,6 +45,7 @@ export default (state = INITIAL, action) => {
                 ...state, 
                 podcast: action.payload,
                 categoryPodcastName: action.categoryName,
+                likePodcast: action.likePodcast,
                 cargando: action.cargando
             };
         case showPodcastCategory:

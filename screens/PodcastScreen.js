@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions, Image, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -26,7 +26,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { apiUrl, screenWidth } from '../App';
+import { apiUrl, screenHeight, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -78,66 +78,66 @@ class PodcastScreen extends Component {
 
 	showUserNameLikes(podcast) {
 		if (podcast.user_likes_new) {
-			return <Text>Tú y ({podcast.likes.length}) más</Text>;
+			return <Text>{podcast.likes.length}</Text>;
 		} else {
-			return <Text>({podcast.likes.length})</Text>;
+			return <Text>{podcast.likes.length}</Text>;
 		}
 	}
 
 	loadContent = () => {
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
-				<Card style={{ flex: 0 }} key={podcast.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={{ uri: `${apiUrl.link}/img/logo.png` }}
-							/>
+				<TouchableOpacity onPress={() => this.showPodcast(podcast.id)} key={podcast.id} >
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem style={{ borderRadius: 15 }}>
 							<Body>
-								<Text>{podcast.title}</Text>
-								<Text note>{podcast.created_at}</Text>
+								<Image
+									source={{ uri: this.state.pathImage + podcast.featured_image }}
+									style={{ borderRadius: 15, width: screenWidth - 50, minHeight: 250, maxHeight: 500 }}
+								/>
+								<Text
+									style={{
+										fontSize: 20,
+										fontWeight: 'bold',
+										color: myStyles.bg1,
+										paddingVertical: 8
+									}}
+								>
+									{podcast.title}
+								</Text>
 							</Body>
-						</Left>
-					</CardItem>
-					<CardItem>
-						<Body>
-							<Image
-								source={{ uri: this.state.pathImage + podcast.featured_image }}
-								style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 500 }}
-							/>
-							<Text>{podcast.description}</Text>
-						</Body>
-					</CardItem>
-					<CardItem>
-						<Left>
-							<Button
-								transparent
-								textStyle={{ color: '#87838B' }}
-								onPress={() => this.likePodcast(podcast.id)}
-							>
-								{(() => {
-									if (podcast.user_likes_new) {
-										return <Icon name="like1" type="AntDesign" />;
-									} else {
-										return <Icon name="like2" type="AntDesign" />;
-									}
-								})()}
-								{this.showUserNameLikes(podcast)}
-							</Button>
-						</Left>
-						<Right>
-							<Button
-								transparent
-								textStyle={{ color: '#87838B' }}
-								onPress={() => this.showPodcast(podcast.id)}
-							>
-								<Icon name="music" type="FontAwesome" />
-								<Text>Escuchar</Text>
-							</Button>
-						</Right>
-					</CardItem>
-				</Card>
+						</CardItem>
+						<CardItem style={{ marginTop: -25, borderRadius: 15 }}>
+							<Left>
+								<Text note>{podcast.created_at}</Text>
+							</Left>
+							<Right>
+								<Button
+									transparent
+									textStyle={{ color: '#87838B' }}
+									onPress={() => this.likePodcast(podcast.id)}
+								>
+									{(() => {
+										if (podcast.user_likes_new) {
+											return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
+										} else {
+											return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
+										}
+									})()}
+									{this.showUserNameLikes(podcast)}
+								</Button>
+							</Right>
+						</CardItem>
+					</Card>
+				</TouchableOpacity>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -164,6 +164,10 @@ class PodcastScreen extends Component {
 		return (
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={2} />
+				<Image
+					source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+					style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+				/>
 				<Form>
 					<Picker
 						note

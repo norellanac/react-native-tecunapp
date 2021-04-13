@@ -110,12 +110,15 @@ export const getShowPodcast = (idPodcast, tokenUsr) => async dispatch => {
 
         const data = await response.json();
 
+        console.log("ActionPodcast :" , data);
+
         if(response.ok){
             //console.log("test :" , data);
             dispatch({
                 type: showPodcast,
                 payload: data.podcast,
                 categoryName: data.categoryName,
+                likePodcast: data.likes,
                 cargando: false
             });
         }

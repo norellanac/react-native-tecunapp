@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView } from 'react-native';
+import { Dimensions, TouchableOpacity, Image, ScrollView } from 'react-native';
 import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 import { Linking } from 'react-native';
@@ -10,6 +10,7 @@ import {
 	Container,
 	Content,
 	Thumbnail,
+	Header,
 	Form,
 	Input,
 	List,
@@ -35,7 +36,7 @@ import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
 import { persistor } from '../App';
 import { Video } from 'expo-av';
-import { apiUrl, screenHeight, screenWidth } from '../App';
+import { apiUrl, screenHeight, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -54,7 +55,8 @@ class PodcastShowScreen extends Component {
 		showSpotify: false,
 		showAudio: false,
 		podcastId: '',
-		sound1: null
+		sound1: null,
+		message: null
 	};
 
 	async componentDidMount() {
@@ -238,6 +240,20 @@ class PodcastShowScreen extends Component {
 		}
 	}
 
+	async likePost(podcastID) {
+		let token = this.props.usuariosReducer.token;
+		await this.props.likeOrDislike(podcastID, token);
+		await this.props.getShowPodcast(podcastID, token);
+	}
+
+	showUserNameLikes(podcast) {
+		if (podcast.user_likes_new) {
+			return <Text style={{ color: '#000000' }}>{podcast.likes.length}</Text>;
+		} else {
+			return <Text style={{ color: '#000000' }}>{podcast.likes.length}</Text>;
+		}
+	}
+
 	render() {
 		//const { navigation } = this.props.navigation
 
@@ -255,168 +271,202 @@ class PodcastShowScreen extends Component {
 			);
 		}
 
+		console.log("Entro aqui ",podcast);
+
 		return (
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={2} />
 				<Content>
-					<Card style={{ flex: 0 }} key={podcast.id}>
-						<ListItem thumbnail>
-							<Left>
-								<Thumbnail
-									square
-									style={{ backgroundColor: 'transparent' }}
-									source={{ uri: `${apiUrl.link}/img/logo.png` }}
-								/>
-							</Left>
-							<Body>
-								<Text>{podcast.title}</Text>
-							</Body>
-						</ListItem>
-						<CardItem>
-							<Body>
-								<Image
-									source={{
-										uri: this.state.pathImage + podcast.featured_image
-									}}
-									style={{ width: screenWidth - 40, minHeight: 250, maxHeight: 400 }}
-								/>
-								<Text note>{podcast.created_at}</Text>
-							</Body>
-						</CardItem>
-						<CardItem>
-							<Left>
-								{(() => {
-									if (podcast.featured_spotify) {
-										return (
-											<Button
-												transparent
-												textStyle={{ color: '#87838B' }}
-												onPress={(showSpotify) =>
-													this.setState({
-														showSpotify: !this.state.showSpotify
-													})}
-											>
-												<Icon name="spotify" type="FontAwesome" />
-												<Text>Spotify</Text>
-											</Button>
-										);
-									}
-								})()}
-							</Left>
-							<Body>
-								{(() => {
-									if (podcast.featured_audio) {
-										return (
-											<Button
-												transparent
-												textStyle={{ color: '#87838B' }}
-												onPress={() =>
-													Linking.openURL(this.state.pathImage + podcast.featured_audio)}
-											>
-												<Icon name="file-download" type="FontAwesome5" />
-												<Text>Descargar</Text>
-											</Button>
-										);
-									}
-								})()}
-							</Body>
-							<Right>
-								{(() => {
-									if (podcast.featured_audio) {
-										return (
-											<Button
-												transparent
-												textStyle={{ color: '#87838B' }}
-												onPress={(showAudio) =>
-													this.setState({ showAudio: !this.state.showAudio })}
-											>
-												<Icon name="file-audio" type="FontAwesome5" />
-												<Text>Audio</Text>
-											</Button>
-										);
-									}
-								})()}
-							</Right>
-						</CardItem>
-						<ScrollView>{this.inputSpotify()}</ScrollView>
-						{this.inputAudio()}
-						<CardItem>
-							<Body>
-								<Text>{podcast.description}</Text>
-								<ScrollView>
+
+					<View>
+						<Image
+							source={{ uri: this.state.pathImage + podcast.featured_image }}
+							style={{ width: screenWidth, minHeight: 250, maxHeight: 400 }}
+						/>
+						<View style={{ backgroundColor: myStyles.bg2 }}>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontSize: 20,
+									fontWeight: 'bold',
+									color: myStyles.light,
+									paddingVertical: 8
+								}}
+							>
+								{podcast.title}
+							</Text>
+						</View>
+						<Card style={{ flex: 0, marginTop: 0 }} key={podcast.id}>
+							<CardItem>
+								<Left>
+									<Text note>{podcast.created_at}</Text>
+								</Left>
+								<Right>
+									<Button
+										textStyle={{ color: '#87838B' }}
+										style={{ 
+											backgroundColor: '#fbf4ff', 
+											borderRadius: 20,
+											shadowColor: "#08ff00",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.27,
+											shadowRadius: 4.65,
+
+											elevation: 6,
+										}}
+										
+										onPress={() => this.likePost(podcast.id)}
+									>
+										{(() => {
+											if (podcast.user_likes_new) {
+												return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
+											} else {
+												return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
+											}
+										})()}
+										{this.showUserNameLikes(podcast)}
+									</Button>
+								</Right>
+							</CardItem>
+
+							<CardItem>
+								<Left>
 									{(() => {
-										if (podcast.featured_document) {
+										if (podcast.featured_spotify) {
 											return (
-												<HTML
-													source={{
-														html: podcast.content.replace(
-															/line-height:107%|line-height: 107%;|\n/g,
-															' '
-														)
-													}}
-													contentWidth={screenWidth}
-												/>
+												<Button
+													transparent
+													textStyle={{ color: '#87838B' }}
+													onPress={(showSpotify) =>
+														this.setState({
+															showSpotify: !this.state.showSpotify
+														})}
+												>
+													<Icon name="spotify" type="FontAwesome" />
+													<Text>Spotify</Text>
+												</Button>
 											);
 										}
 									})()}
-								</ScrollView>
-								{(() => {
-									if (podcast.featured_document) {
-										return (
-											<Grid>
-												<Col size={4} style={{ alignItems: 'center' }}>
-													<Button
-														onPress={() =>
-															Linking.openURL(
-																this.state.pathImage + podcast.featured_document
-															)}
-														style={{ borderRadius: 20, backgroundColor: '#FA8258' }}
-													>
-														<Icon name="cloud-download" type="FontAwesome" />
-														<Text>Descargar documento adjunto</Text>
-													</Button>
-												</Col>
-											</Grid>
-										);
-									}
-								})()}
-							</Body>
-						</CardItem>
-						{(() => {
-							if (podcast.featured_video) {
-								return (
-									<ScrollView style={{ flex: 1 }}>
-										<WebView
-											source={{
-												html: `<iframe width="100%" height="100%" src="${podcast.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
-											}}
-											scalesPageToFit={true}
-											bounces={false}
-											allowsFullscreenVideo={true}
-											javaScriptEnabled
-											style={{ height: 250, marginBottom: 30 }}
-										/>
+								</Left>
+								<Body>
+									{(() => {
+										if (podcast.featured_audio) {
+											return (
+												<Button
+													transparent
+													textStyle={{ color: '#87838B' }}
+													onPress={() =>
+														Linking.openURL(this.state.pathImage + podcast.featured_audio)}
+												>
+													<Icon name="file-download" type="FontAwesome5" />
+													<Text>Descargar</Text>
+												</Button>
+											);
+										}
+									})()}
+								</Body>
+								<Right>
+									{(() => {
+										if (podcast.featured_audio) {
+											return (
+												<Button
+													transparent
+													textStyle={{ color: '#87838B' }}
+													onPress={(showAudio) =>
+														this.setState({ showAudio: !this.state.showAudio })}
+												>
+													<Icon name="file-audio" type="FontAwesome5" />
+													<Text>Audio</Text>
+												</Button>
+											);
+										}
+									})()}
+								</Right>
+							</CardItem>
+							<ScrollView>{this.inputSpotify()}</ScrollView>
+								{this.inputAudio()}
+							<CardItem>
+								<Body>
+									<Text>{podcast.description}</Text>
+									<ScrollView>
+										{(() => {
+											if (podcast.featured_document) {
+												return (
+													<HTML
+														source={{
+															html: podcast.content.replace(
+																/line-height:107%|line-height: 107%;|\n/g,
+																' '
+															)
+														}}
+														contentWidth={screenWidth}
+													/>
+												);
+											}
+										})()}
 									</ScrollView>
-								);
-							}
-						})()}
-						<Button
-							iconLeft
-							info
-							block
-							onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
-						>
-							<Icon name={this.loadIcon()} type="FontAwesome">
-								{' '}
-							</Icon>
-							<Text> Ver Comentarios</Text>
-							<Icon name="comments" type="FontAwesome" />
-						</Button>
-						<ScrollView>
-							{this.loadInfoComment()}
-							{this.inputComment()}
-						</ScrollView>
-					</Card>
+									{(() => {
+										if (podcast.featured_document) {
+											return (
+												<Grid>
+													<Col size={4} style={{ alignItems: 'center' }}>
+														<Button
+															onPress={() =>
+																Linking.openURL(
+																	this.state.pathImage + podcast.featured_document
+																)}
+															style={{ borderRadius: 20, backgroundColor: '#FA8258' }}
+														>
+															<Icon name="cloud-download" type="FontAwesome" />
+															<Text>Descargar documento adjunto</Text>
+														</Button>
+													</Col>
+												</Grid>
+											);
+										}
+									})()}
+								</Body>
+							</CardItem>
+							{(() => {
+								if (podcast.featured_video) {
+									return (
+										<ScrollView style={{ flex: 1 }}>
+											<WebView
+												source={{
+													html: `<iframe width="100%" height="100%" src="${podcast.featured_video}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>"></iframe>`
+												}}
+												scalesPageToFit={true}
+												bounces={false}
+												allowsFullscreenVideo={true}
+												javaScriptEnabled
+												style={{ height: 250, marginBottom: 30 }}
+											/>
+										</ScrollView>
+									);
+								}
+							})()}
+							<Button
+								iconLeft
+								info
+								block
+								onPress={(showComments) => this.setState({ showComments: !this.state.showComments })}
+							>
+								<Icon name={this.loadIcon()} type="FontAwesome">
+									{' '}
+								</Icon>
+								<Text> Ver Comentarios</Text>
+								<Icon name="comments" type="FontAwesome" />
+							</Button>
+							<ScrollView>
+								{this.loadInfoComment()}
+								{this.inputComment()}
+							</ScrollView>
+						</Card>
+					</View>
 					{/* <Video
 						source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
 						rate={1.0}
@@ -435,7 +485,29 @@ class PodcastShowScreen extends Component {
 						<Text> Play</Text>
 					</Button> */}
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} />
+				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
+					<Item>
+						<Input
+							onChangeText={(message) => this.setState({ message })}
+							value={this.state.message}
+							placeholder="Añade un comentario"
+							placeholderTextColor="#000000"
+							style={{ color: myStyles.dark }}
+						/>
+
+						<TouchableOpacity
+							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							onPress={() =>
+								this.uploadComment(
+									this.state.podcastId,
+									this.state.message,
+									this.props.usuariosReducer.token
+								)}
+						>
+							<Text>Publicar</Text>
+						</TouchableOpacity>
+					</Item>
+				</Header>
 			</Container>
 		);
 	}

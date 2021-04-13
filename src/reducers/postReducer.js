@@ -14,6 +14,7 @@ const INITIAL = {
     category: [],
     categories: [],
     categoryPostName: [],
+    likePost: [],
     idCategory: '',
     likeOrDislike: [],
     idDestroy: [],
@@ -45,6 +46,7 @@ export default (state = INITIAL, action) => {
                 ...state, 
                 post: action.payload,
                 categoryPostName: action.categoryName,
+                likePost: action.likePost,
                 cargando: action.cargando
             };
         case showPostCategory:

@@ -128,11 +128,12 @@ export const getShowPost = (idPost, tokenUsr) => async (dispatch) => {
 		//console.log("Que trae el response: ",response);
 
 		if (response.ok) {
-			//console.log("test :" , data);
+			console.log("ActionPost :" , data);
 			dispatch({
 				type: showPost,
 				payload: data.post,
 				categoryName: data.categoryName,
+				likePost: data.like,
 				cargando: false
 			});
 		}

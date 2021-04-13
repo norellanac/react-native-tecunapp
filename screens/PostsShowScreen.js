@@ -150,6 +150,20 @@ class PostsShowScreen extends Component {
 		}
 	}
 
+	async likePost(postID) {
+		let token = this.props.usuariosReducer.token;
+		await this.props.likeOrDislike(postID, token);
+		await this.props.getShowPost(postID, token);
+	}
+
+	showUserNameLikes(post) {
+		if (post.user_likes_new) {
+			return <Text style={{ color: '#000000' }}>{post.likes.length}</Text>;
+		} else {
+			return <Text style={{ color: '#000000' }}>{post.likes.length}</Text>;
+		}
+	}
+
 	render() {
 		this.state.postId = this.props.postReducer.post.id;
 
@@ -169,6 +183,8 @@ class PostsShowScreen extends Component {
 				</Container>
 			);
 		}*/
+
+		///console.log('Que trae post', post);
 
 		return (
 			<Container>
@@ -194,8 +210,41 @@ class PostsShowScreen extends Component {
 						</View>
 						<Card style={{ flex: 0, marginTop: 0 }} key={post.id}>
 							<CardItem>
-								<Body>
+								<Left>
 									<Text note>{post.created_at}</Text>
+								</Left>
+								<Right>
+									<Button
+										textStyle={{ color: '#87838B' }}
+										style={{ 
+											backgroundColor: '#fbf4ff', 
+											borderRadius: 20,
+											shadowColor: "#08ff00",
+											shadowOffset: {
+												width: 0,
+												height: 3,
+											},
+											shadowOpacity: 0.27,
+											shadowRadius: 4.65,
+
+											elevation: 6,
+										}}
+										
+										onPress={() => this.likePost(post.id)}
+									>
+										{(() => {
+											if (post.user_likes_new) {
+												return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
+											} else {
+												return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
+											}
+										})()}
+										{this.showUserNameLikes(post)}
+									</Button>
+								</Right>
+							</CardItem>
+							<CardItem>
+								<Body>
 									<Text>{post.description}</Text>
 									{/* <Text>{post.content.replace()}</Text> */}
 									<ScrollView>
