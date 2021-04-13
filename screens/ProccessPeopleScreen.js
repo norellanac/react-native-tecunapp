@@ -50,19 +50,19 @@ class ProccessPeopleScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-				<View style={{ backgroundColor: myStyles.bg2 }}>
-							<Text
-								style={{
-									textAlign: 'center',
-									fontSize: 30,
-									fontWeight: 'bold',
-									color: myStyles.light,
-									paddingVertical: 8
-								}}
-							>
-								Gestiones de recursos humanos
-							</Text>
-						</View>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Gestiones de recursos humanos
+						</Text>
+					</View>
 					<View>
 						<Grid>
 							<Col>
@@ -227,6 +227,49 @@ class ProccessPeopleScreen extends Component {
 										</CardItem>
 									</Card>
 								</TouchableOpacity>
+							</Col>
+						</Grid>
+						<Grid>
+							<Col>
+								<TouchableOpacity onPress={() => this.loadingVacation()}>
+									<Card
+										style={{
+											borderRadius: 10,
+											marginVertical: 10,
+											marginLeft: 10,
+											marginRight: 10
+										}}
+									>
+										<Image
+											source={{
+												uri: this.state.pathImage + 'piscina.jpg'
+											}}
+											style={{
+												width: screenWidth / 2 - 30,
+												marginVertical: 5,
+												minHeight: 150,
+												maxHeight: 200,
+												borderRadius: 10,
+												alignSelf: 'center'
+											}}
+										/>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+											<Text
+												style={{
+													fontSize: 14,
+													fontWeight: 'bold',
+													textAlign: 'center',
+													color: myStyles.bg1,
+													paddingVertical: 8
+												}}
+											>
+												Asotecsa
+											</Text>
+										</CardItem>
+									</Card>
+								</TouchableOpacity>
+							</Col>
+							<Col>
 							</Col>
 						</Grid>
 					</View>

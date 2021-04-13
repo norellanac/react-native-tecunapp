@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Platform, Image, StyleSheet, View, Text, Dimensions, StatusBar } from 'react-native';
+import { Platform, Image, StyleSheet, View, Text, Dimensions, StatusBar, ImageBackground } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
@@ -16,9 +16,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import image1 from './assets/images/tecun/logoColor.png';
-import image2 from './assets/images/tecun/logoBlanco.png';
-import image3 from './assets/images/tecun/logoColor.png';
+import image1 from './assets/images/img4.png';
+import image2 from './assets/images/img4.png';
+import image3 from './assets/images/img4.png';
 //const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 //redux persisting
@@ -45,8 +45,8 @@ export const persistor = persistStore(store);
 
 export const apiUrl = {
 	//link: "http://192.168.1.44:3000"
-	//link: "http://tecunapp.com/"
-	link: 'http://192.168.1.49:3000'
+	link: "http://tecunapp.com/"
+	//link: 'http://192.168.1.49:3000'
 };
 //http://192.168.50.144:3000
 //http://172.18.0.3:3000
@@ -72,10 +72,10 @@ const styles = StyleSheet.create({
 		})
 	},
 	buttonCircle: {
-		width: 40,
-		height: 40,
-		backgroundColor: 'rgba(255, 255, 255, .2)',
-		borderRadius: 20,
+		width: 50,
+		height: 50,
+		backgroundColor: myStyles.bg2,
+		borderRadius: 25,
 		justifyContent: 'center',
 		alignItems: 'center',
 		color: 'white'
@@ -158,31 +158,23 @@ class App extends React.Component {
 
 	_renderItem = ({ item }: { item: Item }) => {
 		return (
-			<View
-				style={[
-					styles.slide,
-					{
-						backgroundColor: item.bg
-					}
-				]}
-			>
-				<Text style={styles.title}>{item.title}</Text>
-				<Image source={item.image} style={styles.image} />
-				<Text style={styles.text}>{item.text}</Text>
-			</View>
+			<ImageBackground
+				style={{ flex: 1, width: screenWidth }}
+				source={item.image}
+			/>
 		);
 	};
 	_renderDoneButton = () => {
 		return (
 			<View style={styles.buttonCircle}>
-				<Icon name="md-checkmark" color="rgba(255, 255, 255, .9)" size={24} />
+				<Icon name="md-checkmark" style={{fontSize: 20, color: myStyles.light}} />
 			</View>
 		);
 	};
 	_renderNextButton = () => {
 		return (
 			<View style={styles.buttonCircle}>
-				<Icon name="arrow-forward" type="Ionicons" color="rgba(255, 255, 255, .9)" size={24} />
+				<Icon name="arrow-forward" type="Ionicons" style={{fontSize: 20, color: myStyles.light}} />
 			</View>
 		);
 	};

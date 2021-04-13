@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Image, Linking, KeyboardAvoidingView, Dimensions } from 'react-native';
+import { Image, Linking, KeyboardAvoidingView, SafeAreaView, Dimensions, ImageBackground } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import { Container, Content, Text, Card, CardItem, Button, Icon, Form, Item, Input, Spinner } from 'native-base';
 
-import { apiUrl } from './../App';
+import { apiUrl, myStyles } from './../App';
 import { connect } from 'react-redux';
 import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
@@ -77,8 +77,9 @@ class LoginScreen extends Component {
 					<Button
 						onPress={this.userData}
 						rounded
+						large
 						style={{
-							backgroundColor: '#1B2853',
+							backgroundColor: myStyles.bg2,
 							borderBottomLeftRadius: 20,
 							borderTopLeftRadius: 20,
 							borderBottomRightRadius: 20,
@@ -111,78 +112,57 @@ class LoginScreen extends Component {
 		}
 
 		return (
-			<Container style={{ backgroundColor: '#ed913b' }}>
-				{this.showAlert()}
-				<Content>
-					<Card transparent>
-						<CardItem style={{ backgroundColor: '#ed913b' }}>
-							<Grid style={{ marginTop: 60 }}>
-								<Col style={{ alignItems: 'center' }}>
-									<Image
-										source={require('./../assets/images/robot-prod.png')}
-										style={{ width: screenWidth - 20, height: 165 }}
+			<SafeAreaView style={{ flex: 1 }}>
+				<Container style={{ flex: 1, backgroundColor: 'transparent' }}>
+					<ImageBackground
+						style={{ flex: 1, width: screenWidth + 30 }}
+						source={require('./../assets/images/img4.png')}
+					>
+						{this.showAlert()}
+
+						<Content>
+							<Form style={{ marginRight: 45, marginLeft: 45, marginTop: screenHeight / 2 + 100 }}>
+								<Item rounded>
+									<Icon type="FontAwesome" name="user-o" style={{ color: 'white', fontSize: 25 }} />
+									<Input
+										keyboardType="email-address"
+										textContentType="emailAddress"
+										onChangeText={(email) => this.setState({ email })}
+										value={this.state.email}
+										placeholder="Correo"
+										placeholderTextColor="#FFFFFF"
+										style={{ color: 'white' }}
 									/>
-								</Col>
-							</Grid>
-						</CardItem>
-						<CardItem style={{ backgroundColor: '#ed913b' }}>
-							<Grid>
-								<Col style={{ alignItems: 'center' }}>
-									<Text
-										style={{
-											fontSize: 30,
-											color: 'white',
-											fontWeight: 'bold'
-										}}
-									>
-										Bienvenido
-									</Text>
-								</Col>
-							</Grid>
-						</CardItem>
-					</Card>
-					<KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-						<Form style={{ marginRight: 45, marginLeft: 45, marginTop: 20 }}>
-							<Item rounded>
-								<Icon type="FontAwesome" name="user-o" style={{ color: 'white', fontSize: 25 }} />
-								<Input
-									keyboardType="email-address"
-									textContentType="emailAddress"
-									onChangeText={(email) => this.setState({ email })}
-									value={this.state.email}
-									placeholder="Correo"
-									placeholderTextColor="#FFFFFF"
-									style={{ color: 'white' }}
-								/>
-							</Item>
-							<Item rounded style={{ marginTop: 25 }}>
-								<Icon
-									type="MaterialCommunityIcons"
-									name="lock-open-outline"
-									style={{ color: 'white', fontSize: 25 }}
-								/>
-								<Input
-									textContentType="password"
-									secureTextEntry={true}
-									onChangeText={(password) => this.setState({ password })}
-									value={this.state.password}
-									placeholder="Contraseña"
-									placeholderTextColor="#FFFFFF"
-									style={{ color: 'white' }}
-								/>
-							</Item>
-						</Form>
-					</KeyboardAvoidingView>
-					<Card transparent>
-						<CardItem style={{ backgroundColor: '#ed913b', marginTop: 20 }}>
-							<Grid>
-								<Row>{this.ponerError()}</Row>
-								<Row>{this.ponerContenido()}</Row>
-							</Grid>
-						</CardItem>
-					</Card>
-				</Content>
-			</Container>
+								</Item>
+								<Item rounded style={{ marginTop: 25 }}>
+									<Icon
+										type="MaterialCommunityIcons"
+										name="lock-open-outline"
+										style={{ color: 'white', fontSize: 25 }}
+									/>
+									<Input
+										textContentType="password"
+										secureTextEntry={true}
+										onChangeText={(password) => this.setState({ password })}
+										value={this.state.password}
+										placeholder="Contraseña"
+										placeholderTextColor="#FFFFFF"
+										style={{ color: 'white' }}
+									/>
+								</Item>
+							</Form>
+							<Card transparent>
+								<CardItem style={{ backgroundColor: 'transparent', marginTop: 20 }}>
+									<Grid>
+										<Row>{this.ponerError()}</Row>
+										<Row>{this.ponerContenido()}</Row>
+									</Grid>
+								</CardItem>
+							</Card>
+						</Content>
+					</ImageBackground>
+				</Container>
+			</SafeAreaView>
 		);
 	}
 }

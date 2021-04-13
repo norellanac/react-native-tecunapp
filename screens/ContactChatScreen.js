@@ -24,7 +24,7 @@ import * as contactsActions from '../src/actions/contactsActions';
 import * as userActions from '../src/actions/userActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { screenHeight, apiUrl, screenWidth } from '../App';
+import { screenHeight, apiUrl, screenWidth, myStyles } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 
@@ -72,7 +72,7 @@ class ContactChatScreen extends Component {
 			//console.log("posts: ", this.props.postReducer.posts);
 			return this.props.contactsReducer.favorites.whatsapp.map((record) => (
 				<ListItem
-                key={record.id}
+					key={record.id}
 					thumbnail
 					onPress={() => Linking.openURL(`https://api.whatsapp.com/send?phone=${record.mobile_one}&text=`)}
 				>
@@ -84,7 +84,16 @@ class ContactChatScreen extends Component {
 						/>
 					</Left>
 					<Body>
-						<Text>{record.name}</Text>
+						<Text
+							style={{
+								fontSize: 15,
+								fontWeight: 'bold',
+								color: myStyles.bg1,
+								paddingVertical: 8
+							}}
+						>
+							{record.name}
+						</Text>
 						<Text note>{record.description}</Text>
 					</Body>
 					<Right>
@@ -117,19 +126,19 @@ class ContactChatScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
-						<Col style={{ alignItems: 'center' }}>
-							<Text
-								style={{
-									fontSize: 30,
-									color: '#3490dc',
-									fontWeight: 'bold'
-								}}
-							>
-								Whatsapp
-							</Text>
-						</Col>
-					</Grid>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Whatsapp
+						</Text>
+					</View>
 
 					<View style={{ marginTop: 20 }} />
 					{this.loadContent()}

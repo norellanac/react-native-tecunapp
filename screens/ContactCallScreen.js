@@ -24,7 +24,7 @@ import * as contactsActions from '../src/actions/contactsActions';
 import * as userActions from '../src/actions/userActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { screenHeight, apiUrl, screenWidth } from '../App';
+import { screenHeight, apiUrl, screenWidth, myStyles } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 
@@ -84,7 +84,16 @@ class ContactCallScreen extends Component {
 						/>
 					</Left>
 					<Body>
-						<Text>{record.name}</Text>
+						<Text
+							style={{
+								fontSize: 15,
+								fontWeight: 'bold',
+								color: myStyles.bg1,
+								paddingVertical: 8
+							}}
+						>
+							{record.name}
+						</Text>
 						<Text note>
 							{record.description} | {record.phone_one}
 						</Text>
@@ -121,19 +130,19 @@ class ContactCallScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
-						<Col style={{ alignItems: 'center' }}>
-							<Text
-								style={{
-									fontSize: 30,
-									color: '#3490dc',
-									fontWeight: 'bold'
-								}}
-							>
-								PBX
-							</Text>
-						</Col>
-					</Grid>
+					<View style={{ backgroundColor: myStyles.bg2 }}>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontSize: 30,
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8
+							}}
+						>
+							Llamar a
+						</Text>
+					</View>
 
 					<View style={{ marginTop: 20 }} />
 					{this.loadContent()}
