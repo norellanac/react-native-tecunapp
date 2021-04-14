@@ -70,38 +70,33 @@ class ContactCallScreen extends Component {
 	loadContent = () => {
 		var screenWidth = Dimensions.get('window').width;
 		var screenHeight = Dimensions.get('window').height;
-		console.log('====================================');
-		console.log(this.props.contactsReducer);
-		console.log('====================================');
+		//console.log('====================================');
+		//console.log(this.props.contactsReducer);
+		//console.log('====================================');
 		if (this.props.contactsReducer.favorites) {
 			//console.log("posts: ", this.props.postReducer.posts);
 			return this.props.contactsReducer.favorites.pbx.map((record) => (
-				<ListItem avatar key={record.id} onPress={() => Linking.openURL(`tel:${record.phone_one}`)}>
-					<Left>
-						<Thumbnail
-							style={{ backgroundColor: '#000000' }}
-							source={{ uri: `${apiUrl.link}/img/logo.png` }}
-						/>
-					</Left>
-					<Body>
+				<ListItem avatar noBorder key={record.id} onPress={() => Linking.openURL(`tel:${record.phone_one}`)}>
+					<Body style={{ marginLeft: 25 }}>
 						<Text
 							style={{
 								fontSize: 15,
 								fontWeight: 'bold',
 								color: myStyles.bg1,
-								paddingVertical: 8
+								paddingVertical: 8,
 							}}
 						>
 							{record.name}
 						</Text>
 						<Text note>
-							{record.description} | {record.phone_one}
+							{record.phone_one}
 						</Text>
 					</Body>
 					<Right>
-						<Button transparent>
-							<Icon active name="phone" type="FontAwesome" />
-						</Button>
+						<Thumbnail
+							style={{ backgroundColor: '#000000', marginRight: 25 }}
+							source={{ uri: `${apiUrl.link}/img/logo.png` }}
+						/>
 					</Right>
 				</ListItem>
 			));
@@ -130,21 +125,12 @@ class ContactCallScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<View style={{ backgroundColor: myStyles.bg2 }}>
-						<Text
-							style={{
-								textAlign: 'center',
-								fontSize: 30,
-								fontWeight: 'bold',
-								color: myStyles.light,
-								paddingVertical: 8
-							}}
-						>
-							Llamar a
-						</Text>
-					</View>
+					<Image
+						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+						style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+					/>
 
-					<View style={{ marginTop: 20 }} />
+					<View style={{ marginTop: 7 }} />
 					{this.loadContent()}
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />

@@ -141,7 +141,7 @@ class TeamScreen extends Component {
 													paddingVertical: 8
 												}}
 											>
-												Oportunidades de crecimiento
+												OPORTUNIDADES
 											</Text>
 										</CardItem>
 									</Card>
@@ -181,7 +181,7 @@ class TeamScreen extends Component {
 													paddingVertical: 8
 												}}
 											>
-												Ubicación de agencias
+												UBICACIONES
 											</Text>
 										</CardItem>
 									</Card>
@@ -223,7 +223,7 @@ class TeamScreen extends Component {
 													paddingVertical: 8
 												}}
 											>
-												Llama directo
+												DIRECTORIO
 											</Text>
 										</CardItem>
 									</Card>
@@ -260,7 +260,7 @@ class TeamScreen extends Component {
 													paddingVertical: 8
 												}}
 											>
-												Gestiones RRHH
+												SOLICITUDES
 											</Text>
 										</CardItem>
 									</Card>

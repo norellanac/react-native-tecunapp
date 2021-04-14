@@ -74,16 +74,10 @@ class ContactChatScreen extends Component {
 				<ListItem
 					key={record.id}
 					thumbnail
+					noBorder
 					onPress={() => Linking.openURL(`https://api.whatsapp.com/send?phone=${record.mobile_one}&text=`)}
 				>
-					<Left>
-						<Thumbnail
-							square
-							style={{ backgroundColor: 'transparent' }}
-							source={{ uri: `${apiUrl.link}/img/whatsapp.png` }}
-						/>
-					</Left>
-					<Body>
+					<Body style={{ marginLeft: 25 }}>
 						<Text
 							style={{
 								fontSize: 15,
@@ -97,7 +91,11 @@ class ContactChatScreen extends Component {
 						<Text note>{record.description}</Text>
 					</Body>
 					<Right>
-						<Icon active name="whatsapp" type="FontAwesome" />
+						<Thumbnail
+							square
+							style={{ backgroundColor: 'transparent', marginRight: 25 }}
+							source={{ uri: `${apiUrl.link}/img/whatsapp.png` }}
+						/>
 					</Right>
 				</ListItem>
 			));
@@ -127,20 +125,13 @@ class ContactChatScreen extends Component {
 				{this.showError()}
 				<Content>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
-						<Text
-							style={{
-								textAlign: 'center',
-								fontSize: 30,
-								fontWeight: 'bold',
-								color: myStyles.light,
-								paddingVertical: 8
-							}}
-						>
-							Whatsapp
-						</Text>
+						<Image
+							source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+							style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+						/>
 					</View>
 
-					<View style={{ marginTop: 20 }} />
+					<View style={{ marginTop: 7 }} />
 					{this.loadContent()}
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />

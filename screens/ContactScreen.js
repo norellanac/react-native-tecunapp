@@ -15,6 +15,7 @@ import {
 	Card,
 	Button,
 	ListItem,
+	TextInput,
 	Left,
 	Right,
 	Thumbnail,
@@ -220,7 +221,7 @@ class ContactScreen extends Component {
 			token
 		);
 		//await this.props.
-		console.log('entra a buscar en la pantalla: ', this.props.contactsReducer.contacts);
+		//console.log('entra a buscar en la pantalla: ', this.props.contactsReducer.contacts);
 		//this.props.navigation.navigate('ContactScreen');
 	}
 
@@ -255,7 +256,7 @@ class ContactScreen extends Component {
 					</View>
 
 					<View style={{ marginTop: 20 }}>
-						<ListItem
+						{/* <ListItem
 							icon
 							onPress={(showFavorites) => this.setState({ showFavorites: !this.state.showFavorites })}
 						>
@@ -270,10 +271,27 @@ class ContactScreen extends Component {
 							<Right>
 								<Icon active name="caret-down" type="FontAwesome" />
 							</Right>
-						</ListItem>
-					</View>
+						</ListItem> */}
 
-					{this.loadFAvorites()}
+						<Item 
+							rounded 
+							onPress={(showFavorites) => this.setState({ showFavorites: !this.state.showFavorites })}
+							style={{ marginLeft: 25, marginRight: 25 }}
+						>
+							<Left>
+								<Icon active name="address-book" type="FontAwesome5" style={{ marginLeft: 15, color: '#007AFF' }} />
+							</Left>
+							<Body>
+								<Text style={{ fontSize: 15 }}>NUMEROS IMPORTANTES</Text>
+							</Body>
+							<Right style={{ marginRight: 15 }}>
+								<Icon active name="caret-down" type="FontAwesome" />
+							</Right>
+						</Item>
+						<Item rounded>
+							{this.loadFAvorites()}
+						</Item>
+					</View>
 
 					<Grid style={{ backgroundColor: 'transparent', marginTop: 40 }}>
 						<Col style={{ alignItems: 'center' }}>
@@ -290,7 +308,7 @@ class ContactScreen extends Component {
 					</Grid>
 					<View>
 						<Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchNombre) => this.setState({ searchNombre })}
@@ -300,7 +318,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchApellido) => this.setState({ searchApellido })}
@@ -310,7 +328,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item style={{ marginTop: 15 }}>
 								<Icon type="SimpleLineIcons" name="people" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
@@ -320,7 +338,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item style={{ marginTop: 15 }}>
 								<Icon
 									type="MaterialCommunityIcons"
 									name="map"
@@ -335,18 +353,19 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item style={{ marginTop: 15 }}>
 								<Icon
 									type="MaterialCommunityIcons"
 									name="email-outline"
 									style={{ color: myStyles.bg1, fontSize: 25 }}
 								/>
 								<Input
+									underlineColorAndroid="transparent"
 									onChangeText={(searchPuesto) => this.setState({ searchPuesto })}
 									value={this.state.searchPuesto}
 									placeholder="Plaza o puesto"
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1 }}
+									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
 							<Content style={{ marginTop: 20 }}>
@@ -359,7 +378,7 @@ class ContactScreen extends Component {
 										rounded
 										style={{
 											fontSize: 44,
-											backgroundColor: myStyles.bg3
+											backgroundColor: myStyles.bg2
 										}}
 									>
 										<Text
