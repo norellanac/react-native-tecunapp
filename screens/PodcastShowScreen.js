@@ -60,8 +60,8 @@ class PodcastShowScreen extends Component {
 	};
 
 	async componentDidMount() {
-		console.log(this.props.getPodcasts(this.props.usuariosReducer.token));
-		console.log('podcasts reducer', this.props.podcastReducer);
+		//console.log(this.props.getPodcasts(this.props.usuariosReducer.token));
+		//console.log('podcasts reducer', this.props.podcastReducer);
 		this.loadSound();
 	}
 
@@ -168,32 +168,32 @@ class PodcastShowScreen extends Component {
 	}
 
 	async loadSound() {
-		console.log('Loading Sound', sound);
+		//console.log('Loading Sound', sound);
 		await sound.loadAsync(
 			{
 				uri: this.state.pathImage + this.props.podcastReducer.podcast.featured_audio
 			},
 			{ shouldPlay: false }
 		);
-		console.log('Playing Sound', sound);
+		//console.log('Playing Sound', sound);
 	}
 
 	async playSound() {
-		console.log('play: ');
+		//console.log('play: ');
 		await sound.playAsync();
-		console.log('Play/Stop Sound');
+		//console.log('Play/Stop Sound');
 	}
 
 	async stopSound() {
-		console.log('stop: ');
+		//console.log('stop: ');
 		await sound.stopAsync();
-		console.log('Play/Stop Sound');
+		//console.log('Play/Stop Sound');
 	}
 
 	async pauseSound() {
-		console.log('stop: ');
+		//console.log('stop: ');
 		await sound.pauseAsync();
-		console.log('pause Sound', sound);
+		//console.log('pause Sound', sound);
 	}
 
 	inputSpotify() {
@@ -254,6 +254,10 @@ class PodcastShowScreen extends Component {
 		}
 	}
 
+	titleUpper(title) {
+		return title.toUpperCase();
+	}
+
 	render() {
 		//const { navigation } = this.props.navigation
 
@@ -271,7 +275,7 @@ class PodcastShowScreen extends Component {
 			);
 		}
 
-		console.log("Entro aqui ",podcast);
+		//console.log("Entro aqui ",podcast);
 
 		return (
 			<Container>
@@ -290,10 +294,11 @@ class PodcastShowScreen extends Component {
 									fontSize: 20,
 									fontWeight: 'bold',
 									color: myStyles.light,
-									paddingVertical: 8
+									paddingVertical: 8,
+									fontSize: 25
 								}}
 							>
-								{podcast.title}
+								{this.titleUpper(podcast.title)}
 							</Text>
 						</View>
 						<Card style={{ flex: 0, marginTop: 0 }} key={podcast.id}>
@@ -307,7 +312,7 @@ class PodcastShowScreen extends Component {
 										style={{ 
 											backgroundColor: '#fbf4ff', 
 											borderRadius: 20,
-											shadowColor: "#08ff00",
+											shadowColor: `#9400d3`,
 											shadowOffset: {
 												width: 0,
 												height: 3,
@@ -463,7 +468,6 @@ class PodcastShowScreen extends Component {
 							</Button>
 							<ScrollView>
 								{this.loadInfoComment()}
-								{this.inputComment()}
 							</ScrollView>
 						</Card>
 					</View>
@@ -485,14 +489,15 @@ class PodcastShowScreen extends Component {
 						<Text> Play</Text>
 					</Button> */}
 				</Content>
-				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
-					<Item>
+				<View style={{ backgroundColor: '#f9f9f9', padding: 3 }}>
+					<Item style={ myStyles.textInput }>
 						<Input
 							onChangeText={(message) => this.setState({ message })}
 							value={this.state.message}
-							placeholder="Añade un comentario"
+							placeholder="COMENTA"
 							placeholderTextColor="#000000"
-							style={{ color: myStyles.dark }}
+							style={{ paddingRight: 20 }}
+							style={ myStyles.dark }
 						/>
 
 						<TouchableOpacity
@@ -504,10 +509,14 @@ class PodcastShowScreen extends Component {
 									this.props.usuariosReducer.token
 								)}
 						>
-							<Text>Publicar</Text>
+							<Icon
+								name="send-o"
+								type="FontAwesome"
+								style={{ color: "#0075b7" }}
+							/>
 						</TouchableOpacity>
 					</Item>
-				</Header>
+				</View>
 			</Container>
 		);
 	}

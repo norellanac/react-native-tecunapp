@@ -60,7 +60,7 @@ class PostsScreen extends Component {
 			}
 			token = (await Notifications.getExpoPushTokenAsync()).data;
 			this.props.sendPushTokenAction(token, this.props.usuariosReducer.user.id, this.props.usuariosReducer.token);
-			console.log('push token: ', token);
+			//console.log('push token: ', token);
 		} else {
 			this.setState({
 				errorMessage: 'Must use physical device for Push Notifications'
@@ -146,7 +146,7 @@ class PostsScreen extends Component {
 
 	loadContentCategories = () => {
 		return this.props.postReducer.categories.map((category) => (
-			//console.log(category),
+			////console.log(category),
 			<Picker.Item label={category.name} value={category.id} key={category.id} />
 		));
 	};

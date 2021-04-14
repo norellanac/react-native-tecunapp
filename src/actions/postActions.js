@@ -30,7 +30,7 @@ export const getNews = (tokenUsr) => async (dispatch) => {
 		});
 
 		const data = await response.json();
-		console.log('post data?: ', data);
+		//console.log('post data?: ', data);
 		//console.log('Response post:', response);
 
 		if (response.ok) {

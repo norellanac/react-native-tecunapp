@@ -70,7 +70,7 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
 
         const data = await response.json();
 
-        console.log('Que trae data? ',data);
+        //console.log('Que trae data? ',data);
 
         if(response.ok){
             dispatch({
@@ -110,7 +110,7 @@ export const getShowPodcast = (idPodcast, tokenUsr) => async dispatch => {
 
         const data = await response.json();
 
-        console.log("ActionPodcast :" , data);
+        //console.log("ActionPodcast :" , data);
 
         if(response.ok){
             //console.log("test :" , data);
@@ -159,7 +159,7 @@ export const updatePodcastAfterComment = (podcast_id, tokenUsr) => async (dispat
 
 export const uploadMessage = (comment, token) => async dispatch => {
 
-    console.log("Comment ",comment);
+    //console.log("Comment ",comment);
     dispatch({
         type: loadingPodcast
     });
@@ -184,7 +184,7 @@ export const uploadMessage = (comment, token) => async dispatch => {
 
         const data = await response.json();
 
-        console.log("data ",data);
+        //console.log("data ",data);
 
         if (!response.ok) {
             dispatch({
@@ -270,7 +270,7 @@ export const likeOrDislike = (podcastID, token) => async (dispatch) => {
 
 		const data = await response.json();
 
-		console.log('LLego aqui?:', data);
+		//console.log('LLego aqui?:', data);
 
 		if (!response.ok) {
 			dispatch({

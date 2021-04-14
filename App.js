@@ -59,7 +59,20 @@ export const myStyles = {
 	bg3: '#181e26',
 	light: '#ffffff',
 	dark: '#000000',
-	grey: '#f0f5f5'
+	grey: '#f0f5f5',
+	othergrey: '#fdfdfd',
+	textInput:{
+		backgroundColor: '#ffffff',
+		borderStyle: 'solid',
+		fontSize:15,
+		borderRadius: 20,
+		marginRight: 20, 
+		marginLeft: 20
+	},
+	marginAll:{
+		marginRight: 15, 
+		marginLeft: 15
+	}
 };
 
 const styles = StyleSheet.create({
