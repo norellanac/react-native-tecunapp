@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image } from 'react-native';
+import { Dimensions, Image, TouchableOpacity } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -28,7 +28,7 @@ import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
 import { persistor } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
-import { apiUrl, screenWidth } from '../App';
+import { apiUrl, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
 import { loadingPodcast } from '../src/types/podcastType';
@@ -47,8 +47,9 @@ class PodcastScreen extends Component {
 		isWaitingMap: 0
 	};
 
-	showPodcast(idPodcast) {
-		this.props.getShowPodcast(idPodcast, this.props.usuariosReducer.token);
+	showPodcast(podcast) {
+		this.props.passOneRecord(podcast);
+		this.props.getShowPodcast(podcast.id, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PodcastShowScreen');
 	}
 
@@ -58,9 +59,9 @@ class PodcastScreen extends Component {
 
 		if (this.state.idCategory == 0) {
 			this.props.getPodcasts(this.props.usuariosReducer.token);
+			this.props.navigation.navigate('PodcastsCategoryScreen');
 		} else {
 			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-			this.props.navigation.navigate('PodcastsCategoryScreen');
 		}
 	}
 
@@ -73,9 +74,10 @@ class PodcastScreen extends Component {
 	async likePodcast(id) {
 		let token = this.props.usuariosReducer.token;
 		await this.props.likeOrDislike(id, token);
+		
 		if (this.state.idCategory == 0) {
 			this.props.getPodcasts(this.props.usuariosReducer.token);
-			this.props.navigation.navigate('PodcastScreen');
+			//this.props.navigation.navigate('PodcastScreen');
 		} else {
 			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 		}
@@ -83,64 +85,71 @@ class PodcastScreen extends Component {
 
 	showUserNameLikes(podcast) {
 		if (podcast.user_likes_new) {
-			return <Text>Tú y ({podcast.likes.length}) más</Text>;
+			return <Text>{podcast.likes.length}</Text>;
 		} else {
-			return <Text>({podcast.likes.length})</Text>;
+			return <Text>{podcast.likes.length}</Text>;
 		}
 	}
 
 	loadContent = () => {
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
-				<Card style={{ flex: 0 }} key={podcast.id}>
-					<CardItem style={{ backgroundColor: 'transparent' }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={{ uri: `${apiUrl.link}/img/logo.png` }}
-							/>
-							<Body>
-								<Text>{podcast.title}</Text>
-								<Text note>{podcast.created_at}</Text>
-							</Body>
-						</Left>
-					</CardItem>
-					<CardItem>
-						<Body>
-							<Image
-								source={{ uri: this.state.pathImage + podcast.featured_image }}
-								style={{ width: screenWidth - 20, height: 250 }}
-							/>
-							<Text>{podcast.description}</Text>
-						</Body>
-					</CardItem>
-					<CardItem>
-						<Button
-							transparent
-							textStyle={{ color: '#87838B' }}
-							onPress={() => this.likePodcast(podcast.id)}
+
+				<TouchableOpacity onPress={() => this.showPodcast(podcast)} key={podcast.id}>
+					<Card
+						style={{
+							flex: 0,
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
+						}}
+					>
+						<CardItem
+							style={{
+								borderRadius: 15
+							}}
 						>
-							{(() => {
-								if (podcast.user_likes_new) {
-									return <Icon name="like1" type="AntDesign" />;
-								} else {
-									return <Icon name="like2" type="AntDesign" />;
-								}
-							})()}
-							{this.showUserNameLikes(podcast)}
-						</Button>
-						<Right>
-							<Button
-								transparent
-								textStyle={{ color: '#87838B' }}
-								onPress={() => this.showPodcast(podcast.id)}
-							>
-								<Icon name="comment" type="FontAwesome" />
-								<Text>Comentarios</Text>
-							</Button>
-						</Right>
-					</CardItem>
-				</Card>
+							<Body>
+								<Image
+									source={{ uri: this.state.pathImage + podcast.featured_image }}
+									style={{ width: screenWidth - 50, minHeight: 250, maxHeight: 500 }}
+								/>
+								<Text
+									style={{
+										fontSize: 20,
+										fontWeight: 'bold',
+										color: myStyles.bg1,
+										paddingVertical: 8
+									}}
+								>
+									{podcast.title}
+								</Text>
+							</Body>
+						</CardItem>
+						<CardItem style={{ marginTop: -25, borderRadius: 15 }}>
+							<Left>
+								<Text note>{podcast.created_at}</Text>
+							</Left>
+							<Right>
+								<Button
+									transparent
+									textStyle={{ color: '#87838B' }}
+									onPress={() => this.likePodcast(podcast.id)}
+								>
+									{(() => {
+										if (podcast.user_likes_new) {
+											return <Icon name="star" type="AntDesign" style={{ color: '#ffcc00' }} />;
+										} else {
+											return <Icon name="staro" type="AntDesign" style={{ color: '#ffcc00' }} />;
+										}
+									})()}
+									{this.showUserNameLikes(podcast)}
+								</Button>
+							</Right>
+						</CardItem>
+					</Card>
+				</TouchableOpacity>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -162,8 +171,8 @@ class PodcastScreen extends Component {
 			return (
 				<Container>
 					<HederPostSection navigation={this.props.navigation} screen={2} />
-					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+					<Spinner color="blue" style={{ flex: 1 }} />
+					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 				</Container>
 			);
 		}
@@ -175,6 +184,10 @@ class PodcastScreen extends Component {
 		return (
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={2} />
+				<Image
+					source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+					style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+				/>
 				<Form>
 					<Picker
 						note

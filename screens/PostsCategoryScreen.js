@@ -59,6 +59,13 @@ class PostsCategoryScreen extends Component {
 		}
 	}
 
+	loadContentCategories = () => {
+		return this.props.postReducer.categories.map((categories) => (
+			//console.log(categories),
+			<Picker.Item label={categories.name} value={categories.id} key={categories.id} />
+		));
+	};
+
 	async likePost(postID) {
 		let token = this.props.usuariosReducer.token;
 		await this.props.likeOrDislike(postID, token);
@@ -70,13 +77,6 @@ class PostsCategoryScreen extends Component {
 			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
 		}
 	}
-
-	loadContentCategories = () => {
-		return this.props.postReducer.categories.map((categories) => (
-			//console.log(categories),
-			<Picker.Item label={categories.name} value={categories.id} key={categories.id} />
-		));
-	};
 
 	showUserNameLikes(news) {
 		if (news.user_likes_new) {
@@ -172,6 +172,10 @@ class PostsCategoryScreen extends Component {
 		return (
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={1} />
+				<Image
+					source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+					style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+				/>
 				<Form>
 					<Picker
 						note
