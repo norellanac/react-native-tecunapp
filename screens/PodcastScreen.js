@@ -47,8 +47,9 @@ class PodcastScreen extends Component {
 		await this.props.getPodcasts(this.props.usuariosReducer.token);
 	}
 
-	showPodcast(idPodcast) {
-		this.props.getShowPodcast(idPodcast, this.props.usuariosReducer.token);
+	showPodcast(podcast) {
+		this.props.passOneRecord(podcast);
+		this.props.getShowPodcast(podcast.id, this.props.usuariosReducer.token);
 		this.props.navigation.navigate('PodcastShowScreen');
 	}
 
@@ -87,7 +88,7 @@ class PodcastScreen extends Component {
 	loadContent = () => {
 		if (this.props.podcastReducer.podcasts) {
 			return this.props.podcastReducer.podcasts.map((podcast) => (
-				<TouchableOpacity onPress={() => this.showPodcast(podcast.id)} key={podcast.id} >
+				<TouchableOpacity onPress={() => this.showPodcast(podcast)} key={podcast.id} >
 					<Card
 						style={{
 							flex: 0,

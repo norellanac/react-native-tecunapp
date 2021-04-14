@@ -58,6 +58,8 @@ export default (state = INITIAL, action) => {
                 cargando: action.cargando
             };
         case getPodcast:
+            return {...state, podcast: action.payload };
+        case getPodcast:
             return {...state, podcast: action.payload, comment: action.comment };
         case deleteComment:
             return { ...state, cargando: action.cargando };

@@ -50,17 +50,25 @@ class FlashImagesScreen extends Component {
 				<Card
 					style={{
 						flex: 0,
-						borderRadius: 15,
-						marginVertical: 10,
-						marginLeft: 10,
-						marginRight: 10
+							borderRadius: 15,
+							marginVertical: 10,
+							marginLeft: 10,
+							marginRight: 10
 					}}
 					key={picture.id}
 				>
 					<View>
 						<Image
 							source={{ uri: `${apiUrl.link}/storage/pictures/${picture.featured_image}` }}
-							style={{ width: screenWidth - 20, height: screenHeight - 250, alignItems: 'center' }}
+							style={{
+								borderRadius: 15,
+								marginLeft: 3,
+								marginTop: 3,
+								width: screenWidth - 28, 
+								height: screenHeight - 250, 
+								minHeight: 250,
+								alignItems: 'center' 
+							}}
 						/>
 					</View>
 					<CardItem style={{borderRadius: 15,}}>
@@ -104,7 +112,7 @@ class FlashImagesScreen extends Component {
       )
     }*/
 
-		console.log('picturesProps: ', this.props);
+		//console.log('picturesProps: ', this.props);
 
 		return (
 			<Container>

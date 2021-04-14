@@ -93,6 +93,13 @@ export const getCategory = (idCategory,tokenUsr) => async dispatch => {
     }
 }
 
+export const passOneRecord = (record) => async (dispatch) => {
+	dispatch({
+		type: getPodcast,
+		payload: record
+	});
+};
+
 export const getShowPodcast = (idPodcast, tokenUsr) => async dispatch => {
     dispatch({
         type: loadingPodcast
