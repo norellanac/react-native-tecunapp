@@ -322,7 +322,7 @@ class ContactScreen extends Component {
                   />
                 </Left>
                 <Body style={{ marginLeft: 5 }}>
-                  <Text>NUMEROS IMPORTANTES</Text>
+                  <Text style={{ color: '#3a49e5' }}>NUMEROS IMPORTANTES</Text>
                 </Body>
                 <Right>
                   <Icon active name="caret-down" type="FontAwesome" />
