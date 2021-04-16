@@ -85,12 +85,12 @@ class StoreScreen extends Component {
 					key={store.id}
 				>
 					<Image
-						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-2.jpg' }}
 						style={{ 
 							borderTopLeftRadius: 15,
 							borderTopRightRadius: 15,
 							minHeight: screenHeight / 8, 
-							maxHeight: 400 
+							maxHeight: 90 
 						}}
 					/>
 					<Text

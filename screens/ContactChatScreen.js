@@ -74,7 +74,7 @@ class ContactChatScreen extends Component {
 				<ListItem
 					key={record.id}
 					thumbnail
-					noBorder
+					
 					onPress={() => Linking.openURL(`https://api.whatsapp.com/send?phone=${record.mobile_one}&text=`)}
 				>
 					<Body style={{ marginLeft: 25 }}>

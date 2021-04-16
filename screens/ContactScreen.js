@@ -286,19 +286,6 @@ class ContactScreen extends Component {
               minHeight: 20,
             }}
           >
-            {/* <List>
-							<ListItem onPress={() => this.setState({ showFavorites: !this.state.showFavorites })}>
-								<Left style={{ marginLeft: 15 }}>
-									<Icon active name="address-book" type="FontAwesome5" style={{ marginLeft: 5, color: '#007AFF' }} />
-								</Left>
-								<Body style={{ marginLeft: 15 }}>
-									<Text>Numeros Importantes</Text>
-								</Body>
-								<Right>
-									<Icon active name="caret-down" type="FontAwesome" />
-								</Right>
-							</ListItem>
-						</List> */}
 
             <TouchableOpacity
               onPress={() =>
@@ -346,6 +333,9 @@ class ContactScreen extends Component {
 							>
 								<Col
 									size={0}
+                  onPress={() => {
+										this.props.navigation.navigate("ContactCallScreen");
+                  }}
 									style={{
 										marginTop: 15,
 										marginBottom: 15,
@@ -368,10 +358,8 @@ class ContactScreen extends Component {
 											paddingRight: 10
 										}}
 										/>
+                    <Text style={{ color: 'white' }}>LLAMAR</Text>
 									</TouchableOpacity>
-								</Col>
-								<Col size={2} style={{padding: 20, marginRight: 15 }}>
-									<Text style={{ color: 'white' }}>LLAMAR</Text>
 								</Col>
 							</Grid>
 							<Grid
@@ -383,6 +371,9 @@ class ContactScreen extends Component {
 							>
 								<Col
 									size={0}
+                  onPress={() => {
+                    this.props.navigation.navigate("ContactChatScreen");
+                  }}
 									style={{
 										marginTop: 15,
 										marginBottom: 15,
@@ -392,7 +383,7 @@ class ContactScreen extends Component {
 								>
 									<TouchableOpacity
 										onPress={() => {
-										this.props.navigation.navigate("ContactChatScreen");
+										  this.props.navigation.navigate("ContactChatScreen");
 										}}
 									>
 										<Image
@@ -404,10 +395,8 @@ class ContactScreen extends Component {
 											height: screenWidth / 6,
 										}}
 										/>
+                    <Text style={{ color: 'white' }}>WHATSAPP</Text>
 									</TouchableOpacity>
-								</Col>
-								<Col size={2} style={{ padding: 20, marginRight: 15 }}>
-									<Text style={{ color: 'white' }}>WHATSAPP</Text>
 								</Col>
 							</Grid>
 						</ListItem>

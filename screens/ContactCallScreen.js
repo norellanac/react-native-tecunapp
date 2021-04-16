@@ -76,7 +76,7 @@ class ContactCallScreen extends Component {
 		if (this.props.contactsReducer.favorites) {
 			//console.log("posts: ", this.props.postReducer.posts);
 			return this.props.contactsReducer.favorites.pbx.map((record) => (
-				<ListItem avatar noBorder key={record.id} onPress={() => Linking.openURL(`tel:${record.phone_one}`)}>
+				<ListItem avatar key={record.id} onPress={() => Linking.openURL(`tel:${record.phone_one}`)}>
 					<Body style={{ marginLeft: 25 }}>
 						<Text
 							style={{
@@ -94,8 +94,8 @@ class ContactCallScreen extends Component {
 					</Body>
 					<Right>
 						<Thumbnail
-							style={{ backgroundColor: '#000000', marginRight: 25 }}
-							source={{ uri: `${apiUrl.link}/img/logo.png` }}
+							style={{ backgroundColor: '#000000', marginRight: 25, height: 50, width:50 }}
+							source={{ uri: apiUrl.link + '/img/bg/' + 'bg-4.png' }}
 						/>
 					</Right>
 				</ListItem>
