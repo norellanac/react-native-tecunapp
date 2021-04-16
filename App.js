@@ -61,6 +61,7 @@ export const myStyles = {
 	dark: '#000000',
 	grey: '#f0f5f5',
 	othergrey: '#fdfdfd',
+	blue: '#3749ff',
 	textInput:{
 		backgroundColor: '#ffffff',
 		borderStyle: 'solid',
