@@ -28,7 +28,7 @@ import * as storeActions from '../src/actions/storeActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import NotificationHeader from '../components/NotificationHeader';
-import { persistor, apiUrl, myStyles } from '../App';
+import { persistor, apiUrl, myStyles, screenWidth, screenHeight } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -48,83 +48,155 @@ class StoreScreen extends Component {
 
 	async searchStores(search, token) {
 		await this.props.getSearchStores(search, token);
-		this.props.navigation.navigate('StoreShowScreen');
+		this.props.navigation.navigate('StoreScreen');
 	}
 
 	loadContent = () => {
+		let stores = null;
 		if (this.props.storeReducer.stores) {
-			console.log('tiendas: ', this.props.storeReducer);
-			return this.props.storeReducer.stores.map((store) => (
+			//console.log('tiendas: ', this.props.storeReducer);
+			if (this.props.storeReducer.stores && !this.props.storeReducer.searchStores) {
+				stores = this.props.storeReducer.stores	
+			} else {
+				stores = this.props.storeReducer.searchStores
+			}
+				return stores.map((store) => (	
 				<Card
 					style={{
 						flex: 0,
 						borderRadius: 15,
 						marginVertical: 10,
-						marginLeft: 10,
-						marginRight: 10
+						marginLeft: 15,
+						marginRight: 15,
+						marginTop: 10,
+						backgroundColor: '#f9f9f9', 
+						borderBottomLeftRadius: 20, 
+						borderBottomRightRadius: 20,  
+						shadowColor: "#000",
+						shadowOffset: {
+							width: 0,
+							height: 5,
+						},
+						shadowOpacity: 0.34,
+						shadowRadius: 6.27,
+
+						elevation: 10,
 					}}
 					key={store.id}
 				>
-					<CardItem style={{ backgroundColor: 'transparent', borderRadius: 15 }}>
-						<Left>
-							<Thumbnail
-								style={{ backgroundColor: '#000000' }}
-								source={{ uri: `${apiUrl.link}/img/logo.png` }}
-							/>
-							<Body>
-								<Text
-									style={{
-										fontSize: 18,
-										fontWeight: 'bold',
-										color: myStyles.bg1,
-										paddingVertical: 8
-									}}
-								>
-									{store.name}
-								</Text>
-								<Text note>{store.address}</Text>
-								<Text note>{store.schedule}</Text>
-								<Text note>{store.description}</Text>
-							</Body>
-						</Left>
-					</CardItem>
+					<Image
+						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+						style={{ 
+							borderTopLeftRadius: 15,
+							borderTopRightRadius: 15,
+							minHeight: screenHeight / 8, 
+							maxHeight: 400 
+						}}
+					/>
+					<Text
+						style={{
+							fontSize: 18,
+							fontWeight: 'bold',
+							color: myStyles.bg1,
+							paddingVertical: 8,
+							textAlignVertical: "center",
+							textAlign: "center"
+						}}
+					>
+						{store.name}
+					</Text>
+					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
+						<Text style={{ fontSize: 15 }} note>{store.address}</Text>
+					</Content>
+					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
+						<Text style={{ fontSize: 15 }} note>{store.schedule}</Text>
+					</Content>
+					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
+						<Text style={{ fontSize: 15 }} note>{store.description}</Text>
+					</Content>
+					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
+						<Text style={{ fontSize: 15 }} note>Telefono: {store.number}</Text>
+					</Content>
 					<ListItem>
-						<TouchableOpacity
+						<Button
 							transparent
-							iconLeft
-							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							style={{ 
+								alignSelf: 'center',
+								backgroundColor: '#f9f9f9', 
+								borderWidth: 2, 
+								borderRadius: 15, 
+								marginHorizontal: 3,
+								shadowColor: myStyles.bg1,
+								shadowOffset: {
+									width: 0,
+									height: 6,
+								},
+								shadowOpacity: 0.39,
+								shadowRadius: 8.30,
+
+								elevation: 8,
+							}}
 							onPress={() => Linking.openURL(store.maps)}
 						>
 							<Text>
 								<Icon name="waze" type="MaterialCommunityIcons" /> waze
 							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
+						</Button>
+						<Button
 							transparent
-							iconLeft
-							style={{ alignSelf: 'center', marginHorizontal: 5 }}
+							style={{ 
+								alignSelf: 'center',
+								backgroundColor: '#f9f9f9', 
+								borderWidth: 2, 
+								borderRadius: 15, 
+								marginHorizontal: 3,
+								shadowColor: myStyles.bg1,
+								shadowOffset: {
+									width: 0,
+									height: 6,
+								},
+								shadowOpacity: 0.39,
+								shadowRadius: 8.30,
+
+								elevation: 8, 
+							}}
 							onPress={() => Linking.openURL(store.maps)}
 						>
 							<Text>
 								<Icon name="google-maps" type="MaterialCommunityIcons" /> Maps
 							</Text>
-						</TouchableOpacity>
-						<TouchableOpacity
-							iconLeft
+						</Button>
+						<Button
 							transparent
-							style={{ alignSelf: 'center', marginHorizontal: 20 }}
+							style={{ 
+								alignSelf: 'center',
+								backgroundColor: '#f9f9f9', 
+								borderWidth: 2, 
+								borderRadius: 15, 
+								marginHorizontal: 2,
+								 marginRight: 5,
+								 shadowColor: myStyles.bg1,
+								shadowOffset: {
+									width: 0,
+									height: 6,
+								},
+								shadowOpacity: 0.39,
+								shadowRadius: 8.30,
+
+								elevation: 8,
+							}}
 							onPress={() => Linking.openURL(`tel:${store.number}`)}
 						>
 							<Text>
-								<Icon name="phone" type="FontAwesome" /> {store.number}
+								<Icon name="phone" type="FontAwesome" style={{ color: myStyles.bg1 }} /> LLAMA
 							</Text>
-						</TouchableOpacity>
+						</Button>
 						<Right />
 					</ListItem>
 				</Card>
 			));
 		} else {
-			return <Spinner color="blue" style={{ flex: 1 }} />;
+			
 		}
 	};
 	showError = () => {
@@ -173,40 +245,52 @@ class StoreScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				{this.showError()}
 				<Content>
-					<View style={{ backgroundColor: myStyles.bg2 }}>
-						<Text
-							style={{
-								textAlign: 'center',
-								fontSize: 30,
-								fontWeight: 'bold',
-								color: myStyles.light,
-								paddingVertical: 8
-							}}
-						>
-							Ubicación de agencias
-						</Text>
-					</View>
+					<Image
+						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+						style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+					/>
 
 					{this.loadContent()}
 				</Content>
-				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
-					<Item>
+				{/* #f9f9f9 */}
+				<View style={{ 
+					backgroundColor: '#f9f9f9', 
+					borderBottomLeftRadius: 20, 
+					borderBottomRightRadius: 20,
+				}}>
+					<ListItem noBorder
+						style={{ 
+							backgroundColor: 'FFFFFF',
+							marginTop: 10,
+							marginBottom: 10,
+							marginLeft: 35,
+							width: screenWidth - 60, 
+							height: screenHeight / 16,
+							borderWidth: 1,
+							borderRadius: 30,
+
+						}}
+					>
 						<Input
 							onChangeText={(search) => this.setState({ search })}
 							value={this.state.search}
-							placeholder="Dirección o agencia"
-							placeholderTextColor="#000000"
-							style={{ color: '#000000' }}
+							placeholder="BUSCAR UBICACION"
+							placeholderTextColor="#969696"
+							style={{ color: 'black', marginLeft: 15 }}
 						/>
 
 						<TouchableOpacity
 							style={{ alignSelf: 'center', marginHorizontal: 5 }}
 							onPress={() => this.searchStores(this.state.search, this.props.usuariosReducer.token)}
 						>
-							<Text>Buscar</Text>
+							<Icon
+								name="search"
+								type="FontAwesome"
+								style={{ color: "#0075b7" }}
+							/>
 						</TouchableOpacity>
-					</Item>
-				</Header>
+					</ListItem >
+				</View>
 			</Container>
 		);
 	}

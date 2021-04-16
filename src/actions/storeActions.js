@@ -54,7 +54,7 @@ export const getSearchStores = (search, token) => async dispatch => {
     try {
         let dataForm = "_method=" + encodeURIComponent("POST");
         dataForm += "&search=" + encodeURIComponent(search);
-        console.log("form contacts:", dataForm);
+        //console.log("form contacts:", dataForm);
         const response = await fetch(`${apiUrl.link}/api/stores`, {
             method: "POST",
             headers: {
@@ -66,8 +66,8 @@ export const getSearchStores = (search, token) => async dispatch => {
         });
 
         const data = await response.json();
-        console.log("Buscarlas agencias: ", data);
-        console.log("response: ", response);
+        //console.log("Buscarlas agencias: ", data);
+        //console.log("response: ", response);
         if(response.ok) {
             dispatch({
                 type: getStores,

@@ -379,12 +379,12 @@ class PostsShowScreen extends Component {
               value={this.state.message}
               placeholder="COMENTA"
               placeholderTextColor="#000000"
-			  style={{ paddingRight: 20 }}
-			  style={ myStyles.dark }
+              style={{ paddingRight: 20 }}
+              style={ myStyles.dark }
             />
             <TouchableOpacity
               style={{
-				alignSelf: 'center',
+				        alignSelf: 'center',
                 marginHorizontal: 15,
               }}
               onPress={() =>
