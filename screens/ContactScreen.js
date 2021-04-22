@@ -306,6 +306,9 @@ class ContactScreen extends Component {
               >
                 <Left style={{ marginLeft: 5 }}>
                   <Icon
+                    onPress={() =>
+                      this.setState({ showFavorites: !this.state.showFavorites })
+                    }
                     active
                     name="address-book"
                     type="FontAwesome5"
@@ -313,15 +316,22 @@ class ContactScreen extends Component {
                   />
                 </Left>
                 <Body style={{ marginLeft: 5 }}>
-                  <Text style={{ color: '#898989' }}>NUMEROS IMPORTANTES</Text>
+                  <Text style={{ color: '#898989' }}
+                    onPress={() =>
+                      this.setState({ showFavorites: !this.state.showFavorites })
+                    }
+                  >
+                    NUMEROS IMPORTANTES</Text>
                 </Body>
                 <Right>
-                  <Icon active name="caret-down" type="FontAwesome" />
+                  <Icon active name="caret-down" type="FontAwesome" 
+                    onPress={() =>
+                      this.setState({ showFavorites: !this.state.showFavorites })
+                    }
+                  />
                 </Right>
               </ListItem>
-            </TouchableOpacity>
-
-            <ListItem noBorder>
+              <ListItem noBorder>
               {(() => {
                 if (this.state.showFavorites == true) {
                   return (
@@ -406,6 +416,7 @@ class ContactScreen extends Component {
                 }
               })()}
             </ListItem>
+            </TouchableOpacity>
           </Content>
 
           <Grid style={{ backgroundColor: "transparent", marginTop: 15 }}>
