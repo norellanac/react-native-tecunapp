@@ -4,7 +4,7 @@ import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Container, Root, Icon } from 'native-base';
+import { Container, Root, Icon, Item } from 'native-base';
 import AppIntroSlider from 'react-native-app-intro-slider';
 /*/*******redux persist storage*****/
 //*****crear archivo "./src/reducers" from "App.js" */
@@ -16,9 +16,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import image1 from './assets/images/img4.png';
-import image2 from './assets/images/img4.png';
-import image3 from './assets/images/img4.png';
+import image3 from './assets/images/pi3.png';
+import image4 from './assets/images/pi4.png';
 //const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
 
 //redux persisting
@@ -52,6 +51,8 @@ export const apiUrl = {
 //http://172.18.0.3:3000
 //redux persisting
 /*/*******redux persist storage*****/
+
+const image2 = apiUrl.link + '/img/app/' + 'pi2.png';
 
 export const myStyles = {
 	bg1: '#1D578A',
@@ -123,24 +124,30 @@ const styles = StyleSheet.create({
 const slides = [
 	{
 		key: '1',
-		title: 'Bienvenido',
-		text: 'NUEVA APP TECUN',
-		image: image1,
-		bg: '#1D578A'
+		title: 'Novedades',
+		text: 'Noticias y Podcast',
+		image: apiUrl.link + '/img/app/' + 'bcontacto.png',
+		bg: '#E87823',
+		/* Se agrego la propiedad img, para ser llamadas las imagenes desde la WEB y no utilizar la palabra reservada image */
+		img: apiUrl.link + '/img/app/' + 'pi2.png',
 	},
 	{
 		key: '2',
-		title: 'Novedades',
-		text: 'Noticias y Podcast',
-		image: image2,
-		bg: '#E87823'
+		title: 'Ingresa al App',
+		text: 'Utiliza tu correo y contraseña para ingresar!',
+		image: apiUrl.link + '/img/app/' + 'pi2.png',
+		bg: '#181e26',
+		/* Se agrego la propiedad img, para ser llamadas las imagenes desde la WEB y no utilizar la palabra reservada image */
+		img: apiUrl.link + '/img/app/' + 'pi3.png'
 	},
 	{
 		key: '3',
 		title: 'Ingresa al App',
 		text: 'Utiliza tu correo y contraseña para ingresar!',
-		image: image3,
-		bg: '#181e26'
+		image: image4,
+		bg: '#181e26',
+		/* Se agrego la propiedad img, para ser llamadas las imagenes desde la WEB y no utilizar la palabra reservada image */
+		img: apiUrl.link + '/img/app/' + 'pi4.png'
 	}
 ];
 
@@ -174,7 +181,8 @@ class App extends React.Component {
 		return (
 			<ImageBackground
 				style={{ flex: 1, width: screenWidth }}
-				source={item.image}
+				/* source={item.image} para imagenes del assets */
+				source={{ uri: item.img }}
 			/>
 		);
 	};

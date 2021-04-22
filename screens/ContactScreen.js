@@ -36,7 +36,7 @@ import * as contactsActions from "../src/actions/contactsActions";
 import * as userActions from "../src/actions/userActions";
 import FooterTabsNavigationIconText from "../components/FooterTaIconTextN-B";
 import HeaderCustom from "../components/HeaderCustom";
-import { myStyles, apiUrl, screenWidth } from "../App";
+import { myStyles, apiUrl, screenWidth, screenHeight } from "../App";
 import { withNavigation } from "react-navigation";
 import Loading from "./../components/Loading";
 
@@ -269,8 +269,12 @@ class ContactScreen extends Component {
         <ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
           <View style={{ backgroundColor: myStyles.bg2 }}>
             <Image
-              source={{ uri: apiUrl.link + "/img/bg/" + "bg-1.jpg" }}
-              style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+              source={{ uri: apiUrl.link + '/img/app/' + 'bcontacto.png' }}
+              style={{ 
+                width: screenWidth,
+                minHeight: screenHeight / 10,
+                height: screenHeight / 4
+              }}
             />
           </View>
 
@@ -281,7 +285,7 @@ class ContactScreen extends Component {
               marginRight: 20,
               borderColor: myStyles.bg1,
               borderRadius: 30,
-              marginTop: 30,
+              marginTop: 15,
               padding: -20,
               minHeight: 20,
             }}
@@ -309,7 +313,7 @@ class ContactScreen extends Component {
                   />
                 </Left>
                 <Body style={{ marginLeft: 5 }}>
-                  <Text style={{ color: '#3a49e5' }}>NUMEROS IMPORTANTES</Text>
+                  <Text style={{ color: '#898989' }}>NUMEROS IMPORTANTES</Text>
                 </Body>
                 <Right>
                   <Icon active name="caret-down" type="FontAwesome" />
@@ -322,84 +326,81 @@ class ContactScreen extends Component {
                 if (this.state.showFavorites == true) {
                   return (
                     <Content>
-						<ListItem noBorder>
-							<Grid
-								style={{
-									backgroundColor: myStyles.bg1,
-									borderBottomLeftRadius: 15,
-									borderTopLeftRadius: 15,
-									marginRight: 10,
-								}}
-							>
-								<Col
-									size={0}
-                  onPress={() => {
-										this.props.navigation.navigate("ContactCallScreen");
-                  }}
-									style={{
-										marginTop: 15,
-										marginBottom: 15,
-										justifyContent: 'center'
-									}}
-								>
-									<TouchableOpacity
-										onPress={() => {
-										this.props.navigation.navigate("ContactCallScreen");
-										}}
-									>
-										<Image
-										source={{
-											uri: this.state.pathImage + "telephone.png",
-										}}
-										style={{
-											width: screenWidth / 6,
-											height: screenWidth / 6,
-											paddingLeft: 10,
-											paddingRight: 10
-										}}
-										/>
-                    <Text style={{ color: 'white' }}>LLAMAR</Text>
-									</TouchableOpacity>
-								</Col>
-							</Grid>
-							<Grid
-								style={{
-									backgroundColor: myStyles.bg1,
-									borderBottomRightRadius: 15,
-									borderTopRightRadius: 15
-								}}
-							>
-								<Col
-									size={0}
-                  onPress={() => {
-                    this.props.navigation.navigate("ContactChatScreen");
-                  }}
-									style={{
-										marginTop: 15,
-										marginBottom: 15,
+                      <ListItem noBorder>
+                        <Grid
+                          style={{
+                            backgroundColor: myStyles.bg1,
+                            borderBottomLeftRadius: 15,
+                            borderTopLeftRadius: 15,
+                            marginLeft: -15,
+                            marginRight: 5,
+                            height: screenHeight / 10
+                          }}
+                        >
+                          <Col
+                            size={0}
+                            onPress={() => {
+                              this.props.navigation.navigate("ContactCallScreen");
+                            }}
+                            style={{
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <TouchableOpacity
+                              onPress={() => {
+                              this.props.navigation.navigate("ContactCallScreen");
+                              }}
+                            >
+                              <Image
+                              source={{ uri: apiUrl.link + '/img/app/' + 'TELEFONO_ESTE_SI.gif' }}
+                              style={{
+                                minHeight: 55,
+                                maxHeight: 80,
+                                minWidth: 50,
+                                maxWidth: 150,
+                              }}
+                              />
+                            </TouchableOpacity>
+                          </Col>
+                        </Grid>
 
-										justifyContent: 'center'
-									}}
-								>
-									<TouchableOpacity
-										onPress={() => {
-										  this.props.navigation.navigate("ContactChatScreen");
-										}}
-									>
-										<Image
-										source={{
-											uri: this.state.pathImage + "whatsapp.png",
-										}}
-										style={{
-											width: screenWidth / 6,
-											height: screenWidth / 6,
-										}}
-										/>
-                    <Text style={{ color: 'white' }}>WHATSAPP</Text>
-									</TouchableOpacity>
-								</Col>
-							</Grid>
-						</ListItem>
+                        <Grid
+                          style={{
+                            backgroundColor: myStyles.bg1,
+                            borderBottomRightRadius: 15,
+                            borderTopRightRadius: 15,
+                            marginLeft: 1,
+                            marginRight: -20,
+                            height: screenHeight / 10
+                          }}
+                        >
+                          <Col
+                            size={0}
+                            onPress={() => {
+                              this.props.navigation.navigate("ContactChatScreen");
+                            }}
+                            style={{
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <TouchableOpacity
+                              onPress={() => {
+                                this.props.navigation.navigate("ContactChatScreen");
+                              }}
+                            >
+                              <Image
+                              source={{ uri: apiUrl.link + '/img/app/' + 'EsteSiFInal.gif' }}
+                              style={{
+                                minHeight: 60,
+                                maxHeight: 75,
+                                minWidth: 90,
+                                maxWidth: 290
+                              }}
+                              />
+                            </TouchableOpacity>
+                          </Col>
+                        </Grid>
+                      </ListItem>
                     </Content>
                   );
                 }
@@ -407,7 +408,7 @@ class ContactScreen extends Component {
             </ListItem>
           </Content>
 
-          <Grid style={{ backgroundColor: "transparent", marginTop: 40 }}>
+          <Grid style={{ backgroundColor: "transparent", marginTop: 15 }}>
             <Col style={{ alignItems: "center" }}>
               <Text
                 style={{
@@ -416,12 +417,12 @@ class ContactScreen extends Component {
                   fontWeight: "bold",
                 }}
               >
-                Buscar
+                BUSCAR
               </Text>
             </Col>
           </Grid>
           <View>
-            <Form style={{ marginRight: 20, marginLeft: 20, marginTop: 10 }}>
+            <Form style={{ marginRight: 20, marginLeft: 20 }}>
               <Item rounded style={{ marginTop: 15 }}>
                 <Icon
                   type="FontAwesome"
@@ -520,8 +521,10 @@ class ContactScreen extends Component {
                         textAlign: "center",
                         color: "#ffffff",
                         fontSize: 20,
-                        marginRight: 35,
-                        marginLeft: 35,
+                        marginRight: 30,
+                        marginLeft: 30,
+                        paddingBottom: 35,
+                        paddingTop: 35
                       }}
                     >
                       Buscar

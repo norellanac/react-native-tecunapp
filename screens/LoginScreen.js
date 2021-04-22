@@ -115,8 +115,8 @@ class LoginScreen extends Component {
 			<SafeAreaView style={{ flex: 1 }}>
 				<Container style={{ flex: 1, backgroundColor: 'transparent' }}>
 					<ImageBackground
-						style={{ flex: 1, width: screenWidth + 30 }}
-						source={require('./../assets/images/img4.png')}
+						style={{ flex: 1, width: screenWidth + 5 }}
+						source={{ uri: apiUrl.link + '/img/app/' + 'pi1.png' }}
 					>
 						{this.showAlert()}
 

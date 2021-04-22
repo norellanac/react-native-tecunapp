@@ -55,7 +55,7 @@ class StoreScreen extends Component {
 		let stores = null;
 		if (this.props.storeReducer.stores) {
 			//console.log('tiendas: ', this.props.storeReducer);
-			if (this.props.storeReducer.stores && !this.props.storeReducer.searchStores) {
+			if (this.props.storeReducer.stores && this.props.storeReducer.searchStores.length == 0) {
 				stores = this.props.storeReducer.stores	
 			} else {
 				stores = this.props.storeReducer.searchStores
@@ -90,7 +90,7 @@ class StoreScreen extends Component {
 							borderTopLeftRadius: 15,
 							borderTopRightRadius: 15,
 							minHeight: screenHeight / 8, 
-							maxHeight: 90 
+							maxHeight: 400 
 						}}
 					/>
 					<Text
@@ -196,7 +196,7 @@ class StoreScreen extends Component {
 				</Card>
 			));
 		} else {
-			
+			return <Spinner color="blue" style={{ flex: 1 }} />;
 		}
 	};
 	showError = () => {
@@ -204,10 +204,14 @@ class StoreScreen extends Component {
 			return (
 				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
 					<CardItem style={{ backgroundColor: '#00B9D3' }}>
-						<Image
-							source={{ uri: `${apiUrl.link}/img/game/trivia.png` }}
-							style={{ width: 25, height: 25 }}
-						/>
+					<Image
+						source={{ uri: apiUrl.link + '/img/app/' + 'bubicaciones.png' }}
+						style={{ 
+							width: screenWidth,
+							minHeight: screenHeight / 10,
+							height: screenHeight / 4
+						}}
+					/>
 						<Col size={4}>
 							<Text
 								style={{
@@ -230,6 +234,8 @@ class StoreScreen extends Component {
 	};
 
 	render() {
+		//console.log("Stores ", this.props.storeReducer.stores);
+		//console.log("Search Stores ", this.props.storeReducer.searchStores.length);
 		if (this.props.storeReducer.cargando && !this.props.storeReducer) {
 			return (
 				<Container>
@@ -246,10 +252,13 @@ class StoreScreen extends Component {
 				{this.showError()}
 				<Content>
 					<Image
-						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
-						style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+						source={{ uri: apiUrl.link + '/img/app/' + 'bubicaciones.png' }}
+						style={{ 
+							width: screenWidth,
+							minHeight: screenHeight / 10,
+							height: screenHeight / 4
+						}}
 					/>
-
 					{this.loadContent()}
 				</Content>
 				{/* #f9f9f9 */}

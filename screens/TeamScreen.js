@@ -21,7 +21,7 @@ import * as awardActions from '../src/actions/awardActions';
 import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor, apiUrl, myStyles } from '../App';
+import { persistor, apiUrl, myStyles, screenWidth, screenHeight } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 import { SliderBox } from 'react-native-image-slider-box';
@@ -109,7 +109,7 @@ class TeamScreen extends Component {
 				<Content>
 					{this.loadContent()}
 					<View>
-						<Grid>
+						<Grid style={{ marginTop: 15 }}>
 							<Col>
 								<TouchableOpacity onPress={() => this.props.navigation.navigate('JobsScreen')}>
 									<Card
@@ -117,17 +117,26 @@ class TeamScreen extends Component {
 											borderRadius: 10,
 											marginVertical: 10,
 											marginLeft: 10,
-											marginRight: 10
+											marginRight: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 4,
+											},
+											shadowOpacity: 0.32,
+											shadowRadius: 5.46,
+
+											elevation: 9,
 										}}
 									>
 										<Image
-											source={{ uri: 'https://image.freepik.com/vector-gratis/smm-promocion-internet-publicidad-online-anuncio-investigacion-mercado-crecimiento-ventas-comercializador-personaje-dibujos-animados-portatil-altavoz-ilustracion-metafora-concepto-aislado-vector_335657-2849.jpg' }}
+											source={{ uri: apiUrl.link + '/img/app/' + 'grafica.png' }}
 											style={{
-												width: screenWidth / 2 - 30,
-												marginVertical: 5,
-												minHeight: 150,
-												maxHeight: 200,
-												borderRadius: 10,
+												marginTop: 20,
+												minHeight: screenHeight / 13,
+												minWidth: screenWidth / 13,
+												height: screenHeight / 8,
+												width: screenWidth / 4,
 												alignSelf: 'center'
 											}}
 										/>
@@ -138,7 +147,9 @@ class TeamScreen extends Component {
 													fontWeight: 'bold',
 													textAlign: 'center',
 													color: myStyles.bg1,
-													paddingVertical: 8
+													paddingVertical: 8,
+													marginLeft: 10,
+													marginTop: 20
 												}}
 											>
 												OPORTUNIDADES
@@ -154,20 +165,26 @@ class TeamScreen extends Component {
 											borderRadius: 10,
 											marginVertical: 10,
 											marginLeft: 10,
-											marginRight: 10
+											marginRight: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 4,
+											},
+											shadowOpacity: 0.32,
+											shadowRadius: 5.46,
+
+											elevation: 9,
 										}}
 									>
 										<Image
-											source={{
-												uri:
-													'https://image.freepik.com/vector-gratis/mensajero-profesional-que-entrega-pedido-ilustracion-plana-scooter_74855-14494.jpg'
-											}}
+											source={{ uri: apiUrl.link + '/img/app/' + 'ubicacion.png' }}
 											style={{
-												width: screenWidth / 2 - 30,
-												marginVertical: 5,
-												minHeight: 150,
-												maxHeight: 200,
-												borderRadius: 10,
+												marginTop: 20,
+												minHeight: screenHeight / 13,
+												minWidth: screenWidth / 13,
+												height: screenHeight / 8,
+												width: screenWidth / 4,
 												alignSelf: 'center'
 											}}
 										/>
@@ -178,7 +195,9 @@ class TeamScreen extends Component {
 													fontWeight: 'bold',
 													textAlign: 'center',
 													color: myStyles.bg1,
-													paddingVertical: 8
+													paddingVertical: 8,
+													marginLeft: 10,
+													marginTop: 20
 												}}
 											>
 												UBICACIONES
@@ -188,7 +207,7 @@ class TeamScreen extends Component {
 								</TouchableOpacity>
 							</Col>
 						</Grid>
-						<Grid>
+						<Grid style={{ marginTop: 15 }}>
 							<Col>
 								<TouchableOpacity onPress={() => this.props.navigation.navigate('ContactScreen')}>
 									<Card
@@ -196,20 +215,27 @@ class TeamScreen extends Component {
 											borderRadius: 10,
 											marginVertical: 10,
 											marginLeft: 10,
-											marginRight: 10
+											marginRight: 10,
+											marginBottom: 25,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 4,
+											},
+											shadowOpacity: 0.32,
+											shadowRadius: 5.46,
+
+											elevation: 9,
 										}}
 									>
 										<Image
-											source={{
-												uri:
-													'https://image.freepik.com/vector-gratis/ilustracion-concepto-llamando_114360-1823.jpg'
-											}}
+											source={{ uri: apiUrl.link + '/img/app/' + 'tel.png' }}
 											style={{
-												width: screenWidth / 2 - 30,
-												marginVertical: 5,
-												minHeight: 150,
-												maxHeight: 200,
-												borderRadius: 10,
+												marginTop: 20,
+												minHeight: screenHeight / 13,
+												minWidth: screenWidth / 13,
+												height: screenHeight / 8,
+												width: screenWidth / 4,
 												alignSelf: 'center'
 											}}
 										/>
@@ -220,7 +246,9 @@ class TeamScreen extends Component {
 													fontWeight: 'bold',
 													textAlign: 'center',
 													color: myStyles.bg1,
-													paddingVertical: 8
+													paddingVertical: 8,
+													marginLeft: 10,
+													marginTop: 20
 												}}
 											>
 												DIRECTORIO
@@ -236,17 +264,26 @@ class TeamScreen extends Component {
 											borderRadius: 10,
 											marginVertical: 10,
 											marginLeft: 10,
-											marginRight: 10
+											marginRight: 10,
+											shadowColor: "#000",
+											shadowOffset: {
+												width: 0,
+												height: 4,
+											},
+											shadowOpacity: 0.32,
+											shadowRadius: 5.46,
+
+											elevation: 9,
 										}}
 									>
 										<Image
-											source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
+											source={{ uri: apiUrl.link + '/img/app/' + 'user.png' }}
 											style={{
-												width: screenWidth / 2 - 30,
-												marginVertical: 5,
-												minHeight: 150,
-												maxHeight: 200,
-												borderRadius: 10,
+												marginTop: 20,
+												minHeight: screenHeight / 13,
+												minWidth: screenWidth / 13,
+												height: screenHeight / 8,
+												width: screenWidth / 4,
 												alignSelf: 'center'
 											}}
 										/>
@@ -257,7 +294,9 @@ class TeamScreen extends Component {
 													fontWeight: 'bold',
 													textAlign: 'center',
 													color: myStyles.bg1,
-													paddingVertical: 8
+													paddingVertical: 8,
+													marginLeft: 10,
+													marginTop: 20
 												}}
 											>
 												SOLICITUDES

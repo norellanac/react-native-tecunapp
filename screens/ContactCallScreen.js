@@ -95,7 +95,7 @@ class ContactCallScreen extends Component {
 					<Right>
 						<Thumbnail
 							style={{ backgroundColor: '#000000', marginRight: 25, height: 50, width:50 }}
-							source={{ uri: apiUrl.link + '/img/bg/' + 'bg-4.png' }}
+							source={{ uri: apiUrl.link + '/img/app/' + 'llamar.png' }}
 						/>
 					</Right>
 				</ListItem>
@@ -126,8 +126,12 @@ class ContactCallScreen extends Component {
 				{this.showError()}
 				<Content>
 					<Image
-						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
-						style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+						source={{ uri: apiUrl.link + '/img/app/' + 'bnumerosimportantes.png' }}
+						style={{ 
+							width: screenWidth,
+							minHeight: screenHeight / 10,
+							height: screenHeight / 4
+						}}
 					/>
 
 					<View style={{ marginTop: 7 }} />

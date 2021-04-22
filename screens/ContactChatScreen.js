@@ -126,8 +126,12 @@ class ContactChatScreen extends Component {
 				<Content>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
 						<Image
-							source={{ uri: apiUrl.link + '/img/bg/' + 'bg-1.jpg' }}
-							style={{ width: screenWidth, minHeight: 200, maxHeight: 400 }}
+							source={{ uri: apiUrl.link + '/img/app/' + 'bnumerosimportantes.png' }}
+							style={{ 
+								width: screenWidth,
+								minHeight: screenHeight / 10,
+								height: screenHeight / 4
+							}}
 						/>
 					</View>
 
