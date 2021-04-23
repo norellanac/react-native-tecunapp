@@ -61,7 +61,7 @@ class PodcastScreen extends Component {
 			this.props.getPodcasts(this.props.usuariosReducer.token);
 		} else {
 			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-			this.props.navigation.navigate('PodcastsCategoryScreen');
+			//this.props.navigation.navigate('PodcastsCategoryScreen');
 		}
 	}
 
@@ -74,7 +74,14 @@ class PodcastScreen extends Component {
 	async likePodcast(id) {
 		let token = this.props.usuariosReducer.token;
 		await this.props.likeOrDislike(id, token);
-		await this.props.getPodcasts(token);
+		//await this.props.getPodcasts(token);
+
+		if (this.state.idCategory == 0) {
+			this.props.getPodcasts(this.props.usuariosReducer.token);
+		} else {
+			this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+			//this.props.navigation.navigate('PodcastsCategoryScreen');
+		}
 	}
 
 	showUserNameLikes(podcast) {

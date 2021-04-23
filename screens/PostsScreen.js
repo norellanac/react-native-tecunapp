@@ -140,7 +140,7 @@ class PostsScreen extends Component {
 			await this.props.getNews(this.props.usuariosReducer.token);
 		} else {
 			await this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
-			this.props.navigation.navigate('PostsCategoryScreen');
+			/* this.props.navigation.navigate('PostsScreen'); */
 		}
 	}
 
@@ -154,7 +154,14 @@ class PostsScreen extends Component {
 	async likePost(postID) {
 		let token = this.props.usuariosReducer.token;
 		await this.props.likeOrDislike(postID, token);
-		await this.props.getNews(token);
+		//await this.props.getNews(token);
+
+		if (this.state.idCategory == 0) {
+			await this.props.getNews(this.props.usuariosReducer.token);
+		} else {
+			await this.props.getCategory(this.state.idCategory, this.props.usuariosReducer.token);
+			/* this.props.navigation.navigate('PostsScreen'); */
+		}
 	}
 
 	showUserNameLikes(news) {
