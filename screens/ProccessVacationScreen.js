@@ -28,7 +28,7 @@ import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { apiUrl, myStyles } from '../App';
+import { apiUrl, myStyles, screenHeight, screenWidth } from '../App';
 
 import Loading from './../components/Loading';
 
@@ -70,7 +70,10 @@ class ProccessVacationScreen extends Component {
 				}}
 			>
 				<Grid style={{backgroundColor: myStyles.bg2}}>
-					<Col size={4} style={{ alignItems: 'center' }}>
+					<Col size={4} style={{ 
+							alignItems: 'center',
+						}}
+					>
 						<Text
 							style={{
 								textAlign: 'center',

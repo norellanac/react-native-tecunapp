@@ -126,7 +126,7 @@ class ContactChatScreen extends Component {
 				<Content>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
 						<Image
-							source={{ uri: apiUrl.link + '/img/app/' + 'bnumerosimportantes.png' }}
+							source={{ uri: apiUrl.link + '/img/app/' + 'bnumerosimportatnesWhatsapp.png' }}
 							style={{ 
 								width: screenWidth,
 								minHeight: screenHeight / 10,
