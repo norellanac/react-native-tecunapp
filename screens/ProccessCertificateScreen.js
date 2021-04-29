@@ -10,6 +10,7 @@ import {
 	Form,
 	View,
 	Input,
+	ListItem,
 	Icon,
 	Text,
 	CardItem,
@@ -124,7 +125,21 @@ class ProccessCertificateScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
-					<View style={{ backgroundColor: myStyles.bg2 }}>
+					<View style={{ 
+						backgroundColor: myStyles.bg2,
+						backgroundColor: myStyles.bg2,
+						borderBottomLeftRadius: 20,
+						borderBottomRightRadius: 20,
+						borderTopLeftRadius: 20,
+						borderTopRightRadius: 20,
+						marginTop: 7,
+						marginBottom: 7,
+						marginLeft: 20,
+						marginRight: 20,
+						paddingTop: 5,
+						paddingBottom: 5,
+						maxHeight: 100
+					}}>
 						<Text
 							style={{
 								textAlign: 'center',
@@ -134,7 +149,7 @@ class ProccessCertificateScreen extends Component {
 								paddingVertical: 8
 							}}
 						>
-							Constancia laboral
+							CONSTANCIA LABORAL
 						</Text>
 					</View>
 					<Card
@@ -142,33 +157,56 @@ class ProccessCertificateScreen extends Component {
 							flex: 0,
 							borderRadius: 15,
 							marginVertical: 10,
-							marginLeft: 10,
-							marginRight: 10
+							marginLeft: 20,
+							marginRight: 20,
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 0.29,
+							shadowRadius: 4.65,
+
+							elevation: 7,
 						}}
 					>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
+						<CardItem style={{ backgroundColor: 'white', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'guatemala.png' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
+										width: screenWidth / 2,
 										height: screenHeight / 6
 									}}
 								/>
-								<Button
-									onPress={() => this.mailCertificate(gt, paisGT)}
+							</Body>
+						</CardItem>
+						<CardItem 
+							style={{ 
+								backgroundColor: '#81cbff',
+								marginLeft: 65,
+								marginRight: 65,
+								marginBottom: 10,
+								height: screenHeight / 15
+							}} onPress={() => this.mailCertificate(gt, paisGT)}>
+							<Left>
+								<Thumbnail
+									square
 									style={{
-										alignSelf: 'center',
-										backgroundColor: myStyles.bg2,
-										width: screenWidth / 2,
-										height: screenHeight / 17,
-										borderRadius: 20
+										minWidth: 2,
+										maxWidth: 80,
+										maxHeight: 30,
+										marginLeft: 10,
+										
 									}}
-								>
-									<Icon type="FontAwesome" name="send" style={{ marginLeft: 13, color: '#ffffff' }} />
-									<Text style={{ color: '#ffffff', marginRight: 50 }}>Solicitar</Text>
-								</Button>
+									source={{ uri: `${apiUrl.link}/img/vacaciones.png` }}
+								/>
+								
+							</Left>
+							<Text style={{ marginLeft: 55, color: myStyles.bg1 }}>SOLICITA AQUI</Text>
+							<Body>
+
 							</Body>
 						</CardItem>
 					</Card>
@@ -178,33 +216,56 @@ class ProccessCertificateScreen extends Component {
 							flex: 0,
 							borderRadius: 15,
 							marginVertical: 10,
-							marginLeft: 10,
-							marginRight: 10
+							marginLeft: 20,
+							marginRight: 20,
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 0.29,
+							shadowRadius: 4.65,
+
+							elevation: 7,
 						}}
 					>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
+						<CardItem style={{ backgroundColor: 'white', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'el-salvador.png' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
+										width: screenWidth / 2,
 										height: screenHeight / 6
 									}}
 								/>
-								<Button
-									onPress={() => this.mailCertificate(sv, paisSV)}
+							</Body>
+						</CardItem>
+						<CardItem 
+							style={{ 
+								backgroundColor: '#81cbff',
+								marginLeft: 65,
+								marginRight: 65,
+								marginBottom: 10,
+								height: screenHeight / 15
+							}} onPress={() => this.mailCertificate(sv, paisSV)}>
+							<Left>
+								<Thumbnail
+									square
 									style={{
-										alignSelf: 'center',
-										backgroundColor: myStyles.bg2,
-										width: screenWidth / 2,
-										height: screenHeight / 17,
-										borderRadius: 20
+										minWidth: 2,
+										maxWidth: 80,
+										maxHeight: 30,
+										marginLeft: 10,
+										
 									}}
-								>
-									<Icon type="FontAwesome" name="send" style={{ marginLeft: 13, color: '#ffffff' }} />
-									<Text style={{ color: '#ffffff', marginRight: 50 }}>Solicitar</Text>
-								</Button>
+									source={{ uri: `${apiUrl.link}/img/vacaciones.png` }}
+								/>
+								
+							</Left>
+							<Text style={{ marginLeft: 55, color: myStyles.bg1 }}>SOLICITA AQUI</Text>
+							<Body>
+
 							</Body>
 						</CardItem>
 					</Card>
@@ -214,39 +275,61 @@ class ProccessCertificateScreen extends Component {
 							flex: 0,
 							borderRadius: 15,
 							marginVertical: 10,
-							marginLeft: 10,
-							marginRight: 10
+							marginLeft: 20,
+							marginRight: 20,
+							shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 3,
+							},
+							shadowOpacity: 0.29,
+							shadowRadius: 4.65,
+
+							elevation: 7,
 						}}
 					>
-						<CardItem style={{ backgroundColor: 'white', alignItems: 'center', borderRadius: 15 }}>
+						<CardItem style={{ backgroundColor: 'white', borderRadius: 15 }}>
 							<Body style={{ alignItems: 'center' }}>
 								<Image
 									source={{ uri: this.state.pathImage + 'honduras.png' }}
 									style={{
 										borderRadius: 20,
-										width: screenWidth / 3,
+										width: screenWidth / 2,
 										height: screenHeight / 6
 									}}
 								/>
-								<Button
-									onPress={() => this.mailCertificate(hn, paisHn)}
+							</Body>
+						</CardItem>
+						<CardItem 
+							style={{ 
+								backgroundColor: '#81cbff',
+								marginLeft: 65,
+								marginRight: 65,
+								marginBottom: 10,
+								height: screenHeight / 15
+							}} onPress={() => this.mailCertificate(hn, paisHn)}>
+							<Left>
+								<Thumbnail
+									square
 									style={{
-										alignSelf: 'center',
-										backgroundColor: myStyles.bg2,
-										width: screenWidth / 2,
-										height: screenHeight / 17,
-										borderRadius: 20
+										minWidth: 2,
+										maxWidth: 80,
+										maxHeight: 30,
+										marginLeft: 10,
+										
 									}}
-								>
-									<Icon type="FontAwesome" name="send" style={{ marginLeft: 13, color: '#ffffff' }} />
-									<Text style={{ color: '#ffffff', marginRight: 50 }}>Solicitar</Text>
-								</Button>
+									source={{ uri: `${apiUrl.link}/img/vacaciones.png` }}
+								/>
+								
+							</Left>
+							<Text style={{ marginLeft: 55, color: myStyles.bg1 }}>SOLICITA AQUI</Text>
+							<Body>
+
 							</Body>
 						</CardItem>
 					</Card>
-					<Card />
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}
