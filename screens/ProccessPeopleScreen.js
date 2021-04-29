@@ -258,7 +258,7 @@ class ProccessPeopleScreen extends Component {
 								</TouchableOpacity>
 							</Col>
 							<Col>
-								<TouchableOpacity onPress={() => this.loadingVacation()}>
+								<TouchableOpacity onPress={() => this.props.navigation.navigate('AsotecsaScreen')}>
 									<Card
 										style={{
 											borderRadius: 10,

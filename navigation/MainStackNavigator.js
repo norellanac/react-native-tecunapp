@@ -29,6 +29,9 @@ import PostsCategoryScreen from '../screens/PostsCategoryScreen';
 import ProccessVacationScreen from '../screens/ProccessVacationScreen';
 import ProccessCertificateScreen from '../screens/ProccessCertificateScreen';
 
+import AsotecsaScreen from '../screens/AsotecsaScreen';
+
+
 const Stack = createStackNavigator();
 
 function MainStackNavigator() {
@@ -169,7 +172,6 @@ function MainStackNavigator() {
 					options={{ title: 'Noticia' }}
 				/>
 
-
 				<Stack.Screen
 					name="PostsCategoryScreen"
 					header="null"
@@ -195,6 +197,13 @@ function MainStackNavigator() {
 					name="SettingsScreen"
 					header="null"
 					component={SettingsScreen}
+					options={{ title: 'Noticias' }}
+				/>
+
+				<Stack.Screen
+					name="AsotecsaScreen"
+					header="null"
+					component={AsotecsaScreen}
 					options={{ title: 'Noticias' }}
 				/>
 			</Stack.Navigator>

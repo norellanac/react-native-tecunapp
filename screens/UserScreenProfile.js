@@ -95,7 +95,9 @@ class UserScreenProfile extends Component {
 		//console.log("Que viene en el score?: ",this.state.isDisplay);
 		let count = 0;
 		let color = '#F8FAFB';
-		let idUserScore = this.props.questionReducer.userScore.id;
+		if (this.props.questionReducer.userScore) {
+			let idUserScore = this.props.questionReducer.userScore.id;
+		}
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
 			return this.props.questionReducer.score.map(
 				(pounts) => (
