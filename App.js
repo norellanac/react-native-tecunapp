@@ -133,7 +133,7 @@ const slides = [
 	},
 	{
 		key: '2',
-		title: 'Ingresa al App',
+		title: 'Mejoras',
 		text: 'Utiliza tu correo y contraseña para ingresar!',
 		image: apiUrl.link + '/img/app/' + 'pi2.png',
 		bg: '#181e26',

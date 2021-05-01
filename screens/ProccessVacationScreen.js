@@ -39,7 +39,8 @@ class ProccessVacationScreen extends Component {
 	state = {
 		showData: false,
 		newArray: [],
-		company: ''
+		company: '',
+		pathImage: apiUrl.link + '/img/'
 	};
 
 	componentDidMount() {
@@ -62,17 +63,23 @@ class ProccessVacationScreen extends Component {
 
 		return companies.map((itemName) => (
 			//console.log("name ",itemName),
-			//console.log(" other ", companies),
-
-			<Card
-				style={{
-					marginBottom: 15
-				}}
-			>
-				<Grid style={{backgroundColor: myStyles.bg2}}>
-					<Col size={4} style={{ 
-							alignItems: 'center',
-						}}
+			//console.log(" other ", companies)
+			<View>
+				<Grid style={{ 
+					backgroundColor: myStyles.bg2,
+					borderBottomLeftRadius: 20,
+					borderBottomRightRadius: 20,
+					borderTopLeftRadius: 20,
+					borderTopRightRadius: 20,
+					marginTop: 7,
+					marginBottom: 7,
+					marginLeft: 20,
+					marginRight: 20,
+					paddingTop: 5,
+					paddingBottom: 5,
+					maxHeight: 100
+				}}>
+					<Col size={4} style={{ alignItems: 'center' }}
 					>
 						<Text
 							style={{
@@ -91,21 +98,28 @@ class ProccessVacationScreen extends Component {
 				{(() => {
 					return itemName.map((item) => (
 						<ListItem key={item.id} icon onPress={() => this.mailVacation(item.email, item.departament)}>
-							<Left>
-								<Button style={{ backgroundColor: myStyles.bg1 }}>
-									<Icon type="MaterialCommunityIcons" name="email-send" />
-								</Button>
-							</Left>
-							<Body>
+							<Body style={{ marginRight: 5, marginLeft: 10 }}>
 								<Text>{item.departament}</Text>
 							</Body>
 							<Right>
-								<Icon name="arrow-forward" />
+								<Thumbnail
+									square
+									style={{
+										marginRight: 50,
+										paddingLeft: 50,
+										paddingRight: 8,
+										minWidth: 2,
+										maxWidth: 20,
+										maxHeight: 30,
+										width: 20
+									}}
+									source={{ uri: `${apiUrl.link}/img/vacaciones.png` }}
+								/>
 							</Right>
 						</ListItem>
 					));
 				})()}
-			</Card>
+			</View>
 		));
 	}
 
@@ -162,7 +176,7 @@ class ProccessVacationScreen extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>{this.loadingInfoName()}</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);
 	}
