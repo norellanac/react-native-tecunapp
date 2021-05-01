@@ -38,16 +38,27 @@ class ContactScreen extends Component {
 		super();
 	}
 	state = {
-		searchNombre: '',
-		searchApellido: '',
-		searchDepartamento: '',
-		searchPais: '',
-		mobilePhone: '',
-        startDate: '',
-		isShowAlert: true,
-		isShowResult: false,
-		showFavorites: false,
-		activeSections: [],
+		name1: '',
+		name2: '',
+		lastname1: '',
+		lastname2: '',
+		personalid: '',
+		taxid: '',
+		birthday: '',
+		jobdate: '',
+		mobile: '',
+		email: '',
+		bankAcount: '',
+		bankName: '',
+		monthPercent: '',
+		bankFees: '',
+		famName1: '',
+		famName2: '',
+		famLastname1: '',
+		famLastname2: '',
+		famMobile: '',
+		fam: '',
+
 		pathImage: apiUrl.link + '/img/'
 	};
 
@@ -81,30 +92,23 @@ class ContactScreen extends Component {
 		}
 	};
 
-	changeStateShowFavorites(favorite) {
-		console.log(favorite);
-	}
+	async componentDidMount() {}
 
-	_updateSections = (activeSections) => {
-		this.setState({ activeSections });
-	};
-
-	async componentDidMount() {
-		await this.props.clearContactsAction();
-	}
-	async searchContactData(token) {
-		await this.props.searchContactsAction(
-			this.state.searchNombre,
-			this.state.searchApellido,
-			this.state.searchDepartamento,
-			this.state.searchPais,
-			this.state.searchPuesto,
-			token
+	sendAlert = () => {
+		Alert.alert(
+			'Enviar solicitud',
+			'Por este medio solicito a la Asociación Solidarista de Trabajadores Empresas Tecun, S.A. - ASOTECSA se me acepte como asociado de dicha entidad, por lo que me comprometo a respetar y acatar sus estatutos y reglamentos, así como las disposiciones que emanen de su organismo director.',
+			[
+				{
+					text: 'No',
+					onPress: () => console.log('Cancel Pressed'),
+					style: 'cancel'
+				},
+				{ text: 'Si', onPress: () => BackHandler.exitApp() }
+			],
+			{ cancelable: false }
 		);
-		//await this.props.
-		//console.log('entra a buscar en la pantalla: ', this.props.contactsReducer.contacts);
-		//this.props.navigation.navigate('ContactScreen');
-	}
+	};
 
 	render() {
 		if (this.props.usuariosReducer.cargando) {
@@ -133,27 +137,34 @@ class ContactScreen extends Component {
 						/>
 					</View>
 
-					<Grid style={{ backgroundColor: 'transparent', marginTop: 15 }}>
-						<Col style={{ alignItems: 'center' }}>
-							<Text
-								style={{
-									fontSize: 20,
-									color: myStyles.bg1,
-									fontWeight: 'bold'
-								}}
-							>
-								DATOS PERSONALES
-							</Text>
-						</Col>
-					</Grid>
+					<View
+						style={{ backgroundColor: myStyles.bg1, borderRadius: 20, marginHorizontal: 10, marginTop: 25 }}
+					>
+						<Text
+							style={{
+								textAlign: 'center',
+								fontWeight: 'bold',
+								color: myStyles.light,
+								paddingVertical: 8,
+								fontSize: 20,
+								borderRadius: 20
+							}}
+						>
+							DATOS PERSONALES
+						</Text>
+					</View>
 					<View>
 						<Form style={{ marginRight: 20, marginLeft: 20 }}>
 							{/* primer nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Icon
+									type="FontAwesome"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
 								<Input
-									onChangeText={(searchNombre) => this.setState({ searchNombre })}
-									value={this.state.searchNombre}
+									onChangeText={(name1) => this.setState({ name1 })}
+									value={this.state.name1}
 									placeholder="Primer Nombre"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -161,10 +172,14 @@ class ContactScreen extends Component {
 							</Item>
 							{/* segundo nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Icon
+									type="FontAwesome"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
 								<Input
-									onChangeText={(searchNombre) => this.setState({ searchNombre })}
-									value={this.state.searchNombre}
+									onChangeText={(name2) => this.setState({ name2 })}
+									value={this.state.name2}
 									placeholder="Segundo Nombre"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -172,10 +187,14 @@ class ContactScreen extends Component {
 							</Item>
 							{/* Primer Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Icon
+									type="FontAwesome5"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
 								<Input
-									onChangeText={(searchApellido) => this.setState({ searchApellido })}
-									value={this.state.searchApellido}
+									onChangeText={(lastname1) => this.setState({ lastname1 })}
+									value={this.state.lastname1}
 									placeholder="Primer Apellido"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -183,10 +202,14 @@ class ContactScreen extends Component {
 							</Item>
 							{/* Segundo Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon type="FontAwesome" name="user-o" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Icon
+									type="FontAwesome5"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
 								<Input
-									onChangeText={(searchApellido) => this.setState({ searchApellido })}
-									value={this.state.searchApellido}
+									onChangeText={(lastname2) => this.setState({ lastname2 })}
+									value={this.state.lastname2}
 									placeholder="Segundo Apellido"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -194,11 +217,7 @@ class ContactScreen extends Component {
 							</Item>
 							{/* Identificacion */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon
-									type="SimpleLineIcons"
-									name="people"
-									style={{ color: myStyles.bg1, fontSize: 25 }}
-								/>
+								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
 									value={this.state.searchDepartamento}
@@ -209,11 +228,7 @@ class ContactScreen extends Component {
 							</Item>
 							{/* NIT */}
 							<Item rounded style={{ marginTop: 15 }}>
-								<Icon
-									type="MaterialCommunityIcons"
-									name="map"
-									style={{ color: myStyles.bg1, fontSize: 25 }}
-								/>
+								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									maxLength={13}
 									onChangeText={(searchPais) => this.setState({ searchPais })}
@@ -226,8 +241,8 @@ class ContactScreen extends Component {
 							{/* Fecha de Nacimiento */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
-									type="MaterialCommunityIcons"
-									name="email-outline"
+									type="FontAwesome5"
+									name="calendar"
 									style={{ color: myStyles.bg1, fontSize: 25 }}
 								/>
 								<Input
@@ -273,44 +288,258 @@ class ContactScreen extends Component {
 								/>
 							</Item>
 
+							{/* email */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome5"
+									name="mail-bulk"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									underlineColorAndroid="transparent"
+									onChangeText={(email) => this.setState({ email })}
+									value={this.state.email}
+									placeholder="Correo electrónico"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1, outline: 'none' }}
+								/>
+							</Item>
+
+							{/* cuenta banco */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="bank" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Input
+									underlineColorAndroid="transparent"
+									onChangeText={(bankAcount) => this.setState({ bankAcount })}
+									value={this.state.bankAcount}
+									placeholder="No. De cuenta"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1, outline: 'none' }}
+								/>
+							</Item>
+
+							{/* Entidad bancaria: */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="bank" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Input
+									underlineColorAndroid="transparent"
+									onChangeText={(bank) => this.setState({ bank })}
+									value={this.state.bank}
+									placeholder="Entidad bancaria:"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1, outline: 'none' }}
+								/>
+							</Item>
+
+							<View
+								style={{
+									backgroundColor: myStyles.bg1,
+									borderRadius: 20,
+									marginHorizontal: 20,
+									marginTop: 25
+								}}
+							>
+								<Text
+									style={{
+										textAlign: 'center',
+										fontWeight: 'bold',
+										color: myStyles.light,
+										paddingVertical: 8,
+										fontSize: 20,
+										borderRadius: 20
+									}}
+								>
+									{'         DATOS DEL AHORRO    '}
+								</Text>
+							</View>
+							<View />
+
+							{/* Porcentaje de ahorro mensual: */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="percent" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Input
+									underlineColorAndroid="transparent"
+									onChangeText={(monthPercent) => this.setState({ monthPercent })}
+									value={this.state.monthPercent}
+									placeholder="% de ahorro mensual"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1, outline: 'none' }}
+								/>
+							</Item>
+
+							{/* Incluir comisiones en el ahorro: */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="bank" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Input
+									underlineColorAndroid="transparent"
+									onChangeText={(bankFees) => this.setState({ bankFees })}
+									value={this.state.bankFees}
+									placeholder="Incluir comisiones en el ahorro:"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1, outline: 'none' }}
+								/>
+							</Item>
+
+							<View
+								style={{
+									backgroundColor: myStyles.bg1,
+									borderRadius: 20,
+									marginHorizontal: 10,
+									marginTop: 25
+								}}
+							>
+								<Text
+									style={{
+										textAlign: 'center',
+										fontWeight: 'bold',
+										color: myStyles.light,
+										paddingVertical: 8,
+										fontSize: 20,
+										borderRadius: 20
+									}}
+								>
+									{'        DATOS DE BENEFICIARIO   '}
+								</Text>
+							</View>
+
+							{/* primer nombre */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(famName1) => this.setState({ famName1 })}
+									value={this.state.famName1}
+									placeholder="Primer Nombre"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
+							{/* segundo nombre */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(famName2) => this.setState({ famName2 })}
+									value={this.state.famName2}
+									placeholder="Segundo Nombre"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
+							{/* Primer Apellido */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome5"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(famLastname1) => this.setState({ famLastname1 })}
+									value={this.state.famLastname1}
+									placeholder="Primer Apellido"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
+							{/* Segundo Apellido */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome5"
+									name="user-circle"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(famLastname2) => this.setState({ famLastname2 })}
+									value={this.state.famLastname2}
+									placeholder="Segundo Apellido"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
+							{/* No. De teléfono: */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon
+									type="FontAwesome"
+									name="mobile-phone"
+									style={{ color: myStyles.bg1, fontSize: 25 }}
+								/>
+								<Input
+									onChangeText={(famMobile) => this.setState({ famMobile })}
+									value={this.state.famMobile}
+									placeholder="No. De teléfono"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
+							{/* NIT */}
+							<Item rounded style={{ marginTop: 15 }}>
+								<Icon type="FontAwesome" name="users" style={{ color: myStyles.bg1, fontSize: 25 }} />
+								<Input
+									maxLength={13}
+									onChangeText={(searchPais) => this.setState({ searchPais })}
+									value={this.state.searchPais}
+									placeholder="Parentesco"
+									placeholderTextColor={myStyles.bg1}
+									style={{ color: myStyles.bg1 }}
+								/>
+							</Item>
 							{/* BTN */}
-							<Content style={{ marginTop: 20 }}>
+							<View style={{ marginVertical: 20, paddingBottom: 30 }}>
 								<Body>
 									<Button
 										onPress={() => {
-											this.setState({ isShowResult: true });
-											this.searchContactData(this.props.usuariosReducer.token);
+											this.sendAlert();
 										}}
 										rounded
+										iconLeft
 										style={{
 											fontSize: 44,
-											backgroundColor: myStyles.bg2
+											backgroundColor: myStyles.bg2,
+											paddingVertical: 35,
+											borderRadius: 20,
+											shadowColor: `#9400d3`,
+											shadowOffset: {
+												width: 0,
+												height: 3
+											},
+											shadowOpacity: 0.27,
+											shadowRadius: 4.65,
+
+											elevation: 6
 										}}
 									>
+										<Icon
+											type="MaterialCommunityIcons"
+											name="email-send"
+											style={{
+												color: myStyles.light,
+												fontSize: 25,
+												marginLeft: 30
+											}}
+										/>
 										<Text
 											style={{
 												textAlign: 'center',
 												color: '#ffffff',
 												fontSize: 20,
 												marginRight: 30,
-												marginLeft: 30,
 												paddingBottom: 35,
 												paddingTop: 35
 											}}
 										>
-											Buscar
+											ENVIAR SOLICITUD
 										</Text>
 									</Button>
 								</Body>
-							</Content>
+							</View>
 
-							<Content
-								style={{ marginTop: 20 }}
-								onContentSizeChange={() => {
-									this.scrollView.scrollToEnd();
-								}}
-							>
-							</Content>
+							<Content />
 						</Form>
 					</View>
 				</ScrollView>
