@@ -1,4 +1,4 @@
-import { getCompany, getNameCompany, getOtherCompany, loadingCompany, errorCompany } from '../types/rrhhTypes';
+import { getCompany, getNameCompany, getOtherCompany, loadingCompany, loadingCompanyOnlySendCertificate, errorCompany } from '../types/rrhhTypes';
 import { apiUrl } from '../../App';
 
 
@@ -23,14 +23,14 @@ export const allCompany = token => async dispatch => {
         dispatch({
             type: getCompany,
             payload: data.companies,
-            cargando: false
+            //cargando: false
         });
         
     } catch (error) {
         dispatch({
             type: errorCompany,
             error: error.message,
-            cargando: false
+            //cargando: false
         });
     }
 }
@@ -66,13 +66,13 @@ export const mailVacation = (objectMail, token) => async dispatch => {
             dispatch({
               type: errorCompany,
               error: "Error al enviar el correo, " + response.status,
-              cargando: false
+              //cargando: false
             });
           } else {
             dispatch({
               type: getOtherCompany,
               otherCompany: data.message,
-              cargando: false
+              //cargando: false
             });
           }
 
@@ -80,14 +80,14 @@ export const mailVacation = (objectMail, token) => async dispatch => {
         dispatch({
             type: errorCompany,
             error: error.message,
-            cargando: false
+            //cargando: false
           });
     }
 }
 
 export const mailCertificate = (objectMail, token) => async dispatch => {
     dispatch({
-        type: loadingCompany
+        type: loadingCompanyOnlySendCertificate
     });
 
     try {

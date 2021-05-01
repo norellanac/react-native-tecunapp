@@ -336,7 +336,7 @@ class ContactScreen extends Component {
                 if (this.state.showFavorites == true) {
                   return (
                     <Content>
-                      <ListItem noBorder>
+                      <ListItem noBorder delayPressIn>
                         <Grid
                           style={{
                             backgroundColor: myStyles.bg1,
