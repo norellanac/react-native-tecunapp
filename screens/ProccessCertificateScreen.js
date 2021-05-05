@@ -202,7 +202,7 @@ class ProccessCertificateScreen extends Component {
 
 		modalViewText: {
 			marginTop: 50,
-			width: screenWidth - 45,
+			width: screenWidth - 30,
 			height: screenHeight / 5,
 			//margin: 20,
 			backgroundColor: "white",
@@ -239,7 +239,7 @@ class ProccessCertificateScreen extends Component {
 
 		modalViewButton: {
 			marginTop: 50,
-			width: screenWidth - 45,
+			width: screenWidth - 30,
 			height: screenHeight / 4,
 			//margin: 20,
 			backgroundColor: "white",
@@ -427,7 +427,7 @@ class ProccessCertificateScreen extends Component {
 									/>
 								</Body>
 							</CardItem>
-							<TouchableOpacity onPress={() => this.mailCertificate(gt, paisGT)}>
+							<TouchableOpacity onPress={() => this.mailCertificate(gt, paisGT), (modalVisibleMail) => this.setState({ modalVisibleMail: true}) }>
 								<CardItem 
 									style={{ 
 										backgroundColor: '#81cbff',

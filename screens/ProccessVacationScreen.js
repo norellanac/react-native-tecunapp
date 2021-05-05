@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, Alert } from 'react-native';
+import { Dimensions, Image, ScrollView, Modal, TouchableOpacity, Pressable, StyleSheet, Alert } from 'react-native';
 import HTML from 'react-native-render-html';
 import { withNavigation } from 'react-navigation';
 import { Col, Grid, Row } from 'react-native-easy-grid';
@@ -40,21 +40,32 @@ class ProccessVacationScreen extends Component {
 		showData: false,
 		newArray: [],
 		company: '',
+		objectMail: null,
+		token: null,
+		modalVisible: true,
+		modalVisibleMail: false,
+		modalVisibleSend: false,
+		mail: null,
+		departament: null,
 		pathImage: apiUrl.link + '/img/'
 	};
 
+	setModalVisibleOnly = (visible) => {
+		this.setState({ modalVisible: visible });
+	}
+
+	setModalVisible = (visible) => {
+		this.setState({ modalVisibleMail: visible });
+	}
+
+	setModalVisibleSend = (paramsVisibleSend) => {
+		this.setState({ modalVisibleSend: paramsVisibleSend });
+	}
+
 	componentDidMount() {
-		Alert.alert(
-			`Consultar mis vacaciones`,
-			`Elige la empresa a la que perteneces para consultar cuantos días de
-      vacaciones tienes disponibles`,
-			[
-				{
-					text: 'Cerrar'
-				}
-			],
-			{ cancelable: false }
-		);
+	}
+
+	componentDidUpdate() {
 	}
 
 	loadingInfoName() {
@@ -97,7 +108,7 @@ class ProccessVacationScreen extends Component {
 
 				{(() => {
 					return itemName.map((item) => (
-						<ListItem key={item.id} icon onPress={() => this.mailVacation(item.email, item.departament)}>
+						<ListItem key={item.id} icon onPress={ () => this.mailVacation(item.email, item.departament)}>
 							<Body style={{ marginRight: 5, marginLeft: 10 }}>
 								<Text>{item.departament}</Text>
 							</Body>
@@ -123,15 +134,98 @@ class ProccessVacationScreen extends Component {
 		));
 	}
 
+	viewModalMail(){
+		return(
+			<View style={this.styles.centeredView} key={2}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleMail}
+					visible={this.state.modalVisibleMail}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisible(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewMail}>
+							<Text style={this.styles.modalTextTitle}>Constancia laboral {this.state.pais}</Text>
+							<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
+							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+								<Pressable onPress={() => this.setModalVisible(false)}>
+									<View style={this.styles.viewMail}>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>CERRAR</Text>
+									</View>
+								</Pressable>
+								<Pressable onPress={() => this.sendMailCertificate(objectMail, token)}>
+									<View style={this.styles.viewMailAccept}>
+										<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>ACEPTAR</Text>
+									</View>
+								</Pressable>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
+	}
+
 	mailVacation(emailVacation, message) {
 		//console.log("Que viene aqui? ", emailVacation, message);
+
+		console.log("Entro al mailVacation");
+		this.setState({ modalVisibleMail: true});
 
 		let mailUser = this.props.usuariosReducer.user.email;
 		let token = this.props.usuariosReducer.token;
 
 		let objectMail = { email: emailVacation, emailUser: mailUser, departament: message };
 
-		Alert.alert(
+		this.setState({ objectMail: objectMail});
+
+		this.setState({ token: token});
+
+		return(
+			<View style={this.styles.centeredView} key={2}>
+				<Text>Hola mundo</Text>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleMail}
+					visible={this.state.modalVisibleMail}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisible(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewMail}>
+							<Text style={this.styles.modalTextTitle}>Constancia laboral</Text>
+							<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
+							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+								<Pressable onPress={() => this.setModalVisible(false)}>
+									<View style={this.styles.viewMail}>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>CERRAR</Text>
+									</View>
+								</Pressable>
+								<Pressable onPress={() => this.sendMailVacation(objectMail, token)}>
+									<View style={this.styles.viewMailAccept}>
+										<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>ACEPTAR</Text>
+									</View>
+								</Pressable>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+
+		);
+
+		/* Alert.alert(
 			message,
 			`Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.`,
 			[
@@ -143,16 +237,215 @@ class ProccessVacationScreen extends Component {
 				{ text: 'Aceptar', onPress: () => this.sendMailVacation(objectMail, token) }
 			],
 			{ cancelable: false }
-		);
+		); */
 	}
 
 	sendMailVacation(objectMail, token) {
+		this.setModalVisible(false)
+		if (this.props.rrhhReducer.cargando) {
+			this.setModalVisibleSend(true);
+		}
 		this.props.mailVacation(objectMail, token);
-		Alert.alert(
+		/* Alert.alert(
 			'Solicitud enviada',
 			`Constancia solicitada correctamente. `,
 			[ { text: 'Aceptar', onPress: () => this.props.navigation.navigate('ProccessVacationScreen') } ],
 			{ cancelable: false }
+		); */
+	}
+
+	styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+
+		modalViewSendMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5 + 25,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewText: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'red',
+		},
+
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+
+		modalViewButton: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			flexDirection: 'row',
+			justifyContent: 'flex-end',
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		ListCloseMail: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2,
+			//backgroundColor: 'black'
+		},
+
+		ListClose: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2 - 90,
+		},
+
+		textStyle: {
+			color: myStyles.bg1,
+			marginRight: 10
+		},
+
+		textStyleMail: {
+			color: myStyles.bg1,
+		},
+
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+
+		ListbodyMail: {
+			backgroundColor: 'black'
+		},
+
+		ListLeftMail: {
+			backgroundColor: 'blue',
+			width: 2,
+			marginLeft: -100
+		},
+
+		ListLeft: {
+			marginRight: -15,
+			alignItems: 'center'
+		},
+
+		buttonIcon: {
+			color: myStyles.bg1,
+			width: 28,
+		},
+  	});
+
+	modalStart() {
+		//modalVisible = this.state;
+		return(
+			<View style={this.styles.centeredView} key={1}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisible}
+					visible={this.state.modalVisible}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+						this.setModalVisibleOnly(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewText}>
+							<Text style={this.styles.modalTextTitle}>CONSULTAR MIS VACACIONES</Text>
+							<Text style={this.styles.modalTextDescription}>
+								Elige la empresa a la que perteneces para consultar cuantos días de vacaciones tienes disponibles
+							</Text>
+							<ListItem key={1} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleOnly(false)}>
+								<Left style={this.styles.ListLeft}>
+									<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+								</Left>
+								<Body>
+									<Text style={this.styles.textStyle}>CERRAR</Text>
+								</Body>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
 		);
 	}
 
@@ -161,21 +454,81 @@ class ProccessVacationScreen extends Component {
 		var screenHeight = Dimensions.get('window').height;
 		const companies = this.props.rrhhReducer.company;
 
-		/* if (this.props.rrhhReducer.cargando) {
-      return (
-        <Container>
-          <HeaderCustom navigation={this.props.navigation} />
-          <HederPostSection navigation={this.props.navigation} />
-          <Loading />
-          <FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
-        </Container>
-      );
-    } */
+		console.log(this.state);
 
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				<Content>{this.loadingInfoName()}</Content>
+				<Content>
+					{this.loadingInfoName()}
+					{this.modalStart()}
+					<View style={this.styles.centeredView} key={2}>
+						<Modal
+							animationType="fade"
+							transparent={this.state.modalVisibleMail}
+							visible={this.state.modalVisibleMail}
+							onRequestClose={() => {
+							Alert.alert("Modal has been closed.");
+							
+							this.setModalVisible(false);
+							}}
+						>
+							<View style={this.styles.centeredView}>
+								<View style={this.styles.modalViewMail}>
+									<Text style={this.styles.modalTextTitle}>MENSAJE</Text>
+									<Text style={this.styles.modalTextDescription}>Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.</Text>
+									<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+										<Pressable onPress={() => this.setModalVisible(false)}>
+											<View style={this.styles.viewMail}>
+												<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+												<Text style={this.styles.textStyleMail}>CERRAR</Text>
+											</View>
+										</Pressable>
+										<Pressable onPress={() => this.sendMailVacation(this.state.objectMail, this.state.toke)}>
+											<View style={this.styles.viewMailAccept}>
+												<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
+												<Text style={this.styles.textStyleMail}>ACEPTAR</Text>
+											</View>
+										</Pressable>
+									</ListItem>
+								</View>
+							</View>
+						</Modal>
+					</View>
+					{(() => {
+						if (this.props.rrhhReducer.cargando) {
+							return(
+								<View style={this.styles.centeredView} key={3}>
+									<Modal
+										animationType="fade"
+										transparent={this.state.modalVisibleSend}
+										visible={this.state.modalVisibleSend}
+										onRequestClose={() => {
+										Alert.alert("Modal has been closed.");
+										
+										this.setModalVisibleSend(false);
+										}}
+									>
+										<View style={this.styles.centeredView}>
+											<View style={this.styles.modalViewSendMail}>
+												<Text style={this.styles.modalTextTitle}>Solicitud enviada</Text>
+												<Text style={this.styles.modalTextDescription}>Constancia solicitada correctamente.</Text>
+												<ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false)}>
+													<Left style={this.styles.ListLeft}>
+														<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+													</Left>
+													<Body>
+														<Text style={this.styles.textStyle}>CERRAR</Text>
+													</Body>
+												</ListItem>
+											</View>
+										</View>
+									</Modal>
+								</View>
+							);
+						}
+					})()}
+				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
 		);

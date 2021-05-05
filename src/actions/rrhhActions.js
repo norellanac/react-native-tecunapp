@@ -37,7 +37,7 @@ export const allCompany = token => async dispatch => {
 
 export const mailVacation = (objectMail, token) => async dispatch => {
     dispatch({
-        type: loadingCompany
+        type: loadingCompanyOnlySendCertificate
     });
 
     try {
@@ -72,7 +72,7 @@ export const mailVacation = (objectMail, token) => async dispatch => {
             dispatch({
               type: getOtherCompany,
               otherCompany: data.message,
-              //cargando: false
+              cargando: false
             });
           }
 
