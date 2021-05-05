@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Dimensions, Image, Alert } from 'react-native';
+import { Dimensions, Image, Alert, ImageBackground, Touchable } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
-import { Container, Content, Body, Spinner, Icon, Text, CardItem, Card, Button } from 'native-base';
+import { Container, Content, Body, Spinner, Icon, Text, CardItem, Card, Button, View } from 'native-base';
 import { connect } from 'react-redux';
 import * as questionActions from '../src/actions/questionActions';
 import * as loginActions from '../src/actions/loginActions';
@@ -11,7 +11,8 @@ import { persistor } from '../App';
 import { withNavigation } from 'react-navigation';
 import Loading from './../components/Loading';
 import { SliderBox } from 'react-native-image-slider-box';
-import { apiUrl } from '../App';
+import { apiUrl, screenHeight, myStyles } from '../App';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class GameShowScreen extends Component {
 	constructor() {
@@ -34,7 +35,19 @@ class GameShowScreen extends Component {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
 		}
 
-		return this.props.questionReducer.question.map((trivia) => <Text>{trivia.description}</Text>);
+		return this.props.questionReducer.question.map((trivia) => (
+			<Text
+				style={{
+					textAlign: 'center',
+					fontSize: 25,
+					fontWeight: 'bold',
+					color: myStyles.light,
+					fontSize: 25
+				}}
+			>
+				{trivia.description}
+			</Text>
+		));
 	}
 
 	answerQuestion(answId, flag) {
@@ -84,50 +97,65 @@ class GameShowScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
+				<Image
+					source={{ uri: apiUrl.link + '/img/app/' + 'b-trivia.png' }}
+					style={{
+						width: screenWidth,
+						minHeight: screenHeight / 10,
+						height: screenHeight / 4
+					}}
+				/>
+
 				<Content>
-					<CardItem style={{ backgroundColor: '#181e26' }}>
-						<Body>
-							<Image
-								source={require('../assets/images/robot-dev.png')}
-								style={{ width: screenWidth - 20, height: 150 }}
-							/>
-						</Body>
-					</CardItem>
-					<CardItem>
-						<Body>{this.textQuestion()}</Body>
-					</CardItem>
+					<ImageBackground
+						style={{ flex: 1, width: screenWidth + 2 }}
+						source={{ uri: apiUrl.link + '/img/app/' + 'b-trivia1.png' }}
+					>
+						<View transparent>
+							<Text
+								style={{
+									textAlign: 'center',
+									fontWeight: 'bold',
+									color: '#FFBF00',
+									paddingTop: 10,
+									fontSize: 20
+								}}
+							>
+								PREGUNTA 1:
+							</Text>
+						</View>
+						<CardItem style={{ backgroundColor: 'transparent' }}>
+							<Body>{this.textQuestion()}</Body>
+						</CardItem>
 
-					<Card transparent>
-						{(() => {
-							if (this.props.questionReducer.answer1 == undefined) {
-								return (
-									<Container>
-										<HeaderCustom navigation={this.props.navigation} />
-										<Spinner color="blue" style={{ flex: 1 }} />
-										<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
-									</Container>
-								);
-							} else {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answer1.id,
-												this.props.questionReducer.answer1.flag
-											)}
-									>
-										<CardItem style={{ marginTop: 0 }}>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+						<Card transparent>
+							{(() => {
+								if (this.props.questionReducer.answer1 == undefined) {
+									return (
+										<Container>
+											<HeaderCustom navigation={this.props.navigation} />
+											<Spinner color="blue" style={{ flex: 1 }} />
+											<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+										</Container>
+									);
+								} else {
+									return (
+										<TouchableOpacity
+											transparent
+											vertical
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answer1.id,
+													this.props.questionReducer.answer1.flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -136,52 +164,56 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon11.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answer1.reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answer1.reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answer2 == undefined) {
-								return (
-									<Container>
-										<HeaderCustom navigation={this.props.navigation} />
-										<Loading />
-										<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
-									</Container>
-								);
-							} else {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answer2.id,
-												this.props.questionReducer.answer2.flag
-											)}
-									>
-										<CardItem style={{ marginTop: 0 }}>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answer2 == undefined) {
+									return (
+										<Container>
+											<HeaderCustom navigation={this.props.navigation} />
+											<Loading />
+											<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+										</Container>
+									);
+								} else {
+									return (
+										<TouchableOpacity
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answer2.id,
+													this.props.questionReducer.answer2.flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -190,44 +222,50 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon12.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answer2.reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answer2.reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answerArray[0] != undefined) {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answerArray[0].id,
-												this.props.questionReducer.answerArray[0].flag
-											)}
-									>
-										<CardItem>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answerArray[0] != undefined) {
+									return (
+										<TouchableOpacity
+											transparent
+											vertical
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answerArray[0].id,
+													this.props.questionReducer.answerArray[0].flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -236,44 +274,43 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{
+															uri: apiUrl.link + '/img/app/' + 'gamIcon13.png'
+														}}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
 												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answerArray[0].reply}</Text>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answerArray[0].reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answerArray[1] != undefined) {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answerArray[1].id,
-												this.props.questionReducer.answerArray[1].flag
-											)}
-									>
-										<CardItem>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answerArray[1] != undefined) {
+									return (
+										<TouchableOpacity
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answerArray[1].id,
+													this.props.questionReducer.answerArray[1].flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -282,44 +319,50 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon14.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answerArray[1].reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answerArray[1].reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answerArray[2] != undefined) {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answerArray[2].id,
-												this.props.questionReducer.answerArray[2].flag
-											)}
-									>
-										<CardItem>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answerArray[2] != undefined) {
+									return (
+										<TouchableOpacity
+											transparent
+											vertical
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answerArray[2].id,
+													this.props.questionReducer.answerArray[2].flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -328,44 +371,50 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon14.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answerArray[2].reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answerArray[2].reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answerArray[3] != undefined) {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answerArray[3].id,
-												this.props.questionReducer.answerArray[3].flag
-											)}
-									>
-										<CardItem>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answerArray[3] != undefined) {
+									return (
+										<TouchableOpacity
+											transparent
+											vertical
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answerArray[3].id,
+													this.props.questionReducer.answerArray[3].flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -374,44 +423,50 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon14.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answerArray[3].reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answerArray[3].reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
+										</TouchableOpacity>
+									);
+								}
+							})()}
 
-						{(() => {
-							if (this.props.questionReducer.answerArray[4] != undefined) {
-								return (
-									<Button
-										transparent
-										vertical
-										onPress={() =>
-											this.answerQuestion(
-												this.props.questionReducer.answerArray[4].id,
-												this.props.questionReducer.answerArray[4].flag
-											)}
-									>
-										<CardItem>
-											<Grid
-												style={{
-													backgroundColor: '#F8FAFB',
-													borderBottomLeftRadius: 5,
-													borderTopLeftRadius: 5,
-													borderBottomRightRadius: 5,
-													borderTopRightRadius: 5
-												}}
-											>
+							{(() => {
+								if (this.props.questionReducer.answerArray[4] != undefined) {
+									return (
+										<TouchableOpacity
+											transparent
+											vertical
+											onPress={() =>
+												this.answerQuestion(
+													this.props.questionReducer.answerArray[4].id,
+													this.props.questionReducer.answerArray[4].flag
+												)}
+											style={{
+												backgroundColor: myStyles.light,
+												marginHorizontal: 30,
+												marginVertical: 10,
+												borderRadius: 20
+											}}
+										>
+											<Grid>
 												<Col
 													size={1}
 													style={{
@@ -420,24 +475,34 @@ class GameShowScreen extends Component {
 														justifyContent: 'center'
 													}}
 												>
-													<Icon
-														type="FontAwesome"
-														name="question-circle"
-														style={{ marginLeft: 15, color: '#1c5988' }}
+													<Image
+														source={{ uri: apiUrl.link + '/img/app/' + 'gamIcon11.png' }}
+														style={{
+															height: 40,
+															width: 40,
+															marginHorizontal: 15
+														}}
 													/>
 												</Col>
-												<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-													<Text>{this.props.questionReducer.answerArray[4].reply}</Text>
+												<Col
+													size={3}
+													style={{
+														marginTop: 15,
+														marginBottom: 15,
+														justifyContent: 'center'
+													}}
+												>
+													<Text style={{color: myStyles.bg1}}>{this.props.questionReducer.answerArray[4].reply}</Text>
 												</Col>
 											</Grid>
-										</CardItem>
-									</Button>
-								);
-							}
-						})()}
-					</Card>
+										</TouchableOpacity>
+									);
+								}
+							})()}
+						</Card>
+					</ImageBackground>
 				</Content>
-				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
+				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={3} />
 			</Container>
 		);
 	}
