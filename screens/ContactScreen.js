@@ -2,6 +2,9 @@ import React, { Component, useEffect } from "react";
 import {
   ScrollView,
   Linking,
+  Modal, 
+  Pressable, 
+  StyleSheet,
   Image,
   TouchableOpacity,
   Alert,
@@ -53,9 +56,171 @@ class ContactScreen extends Component {
     isShowAlert: true,
     isShowResult: false,
     showFavorites: false,
+    modalVisibleSend: false,
     activeSections: [],
     pathImage: apiUrl.link + "/img/",
   };
+
+  styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+
+		modalViewSendMail: {
+			marginTop: 50,
+			width: screenWidth / 1.4,
+			height: screenHeight / 5.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5 + 25,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewText: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'red',
+		},
+
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+
+		modalViewButton: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			flexDirection: 'row',
+			justifyContent: 'flex-end',
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		ListCloseMail: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2,
+			//backgroundColor: 'black'
+		},
+
+		ListClose: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2 - 90,
+		},
+
+		textStyle: {
+			color: myStyles.bg1,
+			marginRight: 10
+		},
+
+		textStyleMail: {
+			color: myStyles.bg1,
+		},
+
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+
+		ListbodyMail: {
+			backgroundColor: 'black'
+		},
+
+		ListLeftMail: {
+			backgroundColor: 'blue',
+			width: 2,
+			marginLeft: -100
+		},
+
+		ListLeft: {
+			marginRight: -15,
+			alignItems: 'center'
+		},
+
+		buttonIcon: {
+			color: myStyles.bg1,
+			width: 28,
+		},
+  	});
 
   showError = () => {
     if (this.props.contactsReducer.error && this.state.isShowAlert) {
@@ -130,6 +295,10 @@ class ContactScreen extends Component {
     }
   }
 
+  setModalVisibleSend = (paramsVisibleSend) => {
+		this.setState({ modalVisibleSend: paramsVisibleSend });
+	}
+
   showContacts = () => {
     if (this.props.contactsReducer.cargando) {
       return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -148,7 +317,36 @@ class ContactScreen extends Component {
       );
     } else {
       if (this.state.isShowResult && !this.props.contactsReducer.cargando) {
-        Alert.alert(
+        return(
+          <View style={this.styles.centeredView} key={3}>
+            <Modal
+              animationType="fade"
+              transparent={true}
+              visible={true}
+              onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              
+              this.setModalVisibleSend(false);
+              }}
+            >
+              <View style={this.styles.centeredView}>
+                <View style={this.styles.modalViewSendMail}>
+                  <Text style={this.styles.modalTextTitle}>No hay coincidencias</Text>
+                  <Text style={this.styles.modalTextDescription}>Realiza una nueva busqueda.</Text>
+                  <ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false), () => this.setState({ isShowResult: false })}>
+                    <Left style={this.styles.ListLeft}>
+                      <Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+                    </Left>
+                    <Body>
+                      <Text style={this.styles.textStyle}>CERRAR</Text>
+                    </Body>
+                  </ListItem>
+                </View>
+              </View>
+            </Modal>
+          </View>
+        );
+        /* Alert.alert(
           `No hay coincidencias`,
           `Realiza una nueva busqueda`,
           [
@@ -158,7 +356,7 @@ class ContactScreen extends Component {
             },
           ],
           { cancelable: false }
-        );
+        ); */
       }
     }
   };
@@ -426,6 +624,7 @@ class ContactScreen extends Component {
                   fontSize: 20,
                   color: myStyles.bg1,
                   fontWeight: "bold",
+                  marginBottom: 10
                 }}
               >
                 BUSCAR
@@ -525,6 +724,7 @@ class ContactScreen extends Component {
                     style={{
                       fontSize: 44,
                       backgroundColor: myStyles.bg2,
+                      marginBottom: 10,
                     }}
                   >
                     <Text
