@@ -1,4 +1,4 @@
-import { getCompany, getNameCompany, getOtherCompany, loadingCompany, loadingCompanyOnlySendCertificate, errorCompany } from '../types/rrhhTypes';
+import { getCompany, getNameCompany, getOtherCompany, loadingCompany, loadingCompanyOnlySendCertificate, loadingCompanyOnlySendVacation, errorCompany } from '../types/rrhhTypes';
 import { PURGE } from 'redux-persist';
 
 
@@ -7,6 +7,7 @@ const INITIAL = {
     nameCompany: [],
     otherCompany: [],
     cargando: false,
+    cargandoVacation: false,
     error: ''
 }
 
@@ -23,6 +24,9 @@ export default ( state = INITIAL, action ) => {
             return { ...state, error: '' };
         case loadingCompanyOnlySendCertificate:
             return { ...state, cargando: true, error: '' };
+
+        case loadingCompanyOnlySendVacation:
+            return { ...state, cargcargandoVacationando: true, error: '' };
         case errorCompany:
             return { ...state, error: action.error };
         case PURGE:

@@ -315,8 +315,8 @@ class ProccessCertificateScreen extends Component {
   });
 
 	render() {
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
+		/* var screenWidth = Dimensions.get('window').width;
+		var screenHeight = Dimensions.get('window').height; */
 
 		let gt = 'gtm';
 		let paisGT = 'Guatemala';
@@ -401,6 +401,7 @@ class ProccessCertificateScreen extends Component {
 							style={{
 								flex: 0,
 								borderRadius: 15,
+								//height: screenHeight / 4,
 								marginVertical: 10,
 								marginLeft: 20,
 								marginRight: 20,
@@ -421,7 +422,7 @@ class ProccessCertificateScreen extends Component {
 										source={{ uri: this.state.pathImage + 'guatemala.png' }}
 										style={{
 											borderRadius: 20,
-											width: screenWidth / 2,
+											width: screenWidth / 1.7,
 											height: screenHeight / 6
 										}}
 									/>
@@ -430,32 +431,22 @@ class ProccessCertificateScreen extends Component {
 							<TouchableOpacity onPress={() => this.mailCertificate(gt, paisGT), (modalVisibleMail) => this.setState({ modalVisibleMail: true}) }>
 								<CardItem 
 									style={{ 
-										backgroundColor: '#81cbff',
+										//backgroundColor: '#81cbff',
 										marginLeft: 65,
 										marginRight: 65,
-										marginBottom: 10,
-									}}
-									//onPress={() => this.mailCertificate(gt, paisGT)}
-									onPress={() => this.mailCertificate(gt, paisGT)}
-								>
-									<Left>
-										<Thumbnail
-											square
-											style={{
-												minWidth: 2,
-												maxWidth: 80,
-												maxHeight: 30,
-												marginLeft: 10,
-												
-											}}
-											source={{ uri: `${apiUrl.link}/img/vacacionesWhite.png` }}
-										/>
-										
-									</Left>
-									<Text style={{ marginLeft: 55, color: 'white' }}>SOLICITA AQUI</Text>
-									<Body>
-
-									</Body>
+									}} onPress={() => this.mailCertificate(gt, paisGT)}>
+									<Image
+										source={{ uri: this.state.pathImage + 'consLaboral.png' }}
+										style={{
+											//backgroundColor: 'black',
+											marginTop: -10,
+											borderRadius: 10,
+											width: screenWidth / 2,
+											height: 50,
+											maxWidth: 600,
+											maxHeight: 400,
+										}}
+									/>
 								</CardItem>
 							</TouchableOpacity>
 						</Card>
@@ -486,7 +477,7 @@ class ProccessCertificateScreen extends Component {
 										source={{ uri: this.state.pathImage + 'el-salvador.png' }}
 										style={{
 											borderRadius: 20,
-											width: screenWidth / 2,
+											width: screenWidth / 1.7,
 											height: screenHeight / 6
 										}}
 									/>
@@ -495,29 +486,23 @@ class ProccessCertificateScreen extends Component {
 							<TouchableOpacity onPress={() => this.mailCertificate(sv, paisSV), (modalVisibleMail) => this.setState({ modalVisibleMail: true}) }>
 								<CardItem 
 									style={{ 
-										backgroundColor: '#81cbff',
+										//backgroundColor: '#81cbff',
 										marginLeft: 65,
 										marginRight: 65,
-										marginBottom: 10,
+										//marginBottom: 10,
 									}} onPress={() => this.mailCertificate(sv, paisSV)}>
-									<Left>
-										<Thumbnail
-											square
-											style={{
-												minWidth: 2,
-												maxWidth: 80,
-												maxHeight: 30,
-												marginLeft: 10,
-												
-											}}
-											source={{ uri: `${apiUrl.link}/img/vacacionesWhite.png` }}
-										/>
-										
-									</Left>
-									<Text style={{ marginLeft: 55, color: 'white' }}>SOLICITA AQUI</Text>
-									<Body>
-
-									</Body>
+									<Image
+										source={{ uri: this.state.pathImage + 'consLaboral.png' }}
+										style={{
+											//backgroundColor: 'black',
+											marginTop: -10,
+											borderRadius: 10,
+											width: screenWidth / 2,
+											height: 50,
+											maxWidth: 600,
+											maxHeight: 400,
+										}}
+									/>
 								</CardItem>
 							</TouchableOpacity>
 						</Card>
@@ -548,7 +533,7 @@ class ProccessCertificateScreen extends Component {
 										source={{ uri: this.state.pathImage + 'honduras.png' }}
 										style={{
 											borderRadius: 20,
-											width: screenWidth / 2,
+											width: screenWidth / 1.7,
 											height: screenHeight / 6
 										}}
 									/>
@@ -557,29 +542,23 @@ class ProccessCertificateScreen extends Component {
 							<TouchableOpacity onPress={() => this.mailCertificate(hn, paisHn), (modalVisibleMail) => this.setState({ modalVisibleMail: true}) }>
 								<CardItem 
 									style={{ 
-										backgroundColor: '#81cbff',
+										//backgroundColor: '#81cbff',
 										marginLeft: 65,
 										marginRight: 65,
-										marginBottom: 10,
+										//marginBottom: 10,
 									}} onPress={() => this.mailCertificate(hn, paisHn)}>
-									<Left>
-										<Thumbnail
-											square
-											style={{
-												minWidth: 2,
-												maxWidth: 80,
-												maxHeight: 30,
-												marginLeft: 10,
-												
-											}}
-											source={{ uri: `${apiUrl.link}/img/vacacionesWhite.png` }}
-										/>
-										
-									</Left>
-									<Text style={{ marginLeft: 55, color: 'white' }}>SOLICITA AQUI</Text>
-									<Body>
-
-									</Body>
+									<Image
+										source={{ uri: this.state.pathImage + 'consLaboral.png' }}
+										style={{
+											//backgroundColor: 'black',
+											marginTop: -10,
+											borderRadius: 10,
+											width: screenWidth / 2,
+											height: 50,
+											maxWidth: 600,
+											maxHeight: 400,
+										}}
+									/>
 								</CardItem>
 							</TouchableOpacity>
 						</Card>

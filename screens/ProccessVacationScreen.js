@@ -462,7 +462,7 @@ class ProccessVacationScreen extends Component {
 				<Content>
 					{this.loadingInfoName()}
 					{this.modalStart()}
-					<View style={this.styles.centeredView} key={2}>
+					<View style={this.styles.centeredView} key={4}>
 						<Modal
 							animationType="fade"
 							transparent={this.state.modalVisibleMail}
@@ -473,11 +473,11 @@ class ProccessVacationScreen extends Component {
 							this.setModalVisible(false);
 							}}
 						>
-							<View style={this.styles.centeredView}>
+							<View style={this.styles.centeredView} key={4}>
 								<View style={this.styles.modalViewMail}>
 									<Text style={this.styles.modalTextTitle}>MENSAJE</Text>
 									<Text style={this.styles.modalTextDescription}>Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.</Text>
-									<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+									<ListItem key={4} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 										<Pressable onPress={() => this.setModalVisible(false)}>
 											<View style={this.styles.viewMail}>
 												<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
