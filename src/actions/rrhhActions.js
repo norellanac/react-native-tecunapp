@@ -42,6 +42,8 @@ export const mailVacation = (objectMail, token) => async dispatch => {
 
     try {
 
+        console.log("Que trael los objectos",objectMail, token);
+
         let dataForm = "_method=" + encodeURIComponent("POST");
         dataForm += "&email=" + encodeURIComponent(objectMail.email);
         dataForm += "&emailUser=" + encodeURIComponent(objectMail.emailUser);
@@ -66,7 +68,7 @@ export const mailVacation = (objectMail, token) => async dispatch => {
             dispatch({
               type: errorCompany,
               error: "Error al enviar el correo, " + response.status,
-              //cargando: false
+              cargando: false
             });
           } else {
             dispatch({
@@ -80,7 +82,7 @@ export const mailVacation = (objectMail, token) => async dispatch => {
         dispatch({
             type: errorCompany,
             error: error.message,
-            //cargando: false
+            cargando: false
           });
     }
 }
@@ -130,7 +132,7 @@ export const mailCertificate = (objectMail, token) => async dispatch => {
         dispatch({
             type: errorCompany,
             error: error.message,
-            cargando: false
+            cargcargandoVacationando: false
           });
     }
 }

@@ -338,7 +338,7 @@ class ProccessCertificateScreen extends Component {
 					{this.modalStart()}
 					{this.mailCertificate(algo, algo1)}
 					{(() => {
-						if (this.props.rrhhReducer.cargando) {
+						if (this.props.rrhhReducer.cargandoVacation) {
 							return(
 								<View style={this.styles.centeredView} key={3}>
 									<Modal
