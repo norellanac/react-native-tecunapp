@@ -140,7 +140,7 @@ class TeamScreen extends Component {
 												alignSelf: 'center'
 											}}
 										/>
-										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
 											<Text
 												style={{
 													fontSize: 14,
@@ -188,7 +188,7 @@ class TeamScreen extends Component {
 												alignSelf: 'center'
 											}}
 										/>
-										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
 											<Text
 												style={{
 													fontSize: 14,
@@ -239,7 +239,7 @@ class TeamScreen extends Component {
 												alignSelf: 'center'
 											}}
 										/>
-										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
 											<Text
 												style={{
 													fontSize: 14,
@@ -287,7 +287,7 @@ class TeamScreen extends Component {
 												alignSelf: 'center'
 											}}
 										/>
-										<CardItem style={{ borderRadius: 10, paddingTop: 0 }}>
+										<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
 											<Text
 												style={{
 													fontSize: 14,

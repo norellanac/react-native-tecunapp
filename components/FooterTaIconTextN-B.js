@@ -1,47 +1,62 @@
-import React, { Component } from "react";
-import { Linking } from "react-native";
-import {myStyles} from '../App'
-import { View, Footer, FooterTab, Button, Icon, Text } from "native-base";
+import React, { Component } from 'react';
+import { Image } from 'react-native';
+import { myStyles } from '../App';
+import { View, Footer, FooterTab, Button, Icon, Text } from 'native-base';
 class FooterTabsNavigationIconText extends Component {
-  constructor(props) {
-    super();
-  }
+	constructor(props) {
+		super();
+	}
 
-  render() {
-    //const { navigation } = this.props.navigation
-    //console.log("footer: ", this.props);
-    return (
-      <View>
-        <Footer >
-          <FooterTab style={{ backgroundColor: myStyles.light }}>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate("Home")}
-            >
-              <Icon style={{ color: this.props.tab==1 ? myStyles.bg2 : '#6c757d' }} name="newspaper" type="FontAwesome5" />
-              <Text style={{ color: this.props.tab==1 ? myStyles.bg2 : '#6c757d' }}>Noticias</Text>
-            </Button>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate("TeamScreen")}
-            >
-              <Icon style={{ color: this.props.tab==2 ? myStyles.bg2 : '#6c757d' }} name="hard-hat" type="FontAwesome5" />
-              <Text style={{ color: this.props.tab==2 ? myStyles.bg2 : '#6c757d' }}>Tecun</Text>
-            </Button>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate("GamesScreen")}
-            >
-              <Icon style={{ color: this.props.tab==3 ? myStyles.bg2 : '#6c757d' }} name="gamepad" type="FontAwesome5" />
-              <Text style={{ color: this.props.tab==3 ? myStyles.bg2 : '#6c757d' }}>Juegos</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
+	tecunMenu() {
+		if (this.props.tab == 2) {
+			return <Image source={require('./../assets/images/tecun/tecun2.png')} style={{ height: 50, width: 50 }} />;
+		} else {
+			return <Image source={require('./../assets/images/tecun/tecun1.png')} style={{ height: 50, width: 50 }} />;
+		}
+	}
 
-      </View>
+	noticiasMenu() {
+		if (this.props.tab == 1) {
+			return (
+				<Image source={require('./../assets/images/tecun/noticias2.png')} style={{ height: 50, width: 50 }} />
+			);
+		} else {
+			return (
+				<Image source={require('./../assets/images/tecun/noticias1.png')} style={{ height: 50, width: 50 }} />
+			);
+		}
+	}
 
-    );
-  }
+	juegosMenu() {
+		if (this.props.tab == 3) {
+			return <Image source={require('./../assets/images/tecun/juegos2.png')} style={{ height: 50, width: 50 }} />;
+		} else {
+			return <Image source={require('./../assets/images/tecun/juegos1.png')} style={{ height: 50, width: 50 }} />;
+		}
+	}
+
+	render() {
+		//const { navigation } = this.props.navigation
+		//console.log("footer: ", this.props);
+
+		return (
+			<View>
+				<Footer>
+					<FooterTab style={{ backgroundColor: myStyles.light }}>
+						<Button vertical onPress={() => this.props.navigation.navigate('Home')}>
+							{this.noticiasMenu()}
+						</Button>
+						<Button vertical onPress={() => this.props.navigation.navigate('TeamScreen')}>
+							{this.tecunMenu()}
+						</Button>
+						<Button vertical onPress={() => this.props.navigation.navigate('GamesScreen')}>
+							{this.juegosMenu()}
+						</Button>
+					</FooterTab>
+				</Footer>
+			</View>
+		);
+	}
 }
 
 export default FooterTabsNavigationIconText;

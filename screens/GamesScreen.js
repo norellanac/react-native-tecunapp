@@ -15,6 +15,7 @@ import {
 	Right,
 	Badge,
 	Icon,
+	List,
 	View
 } from 'native-base';
 import { connect } from 'react-redux';
@@ -25,7 +26,7 @@ import HeaderCustom from '../components/HeaderCustom';
 import { persistor, myStyles } from '../App';
 import Loading from './../components/Loading';
 import { SliderBox } from 'react-native-image-slider-box';
-import { apiUrl } from '../App';
+import { apiUrl, screenWidth, screenHeight } from '../App';
 
 class GamesScreen extends Component {
 	constructor() {
@@ -127,6 +128,119 @@ class GamesScreen extends Component {
 		}
 	}
 
+	bestPlayers() {
+		//console.log("Que viene en el score?: ",this.state.isDisplay);
+		let count = 0;
+		let possitionArray = { 1: 'numeric-1', 2: 'numeric-2', 3: 'numeric-3', 4: 'numeric-4', 5: 'numeric-5' };
+		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
+			return (
+				<Grid>
+					<Col size={4} style={{ alignItems: 'center' }}>
+						<ImageBackground
+							style={{ flex: 1, width: screenWidth - 110, height: screenWidth / 2 + 50 }}
+							source={{ uri: apiUrl.link + '/img/app/' + 'juegos-4.png' }}
+						>
+							<View>
+								<Grid style={{ marginTop: 160, marginLeft: 25 }}>
+									<Col>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[1].user.name.split(' ', 1)}
+										</Text>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[1].user.lastname.split(' ', 1)}
+										</Text>
+										<Badge success>
+											<Text> {this.props.questionReducer.score[1].points + 900} </Text>
+										</Badge>
+									</Col>
+									<Col>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[0].user.name.split(' ', 1)}
+										</Text>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[0].user.lastname.split(' ', 1)}
+										</Text>
+										<Badge warning>
+											<Text> {this.props.questionReducer.score[0].points} </Text>
+										</Badge>
+									</Col>
+									<Col>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[2].user.name.split(' ', 1)}
+										</Text>
+										<Text
+											style={{
+												color: myStyles.light,
+												textAlign: 'center',
+												marginLeft: -35
+											}}
+										>
+											{this.props.questionReducer.score[2].user.lastname.split(' ', 1)}
+										</Text>
+
+										<Badge danger>
+											<Text> {this.props.questionReducer.score[2].points + 5000} </Text>
+										</Badge>
+									</Col>
+								</Grid>
+							</View>
+
+							{/* <View>
+							<ListItem noBorder>
+								<Left>
+									<Badge primary>
+										<Text> {this.props.questionReducer.score[0].points} </Text>
+									</Badge>
+								</Left>
+								<Body>
+									<Badge primary>
+										<Text> primary </Text>
+									</Badge>
+								</Body>
+								<Right>
+									<Badge primary>
+										<Text> primary </Text>
+									</Badge>
+								</Right>
+							</ListItem>
+						</View> */}
+						</ImageBackground>
+					</Col>
+				</Grid>
+			);
+		}
+	}
+
 	async onValueChance() {
 		await this.props.topScoreAction(this.props.usuariosReducer.token);
 		if (this.state.isDisplay == 1) {
@@ -141,9 +255,10 @@ class GamesScreen extends Component {
 	}
 
 	render() {
+		console.log('====================================');
+		console.log(this.props.questionReducer.score[0]);
+		console.log('====================================');
 		//const { navigation } = this.props.navigation
-		var screenWidth = Dimensions.get('window').width;
-		var screenHeight = Dimensions.get('window').height;
 
 		if (this.props.questionReducer.cargando && !this.props.questionReducer) {
 			return (
@@ -223,7 +338,6 @@ class GamesScreen extends Component {
 					</Card>
 
 					<Card
-						transparent
 						style={{
 							borderRadius: 10,
 							marginVertical: 10,
@@ -261,6 +375,7 @@ class GamesScreen extends Component {
 							<Col size={2} style={{ alignItems: 'center' }}>
 								<Button
 									iconLeft
+									info
 									onPress={() => {
 										this.onValueChance();
 									}}
@@ -268,7 +383,6 @@ class GamesScreen extends Component {
 										width: screenWidth / 3,
 										borderRadius: 10,
 										alignSelf: 'center',
-										backgroundColor: myStyles.bg1,
 										justifyContent: 'center',
 										marginTop: 90
 									}}
@@ -287,16 +401,7 @@ class GamesScreen extends Component {
 								</Button>
 							</Col>
 						</Grid>
-						<Grid>
-							<Col size={4} style={{ alignItems: 'center' }}>
-								<ImageBackground
-									style={{ flex: 1, width: screenWidth - 110, height: screenWidth / 2 + 50 }}
-									source={{ uri: apiUrl.link + '/img/app/' + 'juegos-4.png' }}
-								>
-									{this.allScore()}
-								</ImageBackground>
-							</Col>
-						</Grid>
+						{this.bestPlayers()}
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={3} />

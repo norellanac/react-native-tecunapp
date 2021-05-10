@@ -289,7 +289,6 @@ class PostsShowScreen extends Component {
               </CardItem>
               <CardItem>
                 <Body>
-                  <Text>{post.description}</Text>
                   {/* <Text>{post.content.replace()}</Text> */}
                   <ScrollView>
                     {(() => {

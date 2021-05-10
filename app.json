@@ -8,7 +8,7 @@
       "android",
       "web"
     ],
-    "version": "0.0.1",
+    "version": "0.5.1",
     "orientation": "default",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -31,7 +31,7 @@
     },
     "android": {
       "package": "com.grupotecun.gtm.tecunapp",
-      "versionCode": 2,
+      "versionCode": 3,
       "useNextNotificationsApi": true,
       "googleServicesFile": "./google-services.json"
     },

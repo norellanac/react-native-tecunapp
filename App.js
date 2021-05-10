@@ -43,7 +43,7 @@ const store = createStore(persistedReducer, applyMiddleware(reduxThunk));
 export const persistor = persistStore(store);
 
 export const apiUrl = {
-	link: "http://192.168.1.9:3000"
+	link: "http://192.168.1.49:3000"
 	//link: "http://tecunapp.com/"
 	//link: 'http://192.168.1.49:3000'
 };
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
 	buttonCircle: {
 		width: 50,
 		height: 50,
-		backgroundColor: myStyles.bg2,
+		backgroundColor: myStyles.bg1,
 		borderRadius: 25,
 		justifyContent: 'center',
 		alignItems: 'center',

@@ -58,8 +58,8 @@ export const traerToken = (email, password) => async (dispatch) => {
 	try {
 		let dataForm = '_method=' + encodeURIComponent('POST');
 		dataForm += '&grant_type=' + encodeURIComponent('password');
-		dataForm += '&client_id=' + encodeURIComponent('6');
-		dataForm += '&client_secret=' + encodeURIComponent('7wuBXu9Xd8lFaf0dnjMeodRKbvuc8ggCm8e6feuh');
+		dataForm += '&client_id=' + encodeURIComponent('2');
+		dataForm += '&client_secret=' + encodeURIComponent('p9At0HKUdGlgtemxMEjYPNtl2bX38s3R2XEylG9R');
 		dataForm += '&username=' + encodeURIComponent(email);
 		dataForm += '&password=' + encodeURIComponent("@ppT3cun$3cre7");
 
