@@ -1,4 +1,4 @@
-import { getUser, loadingUser, errorUser } from "../types/userTypes";
+import { getUser, loadingUser, errorUser, avatarUser } from "../types/userTypes";
 import { apiUrl } from './../../App';
 
 export const traerUser = tokenUsr => async dispatch => {
@@ -34,6 +34,53 @@ export const traerUser = tokenUsr => async dispatch => {
       error: error.message,
       cargando: false
     });
+  }
+};
+
+export const changeAvatar = (image, token) => async dispatch => {
+  dispatch({
+    type: loadingUser
+  });
+
+  try {
+    let json = JSON.stringify(image);
+		let params = 'json=' + json;
+
+    let dataForm = '_method=' + encodeURIComponent('POST');
+		dataForm += '&json=' + encodeURIComponent(image);
+		//console.log("Que trae data form: ",dataForm);
+		const response = await fetch(`${apiUrl.link}/api/avataruser`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+				Authorization: `Bearer ${token}`,
+				Params: `json ${dataForm}`
+			},
+			body: params
+		});
+
+		const data = await response.json();
+    console.log("Que trae data ", data);
+
+    if (!response.ok) {
+			dispatch({
+				type: errorUser,
+				error: 'Error al cambiar avatar, ' + response,
+				cargando: false
+			});
+		} else {
+			dispatch({
+				type: avatarUser,
+				url_image: data.url_image,
+				cargando: false
+			});
+		}
+
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
   }
 };
 

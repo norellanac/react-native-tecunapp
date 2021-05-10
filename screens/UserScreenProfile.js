@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-import { Image, Linking, KeyboardAvoidingView } from 'react-native';
+import { Image, Linking, KeyboardAvoidingView, Modal, Alert, Pressable, TouchableOpacity, StyleSheet, } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
@@ -8,6 +8,7 @@ import {
 	Content,
 	Badge,
 	Thumbnail,
+	View,
 	Icon,
 	Text,
 	Left,
@@ -23,7 +24,7 @@ import * as userActions from '../src/actions/userActions';
 import * as questionActions from '../src/actions/questionActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from './../components/HeaderCustom';
-import { persistor, apiUrl } from './../App';
+import { persistor, apiUrl, screenHeight, screenWidth, myStyles } from './../App';
 import { withNavigation } from 'react-navigation';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
@@ -40,6 +41,7 @@ class UserScreenProfile extends Component {
 		setNotification: false,
 		phone: '',
 		password: '',
+		modalVisible: false,
 		confirmPassword: '',
 		errorMessage: null,
 		isShowAlert: true
@@ -55,6 +57,104 @@ class UserScreenProfile extends Component {
 			this.getTokenExpoNotificationsPush();
 		}
 	}
+
+	setModalVisibleOnly = (visible) => {
+		this.setState({ modalVisible: visible });
+	}
+
+	styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+	
+		modalViewText: {
+			width: screenWidth - 70,
+			height: screenHeight / 2,
+			backgroundColor: "white",
+			borderRadius: 20,
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+	
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+	
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+	
+		ListCloseMail: {
+			//backgroundColor: 'black',
+			alignSelf: 'flex-end',
+			marginRight: 15,
+			marginBottom: 5
+			//backgroundColor: 'black'
+		},
+	
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'red',
+		},
+	
+		buttonIcon: {
+			color: myStyles.bg1,
+			width: 28,
+		},
+	
+		textStyleMail: {
+			color: myStyles.bg1,
+		},
+
+		gridModal: {
+
+		},
+
+		cardModal: {
+			borderRadius: 15,
+			height: screenHeight / 6,
+			backgroundColor: 'white',
+			marginHorizontal: 15,
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 1,
+			},
+			shadowOpacity: 0.15,
+			shadowRadius: 4.49,
+
+			elevation: 24,
+		},
+
+		imageModal: {
+			marginTop: 15,
+			minHeight: screenHeight / 13,
+			minWidth: screenWidth / 13,
+			height: screenHeight / 8,
+			width: screenWidth / 4,
+			alignSelf: 'center'
+		},
+  	});
 
 	allScoreTitle() {
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
@@ -95,8 +195,9 @@ class UserScreenProfile extends Component {
 		//console.log("Que viene en el score?: ",this.state.isDisplay);
 		let count = 0;
 		let color = '#F8FAFB';
+		let idUserScore;
 		if (this.props.questionReducer.userScore) {
-			let idUserScore = this.props.questionReducer.userScore.id;
+			idUserScore = this.props.questionReducer.userScore.id;
 		}
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
 			return this.props.questionReducer.score.map(
@@ -294,9 +395,96 @@ class UserScreenProfile extends Component {
 		}
 	};
 
+	changeAvatar(nameImage) {
+		let token = this.props.usuariosReducer.token;
+		let object = {url_image: nameImage};
+
+		this.props.changeAvatar(object, token);
+		this.props.traerUser(token);
+		this.setModalVisibleOnly(false);
+	}
+
+	showModal() {
+		let b1 = 'b1.png';
+		let b2 = 'b2.png';
+		let g1 = 'g1.png';
+		let g2 = 'g2.png';
+		return(
+			<View style={this.styles.centeredView} key={1}>
+				<Modal
+					animationType="slide"
+					transparent={this.state.modalVisible}
+					visible={this.state.modalVisible}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+						this.setModalVisibleOnly(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewText}>
+							<Text style={this.styles.modalTextTitle}>ELIGE TU PERSONAJE</Text>
+							<Grid style={this.styles.gridModal}>
+								<Col>
+									<TouchableOpacity onPress={() => this.changeAvatar(b1)}>
+										<View style={this.styles.cardModal}>
+											<Image
+												source={{ uri: apiUrl.link + '/img/' + 'b1.png' }}
+												style={this.styles.imageModal}
+											/>
+										</View>
+									</TouchableOpacity>
+								</Col>
+								<Col>
+									<TouchableOpacity onPress={() => this.changeAvatar(g1)}>
+										<View style={this.styles.cardModal}>
+											<Image
+												source={{ uri: apiUrl.link + '/img/' + 'g1.png' }}
+												style={this.styles.imageModal}
+											/>
+										</View>
+									</TouchableOpacity>
+								</Col>
+							</Grid>
+							<Grid style={this.styles.gridModal}>
+								<Col>
+									<TouchableOpacity onPress={() => this.changeAvatar(b2)}>
+										<View style={this.styles.cardModal}>
+											<Image
+												source={{ uri: apiUrl.link + '/img/' + 'b2.png' }}
+												style={this.styles.imageModal}
+											/>
+										</View>
+									</TouchableOpacity>
+								</Col>
+								<Col>
+									<TouchableOpacity onPress={() => this.changeAvatar(g2)}>
+										<View style={this.styles.cardModal}>
+											<Image
+												source={{ uri: apiUrl.link + '/img/' + 'g2.png' }}
+												style={this.styles.imageModal}
+											/>
+										</View>
+									</TouchableOpacity>
+								</Col>
+							</Grid>
+							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+								<Pressable onPress={() => this.setModalVisibleOnly(false)}>
+									<View style={this.styles.viewMailAccept}>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>Cerrar</Text>
+									</View>
+								</Pressable>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
+	}
+
 	render() {
 		console.log('perfil: ', this.props.questionReducer);
-
+		console.log('User: ', this.props.usuariosReducer.user);
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
@@ -304,7 +492,19 @@ class UserScreenProfile extends Component {
 					<List>
 						<ListItem thumbnail>
 							<Left>
-								<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
+								<TouchableOpacity onPress={ () => this.setModalVisibleOnly(true) }>
+									{(() => {
+										if (this.props.usuariosReducer.user.url_image != null) {
+											return(
+												<Thumbnail square source={{ uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user.url_image}` }} />
+											);
+										} else {
+											return(
+												<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
+											);
+										}
+									})()}
+								</TouchableOpacity>
 							</Left>
 							<Body>
 								<Text note>{this.props.usuariosReducer.user.name}</Text>
@@ -445,6 +645,7 @@ class UserScreenProfile extends Component {
 						</Button>
 						{this.allScoreTitle()}
 						{this.allScore()}
+						{this.showModal()}
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
