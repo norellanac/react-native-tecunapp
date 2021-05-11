@@ -1,20 +1,20 @@
 import React from 'react';
-import { Linking, BackHandler, TouchableOpacity, Alert, Pressable, TouchableHighlight } from 'react-native';
+import { Linking, BackHandler, TouchableOpacity, Image, Alert, Pressable, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
-import { Text, Header, Left, Body, Right, Button, Icon, View, Badge } from 'native-base';
+import { Text, Header, Left, Body, Right, Thumbnail, Button, Icon, View, Badge } from 'native-base';
 import Constants from 'expo-constants';
 import { logoutUser } from '../src/actions/loginActions';
-import { persistor, myStyles } from '../App';
+import { persistor, myStyles, apiUrl, screenHeight, screenWidth } from '../App';
 
 function HeaderCustom(props) {
-	logout = async () => {
+	/* logout = async () => {
 		//await this.props.logoutUser();
 		console.log('borró usuario');
 		//await this.props.resetAddress();
 		await persistor.purge();
 		props.navigation.navigate('Login');
 		console.log('borró direccion');
-	};
+	}; */
 
 	exitApp = () => {
 		Alert.alert(
@@ -50,8 +50,8 @@ function HeaderCustom(props) {
 					</View>
 				</TouchableOpacity>
 			</Left>
-			<Right>
-				<TouchableOpacity transparent onPress={() => props.navigation.navigate('SettingsScreen')}>
+			<Right style={{alignItems: 'flex-start' }}>
+				<TouchableOpacity transparent style={{ marginTop: 6 }} onPress={() => props.navigation.navigate('SettingsScreen')}>
 					<Text uppercase={false} style={{ color: myStyles.light }}>
 						Hola{' '}
 						<Text uppercase={false} style={{ color: myStyles.light, fontWeight: 'bold', marginLeft: -10 }}>
@@ -66,15 +66,33 @@ function HeaderCustom(props) {
 							borderRadius: 60,
 							marginLeft: 10,
 							alignSelf: 'center',
+							alignItems: 'center',
 							height: 35,
 							width: 35
 						}}
 					>
-						<Icon
-							style={{ color: myStyles.bg1, fontSize: 25, marginLeft: 8, paddingVertical: 5 }}
-							name="user"
-							type="FontAwesome"
-						/>
+						{(() => {
+							if (props.usuariosReducer.user.url_image != null) {
+								return(
+									<Image
+										source={{ uri: `${apiUrl.link}/img/${props.usuariosReducer.user.url_image}` }}
+										style={{
+											borderRadius: 60,
+											height: 35,
+											width: 35
+										}}
+									/>
+								);
+							} else {
+								return(
+									<Icon
+										style={{ color: myStyles.bg1, fontSize: 25, marginLeft: 8, paddingVertical: 5 }}
+										name="user"
+										type="FontAwesome"
+									/>
+								);
+							}
+						})()}
 					</View>
 				</TouchableOpacity>
 			</Right>
