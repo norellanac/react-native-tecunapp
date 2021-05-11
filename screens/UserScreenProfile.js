@@ -1,9 +1,8 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-import { Image, Linking, KeyboardAvoidingView, Modal, Alert, Pressable, TouchableOpacity, StyleSheet, } from 'react-native';
+import { Image, Linking, TouchableOpacity, Modal, Alert, Pressable, StyleSheet } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
-	List,
 	ListItem,
 	Content,
 	Badge,
@@ -60,23 +59,23 @@ class UserScreenProfile extends Component {
 
 	setModalVisibleOnly = (visible) => {
 		this.setState({ modalVisible: visible });
-	}
+	};
 
 	styles = StyleSheet.create({
 		centeredView: {
 			flex: 1,
-			justifyContent: "center",
-			alignItems: "center",
+			justifyContent: 'center',
+			alignItems: 'center',
 			backgroundColor: 'rgba(52, 52, 52, 0.8)'
 			//backgroundColor: 'white'
 		},
-	
+
 		modalViewText: {
 			width: screenWidth - 70,
 			height: screenHeight / 2,
-			backgroundColor: "white",
+			backgroundColor: 'white',
 			borderRadius: 20,
-			shadowColor: "#000",
+			shadowColor: '#000',
 			shadowOffset: {
 				width: 0,
 				height: 2
@@ -85,22 +84,22 @@ class UserScreenProfile extends Component {
 			shadowRadius: 4,
 			elevation: 5
 		},
-	
+
 		modalTextTitle: {
 			marginBottom: 15,
 			fontSize: 18,
-			textAlign: "center",
+			textAlign: 'center',
 			marginTop: 20,
-			fontWeight: "bold",
+			fontWeight: 'bold',
 			color: myStyles.bg1
 		},
-	
+
 		modalTextDescription: {
 			marginBottom: 15,
-			textAlign: "center",
+			textAlign: 'center',
 			color: '#858585'
 		},
-	
+
 		ListCloseMail: {
 			//backgroundColor: 'black',
 			alignSelf: 'flex-end',
@@ -108,42 +107,40 @@ class UserScreenProfile extends Component {
 			marginBottom: 5
 			//backgroundColor: 'black'
 		},
-	
+
 		viewMailAccept: {
 			flex: 0,
 			flexDirection: 'row',
 			justifyContent: 'center',
-			alignItems: 'center',
+			alignItems: 'center'
 			//backgroundColor: 'red',
 		},
-	
+
 		buttonIcon: {
 			color: myStyles.bg1,
-			width: 28,
+			width: 28
 		},
-	
+
 		textStyleMail: {
-			color: myStyles.bg1,
+			color: myStyles.bg1
 		},
 
-		gridModal: {
-
-		},
+		gridModal: {},
 
 		cardModal: {
 			borderRadius: 15,
 			height: screenHeight / 6,
 			backgroundColor: 'white',
 			marginHorizontal: 15,
-			shadowColor: "#000",
+			shadowColor: '#000',
 			shadowOffset: {
 				width: 0,
-				height: 1,
+				height: 1
 			},
 			shadowOpacity: 0.15,
 			shadowRadius: 4.49,
 
-			elevation: 24,
+			elevation: 24
 		},
 
 		imageModal: {
@@ -153,8 +150,8 @@ class UserScreenProfile extends Component {
 			height: screenHeight / 8,
 			width: screenWidth / 4,
 			alignSelf: 'center'
-		},
-  	});
+		}
+	});
 
 	allScoreTitle() {
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
@@ -206,7 +203,7 @@ class UserScreenProfile extends Component {
 					(
 						<Grid
 							style={{
-								backgroundColor: idUserScore==pounts.id? '#E87823' : 'transparent',
+								backgroundColor: idUserScore == pounts.id ? '#E87823' : 'transparent',
 								borderBottomLeftRadius: 5,
 								borderTopLeftRadius: 5,
 								borderBottomRightRadius: 5,
@@ -397,7 +394,7 @@ class UserScreenProfile extends Component {
 
 	changeAvatar(nameImage) {
 		let token = this.props.usuariosReducer.token;
-		let object = {url_image: nameImage};
+		let object = { url_image: nameImage };
 
 		this.props.changeAvatar(object, token);
 		this.props.traerUser(token);
@@ -409,14 +406,14 @@ class UserScreenProfile extends Component {
 		let b2 = 'b2.png';
 		let g1 = 'g1.png';
 		let g2 = 'g2.png';
-		return(
+		return (
 			<View style={this.styles.centeredView} key={1}>
 				<Modal
 					animationType="slide"
 					transparent={this.state.modalVisible}
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
+						Alert.alert('Modal has been closed.');
 						this.setModalVisibleOnly(false);
 					}}
 				>
@@ -470,7 +467,7 @@ class UserScreenProfile extends Component {
 							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 								<Pressable onPress={() => this.setModalVisibleOnly(false)}>
 									<View style={this.styles.viewMailAccept}>
-										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign" />
 										<Text style={this.styles.textStyleMail}>Cerrar</Text>
 									</View>
 								</Pressable>
@@ -488,36 +485,252 @@ class UserScreenProfile extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				<Content>
-					<List>
-						<ListItem thumbnail>
-							<Left>
-								<TouchableOpacity onPress={ () => this.setModalVisibleOnly(true) }>
-									{(() => {
-										if (this.props.usuariosReducer.user.url_image != null) {
-											return(
-												<Thumbnail square source={{ uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user.url_image}` }} />
-											);
-										} else {
-											return(
-												<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
-											);
-										}
-									})()}
-								</TouchableOpacity>
-							</Left>
-							<Body>
-								<Text note>{this.props.usuariosReducer.user.name}</Text>
-								<Text note> {this.props.usuariosReducer.user.email}</Text>
-							</Body>
-						</ListItem>
-					</List>
-					<Card transparent>
-						<CardItem>
-							<Text style={{ fontSize: 22, color: '#1B2853' }}>Mi Perfil</Text>
-						</CardItem>
-						
-						<Button transparent vertical onPress={this.logout}>
+				<Content style={{ backgroundColor: myStyles.bg2 }}>
+					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: 125 }}>
+						{/* <List>
+							<ListItem thumbnail>
+								<Left>
+									<TouchableOpacity onPress={() => this.setModalVisibleOnly(true)}>
+										{(() => {
+											if (this.props.usuariosReducer.user.url_image != null) {
+												return (
+													<Thumbnail
+														square
+														source={{
+															uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user
+																.url_image}`
+														}}
+													/>
+												);
+											} else {
+												return (
+													<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
+												);
+											}
+										})()}
+									</TouchableOpacity>
+								</Left>
+								<Body>
+									<Text note>{this.props.usuariosReducer.user.name}</Text>
+									<Text note> {this.props.usuariosReducer.user.email}</Text>
+								</Body>
+							</ListItem>
+						</List> */}
+					</View>
+					<Card
+						transparent
+						style={{
+							borderTopLeftRadius: 50,
+							borderTopRightRadius: 50,
+							marginTop: -50,
+							backgroundColor: myStyles.bg2
+						}}
+					>
+						<View transparent style={{ alignSelf: 'center' }}>
+							<TouchableOpacity onPress={() => this.setModalVisibleOnly(true)}>
+								{(() => {
+									if (this.props.usuariosReducer.user.url_image != null) {
+										return (
+											<Image
+												style={{
+													backgroundColor: myStyles.light,
+													height: screenWidth / 3,
+													width: screenWidth / 3,
+													marginTop: -60,
+													borderRadius: 70,
+													padding: 50,
+													shadowOffset: {
+														width: 0,
+														height: 1
+													},
+													shadowOpacity: 0.15,
+													shadowRadius: 4.49,
+
+													elevation: 24
+												}}
+												source={{
+													uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user
+														.url_image}`
+												}}
+											/>
+										);
+									} else {
+										return <Thumbnail large source={{ uri: `${apiUrl.link}/img/logo.png` }} />;
+									}
+								})()}
+							</TouchableOpacity>
+						</View>
+						<View style={{ alignSelf: 'center', paddingVertical: 10 }}>
+							<Text
+								style={{ color: myStyles.light, fontWeight: 'bold', fontSize: 35, textAlign: 'center' }}
+							>
+								{this.props.usuariosReducer.user.name}
+							</Text>
+							<Text
+								style={{ color: myStyles.light, fontWeight: 'bold', fontSize: 25, textAlign: 'center' }}
+							>
+								{' '}
+								{this.props.usuariosReducer.user.email}
+							</Text>
+						</View>
+						<View>
+							<Grid>
+								<Col>
+									<TouchableOpacity
+										onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
+									>
+										<Card
+											style={{
+												borderRadius: 10,
+												marginVertical: 10,
+												marginLeft: 10,
+												marginRight: 10,
+												shadowColor: '#000',
+												shadowOffset: {
+													width: 0,
+													height: 4
+												},
+												shadowOpacity: 0.32,
+												shadowRadius: 5.46,
+
+												elevation: 9
+											}}
+										>
+											<Icon
+												type="FontAwesome"
+												name="warning"
+												style={{
+													marginLeft: 15,
+													color: '#1c5988',
+													fontSize: 50,
+													textAlign: 'center',
+													padding: 10
+												}}
+											/>
+											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+												<Text
+													style={{
+														fontSize: 14,
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.bg1,
+														paddingVertical: 8,
+														marginLeft: 10,
+														marginTop: 20
+													}}
+												>
+													LÍNEA DE DENUNCÍA
+												</Text>
+											</CardItem>
+										</Card>
+									</TouchableOpacity>
+								</Col>
+							</Grid>
+							<Grid>
+								<Col>
+									<TouchableOpacity
+										onPress={() => {
+											this.onPressChange();
+										}}
+									>
+										<Card
+											style={{
+												borderRadius: 10,
+												marginVertical: 10,
+												marginLeft: 10,
+												marginRight: 10,
+												shadowColor: '#000',
+												shadowOffset: {
+													width: 0,
+													height: 4
+												},
+												shadowOpacity: 0.32,
+												shadowRadius: 5.46,
+
+												elevation: 9
+											}}
+										>
+											<Icon
+												type="Entypo"
+												name="trophy"
+												style={{
+													marginLeft: 15,
+													color: '#1c5988',
+													fontSize: 50,
+													textAlign: 'center',
+													padding: 10
+												}}
+											/>
+											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+												<Text
+													style={{
+														fontSize: 14,
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.bg1,
+														paddingVertical: 8,
+														marginLeft: 10,
+														marginTop: 20
+													}}
+												>
+													RANKING GENERAL
+												</Text>
+											</CardItem>
+										</Card>
+									</TouchableOpacity>
+								</Col>
+								<Col>
+									<TouchableOpacity onPress={this.logout}>
+										<Card
+											style={{
+												borderRadius: 10,
+												marginVertical: 10,
+												marginLeft: 10,
+												marginRight: 10,
+												shadowColor: '#000',
+												shadowOffset: {
+													width: 0,
+													height: 4
+												},
+												shadowOpacity: 0.32,
+												shadowRadius: 5.46,
+
+												elevation: 9
+											}}
+										>
+											<Icon
+												type="Entypo"
+												name="log-out"
+												style={{
+													marginLeft: 15,
+													color: '#1c5988',
+													fontSize: 50,
+													textAlign: 'center',
+													padding: 10
+												}}
+											/>
+											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+												<Text
+													style={{
+														fontSize: 14,
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.bg1,
+														paddingVertical: 8,
+														marginLeft: 10,
+														marginTop: 20
+													}}
+												>
+													CERRAR SESION
+												</Text>
+											</CardItem>
+										</Card>
+									</TouchableOpacity>
+								</Col>
+							</Grid>
+						</View>
+
+						{/* <Button transparent vertical onPress={this.logout}>
 							<CardItem style={{ marginTop: 10 }}>
 								<Grid
 									style={{
@@ -643,6 +856,7 @@ class UserScreenProfile extends Component {
 								</Grid>
 							</CardItem>
 						</Button>
+						 */}
 						{this.allScoreTitle()}
 						{this.allScore()}
 						{this.showModal()}
