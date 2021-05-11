@@ -119,7 +119,7 @@ export const allScoreActions = (token) => async (dispatch) => {
 		});
 
 		const data = await response.json();
-		console.warn('Que trae allScoreActions?: ', data);
+		//console.warn('Que trae allScoreActions?: ', data);
 
 		dispatch({
 			type: allScoreType,

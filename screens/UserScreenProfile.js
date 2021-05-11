@@ -5,6 +5,7 @@ import {
 	Container,
 	ListItem,
 	Content,
+	Spinner,
 	Badge,
 	Thumbnail,
 	View,
@@ -158,7 +159,7 @@ class UserScreenProfile extends Component {
 			return (
 				<Grid
 					style={{
-						backgroundColor: '#F8FAFB',
+						backgroundColor: myStyles.bg1,
 						borderBottomLeftRadius: 5,
 						borderTopLeftRadius: 5,
 						borderBottomRightRadius: 5,
@@ -175,13 +176,13 @@ class UserScreenProfile extends Component {
 							marginLeft: 15
 						}}
 					>
-						<Text>#</Text>
+						<Text style={{ color: myStyles.light }}>#</Text>
 					</Col>
 					<Col size={3} style={{ marginTop: 5, marginBottom: 5 }}>
-						<Text>Nombre</Text>
+						<Text style={{ color: myStyles.light }}>Nombre</Text>
 					</Col>
 					<Col size={1} style={{ marginTop: 5, marginBottom: 5, marginLeft: 15 }}>
-						<Text>Puntos</Text>
+						<Text style={{ color: myStyles.light }}>Puntos</Text>
 					</Col>
 				</Grid>
 			);
@@ -204,10 +205,10 @@ class UserScreenProfile extends Component {
 						<Grid
 							style={{
 								backgroundColor: idUserScore == pounts.id ? '#E87823' : 'transparent',
-								borderBottomLeftRadius: 5,
-								borderTopLeftRadius: 5,
-								borderBottomRightRadius: 5,
-								borderTopRightRadius: 5
+								borderBottomLeftRadius: 10,
+								borderTopLeftRadius: 10,
+								borderBottomRightRadius: 10,
+								borderTopRightRadius: 10
 							}}
 							key={pounts.id}
 						>
@@ -392,13 +393,16 @@ class UserScreenProfile extends Component {
 		}
 	};
 
-	changeAvatar(nameImage) {
+	async changeAvatar(nameImage) {
 		let token = this.props.usuariosReducer.token;
 		let object = { url_image: nameImage };
 
-		this.props.changeAvatar(object, token);
-		this.props.traerUser(token);
 		this.setModalVisibleOnly(false);
+		await this.props.changeAvatar(object, token);
+		await this.props.traerUser(token);
+		if (!this.props.usuariosReducer.cargando) {
+			this.props.navigation.navigate('SettingsScreen')
+		}
 	}
 
 	showModal() {
@@ -485,381 +489,230 @@ class UserScreenProfile extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				<Content style={{ backgroundColor: myStyles.bg2 }}>
-					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: 125 }}>
-						{/* <List>
-							<ListItem thumbnail>
-								<Left>
-									<TouchableOpacity onPress={() => this.setModalVisibleOnly(true)}>
-										{(() => {
-											if (this.props.usuariosReducer.user.url_image != null) {
-												return (
-													<Thumbnail
-														square
-														source={{
-															uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user
-																.url_image}`
-														}}
-													/>
-												);
-											} else {
-												return (
-													<Thumbnail square source={{ uri: `${apiUrl.link}/img/logo.png` }} />
-												);
-											}
-										})()}
-									</TouchableOpacity>
-								</Left>
-								<Body>
-									<Text note>{this.props.usuariosReducer.user.name}</Text>
-									<Text note> {this.props.usuariosReducer.user.email}</Text>
-								</Body>
-							</ListItem>
-						</List> */}
-					</View>
+				<Content style={{ backgroundColor: myStyles.light }}>
+					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: screenHeight / 5 }}></View>
 					<Card
 						transparent
 						style={{
+							width: screenWidth,
+							marginLeft: 0,
+							marginBottom: 30,
 							borderTopLeftRadius: 50,
 							borderTopRightRadius: 50,
-							marginTop: -50,
-							backgroundColor: myStyles.bg2
+							borderBottomLeftRadius: 15,
+							borderBottomRightRadius: 15,
+							marginTop: -75,
+							backgroundColor: myStyles.light,
+							/* shadowColor: "#000",
+							shadowOffset: {
+								width: 0,
+								height: 4,
+							},
+							shadowOpacity: 0.32,
+							shadowRadius: 5.46,
+
+							elevation: 9, */
 						}}
 					>
-						<View transparent style={{ alignSelf: 'center' }}>
+						<View transparent style={{alignSelf: 'center'}}>
 							<TouchableOpacity onPress={() => this.setModalVisibleOnly(true)}>
 								{(() => {
-									if (this.props.usuariosReducer.user.url_image != null) {
-										return (
-											<Image
-												style={{
-													backgroundColor: myStyles.light,
-													height: screenWidth / 3,
-													width: screenWidth / 3,
-													marginTop: -60,
-													borderRadius: 70,
-													padding: 50,
-													shadowOffset: {
-														width: 0,
-														height: 1
-													},
-													shadowOpacity: 0.15,
-													shadowRadius: 4.49,
-
-													elevation: 24
-												}}
-												source={{
-													uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user
-														.url_image}`
-												}}
-											/>
-										);
+									if (this.props.usuariosReducer.cargando) {
+										return <Spinner color="red" style={{ 
+											backgroundColor: myStyles.light,
+											height: screenWidth / 3,
+											width: screenWidth / 3,
+											marginTop: -60,
+											borderRadius: 70,
+											padding: 50,
+										}}/>;
 									} else {
-										return <Thumbnail large source={{ uri: `${apiUrl.link}/img/logo.png` }} />;
+										if (this.props.usuariosReducer.user.url_image != null) {
+											return (
+												<Image
+													style={{
+														backgroundColor: myStyles.light,
+														height: screenWidth / 3,
+														width: screenWidth / 3,
+														marginTop: -60,
+														borderRadius: 70,
+														padding: 50,
+													}}
+													source={{uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user.url_image}`}}
+												/>
+											);
+										} else {
+											return <Thumbnail 
+											style={{
+												backgroundColor: myStyles.light,
+												height: screenWidth / 3,
+												width: screenWidth / 3,
+												marginTop: -60,
+												borderRadius: 70,
+												padding: 50,
+											}}
+											large source={{ uri: `${apiUrl.link}/img/logo.png` }} />;
+										}
 									}
 								})()}
 							</TouchableOpacity>
 						</View>
-						<View style={{ alignSelf: 'center', paddingVertical: 10 }}>
+						<View style={{ alignSelf: 'center', paddingVertical: 30 }}>
 							<Text
-								style={{ color: myStyles.light, fontWeight: 'bold', fontSize: 35, textAlign: 'center' }}
+								style={{ color: myStyles.bg1, fontWeight: 'bold', fontSize: 30, textAlign: 'center' }}
 							>
 								{this.props.usuariosReducer.user.name}
 							</Text>
 							<Text
-								style={{ color: myStyles.light, fontWeight: 'bold', fontSize: 25, textAlign: 'center' }}
+								style={{ color: myStyles.bg1, fontWeight: 'bold', fontSize: 20, textAlign: 'center' }}
 							>
 								{' '}
 								{this.props.usuariosReducer.user.email}
 							</Text>
 						</View>
-						<View>
+						<View style={{ marginBottom: 25, paddingTop: screenHeight / 17 }}>
 							<Grid>
-								<Col>
-									<TouchableOpacity
-										onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
-									>
-										<Card
-											style={{
-												borderRadius: 10,
-												marginVertical: 10,
-												marginLeft: 10,
-												marginRight: 10,
-												shadowColor: '#000',
-												shadowOffset: {
-													width: 0,
-													height: 4
-												},
-												shadowOpacity: 0.32,
-												shadowRadius: 5.46,
-
-												elevation: 9
+								<Col style={{ alignItems: 'center' }}>
+									<TouchableOpacity onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}>
+										<ListItem style={{ 
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
+												borderRadius: 10
 											}}
+											noBorder
+											onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
 										>
-											<Icon
-												type="FontAwesome"
-												name="warning"
-												style={{
-													marginLeft: 15,
-													color: '#1c5988',
-													fontSize: 50,
-													textAlign: 'center',
-													padding: 10
-												}}
-											/>
-											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+											<Body>
 												<Text
 													style={{
-														fontSize: 14,
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.bg1,
-														paddingVertical: 8,
-														marginLeft: 10,
-														marginTop: 20
+														color: myStyles.light,
 													}}
 												>
 													LÍNEA DE DENUNCÍA
 												</Text>
-											</CardItem>
-										</Card>
+											</Body>
+											<Right>
+												<Icon
+													type="FontAwesome"
+													name="warning"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center',
+													}}
+												/>
+											</Right>
+										</ListItem>
 									</TouchableOpacity>
-								</Col>
-							</Grid>
-							<Grid>
-								<Col>
-									<TouchableOpacity
-										onPress={() => {
-											this.onPressChange();
-										}}
-									>
-										<Card
-											style={{
-												borderRadius: 10,
-												marginVertical: 10,
-												marginLeft: 10,
-												marginRight: 10,
-												shadowColor: '#000',
-												shadowOffset: {
-													width: 0,
-													height: 4
-												},
-												shadowOpacity: 0.32,
-												shadowRadius: 5.46,
 
-												elevation: 9
+									<TouchableOpacity onPress={() => {this.onPressChange()}}>
+										<ListItem style={{ 
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
+												marginTop: 10,
+												marginBottom: 10,
+												borderRadius: 10
 											}}
+											noBorder
+											onPress={() => {this.onPressChange()}}
 										>
-											<Icon
-												type="Entypo"
-												name="trophy"
-												style={{
-													marginLeft: 15,
-													color: '#1c5988',
-													fontSize: 50,
-													textAlign: 'center',
-													padding: 10
-												}}
-											/>
-											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+											<Body>
 												<Text
 													style={{
-														fontSize: 14,
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.bg1,
-														paddingVertical: 8,
-														marginLeft: 10,
-														marginTop: 20
+														color: myStyles.light,
 													}}
 												>
 													RANKING GENERAL
 												</Text>
-											</CardItem>
-										</Card>
+											</Body>
+											<Right>
+												<Icon
+													type="Entypo"
+													name="trophy"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center',
+													}}
+												/>
+											</Right>
+										</ListItem>
 									</TouchableOpacity>
-								</Col>
-								<Col>
-									<TouchableOpacity onPress={this.logout}>
-										<Card
-											style={{
-												borderRadius: 10,
-												marginVertical: 10,
-												marginLeft: 10,
-												marginRight: 10,
-												shadowColor: '#000',
-												shadowOffset: {
-													width: 0,
-													height: 4
-												},
-												shadowOpacity: 0.32,
-												shadowRadius: 5.46,
 
-												elevation: 9
+									<TouchableOpacity>
+										<ListItem style={{ 
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
+												borderRadius: 10
 											}}
+											noBorder
+											onPress={() => {this.logout()}}
 										>
-											<Icon
-												type="Entypo"
-												name="log-out"
-												style={{
-													marginLeft: 15,
-													color: '#1c5988',
-													fontSize: 50,
-													textAlign: 'center',
-													padding: 10
-												}}
-											/>
-											<CardItem style={{ borderRadius: 10, paddingTop: 0, alignSelf: 'center' }}>
+											<Body>
 												<Text
 													style={{
-														fontSize: 14,
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.bg1,
-														paddingVertical: 8,
-														marginLeft: 10,
-														marginTop: 20
+														color: myStyles.light,
 													}}
 												>
 													CERRAR SESION
 												</Text>
-											</CardItem>
-										</Card>
+											</Body>
+											<Right>
+												<Icon
+													type="Entypo"
+													name="log-out"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center',
+													}}
+												/>
+											</Right>
+										</ListItem>
+									</TouchableOpacity>
+
+									<TouchableOpacity>
+										<ListItem style={{ 
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
+												borderRadius: 10
+											}}
+											noBorder
+										>
+											<Body>
+												<Text
+													style={{
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.light,
+													}}
+												>
+													NUMEROS DE EMERGENCIA
+												</Text>
+											</Body>
+											<Right>
+												<Icon
+													type="Entypo"
+													name="log-out"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center',
+													}}
+												/>
+											</Right>
+										</ListItem>
 									</TouchableOpacity>
 								</Col>
 							</Grid>
+							{this.showModal()}
+							<View style={{ marginLeft: 5, marginRight: 5 }}>
+								{this.allScoreTitle()}
+								{this.allScore()}
+							</View>
 						</View>
-
-						{/* <Button transparent vertical onPress={this.logout}>
-							<CardItem style={{ marginTop: 10 }}>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
-											type="Entypo"
-											name="log-out"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Salir</Text>
-									</Col>
-									<Col style={{ marginTop: 15, marginBottom: 15 }}>
-										<Icon
-											type="FontAwesome5"
-											name="arrow-circle-right"
-											style={{ color: '#1c5988' }}
-										/>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button
-							transparent
-							vertical
-							onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
-						>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
-											type="FontAwesome"
-											name="warning"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Línea de denuncia</Text>
-									</Col>
-									<Col style={{ marginTop: 15, marginBottom: 15 }}>
-										<Icon
-											type="FontAwesome5"
-											name="arrow-circle-right"
-											style={{ color: '#1c5988' }}
-										/>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-
-						<Button
-							transparent
-							vertical
-							onPress={() => {
-								this.onPressChange();
-							}}
-						>
-							<CardItem>
-								<Grid
-									style={{
-										backgroundColor: '#F8FAFB',
-										borderBottomLeftRadius: 5,
-										borderTopLeftRadius: 5,
-										borderBottomRightRadius: 5,
-										borderTopRightRadius: 5
-									}}
-								>
-									<Col
-										size={1}
-										style={{
-											marginTop: 15,
-											marginBottom: 15,
-											justifyContent: 'center'
-										}}
-									>
-										<Icon
-											type="Entypo"
-											name="trophy"
-											style={{ marginLeft: 15, color: '#1c5988' }}
-										/>
-									</Col>
-									<Col size={3} style={{ marginTop: 15, marginBottom: 15 }}>
-										<Text>Puntuacion General</Text>
-									</Col>
-									<Col style={{ marginTop: 15, marginBottom: 15 }}>
-										<Icon
-											type="FontAwesome5"
-											name="arrow-circle-right"
-											style={{ color: '#1c5988' }}
-										/>
-									</Col>
-								</Grid>
-							</CardItem>
-						</Button>
-						 */}
-						{this.allScoreTitle()}
-						{this.allScore()}
-						{this.showModal()}
 					</Card>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
