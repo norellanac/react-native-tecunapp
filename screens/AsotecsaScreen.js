@@ -128,7 +128,7 @@ class ContactScreen extends Component {
 				<ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
 						<Image
-							source={{ uri: apiUrl.link + '/img/app/' + 'bcontacto.png' }}
+							source={{ uri: apiUrl.link + '/img/app/' + 'basotecsa.png' }}
 							style={{
 								width: screenWidth,
 								minHeight: screenHeight / 10,

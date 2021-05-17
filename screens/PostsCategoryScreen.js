@@ -117,7 +117,7 @@ class PostsCategoryScreen extends Component {
 										fontSize: 20,
 										fontWeight: 'bold',
 										color: myStyles.bg1,
-										paddingVertical: 8
+										paddingVertical: 13
 									}}
 								>
 									{news.title}

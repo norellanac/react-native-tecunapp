@@ -117,11 +117,11 @@ class HomeScreen extends Component {
 
   logout = async () => {
     //await this.props.logoutUser();
-    console.log("borró usuario");
+    //console.log("borró usuario");
     //await this.props.resetAddress();
     await persistor.purge();
     this.props.navigation.navigate("Login");
-    console.log("borró direccion");
+    //console.log("borró direccion");
   };
 
   async componentDidMount() {

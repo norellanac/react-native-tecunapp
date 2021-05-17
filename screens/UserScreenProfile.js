@@ -410,6 +410,9 @@ class UserScreenProfile extends Component {
 		let b2 = 'b2.png';
 		let g1 = 'g1.png';
 		let g2 = 'g2.png';
+
+		console.log(apiUrl.link + '/img/' + b1);
+
 		return (
 			<View style={this.styles.centeredView} key={1}>
 				<Modal
@@ -436,10 +439,10 @@ class UserScreenProfile extends Component {
 									</TouchableOpacity>
 								</Col>
 								<Col>
-									<TouchableOpacity onPress={() => this.changeAvatar(g1)}>
+									<TouchableOpacity onPress={() => this.changeAvatar(b2)}>
 										<View style={this.styles.cardModal}>
 											<Image
-												source={{ uri: apiUrl.link + '/img/' + 'g1.png' }}
+												source={{ uri: apiUrl.link + '/img/' + 'b2.png' }}
 												style={this.styles.imageModal}
 											/>
 										</View>
@@ -448,10 +451,10 @@ class UserScreenProfile extends Component {
 							</Grid>
 							<Grid style={this.styles.gridModal}>
 								<Col>
-									<TouchableOpacity onPress={() => this.changeAvatar(b2)}>
+									<TouchableOpacity onPress={() => this.changeAvatar(g1)}>
 										<View style={this.styles.cardModal}>
 											<Image
-												source={{ uri: apiUrl.link + '/img/' + 'b2.png' }}
+												source={{ uri: apiUrl.link + '/img/' + 'g1.png' }}
 												style={this.styles.imageModal}
 											/>
 										</View>
@@ -645,6 +648,7 @@ class UserScreenProfile extends Component {
 										<ListItem style={{ 
 												backgroundColor: myStyles.bg2,
 												width: screenWidth / 1.2,
+												marginBottom: 10,
 												borderRadius: 10
 											}}
 											noBorder

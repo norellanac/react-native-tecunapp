@@ -50,7 +50,7 @@ function HederPostSection(props) {
 					<Text
 						style={{ color: myStyles.light, margin: 10, fontWeight: props.screen == 1 ? 'bold' : 'normal' }}
 					>
-						Noticias{' '}
+						TECuento{' '}
 					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity

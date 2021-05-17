@@ -197,7 +197,7 @@ class PostsScreen extends Component {
 										fontSize: 20,
 										fontWeight: 'bold',
 										color: myStyles.bg1,
-										paddingVertical: 8
+										paddingVertical: 13
 									}}
 								>
 									{news.title}
@@ -263,7 +263,7 @@ class PostsScreen extends Component {
 						selectedValue={this.state.selected}
 						onValueChange={this.onValueChange.bind(this)}
 					>
-						<Picker.Item label="Categorias" value="0" />
+						<Picker.Item label="Categorias" value="0"/>
 						{this.loadContentCategories()}
 					</Picker>
 				</Form>

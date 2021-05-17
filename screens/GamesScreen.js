@@ -255,9 +255,9 @@ class GamesScreen extends Component {
 	}
 
 	render() {
-		console.log('====================================');
-		console.log(this.props.questionReducer.score[0]);
-		console.log('====================================');
+		//console.log('====================================');
+		//console.log(this.props.questionReducer.score[0]);
+		//console.log('====================================');
 		//const { navigation } = this.props.navigation
 
 		if (this.props.questionReducer.cargando && !this.props.questionReducer) {

@@ -295,11 +295,11 @@ class GameShowScreen extends Component {
 
 	render() {
 		var screenWidth = Dimensions.get('window').width - 1;
-		console.log(this.props.questionReducer.answerArray);
+		//console.log(this.props.questionReducer.answerArray);
 
 		var obj = this.props.questionReducer.answerArray;
 		var result = Object.keys(obj).map((key) => [Number(key), obj[key]]);
-		console.log(result[1]);
+		//console.log(result[1]);
 
 		if (this.props.questionReducer.cargando || this.props.questionReducer.answerArray == undefined) {
 			return (
