@@ -85,13 +85,13 @@ class JobShowScreen extends Component {
           }
         );
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-          console.log("You can use the storage");
+          //console.log("You can use the storage");
         } else {
-          console.log("permission denied");
+          //console.log("permission denied");
           return;
         }
       } catch (err) {
-        console.warn(err);
+        //console.warn(err);
         return;
       }
     }

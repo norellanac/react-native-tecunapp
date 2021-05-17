@@ -253,11 +253,11 @@ class ContactScreen extends Component {
 	};
 
 	changeStateShowFavorites(favorite) {
-		console.log(favorite);
+		//console.log(favorite);
 	}
 
 	loadFAvorites() {
-		console.log('Entro aqui? ', this.state.showFavorites);
+		//console.log('Entro aqui? ', this.state.showFavorites);
 		if (this.state.showFavorites == true) {
 			return (
 				<CardItem

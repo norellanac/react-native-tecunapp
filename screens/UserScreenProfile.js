@@ -699,8 +699,8 @@ class UserScreenProfile extends Component {
 											</Body>
 											<Right>
 												<Icon
-													type="Entypo"
-													name="log-out"
+													type="MaterialIcons"
+													name="add-ic-call"
 													style={{
 														color: myStyles.light,
 														textAlign: 'center',
