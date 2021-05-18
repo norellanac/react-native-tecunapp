@@ -312,7 +312,7 @@ class ProccessCertificateScreen extends Component {
 			color: myStyles.bg1,
 			width: 28,
 		},
-  });
+  	});
 
 	render() {
 		/* var screenWidth = Dimensions.get('window').width;

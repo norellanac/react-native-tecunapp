@@ -1,5 +1,54 @@
-import { getUser, loadingUser, errorUser, avatarUser } from "../types/userTypes";
+import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo } from "../types/userTypes";
 import { apiUrl } from './../../App';
+
+export const AsocTec = (objectInfo, token) => async dispatch => {
+  console.log(objectInfo);
+  
+  dispatch({
+    type: loadingUser
+  });
+
+  try {
+    let json = JSON.stringify(objectInfo);
+		let params = 'json=' + json;
+
+    let dataForm = '_method=' + encodeURIComponent('POST');
+		dataForm += '&json=' + encodeURIComponent(objectInfo);
+		//console.log("Que trae data form: ",dataForm);
+		const response = await fetch(`${apiUrl.link}/api/asotecsa`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+				Authorization: `Bearer ${token}`,
+				Params: `json ${dataForm}`
+			},
+			body: params
+		});
+
+		const data = await response.json();
+    console.log("Que trae data en asotecsa", data);
+
+    if (!response.ok) {
+			dispatch({
+				type: errorUser,
+				error: 'Error al cambiar avatar, ' + response,
+				cargando: false
+			});
+		} else {
+			dispatch({
+				type: asotecsaInfo,
+				message: data.message,
+				cargando: false
+			});
+		}
+
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+  }
+};
 
 export const traerUser = tokenUsr => async dispatch => {
   dispatch({

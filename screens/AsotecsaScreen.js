@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import { ScrollView, Linking, Image, TouchableOpacity, Alert, LogBox } from 'react-native';
+import { ScrollView, Linking, Image, Modal, Alert, TouchableOpacity, Pressable, StyleSheet } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
@@ -43,10 +43,12 @@ class ContactScreen extends Component {
 		lastname1: '',
 		lastname2: '',
 		personalid: '',
-		taxid: '',
+		idDpi: '',
+		nit: '',
 		birthday: '',
 		jobdate: '',
-		mobile: '',
+		startDate: '',
+		mobilePhone: '',
 		email: '',
 		bankAcount: '',
 		bankName: '',
@@ -58,9 +60,13 @@ class ContactScreen extends Component {
 		famLastname2: '',
 		famMobile: '',
 		fam: '',
-
+		modalVisibleMail: false,
 		pathImage: apiUrl.link + '/img/'
 	};
+
+	setModalVisible = (paramsVisible) => {
+		this.setState({ modalVisibleMail: paramsVisible });
+	}
 
 	showError = () => {
 		if (this.props.contactsReducer.error && this.state.isShowAlert) {
@@ -92,21 +98,150 @@ class ContactScreen extends Component {
 		}
 	};
 
+	styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+	
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 20,
+			height: screenHeight / 3,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+	
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+	
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+	
+		ListCloseMail: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2,
+			//backgroundColor: 'black'
+		},
+	
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'red',
+		},
+	
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+	
+		buttonIcon: {
+			color: myStyles.bg1,
+			width: 28,
+		},
+	
+		textStyleMail: {
+			color: myStyles.bg1,
+		},	
+  	});
+
 	async componentDidMount() {}
 
-	sendAlert = () => {
-		Alert.alert(
-			'Enviar solicitud',
-			'Por este medio solicito a la Asociación Solidarista de Trabajadores Empresas Tecun, S.A. - ASOTECSA se me acepte como asociado de dicha entidad, por lo que me comprometo a respetar y acatar sus estatutos y reglamentos, así como las disposiciones que emanen de su organismo director.',
-			[
-				{
-					text: 'No',
-					onPress: () => console.log('Cancel Pressed'),
-					style: 'cancel'
-				},
-				{ text: 'Si', onPress: () => BackHandler.exitApp() }
-			],
-			{ cancelable: false }
+	async sendInfo(){
+		var token = this.props.usuariosReducer.token;
+		var object = {
+			name1: this.state.name1, 
+			name2: this.state.name2, 
+			lastname1: this.state.lastname1,
+			lastname2: this.state.lastname2,
+			personalid: this.state.personalid,
+			idDpi: this.state.idDpi,
+			nit: this.state.nit,
+			birthday: this.state.birthday,
+			jobdate: this.state.jobdate,
+			startDate: this.state.startDate,
+			mobilePhone: this.state.mobilePhone,
+			email: this.state.email,
+			bankAcount: this.state.bankAcount,
+			bankName: this.state.bankName,
+			monthPercent: this.state.monthPercent,
+			bankFees: this.state.bankFees,
+			famName1: this.state.famName1,
+			famLastname2: this.state.famName2,
+			famLastname1: this.state.famLastname1,
+			famLastname2: this.state.famLastname2,
+			famMobile: this.state.famMobile,
+			fam: this.state.fam
+		};
+
+		await this.props.AsocTec(object, token);
+	}
+
+	sendAlert() {
+		return(
+			<View style={this.styles.centeredView} key={2}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleMail}
+					visible={this.state.modalVisibleMail}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisible(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewMail}>
+							<Text style={this.styles.modalTextTitle}>Enviar solicitud</Text>
+							<Text style={this.styles.modalTextDescription}>Por este medio solicito a la Asociación Solidarista de Trabajadores Empresas Tecun, S.A. - ASOTECSA se me acepte como asociado de dicha entidad, por lo que me comprometo a respetar y acatar sus estatutos y reglamentos, así como las disposiciones que emanen de su organismo director.</Text>
+							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+								<Pressable onPress={() => this.setModalVisible(false)}>
+									<View style={this.styles.viewMail}>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>CERRAR</Text>
+									</View>
+								</Pressable>
+								<Pressable onPress={ () =>  this.sendInfo()}>
+									<View style={this.styles.viewMailAccept}>
+										<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>ACEPTAR</Text>
+									</View>
+								</Pressable>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
 		);
 	};
 
@@ -153,6 +288,7 @@ class ContactScreen extends Component {
 							DATOS PERSONALES
 						</Text>
 					</View>
+					{this.sendAlert()}
 					<View>
 						<Form style={{ marginRight: 20, marginLeft: 20 }}>
 							{/* primer nombre */}
@@ -219,8 +355,8 @@ class ContactScreen extends Component {
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
-									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
-									value={this.state.searchDepartamento}
+									onChangeText={(idDpi) => this.setState({ idDpi })}
+									value={this.state.idDpi}
 									placeholder="DPI"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -231,8 +367,8 @@ class ContactScreen extends Component {
 								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									maxLength={13}
-									onChangeText={(searchPais) => this.setState({ searchPais })}
-									value={this.state.searchPais}
+									onChangeText={(nit) => this.setState({ nit })}
+									value={this.state.nit}
 									placeholder="NIT"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -247,8 +383,8 @@ class ContactScreen extends Component {
 								/>
 								<Input
 									underlineColorAndroid="transparent"
-									onChangeText={(searchPuesto) => this.setState({ searchPuesto })}
-									value={this.state.searchPuesto}
+									onChangeText={(birthday) => this.setState({ birthday })}
+									value={this.state.birthday}
 									placeholder="Fecha de Nacimiento"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
@@ -323,8 +459,8 @@ class ContactScreen extends Component {
 								<Icon type="FontAwesome" name="bank" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									underlineColorAndroid="transparent"
-									onChangeText={(bank) => this.setState({ bank })}
-									value={this.state.bank}
+									onChangeText={(bankName) => this.setState({ bankName })}
+									value={this.state.bankName}
 									placeholder="Entidad bancaria:"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
@@ -477,13 +613,13 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							{/* NIT */}
+							{/* Parentesco */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="users" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									maxLength={13}
-									onChangeText={(searchPais) => this.setState({ searchPais })}
-									value={this.state.searchPais}
+									onChangeText={(fam) => this.setState({ fam })}
+									value={this.state.fam}
 									placeholder="Parentesco"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
@@ -493,9 +629,7 @@ class ContactScreen extends Component {
 							<View style={{ marginVertical: 20, paddingBottom: 30 }}>
 								<Body>
 									<Button
-										onPress={() => {
-											this.sendAlert();
-										}}
+										onPress={this.sendAlert(), (modalVisibleMail) => this.setState({ modalVisibleMail: true})}
 										rounded
 										iconLeft
 										style={{

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Share, Image, Linking, TouchableOpacity } from 'react-native';
+import { Share, Image, Linking, TouchableOpacity, Modal, Pressable, StyleSheet, Alert, ImageBackground, Touchable } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { withNavigation } from 'react-navigation';
 import {
@@ -27,7 +27,7 @@ import * as jobsActions from '../src/actions/jobsActions';
 import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor, myStyles } from '../App';
+import { persistor, myStyles, screenHeight, screenWidth } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -39,6 +39,185 @@ class JobsScren extends Component {
 		search: '',
 		jobId: null
 	};
+
+	styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+
+		modalViewSendMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5 + 25,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewText: {
+			marginTop: 50,
+			width: screenWidth - 80,
+			height: screenHeight / 5.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			marginLeft: 15,
+			marginVertical: 15,
+			paddingHorizontal: 10,
+			paddingVertical: 10,
+			backgroundColor: myStyles.bg1,
+			borderRadius: 20,
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 7,
+			},
+			shadowOpacity: 0.41,
+			shadowRadius: 9.11,
+
+			elevation: 14,
+			//backgroundColor: 'red',
+		},
+
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+
+		modalViewButton: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			flexDirection: 'row',
+			justifyContent: 'flex-end',
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		ListCloseMail: {
+			//backgroundColor: 'black',
+			alignSelf: 'center',
+			marginRight: 15,
+			marginVertical: 20
+			//backgroundColor: 'black'
+		},
+
+		ListClose: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2 - 90,
+		},
+
+		textStyle: {
+			color: myStyles.bg1,
+			marginRight: 10
+		},
+
+		textStyleMail: {
+			color: myStyles.light,
+		},
+
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+
+		ListbodyMail: {
+			backgroundColor: 'black'
+		},
+
+		ListLeftMail: {
+			backgroundColor: 'blue',
+			width: 2,
+			marginLeft: -100
+		},
+
+		ListLeft: {
+			marginRight: -15,
+			alignItems: 'center'
+		},
+
+		buttonIcon: {
+			color: myStyles.bg2,
+			marginRight: 3,
+			width: 28,
+		},
+  	});
 
 	shareMesage = async (text) => {
 		try {
@@ -60,14 +239,14 @@ class JobsScren extends Component {
 	};
 
 	setIdOneJob(jobArray) {
-		console.log('Array del job: ', jobArray);
-		console.log('Reducer del job: ', this.props.jobsReducer);
+		//console.log('Array del job: ', jobArray);
+		//console.log('Reducer del job: ', this.props.jobsReducer);
 		this.props.setIdJobSearch(jobArray);
-		this.props.navigation.navigate('JobShowScreen');
+		//this.props.navigation.navigate('JobShowScreen');
 	}
 
 	searchTextJob(search, token) {
-		console.log('Busqueda del job: ', this.props.jobsReducer);
+		//console.log('Busqueda del job: ', this.props.jobsReducer);
 		this.props.searchTextInJobs(search, token);
 	}
 
@@ -75,30 +254,51 @@ class JobsScren extends Component {
 		if (this.props.jobsReducer.jobs) {
 			//console.log("jobs: ", this.props.jobsReducer.jobs);
 			return this.props.jobsReducer.jobs.map((job) => (
-				<TouchableOpacity onPress={() => Linking.openURL(job.public_link)}>
-					<ListItem thumbnail onPress={() => Linking.openURL(job.public_link)} key={job.id}>
-						<Body>
-							<Text
-								style={{
-									fontSize: 15,
-									fontWeight: 'bold',
-									color: myStyles.bg1,
-									paddingVertical: 8
-								}}
-							>
-								{job.title}
-							</Text>
-							<Text note numberOfLines={5}>
-								{job.description}
-							</Text>
-						</Body>
-						<Right>
-							<Button transparent onPress={() => this.shareMesage(job.public_link)}>
-								<Icon name="share-alt-square" type="FontAwesome" />
-							</Button>
-						</Right>
-					</ListItem>
-				</TouchableOpacity>
+
+				<Card key={job.id} style={{
+					borderRadius: 25,
+					marginTop: 15,
+					width: screenWidth / 1.1,
+					shadowColor: "#000",
+					shadowOffset: {
+						width: 0,
+						height: 6,
+					},
+					shadowOpacity: 0.37,
+					shadowRadius: 7.49,
+
+					elevation: 12,
+				 }}> 
+					<Text style={{
+						textAlign: 'center',
+						color: myStyles.bg1,
+						fontSize: 20,
+						fontWeight: 'bold'
+					}}>
+						{job.title}
+					</Text>
+					<Content style={{
+						marginHorizontal: 20
+					}}>
+						<Text style={{ fontSize: 15 }} note>{job.description}</Text>
+					</Content>
+					<View>
+						<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+							<Pressable onPress={() => Linking.openURL(job.public_link)}>
+								<View style={this.styles.viewMailAccept}>
+									<Icon style={this.styles.buttonIcon} name="web" type="Foundation"/>
+									<Text style={this.styles.textStyleMail}>Ver Detalle</Text>
+								</View>
+							</Pressable>
+							<Pressable onPress={() => this.shareMesage(job.public_link)}>
+								<View style={this.styles.viewMailAccept}>
+									<Icon style={this.styles.buttonIcon} name="share-alt-square" type="FontAwesome"/>
+									<Text style={this.styles.textStyleMail}>Compartir</Text>
+								</View>
+							</Pressable>
+						</ListItem>
+					</View>
+				</Card>
 			));
 		} else {
 			return <Spinner color="blue" style={{ flex: 1 }} />;
@@ -107,33 +307,20 @@ class JobsScren extends Component {
 
 	logout = async () => {
 		//await this.props.logoutUser();
-		console.log('borró usuario');
+		//console.log('borró usuario');
 		//await this.props.resetAddress();
 		await persistor.purge();
 		this.props.navigation.navigate('Login');
-		console.log('borró direccion');
+		//console.log('borró direccion');
 	};
 
 	async componentDidMount() {
 		await this.props.getJobs(this.props.usuariosReducer.token);
-		console.log('jobs props', this.props);
-		console.log('jobs state: ', this.state);
+		//console.log('jobs props', this.props);
+		//console.log('jobs state: ', this.state);
 	}
 
 	render() {
-		//const { navigation } = this.props.navigation
-		/*
-		if (this.props.jobsReducer.cargando) {
-			console.log('jobsScreen: ', this.props);
-			return (
-				<Container>
-					<HeaderCustom navigation={this.props.navigation} />
-					<Loading />
-					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
-				</Container>
-			);
-		}*/
-
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
@@ -151,27 +338,49 @@ class JobsScren extends Component {
 							Oportunidades de crecimiento
 						</Text>
 					</View>
-					<List>{this.loadContent()}</List>
+					<View style={{ alignItems: 'center' }}>
+						{this.loadContent()}
+					</View>
 				</Content>
 
-				<Header searchBar rounded style={{ backgroundColor: myStyles.grey, borderRadius: 15 }}>
-					<Item>
+				<View style={{ 
+					backgroundColor: '#f9f9f9', 
+					borderBottomLeftRadius: 20, 
+					borderBottomRightRadius: 20,
+				}}>
+					<ListItem noBorder
+						style={{ 
+							backgroundColor: 'FFFFFF',
+							marginTop: 10,
+							marginBottom: 10,
+							marginLeft: 35,
+							width: screenWidth - 60, 
+							height: screenHeight / 16,
+							borderWidth: 1,
+							borderRadius: 30,
+
+						}}
+					>
 						<Input
 							onChangeText={(search) => this.setState({ search })}
 							value={this.state.search}
-							placeholder="Plaza o Descripcion"
-							placeholderTextColor="#000000"
-							style={{ color: '#000000' }}
+							placeholder="BUSCAR PLAZA"
+							placeholderTextColor="#969696"
+							style={{ color: 'black', marginLeft: 15 }}
 						/>
 
 						<TouchableOpacity
 							style={{ alignSelf: 'center', marginHorizontal: 5 }}
 							onPress={() => this.searchTextJob(this.state.search, this.props.usuariosReducer.token)}
 						>
-							<Text>Buscar</Text>
+							<Icon
+								name="search"
+								type="FontAwesome"
+								style={{ color: "#0075b7" }}
+							/>
 						</TouchableOpacity>
-					</Item>
-				</Header>
+					</ListItem >
+				</View>
 			</Container>
 		);
 	}

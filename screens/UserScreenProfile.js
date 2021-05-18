@@ -439,18 +439,6 @@ class UserScreenProfile extends Component {
 									</TouchableOpacity>
 								</Col>
 								<Col>
-									<TouchableOpacity onPress={() => this.changeAvatar(b2)}>
-										<View style={this.styles.cardModal}>
-											<Image
-												source={{ uri: apiUrl.link + '/img/' + 'b2.png' }}
-												style={this.styles.imageModal}
-											/>
-										</View>
-									</TouchableOpacity>
-								</Col>
-							</Grid>
-							<Grid style={this.styles.gridModal}>
-								<Col>
 									<TouchableOpacity onPress={() => this.changeAvatar(g1)}>
 										<View style={this.styles.cardModal}>
 											<Image
@@ -460,11 +448,23 @@ class UserScreenProfile extends Component {
 										</View>
 									</TouchableOpacity>
 								</Col>
+							</Grid>
+							<Grid style={this.styles.gridModal}>
 								<Col>
 									<TouchableOpacity onPress={() => this.changeAvatar(g2)}>
 										<View style={this.styles.cardModal}>
 											<Image
 												source={{ uri: apiUrl.link + '/img/' + 'g2.png' }}
+												style={this.styles.imageModal}
+											/>
+										</View>
+									</TouchableOpacity>
+								</Col>
+								<Col>
+									<TouchableOpacity onPress={() => this.changeAvatar(b2)}>
+										<View style={this.styles.cardModal}>
+											<Image
+												source={{ uri: apiUrl.link + '/img/' + 'b2.png' }}
 												style={this.styles.imageModal}
 											/>
 										</View>
@@ -487,8 +487,8 @@ class UserScreenProfile extends Component {
 	}
 
 	render() {
-		console.log('perfil: ', this.props.questionReducer);
-		console.log('User: ', this.props.usuariosReducer.user);
+		//console.log('perfil: ', this.props.questionReducer);
+		//console.log('User: ', this.props.usuariosReducer.user);
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
@@ -583,6 +583,7 @@ class UserScreenProfile extends Component {
 												borderRadius: 10
 											}}
 											noBorder
+											delayPressIn
 											onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
 										>
 											<Body>
@@ -618,6 +619,7 @@ class UserScreenProfile extends Component {
 												borderRadius: 10
 											}}
 											noBorder
+											delayPressIn
 											onPress={() => {this.onPressChange()}}
 										>
 											<Body>
@@ -648,10 +650,47 @@ class UserScreenProfile extends Component {
 										<ListItem style={{ 
 												backgroundColor: myStyles.bg2,
 												width: screenWidth / 1.2,
+												borderRadius: 10,
+												marginBottom: 10
+											}}
+											onFocus
+											delayPressIn
+											noBorder
+											onPress={() => this.props.navigation.navigate('ContactCallScreen')}
+										>
+											<Body>
+												<Text
+													style={{
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.light,
+													}}
+												>
+													NUMEROS DE EMERGENCIA
+												</Text>
+											</Body>
+											<Right>
+												<Icon
+													type="MaterialIcons"
+													name="add-ic-call"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center',
+													}}
+												/>
+											</Right>
+										</ListItem>
+									</TouchableOpacity>
+
+									<TouchableOpacity>
+										<ListItem style={{ 
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
 												marginBottom: 10,
 												borderRadius: 10
 											}}
 											noBorder
+											delayPressIn
 											onPress={() => {this.logout()}}
 										>
 											<Body>
@@ -669,38 +708,6 @@ class UserScreenProfile extends Component {
 												<Icon
 													type="Entypo"
 													name="log-out"
-													style={{
-														color: myStyles.light,
-														textAlign: 'center',
-													}}
-												/>
-											</Right>
-										</ListItem>
-									</TouchableOpacity>
-
-									<TouchableOpacity>
-										<ListItem style={{ 
-												backgroundColor: myStyles.bg2,
-												width: screenWidth / 1.2,
-												borderRadius: 10
-											}}
-											noBorder
-										>
-											<Body>
-												<Text
-													style={{
-														fontWeight: 'bold',
-														textAlign: 'center',
-														color: myStyles.light,
-													}}
-												>
-													NUMEROS DE EMERGENCIA
-												</Text>
-											</Body>
-											<Right>
-												<Icon
-													type="MaterialIcons"
-													name="add-ic-call"
 													style={{
 														color: myStyles.light,
 														textAlign: 'center',
