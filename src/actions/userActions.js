@@ -1,19 +1,35 @@
 import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo } from "../types/userTypes";
 import { apiUrl } from './../../App';
 
-export const AsocTec = (objectInfo, token) => async dispatch => {
-  console.log(objectInfo);
-  
+export const AsocTec = (objectInfo, token) => async dispatch => {  
   dispatch({
     type: loadingUser
   });
 
   try {
-    let json = JSON.stringify(objectInfo);
-		let params = 'json=' + json;
-
     let dataForm = '_method=' + encodeURIComponent('POST');
-		dataForm += '&json=' + encodeURIComponent(objectInfo);
+    dataForm += '&name1=' + encodeURIComponent(objectInfo.name1);
+    dataForm += '&name2=' + encodeURIComponent(objectInfo.name2);
+    dataForm += '&lastname1=' + encodeURIComponent(objectInfo.lastname1);
+    dataForm += '&lastname2=' + encodeURIComponent(objectInfo.lastname2);
+    dataForm += '&personalid=' + encodeURIComponent(objectInfo.personalid);
+    dataForm += '&idDpi=' + encodeURIComponent(objectInfo.idDpi);
+    dataForm += '&nit=' + encodeURIComponent(objectInfo.nit);
+    dataForm += '&birthday=' + encodeURIComponent(objectInfo.birthday);
+    dataForm += '&jobdate=' + encodeURIComponent(objectInfo.jobdate);
+    dataForm += '&startDate=' + encodeURIComponent(objectInfo.startDate);
+    dataForm += '&mobilePhone=' + encodeURIComponent(objectInfo.mobilePhone);
+    dataForm += '&email=' + encodeURIComponent(objectInfo.email);
+    dataForm += '&bankAcount=' + encodeURIComponent(objectInfo.bankAcount);
+    dataForm += '&bankName=' + encodeURIComponent(objectInfo.bankName);
+    dataForm += '&monthPercent=' + encodeURIComponent(objectInfo.monthPercent);
+    dataForm += '&bankFees=' + encodeURIComponent(objectInfo.bankFees);
+    dataForm += '&famName1=' + encodeURIComponent(objectInfo.famName1);
+    dataForm += '&famName2=' + encodeURIComponent(objectInfo.famName2);
+    dataForm += '&famLastname1=' + encodeURIComponent(objectInfo.famLastname1);
+    dataForm += '&famLastname2=' + encodeURIComponent(objectInfo.famLastname2);
+    dataForm += '&famMobile=' + encodeURIComponent(objectInfo.famMobile);
+    dataForm += '&fam=' + encodeURIComponent(objectInfo.fam);
 		//console.log("Que trae data form: ",dataForm);
 		const response = await fetch(`${apiUrl.link}/api/asotecsa`, {
 			method: 'POST',
@@ -23,7 +39,7 @@ export const AsocTec = (objectInfo, token) => async dispatch => {
 				Authorization: `Bearer ${token}`,
 				Params: `json ${dataForm}`
 			},
-			body: params
+			body: dataForm
 		});
 
 		const data = await response.json();

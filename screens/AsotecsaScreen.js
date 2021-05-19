@@ -39,6 +39,7 @@ class ContactScreen extends Component {
 	}
 	state = {
 		name1: '',
+		name1Error: '',
 		name2: '',
 		lastname1: '',
 		lastname2: '',
@@ -180,31 +181,40 @@ class ContactScreen extends Component {
 	async sendInfo(){
 		var token = this.props.usuariosReducer.token;
 		var object = {
-			name1: this.state.name1, 
-			name2: this.state.name2, 
-			lastname1: this.state.lastname1,
-			lastname2: this.state.lastname2,
-			personalid: this.state.personalid,
-			idDpi: this.state.idDpi,
-			nit: this.state.nit,
-			birthday: this.state.birthday,
-			jobdate: this.state.jobdate,
-			startDate: this.state.startDate,
-			mobilePhone: this.state.mobilePhone,
-			email: this.state.email,
-			bankAcount: this.state.bankAcount,
-			bankName: this.state.bankName,
-			monthPercent: this.state.monthPercent,
-			bankFees: this.state.bankFees,
-			famName1: this.state.famName1,
-			famLastname2: this.state.famName2,
-			famLastname1: this.state.famLastname1,
-			famLastname2: this.state.famLastname2,
-			famMobile: this.state.famMobile,
-			fam: this.state.fam
+			'name1': this.state.name1, 
+			'name2': this.state.name2, 
+			'lastname1': this.state.lastname1,
+			'lastname2': this.state.lastname2,
+			'personalid': this.state.personalid,
+			'idDpi': this.state.idDpi,
+			'nit': this.state.nit,
+			'birthday': this.state.birthday,
+			'jobdate': this.state.jobdate,
+			'startDate': this.state.startDate,
+			'mobilePhone': this.state.mobilePhone,
+			'email': this.state.email,
+			'bankAcount': this.state.bankAcount,
+			'bankName': this.state.bankName,
+			'monthPercent': this.state.monthPercent,
+			'bankFees': this.state.bankFees,
+			'famName1': this.state.famName1,
+			'famName2': this.state.famName2,
+			'famLastname1': this.state.famLastname1,
+			'famLastname2': this.state.famLastname2,
+			'famMobile': this.state.famMobile,
+			'fam': this.state.fam
 		};
 
+		this.setModalVisible(false);
 		await this.props.AsocTec(object, token);
+	}
+
+	inputValidate(){
+		if (this.state.name1 == "") {
+			this.state.name1Error = "El campo es requerido";
+		} else {
+			this.state.name1Error = "";
+		}
 	}
 
 	sendAlert() {
@@ -306,6 +316,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.name1Error}</Text>
 							{/* segundo nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
