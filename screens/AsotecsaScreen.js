@@ -42,25 +42,45 @@ class ContactScreen extends Component {
 		name1Error: '',
 		name2: '',
 		lastname1: '',
+		lastname1Error: '',
 		lastname2: '',
+		lastname2Error: '',
 		personalid: '',
+		personalidError: '',
 		idDpi: '',
+		idDpiError: '',
 		nit: '',
+		nitError: '',
 		birthday: '',
+		birthdayError: '',
 		jobdate: '',
+		jobdateError: '',
 		startDate: '',
+		startDateError: '',
 		mobilePhone: '',
+		mobilePhoneError: '',
 		email: '',
+		emailError: '',
 		bankAcount: '',
+		bankAcountError: '',
 		bankName: '',
+		bankNameError: '',
 		monthPercent: '',
+		monthPercentError: '',
 		bankFees: '',
+		bankFeesError: '',
 		famName1: '',
+		famName1Error: '',
 		famName2: '',
+		famName2Error: '',
 		famLastname1: '',
+		famLastname1Error: '',
 		famLastname2: '',
+		famLastname2Error: '',
 		famMobile: '',
+		famMobileError: '',
 		fam: '',
+		famError: '',
 		modalVisibleMail: false,
 		pathImage: apiUrl.link + '/img/'
 	};
@@ -209,11 +229,147 @@ class ContactScreen extends Component {
 		await this.props.AsocTec(object, token);
 	}
 
-	inputValidate(){
+	validateName1(){
 		if (this.state.name1 == "") {
-			this.state.name1Error = "El campo es requerido";
+			this.setState({ name1Error: "*El campo es requerido*" });
 		} else {
-			this.state.name1Error = "";
+			this.setState({ name1Error: "" });
+		}
+	}
+
+	validateLastName1(){
+		if (this.state.lastname1 == "") {
+			this.setState({ lastname1Error: "*El campo es requerido*" });
+		} else {
+			this.setState({ lastname1Error: '' });
+		}
+	}
+
+	validateLastName2(){
+		if (this.state.lastname2 == "") {
+			this.setState({ lastname2Error: "*El campo es requerido*" });
+		} else {
+			this.setState({ lastname2Error: '' });
+		}
+	}
+
+	validateIdDpi(){
+		if (this.state.idDpi == "") {
+			this.setState({ idDpiError: "*El campo es requerido*" });
+		} else {
+			this.setState({ idDpiError: '' });
+		}
+	}
+
+	validateNit(){
+		if (this.state.nit == "") {
+			this.setState({ nitError: "*El campo es requerido*" });
+		} else {
+			this.setState({ nitError: '' });
+		}
+	}
+
+	validateBirthday(){
+		if (this.state.birthday == "") {
+			this.setState({ birthdayError: "*El campo es requerido*" });
+		} else {
+			this.setState({ birthdayError: '' });
+		}
+	}
+
+	validateStartDate(){
+		if (this.state.startDate == "") {
+			this.setState({ startDateError: "*El campo es requerido*" });
+		} else {
+			this.setState({ startDateError: '' });
+		}
+	}
+
+	validateMobilPhone(){
+		if (this.state.mobilePhone == "") {
+			this.setState({ mobilePhoneError: "*El campo es requerido*" });
+		} else {
+			this.setState({ mobilePhoneError: '' });
+		}
+	}
+
+	validateEmail(){
+		if (this.state.email == "") {
+			this.setState({ emailError: "*El campo es requerido*" });
+		} else {
+			this.setState({ emailError: '' });
+		}
+	}
+
+	validateBankAcount(){
+		if (this.state.bankAcount == "") {
+			this.setState({ bankAcountError: "*El campo es requerido*" });
+		} else {
+			this.setState({ bankAcountError: '' });
+		}
+	}
+
+	validateBankName(){
+		if (this.state.bankName == "") {
+			this.setState({ bankNameError: "*El campo es requerido*" });
+		} else {
+			this.setState({ bankNameError: '' });
+		}
+	}
+
+	validateMonthPercent(){
+		if (this.state.monthPercent == "") {
+			this.setState({ monthPercentError: "*El campo es requerido*" });
+		} else {
+			this.setState({ monthPercentError: '' });
+		}
+	}
+
+	validatebankFees(){
+		if (this.state.bankFees == "") {
+			this.setState({ bankFeesError: "*El campo es requerido*" });
+		} else {
+			this.setState({ bankFeesError: '' });
+		}
+	}
+
+	validateFamName1(){
+		if (this.state.famName1 == "") {
+			this.setState({ famName1Error: "*El campo es requerido*" });
+		} else {
+			this.setState({ famName1Error: '' });
+		}
+	}
+
+	validateFamLastName1(){
+		if (this.state.famLastname1 == "") {
+			this.setState({ famLastname1Error: "*El campo es requerido*" });
+		} else {
+			this.setState({ famLastname1Error: '' });
+		}
+	}
+
+	validateFamLastName2(){
+		if (this.state.famLastname2 == "") {
+			this.setState({ famLastname2Error: "*El campo es requerido*" });
+		} else {
+			this.setState({ famLastname2Error: '' });
+		}
+	}
+
+	validateFamMobile(){
+		if (this.state.famMobile == "") {
+			this.setState({ famMobileError: "*El campo es requerido*" });
+		} else {
+			this.setState({ famMobileError: '' });
+		}
+	}
+
+	validateFam(){
+		if (this.state.fam == "") {
+			this.setState({ famError: "*El campo es requerido*" });
+		} else {
+			this.setState({ famError: '' });
 		}
 	}
 
@@ -254,6 +410,60 @@ class ContactScreen extends Component {
 			</View>
 		);
 	};
+
+	submit(){
+		//console.log(this.state);
+		if((this.state.name1 != '') && (this.state.lastname1 != '') && (this.state.lastname2 != '') && (this.state.idDpi != '') && (this.state.nit != '') && (this.state.birthday != '') && (this.state.startDate != '') && (this.state.mobilePhone != '') && (this.state.email != '') && (this.state.bankAcount != '') && (this.state.bankName != '') && (this.state.monthPercent != '') && (this.state.bankFees != '') && (this.state.famName1 != '') && (this.state.famLastname1 != '') && (this.state.famLastname2 != '') && (this.state.famMobile != '') && (this.state.fam != '')){
+			return (
+				<View style={{ marginVertical: 20, paddingBottom: 30, paddingTop: -10 }}>
+					<Body>
+						<Button
+							onPress={this.sendAlert(), (modalVisibleMail) => this.setState({ modalVisibleMail: true})}
+							rounded
+							iconLeft
+							style={{
+								fontSize: 44,
+								backgroundColor: myStyles.bg2,
+								paddingVertical: 35,
+								borderRadius: 20,
+								shadowColor: `#9400d3`,
+								shadowOffset: {
+									width: 0,
+									height: 3
+								},
+								shadowOpacity: 0.27,
+								shadowRadius: 4.65,
+
+								elevation: 6
+							}}
+						>
+							<Icon
+								type="MaterialCommunityIcons"
+								name="email-send"
+								style={{
+									color: myStyles.light,
+									fontSize: 25,
+									marginLeft: 30
+								}}
+							/>
+							<Text
+								style={{
+									textAlign: 'center',
+									color: '#ffffff',
+									fontSize: 20,
+									marginRight: 30,
+									paddingBottom: 35,
+									paddingTop: 35
+								}}
+							>
+								ENVIAR SOLICITUD
+							</Text>
+						</Button>
+					</Body>
+				</View>
+			);
+		}
+	}
 
 	render() {
 		if (this.props.usuariosReducer.cargando) {
@@ -312,11 +522,19 @@ class ContactScreen extends Component {
 									onChangeText={(name1) => this.setState({ name1 })}
 									value={this.state.name1}
 									placeholder="Primer Nombre"
+									onBlur={() => this.validateName1()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.name1Error}</Text>
+							{(() => {
+								if ((this.state.name1Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.name1Error}</Text>
+									);
+								}
+							})()}
+
 							{/* segundo nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -332,6 +550,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+
 							{/* Primer Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -343,10 +562,19 @@ class ContactScreen extends Component {
 									onChangeText={(lastname1) => this.setState({ lastname1 })}
 									value={this.state.lastname1}
 									placeholder="Primer Apellido"
+									onBlur={() => this.validateLastName1()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.lastname1Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.lastname1Error}</Text>
+									);
+								}
+							})()}
+
 							{/* Segundo Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -358,10 +586,19 @@ class ContactScreen extends Component {
 									onChangeText={(lastname2) => this.setState({ lastname2 })}
 									value={this.state.lastname2}
 									placeholder="Segundo Apellido"
+									onBlur={() => this.validateLastName2()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.lastname2Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.lastname2Error}</Text>
+									);
+								}
+							})()}
+
 							{/* Identificacion */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
@@ -369,10 +606,19 @@ class ContactScreen extends Component {
 									onChangeText={(idDpi) => this.setState({ idDpi })}
 									value={this.state.idDpi}
 									placeholder="DPI"
+									onBlur={() => this.validateIdDpi()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.idDpiError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.idDpiError}</Text>
+									);
+								}
+							})()}
+
 							{/* NIT */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon type="FontAwesome" name="vcard" style={{ color: myStyles.bg1, fontSize: 25 }} />
@@ -381,10 +627,19 @@ class ContactScreen extends Component {
 									onChangeText={(nit) => this.setState({ nit })}
 									value={this.state.nit}
 									placeholder="NIT"
+									onBlur={() => this.validateNit()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.nitError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.nitError}</Text>
+									);
+								}
+							})()}
+
 							{/* Fecha de Nacimiento */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -397,10 +652,19 @@ class ContactScreen extends Component {
 									onChangeText={(birthday) => this.setState({ birthday })}
 									value={this.state.birthday}
 									placeholder="Fecha de Nacimiento"
+									onBlur={() => this.validateBirthday()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.birthdayError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.birthdayError}</Text>
+									);
+								}
+							})()}
+
 							{/* Fecha de Ingreso */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -413,10 +677,18 @@ class ContactScreen extends Component {
 									onChangeText={(startDate) => this.setState({ startDate })}
 									value={this.state.startDate}
 									placeholder="Fecha de Ingreso"
+									onBlur={() => this.validateStartDate()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.startDateError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.startDateError}</Text>
+									);
+								}
+							})()}
 
 							{/* celular */}
 							<Item rounded style={{ marginTop: 15 }}>
@@ -430,10 +702,18 @@ class ContactScreen extends Component {
 									onChangeText={(mobilePhone) => this.setState({ mobilePhone })}
 									value={this.state.mobilePhone}
 									placeholder="No. De celular"
+									onBlur={() => this.validateMobilPhone()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.mobilePhoneError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.mobilePhoneError}</Text>
+									);
+								}
+							})()}
 
 							{/* email */}
 							<Item rounded style={{ marginTop: 15 }}>
@@ -447,10 +727,18 @@ class ContactScreen extends Component {
 									onChangeText={(email) => this.setState({ email })}
 									value={this.state.email}
 									placeholder="Correo electrónico"
+									onBlur={() => this.validateEmail()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.emailError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.emailError}</Text>
+									);
+								}
+							})()}
 
 							{/* cuenta banco */}
 							<Item rounded style={{ marginTop: 15 }}>
@@ -460,10 +748,18 @@ class ContactScreen extends Component {
 									onChangeText={(bankAcount) => this.setState({ bankAcount })}
 									value={this.state.bankAcount}
 									placeholder="No. De cuenta"
+									onBlur={() => this.validateBankAcount()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.bankAcountError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.bankAcountError}</Text>
+									);
+								}
+							})()}
 
 							{/* Entidad bancaria: */}
 							<Item rounded style={{ marginTop: 15 }}>
@@ -473,10 +769,18 @@ class ContactScreen extends Component {
 									onChangeText={(bankName) => this.setState({ bankName })}
 									value={this.state.bankName}
 									placeholder="Entidad bancaria:"
+									onBlur={() => this.validateBankName()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.bankNameError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.bankNameError}</Text>
+									);
+								}
+							})()}
 
 							<View
 								style={{
@@ -509,10 +813,18 @@ class ContactScreen extends Component {
 									onChangeText={(monthPercent) => this.setState({ monthPercent })}
 									value={this.state.monthPercent}
 									placeholder="% de ahorro mensual"
+									onBlur={() => this.validateMonthPercent()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.monthPercentError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.monthPercentError}</Text>
+									);
+								}
+							})()}
 
 							{/* Incluir comisiones en el ahorro: */}
 							<Item rounded style={{ marginTop: 15 }}>
@@ -521,11 +833,19 @@ class ContactScreen extends Component {
 									underlineColorAndroid="transparent"
 									onChangeText={(bankFees) => this.setState({ bankFees })}
 									value={this.state.bankFees}
+									onBlur={() => this.validatebankFees()}
 									placeholder="Incluir comisiones en el ahorro:"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1, outline: 'none' }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.bankFeesError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.bankFeesError}</Text>
+									);
+								}
+							})()}
 
 							<View
 								style={{
@@ -560,10 +880,19 @@ class ContactScreen extends Component {
 									onChangeText={(famName1) => this.setState({ famName1 })}
 									value={this.state.famName1}
 									placeholder="Primer Nombre"
+									onBlur={() => this.validateFamName1()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.famName1Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.famName1Error}</Text>
+									);
+								}
+							})()}
+
 							{/* segundo nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -579,6 +908,7 @@ class ContactScreen extends Component {
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+
 							{/* Primer Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -590,10 +920,19 @@ class ContactScreen extends Component {
 									onChangeText={(famLastname1) => this.setState({ famLastname1 })}
 									value={this.state.famLastname1}
 									placeholder="Primer Apellido"
+									onBlur={() => this.validateFamLastName1()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.famLastname1Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.famLastname1Error}</Text>
+									);
+								}
+							})()}
+
 							{/* Segundo Apellido */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -605,10 +944,19 @@ class ContactScreen extends Component {
 									onChangeText={(famLastname2) => this.setState({ famLastname2 })}
 									value={this.state.famLastname2}
 									placeholder="Segundo Apellido"
+									onBlur={() => this.validateFamLastName2()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.famLastname2Error != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.famLastname2Error}</Text>
+									);
+								}
+							})()}
+
 							{/* No. De teléfono: */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -620,69 +968,41 @@ class ContactScreen extends Component {
 									onChangeText={(famMobile) => this.setState({ famMobile })}
 									value={this.state.famMobile}
 									placeholder="No. De teléfono"
+									onBlur={() => this.validateFamMobile()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
+							{(() => {
+								if ((this.state.famMobileError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.famMobileError}</Text>
+									);
+								}
+							})()}
+
 							{/* Parentesco */}
-							<Item rounded style={{ marginTop: 15 }}>
+							<Item rounded style={{ marginTop: 15, marginBottom: 15 }}>
 								<Icon type="FontAwesome" name="users" style={{ color: myStyles.bg1, fontSize: 25 }} />
 								<Input
 									maxLength={13}
 									onChangeText={(fam) => this.setState({ fam })}
 									value={this.state.fam}
 									placeholder="Parentesco"
+									onBlur={() => this.validateFam()}
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
-							{/* BTN */}
-							<View style={{ marginVertical: 20, paddingBottom: 30 }}>
-								<Body>
-									<Button
-										onPress={this.sendAlert(), (modalVisibleMail) => this.setState({ modalVisibleMail: true})}
-										rounded
-										iconLeft
-										style={{
-											fontSize: 44,
-											backgroundColor: myStyles.bg2,
-											paddingVertical: 35,
-											borderRadius: 20,
-											shadowColor: `#9400d3`,
-											shadowOffset: {
-												width: 0,
-												height: 3
-											},
-											shadowOpacity: 0.27,
-											shadowRadius: 4.65,
+							{(() => {
+								if ((this.state.famError != '')) {
+									return (
+										<Text style={{ color: 'red', textAlign: 'center' }}>{this.state.famError}</Text>
+									);
+								}
+							})()}
 
-											elevation: 6
-										}}
-									>
-										<Icon
-											type="MaterialCommunityIcons"
-											name="email-send"
-											style={{
-												color: myStyles.light,
-												fontSize: 25,
-												marginLeft: 30
-											}}
-										/>
-										<Text
-											style={{
-												textAlign: 'center',
-												color: '#ffffff',
-												fontSize: 20,
-												marginRight: 30,
-												paddingBottom: 35,
-												paddingTop: 35
-											}}
-										>
-											ENVIAR SOLICITUD
-										</Text>
-									</Button>
-								</Body>
-							</View>
+							{this.submit()}
 
 							<Content />
 						</Form>
