@@ -121,7 +121,11 @@ class LoginScreen extends Component {
 						{this.showAlert()}
 
 						<Content>
-							<Form style={{ marginRight: 45, marginLeft: 45, marginTop: screenHeight / 2 + 100 }}>
+							<Image
+								style={{ width: screenWidth -100, height: screenWidth -210, alignSelf: 'center', marginTop: screenHeight / 4  }}
+								source={{ uri: apiUrl.link + '/img/app/' + 'login-logo.png' }}
+							/>
+							<Form style={{ marginRight: 45, marginLeft: 45, marginTop: 50 }}>
 								<Item rounded>
 									<Icon type="FontAwesome" name="user-o" style={{ color: 'white', fontSize: 25 }} />
 									<Input

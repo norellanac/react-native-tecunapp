@@ -338,7 +338,7 @@ class GameShowScreen extends Component {
 									fontSize: 20
 								}}
 							>
-								PREGUNTA 1:
+								PREGUNTA:
 							</Text>
 						</View>
 						<CardItem style={{ backgroundColor: 'transparent' }}>

@@ -162,7 +162,7 @@ class GamesScreen extends Component {
 											{this.props.questionReducer.score[1].user.lastname.split(' ', 1)}
 										</Text>
 										<Badge success>
-											<Text> {this.props.questionReducer.score[1].points + 900} </Text>
+											<Text> {this.props.questionReducer.score[1].points } </Text>
 										</Badge>
 									</Col>
 									<Col>
@@ -209,7 +209,7 @@ class GamesScreen extends Component {
 										</Text>
 
 										<Badge danger>
-											<Text> {this.props.questionReducer.score[2].points + 5000} </Text>
+											<Text> {this.props.questionReducer.score[2].points } </Text>
 										</Badge>
 									</Col>
 								</Grid>

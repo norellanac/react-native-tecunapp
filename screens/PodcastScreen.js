@@ -173,7 +173,7 @@ class PodcastScreen extends Component {
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={2} />
 				<Image
-					source={{ uri: apiUrl.link + '/img/app/' + 'bcontacto.png' }}
+					source={{ uri: apiUrl.link + '/img/app/' + 'bpodcast.png' }}
 					style={{ 
 						width: screenWidth,
 						minHeight: screenHeight / 10,

@@ -248,7 +248,7 @@ class PostsScreen extends Component {
 			<Container>
 				<HederPostSection navigation={this.props.navigation} screen={1} />
 				<Image
-					source={{ uri: apiUrl.link + '/img/app/' + 'bcontacto.png' }}
+					source={{ uri: apiUrl.link + '/img/app/' + 'bnoticias.png' }}
 					style={{ 
 						width: screenWidth,
 						minHeight: screenHeight / 10,

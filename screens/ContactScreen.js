@@ -537,13 +537,17 @@ class ContactScreen extends Component {
 																justifyContent: 'center'
 															}}
 														>
-															<TouchableOpacity
-																onPress={() => {
-																	this.props.navigation.navigate('ContactCallScreen');
-																}}
+															<View
 																style={{ alignSelf: 'center' }}
 															>
-																<ListItem noBorder>
+																<ListItem
+																	noBorder
+																	onPress={() => {
+																		this.props.navigation.navigate(
+																			'ContactCallScreen'
+																		);
+																	}}
+																>
 																	<Image
 																		source={{
 																			uri:
@@ -566,7 +570,7 @@ class ContactScreen extends Component {
 																		LLAMAR
 																	</Text>
 																</ListItem>
-															</TouchableOpacity>
+															</View>
 														</Col>
 													</Grid>
 
@@ -589,15 +593,19 @@ class ContactScreen extends Component {
 																justifyContent: 'center'
 															}}
 														>
-															<TouchableOpacity
-																onPress={() => {
-																	this.props.navigation.navigate('ContactChatScreen');
-																}}
+															<View
 																style={{
 																	alignSelf: 'center'
 																}}
 															>
-																<ListItem noBorder>
+																<ListItem
+																	noBorder
+																	onPress={() => {
+																		this.props.navigation.navigate(
+																			'ContactChatScreen'
+																		);
+																	}}
+																>
 																	<Image
 																		source={{
 																			uri:
@@ -620,7 +628,7 @@ class ContactScreen extends Component {
 																		WHATSAPP
 																	</Text>
 																</ListItem>
-															</TouchableOpacity>
+															</View>
 														</Col>
 													</Grid>
 												</ListItem>
@@ -677,7 +685,7 @@ class ContactScreen extends Component {
 								<Input
 									onChangeText={(searchDepartamento) => this.setState({ searchDepartamento })}
 									value={this.state.searchDepartamento}
-									placeholder="Departamento o area"
+									placeholder="Departamento o área"
 									placeholderTextColor={myStyles.bg1}
 									style={{ color: myStyles.bg1 }}
 								/>

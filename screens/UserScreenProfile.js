@@ -159,29 +159,55 @@ class UserScreenProfile extends Component {
 			return (
 				<Grid
 					style={{
-						backgroundColor: myStyles.bg1,
-						borderBottomLeftRadius: 5,
-						borderTopLeftRadius: 5,
-						borderBottomRightRadius: 5,
-						borderTopRightRadius: 5,
 						marginTop: 15
 					}}
 				>
 					<Col
 						size={1}
 						style={{
-							marginTop: 5,
-							marginBottom: 5,
-							justifyContent: 'center',
-							marginLeft: 15
+							marginVertical: 5,
+							paddingVertical: 10,
+							marginHorizontal: 2,
+							alignItems: 'center',
+							backgroundColor: myStyles.bg1,
+							borderBottomLeftRadius: 5,
+							borderTopLeftRadius: 5,
+							borderBottomRightRadius: 5,
+							borderTopRightRadius: 5
 						}}
 					>
 						<Text style={{ color: myStyles.light }}>#</Text>
 					</Col>
-					<Col size={3} style={{ marginTop: 5, marginBottom: 5 }}>
+					<Col
+						size={3}
+						style={{
+							marginVertical: 5,
+							paddingVertical: 10,
+							marginHorizontal: 2,
+							alignItems: 'center',
+							backgroundColor: myStyles.bg2,
+							borderBottomLeftRadius: 5,
+							borderTopLeftRadius: 5,
+							borderBottomRightRadius: 5,
+							borderTopRightRadius: 5
+						}}
+					>
 						<Text style={{ color: myStyles.light }}>Nombre</Text>
 					</Col>
-					<Col size={1} style={{ marginTop: 5, marginBottom: 5, marginLeft: 15 }}>
+					<Col
+						size={1}
+						style={{
+							marginVertical: 5,
+							paddingVertical: 10,
+							marginHorizontal: 2,
+							alignItems: 'center',
+							backgroundColor: myStyles.bg1,
+							borderBottomLeftRadius: 5,
+							borderTopLeftRadius: 5,
+							borderBottomRightRadius: 5,
+							borderTopRightRadius: 5
+						}}
+					>
 						<Text style={{ color: myStyles.light }}>Puntos</Text>
 					</Col>
 				</Grid>
@@ -190,7 +216,7 @@ class UserScreenProfile extends Component {
 	}
 
 	allScore() {
-		//console.log("Que viene en el score?: ",this.state.isDisplay);
+		console.log("Que viene en puntos?: ",this.props.questionReducer);
 		let count = 0;
 		let color = '#F8FAFB';
 		let idUserScore;
@@ -204,7 +230,7 @@ class UserScreenProfile extends Component {
 					(
 						<Grid
 							style={{
-								backgroundColor: idUserScore == pounts.id ? '#E87823' : 'transparent',
+								backgroundColor: idUserScore == pounts.id ? myStyles.grey : 'transparent',
 								borderBottomLeftRadius: 10,
 								borderTopLeftRadius: 10,
 								borderBottomRightRadius: 10,
@@ -217,23 +243,19 @@ class UserScreenProfile extends Component {
 								style={{
 									marginTop: 5,
 									marginBottom: 5,
-									justifyContent: 'center',
+									alignItems: 'center',
 									marginLeft: 5
 								}}
 							>
-								<Badge success>
-									<Text>{count}</Text>
-								</Badge>
+								<Text style={{ color: myStyles.bg1 }}>{count}</Text>
 							</Col>
 							<Col size={3} style={{ marginTop: 5, marginBottom: 5 }}>
-								<Text>
+								<Text style={{ color: myStyles.bg1 }}>
 									{pounts.user.name} {pounts.user.lastname}
 								</Text>
 							</Col>
 							<Col size={1} style={{ marginTop: 5, marginBottom: 5, marginLeft: 15 }}>
-								<Badge primary>
-									<Text>{pounts.points}</Text>
-								</Badge>
+								<Text style={{ color: myStyles.bg1 }}>{pounts.points}</Text>
 							</Col>
 						</Grid>
 					)
@@ -401,7 +423,7 @@ class UserScreenProfile extends Component {
 		await this.props.changeAvatar(object, token);
 		await this.props.traerUser(token);
 		if (!this.props.usuariosReducer.cargando) {
-			this.props.navigation.navigate('SettingsScreen')
+			this.props.navigation.navigate('SettingsScreen');
 		}
 	}
 
@@ -493,7 +515,7 @@ class UserScreenProfile extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content style={{ backgroundColor: myStyles.light }}>
-					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: screenHeight / 5 }}></View>
+					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: screenHeight / 5 }} />
 					<Card
 						transparent
 						style={{
@@ -505,7 +527,7 @@ class UserScreenProfile extends Component {
 							borderBottomLeftRadius: 15,
 							borderBottomRightRadius: 15,
 							marginTop: -75,
-							backgroundColor: myStyles.light,
+							backgroundColor: myStyles.light
 							/* shadowColor: "#000",
 							shadowOffset: {
 								width: 0,
@@ -517,18 +539,23 @@ class UserScreenProfile extends Component {
 							elevation: 9, */
 						}}
 					>
-						<View transparent style={{alignSelf: 'center'}}>
+						<View transparent style={{ alignSelf: 'center' }}>
 							<TouchableOpacity onPress={() => this.setModalVisibleOnly(true)}>
 								{(() => {
 									if (this.props.usuariosReducer.cargando) {
-										return <Spinner color="red" style={{ 
-											backgroundColor: myStyles.light,
-											height: screenWidth / 3,
-											width: screenWidth / 3,
-											marginTop: -60,
-											borderRadius: 70,
-											padding: 50,
-										}}/>;
+										return (
+											<Spinner
+												color="red"
+												style={{
+													backgroundColor: myStyles.light,
+													height: screenWidth / 3,
+													width: screenWidth / 3,
+													marginTop: -60,
+													borderRadius: 70,
+													padding: 50
+												}}
+											/>
+										);
 									} else {
 										if (this.props.usuariosReducer.user.url_image != null) {
 											return (
@@ -539,22 +566,29 @@ class UserScreenProfile extends Component {
 														width: screenWidth / 3,
 														marginTop: -60,
 														borderRadius: 70,
-														padding: 50,
+														padding: 50
 													}}
-													source={{uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user.url_image}`}}
+													source={{
+														uri: `${apiUrl.link}/img/${this.props.usuariosReducer.user
+															.url_image}`
+													}}
 												/>
 											);
 										} else {
-											return <Thumbnail 
-											style={{
-												backgroundColor: myStyles.light,
-												height: screenWidth / 3,
-												width: screenWidth / 3,
-												marginTop: -60,
-												borderRadius: 70,
-												padding: 50,
-											}}
-											large source={{ uri: `${apiUrl.link}/img/logo.png` }} />;
+											return (
+												<Thumbnail
+													style={{
+														backgroundColor: myStyles.light,
+														height: screenWidth / 3,
+														width: screenWidth / 3,
+														marginTop: -60,
+														borderRadius: 70,
+														padding: 50
+													}}
+													large
+													source={{ uri: `${apiUrl.link}/img/logo.png` }}
+												/>
+											);
 										}
 									}
 								})()}
@@ -573,45 +607,20 @@ class UserScreenProfile extends Component {
 								{this.props.usuariosReducer.user.email}
 							</Text>
 						</View>
+						<View style={{ marginHorizontal: 30, alignItems: 'center' }}>
+							{this.allScoreTitle()}
+							{this.allScore()}
+						</View>
 						<View style={{ marginBottom: 25, paddingTop: screenHeight / 17 }}>
 							<Grid>
 								<Col style={{ alignItems: 'center' }}>
-									<TouchableOpacity onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}>
-										<ListItem style={{ 
-												backgroundColor: myStyles.bg2,
-												width: screenWidth / 1.2,
-												borderRadius: 10
-											}}
-											noBorder
-											delayPressIn
-											onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
-										>
-											<Body>
-												<Text
-													style={{
-														fontWeight: 'bold',
-														textAlign: 'center',
-														color: myStyles.light,
-													}}
-												>
-													LÍNEA DE DENUNCÍA
-												</Text>
-											</Body>
-											<Right>
-												<Icon
-													type="FontAwesome"
-													name="warning"
-													style={{
-														color: myStyles.light,
-														textAlign: 'center',
-													}}
-												/>
-											</Right>
-										</ListItem>
-									</TouchableOpacity>
-
-									<TouchableOpacity onPress={() => {this.onPressChange()}}>
-										<ListItem style={{ 
+									<TouchableOpacity
+										onPress={() => {
+											this.onPressChange();
+										}}
+									>
+										<ListItem
+											style={{
 												backgroundColor: myStyles.bg2,
 												width: screenWidth / 1.2,
 												marginTop: 10,
@@ -620,14 +629,16 @@ class UserScreenProfile extends Component {
 											}}
 											noBorder
 											delayPressIn
-											onPress={() => {this.onPressChange()}}
+											onPress={() => {
+												this.onPressChange();
+											}}
 										>
 											<Body>
 												<Text
 													style={{
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.light,
+														color: myStyles.light
 													}}
 												>
 													RANKING GENERAL
@@ -639,15 +650,52 @@ class UserScreenProfile extends Component {
 													name="trophy"
 													style={{
 														color: myStyles.light,
-														textAlign: 'center',
+														textAlign: 'center'
 													}}
 												/>
 											</Right>
 										</ListItem>
 									</TouchableOpacity>
-
+									<TouchableOpacity
+										onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
+									>
+										<ListItem
+											style={{
+												backgroundColor: myStyles.bg2,
+												width: screenWidth / 1.2,
+												borderRadius: 10,
+												marginBottom: 10
+											}}
+											noBorder
+											delayPressIn
+											onPress={() => Linking.openURL('http://www.denunciagrupotecun.com/')}
+										>
+											<Body>
+												<Text
+													style={{
+														fontWeight: 'bold',
+														textAlign: 'center',
+														color: myStyles.light
+													}}
+												>
+													LÍNEA DE DENUNCÍA
+												</Text>
+											</Body>
+											<Right>
+												<Icon
+													type="FontAwesome"
+													name="warning"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center'
+													}}
+												/>
+											</Right>
+										</ListItem>
+									</TouchableOpacity>
 									<TouchableOpacity>
-										<ListItem style={{ 
+										<ListItem
+											style={{
 												backgroundColor: myStyles.bg2,
 												width: screenWidth / 1.2,
 												borderRadius: 10,
@@ -663,7 +711,7 @@ class UserScreenProfile extends Component {
 													style={{
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.light,
+														color: myStyles.light
 													}}
 												>
 													NUMEROS DE EMERGENCIA
@@ -675,7 +723,7 @@ class UserScreenProfile extends Component {
 													name="add-ic-call"
 													style={{
 														color: myStyles.light,
-														textAlign: 'center',
+														textAlign: 'center'
 													}}
 												/>
 											</Right>
@@ -683,7 +731,8 @@ class UserScreenProfile extends Component {
 									</TouchableOpacity>
 
 									<TouchableOpacity>
-										<ListItem style={{ 
+										<ListItem
+											style={{
 												backgroundColor: myStyles.bg2,
 												width: screenWidth / 1.2,
 												marginBottom: 10,
@@ -691,14 +740,16 @@ class UserScreenProfile extends Component {
 											}}
 											noBorder
 											delayPressIn
-											onPress={() => {this.logout()}}
+											onPress={() => {
+												this.logout();
+											}}
 										>
 											<Body>
 												<Text
 													style={{
 														fontWeight: 'bold',
 														textAlign: 'center',
-														color: myStyles.light,
+														color: myStyles.light
 													}}
 												>
 													CERRAR SESION
@@ -710,7 +761,7 @@ class UserScreenProfile extends Component {
 													name="log-out"
 													style={{
 														color: myStyles.light,
-														textAlign: 'center',
+														textAlign: 'center'
 													}}
 												/>
 											</Right>
@@ -719,10 +770,6 @@ class UserScreenProfile extends Component {
 								</Col>
 							</Grid>
 							{this.showModal()}
-							<View style={{ marginLeft: 5, marginRight: 5 }}>
-								{this.allScoreTitle()}
-								{this.allScore()}
-							</View>
 						</View>
 					</Card>
 				</Content>

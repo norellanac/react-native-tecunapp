@@ -56,11 +56,11 @@ class StoreScreen extends Component {
 		if (this.props.storeReducer.stores) {
 			//console.log('tiendas: ', this.props.storeReducer);
 			if (this.props.storeReducer.stores && this.props.storeReducer.searchStores.length == 0) {
-				stores = this.props.storeReducer.stores	
+				stores = this.props.storeReducer.stores;
 			} else {
-				stores = this.props.storeReducer.searchStores
+				stores = this.props.storeReducer.searchStores;
 			}
-				return stores.map((store) => (	
+			return stores.map((store) => (
 				<Card
 					style={{
 						flex: 0,
@@ -69,28 +69,28 @@ class StoreScreen extends Component {
 						marginLeft: 15,
 						marginRight: 15,
 						marginTop: 10,
-						backgroundColor: '#f9f9f9', 
-						borderBottomLeftRadius: 20, 
-						borderBottomRightRadius: 20,  
-						shadowColor: "#000",
+						backgroundColor: '#f9f9f9',
+						borderBottomLeftRadius: 20,
+						borderBottomRightRadius: 20,
+						shadowColor: '#000',
 						shadowOffset: {
 							width: 0,
-							height: 5,
+							height: 5
 						},
 						shadowOpacity: 0.34,
 						shadowRadius: 6.27,
 
-						elevation: 10,
+						elevation: 10
 					}}
 					key={store.id}
 				>
 					<Image
 						source={{ uri: apiUrl.link + '/img/bg/' + 'bg-2.jpg' }}
-						style={{ 
+						style={{
 							borderTopLeftRadius: 15,
 							borderTopRightRadius: 15,
-							minHeight: screenHeight / 8, 
-							maxHeight: 400 
+							minHeight: screenHeight / 8,
+							maxHeight: 400
 						}}
 					/>
 					<Text
@@ -99,97 +99,111 @@ class StoreScreen extends Component {
 							fontWeight: 'bold',
 							color: myStyles.bg1,
 							paddingVertical: 8,
-							textAlignVertical: "center",
-							textAlign: "center"
+							textAlignVertical: 'center',
+							textAlign: 'center'
 						}}
 					>
 						{store.name}
 					</Text>
 					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
-						<Text style={{ fontSize: 15 }} note>{store.address}</Text>
+						<Text style={{ fontSize: 15 }} note>
+							{store.address}
+						</Text>
 					</Content>
 					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
-						<Text style={{ fontSize: 15 }} note>{store.schedule}</Text>
+						<Text style={{ fontSize: 15 }} note>
+							{store.schedule}
+						</Text>
 					</Content>
 					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
-						<Text style={{ fontSize: 15 }} note>{store.description}</Text>
+						<Text style={{ fontSize: 15 }} note>
+							{store.description}
+						</Text>
 					</Content>
 					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
-						<Text style={{ fontSize: 15 }} note>Telefono: {store.number}</Text>
+						<Text style={{ fontSize: 15 }} note>
+							Telefono: {store.number}
+						</Text>
 					</Content>
 					<ListItem>
 						<Button
+							iconLeft
 							transparent
-							style={{ 
+							style={{
 								alignSelf: 'center',
-								backgroundColor: '#f9f9f9', 
-								borderWidth: 2, 
-								borderRadius: 15, 
+								backgroundColor: '#f9f9f9',
+								borderWidth: 2,
+								borderRadius: 15,
 								marginHorizontal: 3,
 								shadowColor: myStyles.bg1,
 								shadowOffset: {
 									width: 0,
-									height: 6,
+									height: 6
 								},
 								shadowOpacity: 0.39,
-								shadowRadius: 8.30,
+								shadowRadius: 8.3,
 
-								elevation: 8,
+								elevation: 8
 							}}
 							onPress={() => Linking.openURL(store.maps)}
 						>
-							<Text>
-								<Icon name="waze" type="MaterialCommunityIcons" /> waze
-							</Text>
+							<Icon name="waze" type="MaterialCommunityIcons" />
+							<Text style={{ marginLeft: -10,  color: myStyles.bg1 }}>WAZE</Text>
 						</Button>
 						<Button
 							transparent
-							style={{ 
+							style={{
 								alignSelf: 'center',
-								backgroundColor: '#f9f9f9', 
-								borderWidth: 2, 
-								borderRadius: 15, 
+								backgroundColor: '#f9f9f9',
+								borderWidth: 2,
+								borderRadius: 15,
 								marginHorizontal: 3,
 								shadowColor: myStyles.bg1,
 								shadowOffset: {
 									width: 0,
-									height: 6,
+									height: 6
 								},
 								shadowOpacity: 0.39,
-								shadowRadius: 8.30,
+								shadowRadius: 8.3,
 
-								elevation: 8, 
+								elevation: 8
 							}}
 							onPress={() => Linking.openURL(store.maps)}
 						>
-							<Text>
-								<Icon name="google-maps" type="MaterialCommunityIcons" /> Maps
-							</Text>
+							<Image
+								source={{ uri: apiUrl.link + '/img/app/' + 'google-maps.png' }}
+								style={{
+									width: 25,
+									height: 25,
+									marginLeft: 10
+								}}
+							/>
+							<Text style={{ marginLeft: -10,  color: myStyles.bg1 }}>Maps</Text>
 						</Button>
 						<Button
 							transparent
-							style={{ 
+							iconLeft
+							style={{
 								alignSelf: 'center',
-								backgroundColor: '#f9f9f9', 
-								borderWidth: 2, 
-								borderRadius: 15, 
+								backgroundColor: '#f9f9f9',
+								borderWidth: 2,
+								borderRadius: 15,
 								marginHorizontal: 2,
-								 marginRight: 5,
-								 shadowColor: myStyles.bg1,
+								marginRight: 5,
+								shadowColor: myStyles.bg1,
 								shadowOffset: {
 									width: 0,
-									height: 6,
+									height: 6
 								},
 								shadowOpacity: 0.39,
-								shadowRadius: 8.30,
+								shadowRadius: 8.3,
 
-								elevation: 8,
+								elevation: 8
 							}}
 							onPress={() => Linking.openURL(`tel:${store.number}`)}
 						>
-							<Text>
-								<Icon name="phone" type="FontAwesome" style={{ color: myStyles.bg1 }} /> LLAMA
-							</Text>
+							<Icon name="phone" type="FontAwesome" style={{ color: myStyles.bg1 }} />
+							<Text style={{ marginLeft: -10,  color: myStyles.bg1 }}>LLAMAR</Text>
 						</Button>
 						<Right />
 					</ListItem>
@@ -204,14 +218,14 @@ class StoreScreen extends Component {
 			return (
 				<Card style={{ marginTop: 0, marginLeft: 0, marginRight: 0 }}>
 					<CardItem style={{ backgroundColor: '#00B9D3' }}>
-					<Image
-						source={{ uri: apiUrl.link + '/img/app/' + 'bubicaciones.png' }}
-						style={{ 
-							width: screenWidth,
-							minHeight: screenHeight / 10,
-							height: screenHeight / 4
-						}}
-					/>
+						<Image
+							source={{ uri: apiUrl.link + '/img/app/' + 'bubicaciones.png' }}
+							style={{
+								width: screenWidth,
+								minHeight: screenHeight / 10,
+								height: screenHeight / 4
+							}}
+						/>
 						<Col size={4}>
 							<Text
 								style={{
@@ -253,7 +267,7 @@ class StoreScreen extends Component {
 				<Content>
 					<Image
 						source={{ uri: apiUrl.link + '/img/app/' + 'bubicaciones.png' }}
-						style={{ 
+						style={{
 							width: screenWidth,
 							minHeight: screenHeight / 10,
 							height: screenHeight / 4
@@ -262,22 +276,24 @@ class StoreScreen extends Component {
 					{this.loadContent()}
 				</Content>
 				{/* #f9f9f9 */}
-				<View style={{ 
-					backgroundColor: '#f9f9f9', 
-					borderBottomLeftRadius: 20, 
-					borderBottomRightRadius: 20,
-				}}>
-					<ListItem noBorder
-						style={{ 
+				<View
+					style={{
+						backgroundColor: '#f9f9f9',
+						borderBottomLeftRadius: 20,
+						borderBottomRightRadius: 20
+					}}
+				>
+					<ListItem
+						noBorder
+						style={{
 							backgroundColor: 'FFFFFF',
 							marginTop: 10,
 							marginBottom: 10,
 							marginLeft: 35,
-							width: screenWidth - 60, 
+							width: screenWidth - 60,
 							height: screenHeight / 16,
 							borderWidth: 1,
-							borderRadius: 30,
-
+							borderRadius: 30
 						}}
 					>
 						<Input
@@ -292,13 +308,9 @@ class StoreScreen extends Component {
 							style={{ alignSelf: 'center', marginHorizontal: 5 }}
 							onPress={() => this.searchStores(this.state.search, this.props.usuariosReducer.token)}
 						>
-							<Icon
-								name="search"
-								type="FontAwesome"
-								style={{ color: "#0075b7" }}
-							/>
+							<Icon name="search" type="FontAwesome" style={{ color: '#0075b7' }} />
 						</TouchableOpacity>
-					</ListItem >
+					</ListItem>
 				</View>
 			</Container>
 		);

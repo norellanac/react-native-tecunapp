@@ -9,7 +9,7 @@
       "web"
     ],
     "version": "0.5.1",
-    "orientation": "default",
+    "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "splash": {

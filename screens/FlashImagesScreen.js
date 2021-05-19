@@ -23,7 +23,7 @@ import * as pictureActions from '../src/actions/pictureActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
 import HederPostSection from '../components/HederPostSection';
-import { persistor, apiUrl } from '../App';
+import { persistor, apiUrl, myStyles } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -74,15 +74,10 @@ class FlashImagesScreen extends Component {
 					<CardItem style={{borderRadius: 15,}}>
 						<Left>
 							<Button transparent textStyle={{ color: '#87838B' }}>
-								<Icon name="calendar" type="FontAwesome5" />
-								<Text>{`${picture.created_at}`} </Text>
+								<Icon name="calendar" type="FontAwesome5" style={{color: myStyles.bg1}} />
+								<Text style={{color: myStyles.bg1}}>{`${picture.created_at.split(' ', 1)}`} </Text>
 							</Button>
 						</Left>
-						<Right>
-							<Button transparent textStyle={{ color: '#87838B' }}>
-								<Icon name="clock" type="FontAwesome5" />
-							</Button>
-						</Right>
 					</CardItem>
 				</Card>
 			));
