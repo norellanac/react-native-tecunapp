@@ -1,4 +1,4 @@
-import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo } from "../types/userTypes";
+import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo, getEmergencyNumber } from "../types/userTypes";
 import { PURGE } from 'redux-persist';
 const INITIAL = {
 	token: '',
@@ -7,6 +7,7 @@ const INITIAL = {
 	registered: false,
 	url_image: null,
 	message: '',
+	number: '',
 	error: '',
 };
 export default (state = INITIAL, action) => {
@@ -21,6 +22,8 @@ export default (state = INITIAL, action) => {
 			return { ...state,  url_image: action.url_image, cargando: action.cargando, error: ''}
 		case asotecsaInfo:
 			return { ...state, message: action.message, cargando: action.cargando, error: ''}
+		case getEmergencyNumber:
+			return { ...state, number: action.number, cargando: action.cargando, error: ''}
 		case PURGE:
 			return INITIAL;
 		default:

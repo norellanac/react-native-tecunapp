@@ -27,6 +27,7 @@ import JobShowScreen from '../screens/JobShowScreen';
 import HomeShowScreen from '../screens/HomeShowScreen';
 import PostsCategoryScreen from '../screens/PostsCategoryScreen';
 import ProccessVacationScreen from '../screens/ProccessVacationScreen';
+import EmergencyNumberScreen from '../screens/EmergencyNumberScreen';
 import ProccessCertificateScreen from '../screens/ProccessCertificateScreen';
 
 import AsotecsaScreen from '../screens/AsotecsaScreen';
@@ -205,6 +206,13 @@ function MainStackNavigator() {
 					header="null"
 					component={AsotecsaScreen}
 					options={{ title: 'Noticias' }}
+				/>
+
+				<Stack.Screen
+					name="EmergencyNumberScreen"
+					header="null"
+					component={EmergencyNumberScreen}
+					options={{ title: 'Numero de emergencia' }}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

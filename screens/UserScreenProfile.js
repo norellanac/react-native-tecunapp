@@ -264,6 +264,10 @@ class UserScreenProfile extends Component {
 		}
 	}
 
+	emergency() {
+		
+	}
+
 	async onPressChange() {
 		await this.props.topScoreAction(this.props.usuariosReducer.token);
 		if (this.state.isDisplay == 1) {
@@ -704,7 +708,7 @@ class UserScreenProfile extends Component {
 											onFocus
 											delayPressIn
 											noBorder
-											onPress={() => this.props.navigation.navigate('ContactCallScreen')}
+											onPress={() => this.props.navigation.navigate('EmergencyNumberScreen')}
 										>
 											<Body>
 												<Text

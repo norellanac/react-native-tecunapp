@@ -1,5 +1,47 @@
-import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo } from "../types/userTypes";
+import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo, getEmergencyNumber } from "../types/userTypes";
 import { apiUrl } from './../../App';
+
+export const getEmergency = (token) => async (dispatch) => {
+	dispatch({
+		type: loadingUser
+	});
+
+	try {
+		const response = await fetch(`${apiUrl.link}/api/numeros`, {
+			method: 'GET',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+				Authorization: `Bearer ${token}`
+			}
+		});
+
+		const data = await response.json();
+
+    console.log(data);
+    
+
+		if (response.ok) {
+			dispatch({
+				type: getEmergencyNumber,
+				number: data.arrayNumer,
+				cargando: false
+			});
+		} else {
+			dispatch({
+				type: errorUser,
+				error: 'algo salio mal',
+				cargando: false
+			});
+		}
+	} catch (error) {
+		dispatch({
+			type: errorUser,
+			error: error.message,
+			cargando: false
+		});
+	}
+};
 
 export const AsocTec = (objectInfo, token) => async dispatch => {  
   dispatch({
@@ -177,7 +219,7 @@ export const sendPushTokenAction = (pushToken, userId, apiToken) => async dispat
   }
 };
 
-export const registerUsers = ( dpi, name, lastname, email, phone, password ) => async dispatch => {
+/* export const registerUsers = ( dpi, name, lastname, email, phone, password ) => async dispatch => {
   dispatch({
     type: loadingUser
   });
@@ -203,7 +245,7 @@ export const registerUsers = ( dpi, name, lastname, email, phone, password ) => 
     const data = await response.json();    
     if (!response.ok) {
       dispatch({ 
-        type: errorLogin,
+        type: errorUser,
         error: data.error,
         cargando: false
       });
@@ -216,11 +258,11 @@ export const registerUsers = ( dpi, name, lastname, email, phone, password ) => 
     }
   } catch (error) {
     dispatch({
-      type: errorLogin,
+      type: errorUser,
       error: error.message,
       cargando: false
     });
     console.log(error.message);
   }
-};
+}; */
 

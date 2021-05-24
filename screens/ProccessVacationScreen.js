@@ -454,8 +454,8 @@ class ProccessVacationScreen extends Component {
 		var screenHeight = Dimensions.get('window').height;
 		const companies = this.props.rrhhReducer.company;
 
-		console.log(this.props.rrhhReducer);
-		console.log(this.state);
+		//console.log(this.props.rrhhReducer);
+		//console.log(this.state);
 
 		return (
 			<Container>
