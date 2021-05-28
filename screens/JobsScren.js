@@ -27,7 +27,7 @@ import * as jobsActions from '../src/actions/jobsActions';
 import * as loginActions from '../src/actions/loginActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
 import HeaderCustom from '../components/HeaderCustom';
-import { persistor, myStyles, screenHeight, screenWidth } from '../App';
+import { persistor, myStyles, screenHeight, screenWidth, apiUrl } from '../App';
 import { SliderBox } from 'react-native-image-slider-box';
 import Loading from './../components/Loading';
 
@@ -326,17 +326,14 @@ class JobsScren extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
-						<Text
-							style={{
-								textAlign: 'center',
-								fontSize: 30,
-								fontWeight: 'bold',
-								color: myStyles.light,
-								paddingVertical: 8
+						<Image
+							source={{ uri: apiUrl.link + '/img/app/' + 'boportunidad.png' }}
+							style={{ 
+								width: screenWidth,
+								minHeight: screenHeight / 10,
+								height: screenHeight / 4
 							}}
-						>
-							Oportunidades de crecimiento
-						</Text>
+						/>
 					</View>
 					<View style={{ alignItems: 'center' }}>
 						{this.loadContent()}

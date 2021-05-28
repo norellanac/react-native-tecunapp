@@ -92,7 +92,7 @@ class EmergencyNumberScreen extends Component {
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content>
 					<Image
-						source={{ uri: apiUrl.link + '/img/app/' + 'bnumerosimportantes.png' }}
+						source={{ uri: apiUrl.link + '/img/app/' + 'bnumeroemergencia.png' }}
 						style={{ 
 							width: screenWidth,
 							minHeight: screenHeight / 10,
