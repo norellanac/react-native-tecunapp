@@ -35,6 +35,7 @@ export const suggestion = (objectInfo, token) => async dispatch => {
 			dispatch({
 				type: sendSuggestions,
 				message: data.message,
+        status: data.status,
 				cargando: false
 			});
 		}

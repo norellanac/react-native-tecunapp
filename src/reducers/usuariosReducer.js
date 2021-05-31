@@ -8,6 +8,7 @@ const INITIAL = {
 	url_image: null,
 	message: '',
 	messageSuggestion: '',
+	statusSuggestion: '',
 	number: '',
 	error: '',
 };
@@ -26,7 +27,7 @@ export default (state = INITIAL, action) => {
 		case getEmergencyNumber:
 			return { ...state, number: action.number, cargando: action.cargando, error: ''}
 		case sendSuggestions:
-			return { ...state, messageSuggestion: action.message, cargando: action.cargando, error: ''}
+			return { ...state, messageSuggestion: action.message, statusSuggestion: action.status, cargando: action.cargando, error: ''}
 		case PURGE:
 			return INITIAL;
 		default:

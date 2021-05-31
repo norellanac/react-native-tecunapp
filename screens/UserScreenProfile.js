@@ -47,11 +47,92 @@ class UserScreenProfile extends Component {
 		title: '',
 		description: '',
 		messageAction: '',
+		status: '',
+		statusAction: '',
+		modalVisibleMail: false,
+		titleModal: '',
 		modalVisible: false,
 		confirmPassword: '',
 		errorMessage: null,
 		isShowAlert: true
 	};
+
+	styles = StyleSheet.create({
+		centeredView: {
+			flex: 1,
+			justifyContent: "center",
+			alignItems: "center",
+			backgroundColor: 'rgba(52, 52, 52, 0.8)'
+			//backgroundColor: 'white'
+		},
+	
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 20,
+			height: screenHeight / 3,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+	
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+	
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+	
+		ListCloseMail: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2,
+			//backgroundColor: 'black'
+		},
+	
+		viewMailAccept: {
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'red',
+		},
+	
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+	
+		buttonIcon: {
+			color: myStyles.bg1,
+			width: 28,
+		},
+	
+		textStyleMail: {
+			color: myStyles.bg1,
+		},	
+  	});
 
 	async componentDidMount() {
 		await this.props.allScoreActions(this.props.usuariosReducer.token);
@@ -71,18 +152,22 @@ class UserScreenProfile extends Component {
 	styles = StyleSheet.create({
 		centeredView: {
 			flex: 1,
-			justifyContent: 'center',
-			alignItems: 'center',
+			justifyContent: "center",
+			alignItems: "center",
 			backgroundColor: 'rgba(52, 52, 52, 0.8)'
 			//backgroundColor: 'white'
 		},
 
-		modalViewText: {
-			width: screenWidth - 70,
-			height: screenHeight / 2,
-			backgroundColor: 'white',
+		modalViewSendMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5.5,
+			//margin: 20,
+			backgroundColor: "white",
 			borderRadius: 20,
-			shadowColor: '#000',
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
 			shadowOffset: {
 				width: 0,
 				height: 2
@@ -92,73 +177,138 @@ class UserScreenProfile extends Component {
 			elevation: 5
 		},
 
-		modalTextTitle: {
-			marginBottom: 15,
-			fontSize: 18,
-			textAlign: 'center',
-			marginTop: 20,
-			fontWeight: 'bold',
-			color: myStyles.bg1
-		},
-
-		modalTextDescription: {
-			marginBottom: 15,
-			textAlign: 'center',
-			color: '#858585'
-		},
-
-		ListCloseMail: {
+		modalViewMail: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 5 + 25,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
 			//backgroundColor: 'black',
-			alignSelf: 'flex-end',
-			marginRight: 15,
-			marginBottom: 5
-			//backgroundColor: 'black'
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		modalViewText: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4.5,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
 		},
 
 		viewMailAccept: {
 			flex: 0,
 			flexDirection: 'row',
 			justifyContent: 'center',
-			alignItems: 'center'
+			alignItems: 'center',
 			//backgroundColor: 'red',
+		},
+
+		viewMail:{
+			flex: 0,
+			flexDirection: 'row',
+			justifyContent: 'center',
+			alignItems: 'center',
+			//backgroundColor: 'blue',
+			marginLeft: -15,
+			marginRight: 5
+		},
+
+		modalViewButton: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			flexDirection: 'row',
+			justifyContent: 'flex-end',
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
+
+		ListCloseMail: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2,
+			//backgroundColor: 'black'
+		},
+
+		ListClose: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2 - 90,
+		},
+
+		textStyle: {
+			color: myStyles.bg1,
+			marginRight: 10
+		},
+
+		textStyleMail: {
+			color: myStyles.bg1,
+		},
+
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: "center",
+			marginTop: 20,
+			fontWeight: "bold",
+			color: myStyles.bg1
+		},
+
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: "center",
+			color: '#858585'
+		},
+
+		ListbodyMail: {
+			backgroundColor: 'black'
+		},
+
+		ListLeftMail: {
+			backgroundColor: 'blue',
+			width: 2,
+			marginLeft: -100
+		},
+
+		ListLeft: {
+			marginRight: -15,
+			alignItems: 'center'
 		},
 
 		buttonIcon: {
 			color: myStyles.bg1,
-			width: 28
+			width: 28,
 		},
-
-		textStyleMail: {
-			color: myStyles.bg1
-		},
-
-		gridModal: {},
-
-		cardModal: {
-			borderRadius: 15,
-			height: screenHeight / 6,
-			backgroundColor: 'white',
-			marginHorizontal: 15,
-			shadowColor: '#000',
-			shadowOffset: {
-				width: 0,
-				height: 1
-			},
-			shadowOpacity: 0.15,
-			shadowRadius: 4.49,
-
-			elevation: 24
-		},
-
-		imageModal: {
-			marginTop: 15,
-			minHeight: screenHeight / 13,
-			minWidth: screenWidth / 13,
-			height: screenHeight / 8,
-			width: screenWidth / 4,
-			alignSelf: 'center'
-		}
-	});
+  	});
 
 	allScoreTitle() {
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
@@ -277,16 +427,63 @@ class UserScreenProfile extends Component {
 			'description': this.state.description
 		};
 
-		console.log("Esto es lo que viene en el object ",object);
-		
-
 		if ((object.title != "") && (object.description != "")) {
 			await this.props.suggestion(object, token);
-			this.state.title = '';
-			this.state.description = '';
+			this.setState({ 
+				title: "",
+				description: "",
+				messageAction: this.props.usuariosReducer.messageSuggestion,
+				statusAction: this.props.usuariosReducer.statusSuggestion
+			});
+			
 		} else {
-			this.state.messageAction = "El campo titulo y descripcion son requeridos";
+			this.setState({
+				messageAction: "Los campos de titulo y descripcion son requeridos, intente de nuevo",
+				statusAction: "error"
+			});
 		}
+
+		if (this.state.statusAction == "success") {
+			this.setState({ status: 'Correcto' });
+		} else {
+			this.setState({ status: 'Error' });
+		}
+
+		console.log("Que trae el estado: ",this.state);
+		
+		this.setState({ modalVisibleMail: true });
+	}
+
+	modalMessage(){
+		return(
+			<View style={this.styles.centeredView} key={2}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleMail}
+					visible={this.state.modalVisibleMail}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisible(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewMail}>
+							<Text style={this.styles.modalTextTitle}>{this.state.status}</Text>
+							<Text style={this.styles.modalTextDescription}>{this.state.messageAction}</Text>
+							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+								<Pressable onPress={() => this.setModalVisibleOnly(false)}>
+									<View style={this.styles.viewMailAccept}>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Text style={this.styles.textStyleMail}>CERRAR</Text>
+									</View>
+								</Pressable>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
 	}
 
 	async onPressChange() {
@@ -540,6 +737,7 @@ class UserScreenProfile extends Component {
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
 				<Content style={{ backgroundColor: myStyles.light }}>
+					{this.modalMessage()}
 					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: screenHeight / 5 }} />
 					<Card
 						transparent
@@ -649,7 +847,7 @@ class UserScreenProfile extends Component {
 												value={this.state.title}
 												placeholder="Titulo"
 												placeholderTextColor={myStyles.bg1}
-												style={{ color: myStyles.bg1 }}
+												style={{ color: myStyles.bg1, fontWeight: 'bold' }}
 											/>
 										</Item>
 										<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top'}}>
