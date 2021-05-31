@@ -325,6 +325,7 @@ class ProccessVacationScreen extends Component {
 			flexDirection: 'row',
 			justifyContent: 'center',
 			alignItems: 'center',
+			marginLeft: 10,
 			//backgroundColor: 'red',
 		},
 
@@ -361,13 +362,13 @@ class ProccessVacationScreen extends Component {
 
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2,
+			width: screenWidth / 1.7,
 			//backgroundColor: 'black'
 		},
 
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 90,
+			width: screenWidth / 2 - 75,
 		},
 
 		textStyle: {
@@ -412,6 +413,7 @@ class ProccessVacationScreen extends Component {
 		buttonIcon: {
 			color: myStyles.bg1,
 			width: 28,
+			marginRight: 5,
 		},
   	});
 

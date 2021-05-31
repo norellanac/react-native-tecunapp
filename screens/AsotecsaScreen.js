@@ -164,7 +164,7 @@ class ContactScreen extends Component {
 	
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2,
+			width: screenWidth / 1.8,
 			//backgroundColor: 'black'
 		},
 	
@@ -173,6 +173,7 @@ class ContactScreen extends Component {
 			flexDirection: 'row',
 			justifyContent: 'center',
 			alignItems: 'center',
+			marginLeft: 20
 			//backgroundColor: 'red',
 		},
 	
@@ -182,12 +183,13 @@ class ContactScreen extends Component {
 			justifyContent: 'center',
 			alignItems: 'center',
 			//backgroundColor: 'blue',
-			marginLeft: -15,
+			marginLeft: -30,
 			marginRight: 5
 		},
 	
 		buttonIcon: {
 			color: myStyles.bg1,
+			marginRight: 5,
 			width: 28,
 		},
 	
@@ -479,7 +481,7 @@ class ContactScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				{this.showError()}
+				{/* {this.showError()} */}
 				<ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
 						<Image

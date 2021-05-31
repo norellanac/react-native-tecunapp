@@ -78,7 +78,7 @@ class GameShowScreen extends Component {
 		modalViewText: {
 			marginTop: 50,
 			width: screenWidth - 80,
-			height: screenHeight / 5.5,
+			height: screenHeight / 4,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -188,6 +188,7 @@ class GameShowScreen extends Component {
 		buttonIcon: {
 			color: myStyles.bg1,
 			width: 28,
+			marginRight: 5,
 		},
   	});
 

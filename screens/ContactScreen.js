@@ -73,7 +73,7 @@ class ContactScreen extends Component {
 		modalViewSendMail: {
 			marginTop: 50,
 			width: screenWidth / 1.4,
-			height: screenHeight / 5.5,
+			height: screenHeight / 4.5,
 			//margin: 20,
 			backgroundColor: 'white',
 			borderRadius: 20,
@@ -454,7 +454,7 @@ class ContactScreen extends Component {
 		return (
 			<Container>
 				<HeaderCustom navigation={this.props.navigation} />
-				{this.showError()}
+				{/* {this.showError()} */}
 				<ScrollView ref={(scrollView) => (this.scrollView = scrollView)}>
 					<View style={{ backgroundColor: myStyles.bg2 }}>
 						<Image

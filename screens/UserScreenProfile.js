@@ -127,10 +127,12 @@ class UserScreenProfile extends Component {
 		buttonIcon: {
 			color: myStyles.bg1,
 			width: 28,
+			marginRight: 5,
 		},
 	
 		textStyleMail: {
 			color: myStyles.bg1,
+			marginLeft: 5
 		},	
   	});
 

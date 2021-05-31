@@ -224,6 +224,7 @@ class ProccessCertificateScreen extends Component {
 			flexDirection: 'row',
 			justifyContent: 'center',
 			alignItems: 'center',
+			marginLeft: 10
 			//backgroundColor: 'red',
 		},
 
@@ -260,13 +261,13 @@ class ProccessCertificateScreen extends Component {
 
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2,
+			width: screenWidth / 1.6,
 			//backgroundColor: 'black'
 		},
 
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 90,
+			width: screenWidth / 2 - 75,
 		},
 
 		textStyle: {
@@ -310,6 +311,7 @@ class ProccessCertificateScreen extends Component {
 
 		buttonIcon: {
 			color: myStyles.bg1,
+			marginRight: 5,
 			width: 28,
 		},
   	});
