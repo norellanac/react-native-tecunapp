@@ -1,5 +1,50 @@
-import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo, getEmergencyNumber } from "../types/userTypes";
+import { getUser, loadingUser, errorUser, avatarUser, asotecsaInfo, getEmergencyNumber, sendSuggestions } from "../types/userTypes";
 import { apiUrl } from './../../App';
+
+export const suggestion = (objectInfo, token) => async dispatch => {  
+  dispatch({
+    type: loadingUser
+  });
+
+  try {
+    let dataForm = '_method=' + encodeURIComponent('POST');
+    dataForm += '&title=' + encodeURIComponent(objectInfo.title);
+    dataForm += '&description=' + encodeURIComponent(objectInfo.description);
+		//console.log("Que trae data form: ",dataForm);
+		const response = await fetch(`${apiUrl.link}/api/sugerenca`, {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json',
+				'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+				Authorization: `Bearer ${token}`,
+				Params: `json ${dataForm}`
+			},
+			body: dataForm
+		});
+
+		const data = await response.json();
+    console.log("Mensaje de la sugerencia", data);
+
+    if (!response.ok) {
+			dispatch({
+				type: errorUser,
+				error: 'Error al enviar la sugerencia, ' + response,
+				cargando: false
+			});
+		} else {
+			dispatch({
+				type: sendSuggestions,
+				message: data.message,
+				cargando: false
+			});
+		}
+
+  } catch (error) {
+    console.log('====================================');
+    console.log(error);
+    console.log('====================================');
+  }
+};
 
 export const getEmergency = (token) => async (dispatch) => {
 	dispatch({

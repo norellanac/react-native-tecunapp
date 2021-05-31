@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect, useRef } from 'react';
-import { Image, Linking, TouchableOpacity, Modal, Alert, Pressable, StyleSheet } from 'react-native';
+import { Image, Linking, TouchableOpacity, Modal, Alert, Pressable, TextInput, StyleSheet } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 import {
 	Container,
@@ -8,6 +8,9 @@ import {
 	Spinner,
 	Badge,
 	Thumbnail,
+	Form,
+	Item,
+	Input,
 	View,
 	Icon,
 	Text,
@@ -41,6 +44,9 @@ class UserScreenProfile extends Component {
 		setNotification: false,
 		phone: '',
 		password: '',
+		title: '',
+		description: '',
+		messageAction: '',
 		modalVisible: false,
 		confirmPassword: '',
 		errorMessage: null,
@@ -216,7 +222,7 @@ class UserScreenProfile extends Component {
 	}
 
 	allScore() {
-		console.log("Que viene en puntos?: ",this.props.questionReducer);
+		//console.log("Que viene en puntos?: ",this.props.questionReducer);
 		let count = 0;
 		let color = '#F8FAFB';
 		let idUserScore;
@@ -264,8 +270,23 @@ class UserScreenProfile extends Component {
 		}
 	}
 
-	emergency() {
+	async suggestionButton() {
+		var token = this.props.usuariosReducer.token;
+		var object = {
+			'title': this.state.title,
+			'description': this.state.description
+		};
+
+		console.log("Esto es lo que viene en el object ",object);
 		
+
+		if ((object.title != "") && (object.description != "")) {
+			await this.props.suggestion(object, token);
+			this.state.title = '';
+			this.state.description = '';
+		} else {
+			this.state.messageAction = "El campo titulo y descripcion son requeridos";
+		}
 	}
 
 	async onPressChange() {
@@ -283,11 +304,11 @@ class UserScreenProfile extends Component {
 
 	logout = async () => {
 		//await this.props.logoutUser();
-		console.log('borró usuario');
+		//console.log('borró usuario');
 		//await this.props.resetAddress();
 		await persistor.purge();
 		this.props.navigation.navigate('Login');
-		console.log('borró direccion');
+		//console.log('borró direccion');
 	};
 
 	/**+++++++++++++NOTIFICACIONES+++++++++++++ */
@@ -306,7 +327,7 @@ class UserScreenProfile extends Component {
 			}
 			token = (await Notifications.getExpoPushTokenAsync()).data;
 			this.props.sendPushTokenAction(token, this.props.usuariosReducer.user.id, this.props.usuariosReducer.token);
-			console.log('push token: ', token);
+			//console.log('push token: ', token);
 		} else {
 			this.setState({
 				errorMessage: 'Must use physical device for Push Notifications'
@@ -437,7 +458,7 @@ class UserScreenProfile extends Component {
 		let g1 = 'g1.png';
 		let g2 = 'g2.png';
 
-		console.log(apiUrl.link + '/img/' + b1);
+		//console.log(apiUrl.link + '/img/' + b1);
 
 		return (
 			<View style={this.styles.centeredView} key={1}>
@@ -532,15 +553,6 @@ class UserScreenProfile extends Component {
 							borderBottomRightRadius: 15,
 							marginTop: -75,
 							backgroundColor: myStyles.light
-							/* shadowColor: "#000",
-							shadowOffset: {
-								width: 0,
-								height: 4,
-							},
-							shadowOpacity: 0.32,
-							shadowRadius: 5.46,
-
-							elevation: 9, */
 						}}
 					>
 						<View transparent style={{ alignSelf: 'center' }}>
@@ -611,13 +623,98 @@ class UserScreenProfile extends Component {
 								{this.props.usuariosReducer.user.email}
 							</Text>
 						</View>
-						<View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-							{this.allScoreTitle()}
-							{this.allScore()}
-						</View>
-						<View style={{ marginBottom: 25, paddingTop: screenHeight / 17 }}>
+						<View style={{ paddingTop: screenHeight / 17 }}>
 							<Grid>
-								<Col style={{ alignItems: 'center' }}>
+								<Col style={{ marginTop: -50, alignItems: 'center'}}>
+									<Col style={{ alignItems: 'center'}}>
+										<Text
+											style={{
+												fontSize: 20,
+												color: myStyles.bg2,
+												fontWeight: 'bold',
+												marginBottom: 5
+											}}
+										>
+											DUDAS Y SUGERENCIAS
+										</Text>
+
+										<Item rounded style={{ marginTop: 10, width: screenWidth / 1.2,}}>
+											<Icon
+												type="MaterialIcons"
+												name="title"
+												style={{ color: myStyles.bg1, fontSize: 25 }}
+											/>
+											<Input
+												onChangeText={(title) => this.setState({ title })}
+												value={this.state.title}
+												placeholder="Titulo"
+												placeholderTextColor={myStyles.bg1}
+												style={{ color: myStyles.bg1 }}
+											/>
+										</Item>
+										<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top'}}>
+											<Icon
+												type="Ionicons"
+												name="md-text"
+												style={{ color: myStyles.bg1, fontSize: 25 }}
+											/>
+											<TextInput
+												style={{ color: myStyles.bg1, justifyContent: "flex-start", marginRight: 50 }}
+												onChangeText={(description) => this.setState({description})}
+												placeholder="Descripcion                                                                   "
+												placeholderTextColor={myStyles.bg1}
+												numberOfLines={6}
+												value={this.state.description}
+												multiline={true}
+											/>
+										</Item>
+										<Col style={{ alignItems: 'center'}}>
+											<Item rounded style={{ marginTop: 15, marginBottom: 20, width: screenWidth / 2.4, textAlignVertical: 'top'}}>
+												<Button
+												onPress={ () => this.suggestionButton() }
+													rounded
+													iconLeft
+													style={{
+														backgroundColor: myStyles.bg1,
+														borderRadius: 20,
+														marginLeft: -10,
+														shadowColor: `#9400d3`,
+														shadowOffset: {
+															width: 0,
+															height: 3
+														},
+														shadowOpacity: 0.27,
+														shadowRadius: 4.65,
+
+														elevation: 6
+													}}
+												>
+													<Icon
+														type="MaterialCommunityIcons"
+														name="email-send"
+														style={{
+															color: myStyles.light,
+															fontSize: 25,
+															marginLeft: 30
+														}}
+													/>
+													<Text
+														style={{
+															textAlign: 'center',
+															color: '#ffffff',
+															fontSize: 20,
+															marginRight: 30,
+															paddingBottom: 35,
+															paddingTop: 35
+														}}
+													>
+														ENVIAR
+													</Text>
+												</Button>
+											</Item>
+										</Col>
+										
+									</Col>
 									<TouchableOpacity
 										onPress={() => {
 											this.onPressChange();
@@ -774,6 +871,10 @@ class UserScreenProfile extends Component {
 								</Col>
 							</Grid>
 							{this.showModal()}
+						</View>
+						<View style={{ marginHorizontal: 30, alignItems: 'center' }}>
+							{this.allScoreTitle()}
+							{this.allScore()}
 						</View>
 					</Card>
 				</Content>
