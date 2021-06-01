@@ -40,6 +40,7 @@ class ContactScreen extends Component {
 	state = {
 		name1: '',
 		name1Error: '',
+		modalVisible: true,
 		name2: '',
 		lastname1: '',
 		lastname1Error: '',
@@ -127,6 +128,25 @@ class ContactScreen extends Component {
 			backgroundColor: 'rgba(52, 52, 52, 0.8)'
 			//backgroundColor: 'white'
 		},
+
+		modalViewText: {
+			marginTop: 50,
+			width: screenWidth - 30,
+			height: screenHeight / 4,
+			//margin: 20,
+			backgroundColor: "white",
+			borderRadius: 20,
+			//padding: 35,
+			//backgroundColor: 'black',
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2
+			},
+			shadowOpacity: 0.25,
+			shadowRadius: 4,
+			elevation: 5
+		},
 	
 		modalViewMail: {
 			marginTop: 50,
@@ -195,7 +215,17 @@ class ContactScreen extends Component {
 	
 		textStyleMail: {
 			color: myStyles.bg1,
-		},	
+		},
+		
+		ListClose: {
+			alignSelf: 'flex-end',
+			width: screenWidth / 2 - 75,
+		},
+
+		ListLeft: {
+			marginRight: -15,
+			alignItems: 'center'
+		},
   	});
 
 	async componentDidMount() {}
@@ -467,6 +497,44 @@ class ContactScreen extends Component {
 		}
 	}
 
+	setModalVisibleOnly = (visible) => {
+		this.setState({ modalVisible: visible });
+	}
+
+	modalStart() {
+		//modalVisible = this.state;
+		return(
+			<View style={this.styles.centeredView} key={1}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisible}
+					visible={this.state.modalVisible}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+						this.setModalVisibleOnly(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewText}>
+							<Text style={this.styles.modalTextTitle}>ASOTECSA</Text>
+							<Text style={this.styles.modalTextDescription}>
+								¡Bienvenido a la Asociación Solidarista de Trabajadores Empresas TECUN, S.A.! Llena los datos solicitados para inscribirte.
+							</Text>
+							<ListItem key={1} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleOnly(false)}>
+								<Left style={this.styles.ListLeft}>
+									<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+								</Left>
+								<Body>
+									<Text style={this.styles.textStyle}>CERRAR</Text>
+								</Body>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
+	}
+
 	render() {
 		if (this.props.usuariosReducer.cargando) {
 			return (
@@ -493,6 +561,8 @@ class ContactScreen extends Component {
 							}}
 						/>
 					</View>
+
+					{this.modalStart()}
 
 					<View
 						style={{ backgroundColor: myStyles.bg1, borderRadius: 20, marginHorizontal: 10, marginTop: 25 }}
