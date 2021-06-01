@@ -350,8 +350,8 @@ class PodcastShowScreen extends Component {
 															showSpotify: !this.state.showSpotify
 														})}
 												>
-													<Icon name="spotify" type="FontAwesome" />
-													<Text>Spotify</Text>
+													<Icon name="music" type="FontAwesome" />
+													<Text>ESCUCHAR</Text>
 												</Button>
 											);
 										}
@@ -471,23 +471,6 @@ class PodcastShowScreen extends Component {
 							</ScrollView>
 						</Card>
 					</View>
-					{/* <Video
-						source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
-						rate={1.0}
-						volume={1.0}
-						isMuted={true}
-						resizeMode="cover"
-						shouldPlay
-						isLooping
-						style={{ width: screenWidth, height: 300 }}
-					/>
-
-					<Button full>
-						<Text>Hola mundo</Text>
-					</Button> */}
-					{/* <Button full title="Play Sound" onPress={this.playSound}>
-						<Text> Play</Text>
-					</Button> */}
 				</Content>
 				<View style={{ backgroundColor: '#f9f9f9', padding: 3 }}>
 					<Item style={ myStyles.textInput }>
