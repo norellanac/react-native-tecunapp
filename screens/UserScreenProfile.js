@@ -48,6 +48,7 @@ class UserScreenProfile extends Component {
 		description: '',
 		messageAction: '',
 		status: '',
+		isDisplaySugge: 0,
 		statusAction: '',
 		modalVisibleMail: false,
 		titleModal: '',
@@ -56,85 +57,6 @@ class UserScreenProfile extends Component {
 		errorMessage: null,
 		isShowAlert: true
 	};
-
-	styles = StyleSheet.create({
-		centeredView: {
-			flex: 1,
-			justifyContent: "center",
-			alignItems: "center",
-			backgroundColor: 'rgba(52, 52, 52, 0.8)'
-			//backgroundColor: 'white'
-		},
-	
-		modalViewMail: {
-			marginTop: 50,
-			width: screenWidth - 20,
-			height: screenHeight / 3,
-			//margin: 20,
-			backgroundColor: "white",
-			borderRadius: 20,
-			//padding: 35,
-			//backgroundColor: 'black',
-			shadowColor: "#000",
-			shadowOffset: {
-				width: 0,
-				height: 2
-			},
-			shadowOpacity: 0.25,
-			shadowRadius: 4,
-			elevation: 5
-		},
-	
-		modalTextTitle: {
-			marginBottom: 15,
-			fontSize: 18,
-			textAlign: "center",
-			marginTop: 20,
-			fontWeight: "bold",
-			color: myStyles.bg1
-		},
-	
-		modalTextDescription: {
-			marginBottom: 15,
-			textAlign: "center",
-			color: '#858585'
-		},
-	
-		ListCloseMail: {
-			alignSelf: 'flex-end',
-			width: screenWidth / 2,
-			//backgroundColor: 'black'
-		},
-	
-		viewMailAccept: {
-			flex: 0,
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center',
-			//backgroundColor: 'red',
-		},
-	
-		viewMail:{
-			flex: 0,
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center',
-			//backgroundColor: 'blue',
-			marginLeft: -15,
-			marginRight: 5
-		},
-	
-		buttonIcon: {
-			color: myStyles.bg1,
-			width: 28,
-			marginRight: 5,
-		},
-	
-		textStyleMail: {
-			color: myStyles.bg1,
-			marginLeft: 5
-		},	
-  	});
 
 	async componentDidMount() {
 		await this.props.allScoreActions(this.props.usuariosReducer.token);
@@ -154,60 +76,18 @@ class UserScreenProfile extends Component {
 	styles = StyleSheet.create({
 		centeredView: {
 			flex: 1,
-			justifyContent: "center",
-			alignItems: "center",
+			justifyContent: 'center',
+			alignItems: 'center',
 			backgroundColor: 'rgba(52, 52, 52, 0.8)'
 			//backgroundColor: 'white'
 		},
 
-		modalViewSendMail: {
-			marginTop: 50,
-			width: screenWidth - 30,
-			height: screenHeight / 5.5,
-			//margin: 20,
-			backgroundColor: "white",
-			borderRadius: 20,
-			//padding: 35,
-			//backgroundColor: 'black',
-			shadowColor: "#000",
-			shadowOffset: {
-				width: 0,
-				height: 2
-			},
-			shadowOpacity: 0.25,
-			shadowRadius: 4,
-			elevation: 5
-		},
-
-		modalViewMail: {
-			marginTop: 50,
-			width: screenWidth - 30,
-			height: screenHeight / 5 + 25,
-			//margin: 20,
-			backgroundColor: "white",
-			borderRadius: 20,
-			//padding: 35,
-			//backgroundColor: 'black',
-			shadowColor: "#000",
-			shadowOffset: {
-				width: 0,
-				height: 2
-			},
-			shadowOpacity: 0.25,
-			shadowRadius: 4,
-			elevation: 5
-		},
-
 		modalViewText: {
-			marginTop: 50,
-			width: screenWidth - 30,
-			height: screenHeight / 4.5,
-			//margin: 20,
-			backgroundColor: "white",
+			width: screenWidth - 70,
+			height: screenHeight / 2,
+			backgroundColor: 'white',
 			borderRadius: 20,
-			//padding: 35,
-			//backgroundColor: 'black',
-			shadowColor: "#000",
+			shadowColor: '#000',
 			shadowOffset: {
 				width: 0,
 				height: 2
@@ -215,109 +95,84 @@ class UserScreenProfile extends Component {
 			shadowOpacity: 0.25,
 			shadowRadius: 4,
 			elevation: 5
+		},
+
+		modalTextTitle: {
+			marginBottom: 15,
+			fontSize: 18,
+			textAlign: 'center',
+			marginTop: 20,
+			fontWeight: 'bold',
+			color: myStyles.bg1
+		},
+
+		modalTextDescription: {
+			marginBottom: 15,
+			textAlign: 'center',
+			color: '#858585'
+		},
+
+		ListCloseMail: {
+			//backgroundColor: 'black',
+			alignSelf: 'flex-end',
+			marginRight: 15,
+			marginBottom: 5
+			//backgroundColor: 'black'
 		},
 
 		viewMailAccept: {
 			flex: 0,
 			flexDirection: 'row',
 			justifyContent: 'center',
-			alignItems: 'center',
-			//backgroundColor: 'red',
-		},
-
-		viewMail:{
-			flex: 0,
-			flexDirection: 'row',
-			justifyContent: 'center',
-			alignItems: 'center',
-			//backgroundColor: 'blue',
-			marginLeft: -15,
-			marginRight: 5
-		},
-
-		modalViewButton: {
-			marginTop: 50,
-			width: screenWidth - 30,
-			height: screenHeight / 4,
-			//margin: 20,
-			backgroundColor: "white",
-			borderRadius: 20,
-			//padding: 35,
-			flexDirection: 'row',
-			justifyContent: 'flex-end',
-			//backgroundColor: 'black',
-			shadowColor: "#000",
-			shadowOffset: {
-				width: 0,
-				height: 2
-			},
-			shadowOpacity: 0.25,
-			shadowRadius: 4,
-			elevation: 5
-		},
-
-		ListCloseMail: {
-			alignSelf: 'flex-end',
-			width: screenWidth / 2,
-			//backgroundColor: 'black'
-		},
-
-		ListClose: {
-			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 90,
-		},
-
-		textStyle: {
-			color: myStyles.bg1,
-			marginRight: 10
-		},
-
-		textStyleMail: {
-			color: myStyles.bg1,
-		},
-
-		modalTextTitle: {
-			marginBottom: 15,
-			fontSize: 18,
-			textAlign: "center",
-			marginTop: 20,
-			fontWeight: "bold",
-			color: myStyles.bg1
-		},
-
-		modalTextDescription: {
-			marginBottom: 15,
-			textAlign: "center",
-			color: '#858585'
-		},
-
-		ListbodyMail: {
-			backgroundColor: 'black'
-		},
-
-		ListLeftMail: {
-			backgroundColor: 'blue',
-			width: 2,
-			marginLeft: -100
-		},
-
-		ListLeft: {
-			marginRight: -15,
 			alignItems: 'center'
+			//backgroundColor: 'red',
 		},
 
 		buttonIcon: {
 			color: myStyles.bg1,
 			width: 28,
+			marginRight: 5
 		},
-  	});
+
+		textStyleMail: {
+			color: myStyles.bg1
+		},
+
+		gridModal: {},
+
+		cardModal: {
+			borderRadius: 15,
+			height: screenHeight / 6,
+			backgroundColor: 'white',
+			marginHorizontal: 15,
+			shadowColor: '#000',
+			shadowOffset: {
+				width: 0,
+				height: 1
+			},
+			shadowOpacity: 0.15,
+			shadowRadius: 4.49,
+
+			elevation: 24
+		},
+
+		imageModal: {
+			marginTop: 15,
+			minHeight: screenHeight / 13,
+			minWidth: screenWidth / 13,
+			height: screenHeight / 8,
+			width: screenWidth / 4,
+			alignSelf: 'center'
+		}
+	});
 
 	allScoreTitle() {
 		if (this.state.isDisplay == 1 && this.props.questionReducer.score) {
 			return (
 				<Grid
 					style={{
-						marginTop: 15
+						marginTop: 15,
+						marginHorizontal: 15
 					}}
 				>
 					<Col
@@ -392,7 +247,8 @@ class UserScreenProfile extends Component {
 								borderBottomLeftRadius: 10,
 								borderTopLeftRadius: 10,
 								borderBottomRightRadius: 10,
-								borderTopRightRadius: 10
+								borderTopRightRadius: 10,
+								marginHorizontal: 15
 							}}
 							key={pounts.id}
 						>
@@ -657,7 +513,7 @@ class UserScreenProfile extends Component {
 		let g1 = 'g1.png';
 		let g2 = 'g2.png';
 
-		//console.log(apiUrl.link + '/img/' + b1);
+		console.log(apiUrl.link + '/img/' + g1);
 
 		return (
 			<View style={this.styles.centeredView} key={1}>
@@ -730,6 +586,103 @@ class UserScreenProfile extends Component {
 				</Modal>
 			</View>
 		);
+	}
+
+	returnSuggestion(){
+		if (this.state.isDisplaySugge == 1) {
+			return(
+				<Col style={{ alignItems: 'center'}}>
+					<Item rounded style={{ marginTop: 10, width: screenWidth / 1.2,}}>
+						<Icon
+							type="MaterialIcons"
+							name="title"
+							style={{ color: myStyles.bg1, fontSize: 25 }}
+						/>
+						<Input
+							onChangeText={(title) => this.setState({ title })}
+							value={this.state.title}
+							placeholder="Asunto"
+							placeholderTextColor={myStyles.bg1}
+							style={{ color: myStyles.bg1, fontWeight: 'bold' }}
+						/>
+					</Item>
+					<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top'}}>
+						<Icon
+							type="MaterialCommunityIcons"
+							name="email-edit"
+							style={{ color: myStyles.bg1, fontSize: 25 }}
+						/>
+						<TextInput
+							style={{ color: myStyles.bg1, justifyContent: "flex-start", marginRight: 50 }}
+							onChangeText={(description) => this.setState({description})}
+							placeholder="Escribe tu opinión sobre TecunApp                                                                   "
+							placeholderTextColor={myStyles.bg1}
+							numberOfLines={6}
+							value={this.state.description}
+							multiline={true}
+						/>
+					</Item>
+					<Col style={{ alignItems: 'center'}}>
+						<Item rounded style={{ marginTop: 15, marginBottom: 20, width: screenWidth / 2.4, textAlignVertical: 'top'}}>
+							<Button
+								onPress={ () => this.suggestionButton() }
+								rounded
+								iconLeft
+								style={{
+									backgroundColor: myStyles.bg2,
+									borderRadius: 20,
+									marginLeft: -10,
+									shadowColor: `#9400d3`,
+									shadowOffset: {
+										width: 0,
+										height: 3
+									},
+									shadowOpacity: 0.27,
+									shadowRadius: 4.65,
+
+									elevation: 6
+								}}
+							>
+								<Icon
+									type="MaterialCommunityIcons"
+									name="email-send"
+									style={{
+										color: myStyles.light,
+										fontSize: 25,
+										marginLeft: 30
+									}}
+								/>
+								<Text
+									style={{
+										textAlign: 'center',
+										color: '#ffffff',
+										fontSize: 20,
+										marginRight: 30,
+										paddingBottom: 35,
+										paddingTop: 35
+									}}
+								>
+									ENVIAR
+								</Text>
+							</Button>
+						</Item>
+					</Col>
+					
+				</Col>
+			);
+		}
+	}
+
+	suggestion() {
+		if (this.state.isDisplaySugge == 0 ) {
+			this.setState({
+				isDisplaySugge: 1
+			});
+		} else {
+			this.setState({
+				isDisplaySugge: 0
+			});
+		}
 	}
 
 	render() {
@@ -826,95 +779,6 @@ class UserScreenProfile extends Component {
 						<View style={{ paddingTop: screenHeight / 17 }}>
 							<Grid>
 								<Col style={{ marginTop: -50, alignItems: 'center'}}>
-									<Col style={{ alignItems: 'center'}}>
-										<Text
-											style={{
-												fontSize: 20,
-												color: myStyles.bg2,
-												fontWeight: 'bold',
-												marginBottom: 5
-											}}
-										>
-											DUDAS Y SUGERENCIAS
-										</Text>
-
-										<Item rounded style={{ marginTop: 10, width: screenWidth / 1.2,}}>
-											<Icon
-												type="MaterialIcons"
-												name="title"
-												style={{ color: myStyles.bg1, fontSize: 25 }}
-											/>
-											<Input
-												onChangeText={(title) => this.setState({ title })}
-												value={this.state.title}
-												placeholder="Titulo"
-												placeholderTextColor={myStyles.bg1}
-												style={{ color: myStyles.bg1, fontWeight: 'bold' }}
-											/>
-										</Item>
-										<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top'}}>
-											<Icon
-												type="Ionicons"
-												name="md-text"
-												style={{ color: myStyles.bg1, fontSize: 25 }}
-											/>
-											<TextInput
-												style={{ color: myStyles.bg1, justifyContent: "flex-start", marginRight: 50 }}
-												onChangeText={(description) => this.setState({description})}
-												placeholder="Descripcion                                                                   "
-												placeholderTextColor={myStyles.bg1}
-												numberOfLines={6}
-												value={this.state.description}
-												multiline={true}
-											/>
-										</Item>
-										<Col style={{ alignItems: 'center'}}>
-											<Item rounded style={{ marginTop: 15, marginBottom: 20, width: screenWidth / 2.4, textAlignVertical: 'top'}}>
-												<Button
-												onPress={ () => this.suggestionButton() }
-													rounded
-													iconLeft
-													style={{
-														backgroundColor: myStyles.bg1,
-														borderRadius: 20,
-														marginLeft: -10,
-														shadowColor: `#9400d3`,
-														shadowOffset: {
-															width: 0,
-															height: 3
-														},
-														shadowOpacity: 0.27,
-														shadowRadius: 4.65,
-
-														elevation: 6
-													}}
-												>
-													<Icon
-														type="MaterialCommunityIcons"
-														name="email-send"
-														style={{
-															color: myStyles.light,
-															fontSize: 25,
-															marginLeft: 30
-														}}
-													/>
-													<Text
-														style={{
-															textAlign: 'center',
-															color: '#ffffff',
-															fontSize: 20,
-															marginRight: 30,
-															paddingBottom: 35,
-															paddingTop: 35
-														}}
-													>
-														ENVIAR
-													</Text>
-												</Button>
-											</Item>
-										</Col>
-										
-									</Col>
 									<TouchableOpacity
 										onPress={() => {
 											this.onPressChange();
@@ -922,7 +786,7 @@ class UserScreenProfile extends Component {
 									>
 										<ListItem
 											style={{
-												backgroundColor: myStyles.bg2,
+												backgroundColor: '#e66321',
 												width: screenWidth / 1.2,
 												marginTop: 10,
 												marginBottom: 10,
@@ -962,7 +826,7 @@ class UserScreenProfile extends Component {
 									>
 										<ListItem
 											style={{
-												backgroundColor: myStyles.bg2,
+												backgroundColor: '#e38332',
 												width: screenWidth / 1.2,
 												borderRadius: 10,
 												marginBottom: 10
@@ -997,10 +861,9 @@ class UserScreenProfile extends Component {
 									<TouchableOpacity>
 										<ListItem
 											style={{
-												backgroundColor: myStyles.bg2,
+												backgroundColor: '#eba547',
 												width: screenWidth / 1.2,
 												borderRadius: 10,
-												marginBottom: 10
 											}}
 											onFocus
 											delayPressIn
@@ -1030,19 +893,23 @@ class UserScreenProfile extends Component {
 											</Right>
 										</ListItem>
 									</TouchableOpacity>
-
-									<TouchableOpacity>
+									<TouchableOpacity
+										onPress={() => {
+											this.suggestion();
+										}}
+									>
 										<ListItem
 											style={{
-												backgroundColor: myStyles.bg2,
+												backgroundColor: '#d5a057',
 												width: screenWidth / 1.2,
+												marginTop: 10,
 												marginBottom: 10,
 												borderRadius: 10
 											}}
 											noBorder
 											delayPressIn
 											onPress={() => {
-												this.logout();
+												this.suggestion();
 											}}
 										>
 											<Body>
@@ -1053,13 +920,13 @@ class UserScreenProfile extends Component {
 														color: myStyles.light
 													}}
 												>
-													CERRAR SESION
+													DUDAS Y SUGERENCIAS
 												</Text>
 											</Body>
 											<Right>
 												<Icon
-													type="Entypo"
-													name="log-out"
+													type="MaterialCommunityIcons"
+													name="message-cog"
 													style={{
 														color: myStyles.light,
 														textAlign: 'center'
@@ -1068,13 +935,59 @@ class UserScreenProfile extends Component {
 											</Right>
 										</ListItem>
 									</TouchableOpacity>
+
+									{this.allScoreTitle()}
+									{this.allScore()}
+									{ this.returnSuggestion() }
+
+									<Col style={{ alignItems: 'center', marginTop: screenHeight / 10}}>
+										<Item style={{ marginTop: 15, alignItems: 'center', textAlignVertical: 'top'}}>
+											<Button
+												onPress={ () => this.logout() }
+												iconRight
+												style={{
+													backgroundColor: myStyles.bg1,
+													alignItems: 'center',
+													borderRadius: 10,
+													height: screenHeight / 15,
+													paddingHorizontal: 10,
+													paddingVertical: 10,
+													shadowColor: `#9400d3`,
+													shadowOffset: {
+														width: 0,
+														height: 3
+													},
+													shadowOpacity: 0.27,
+													shadowRadius: 4.65,
+
+													elevation: 6
+												}}
+											>
+												<Text
+													style={{
+														textAlign: 'center',
+														color: '#ffffff',
+														fontSize: 17,
+														paddingBottom: 35,
+														paddingTop: 35
+													}}
+												>
+													CERRAR SESION
+												</Text>
+												<Icon
+													type="Entypo"
+													name="log-out"
+													style={{
+														color: myStyles.light,
+														textAlign: 'center'
+													}}
+												/>
+											</Button>
+										</Item>
+									</Col>
 								</Col>
 							</Grid>
 							{this.showModal()}
-						</View>
-						<View style={{ marginHorizontal: 30, alignItems: 'center' }}>
-							{this.allScoreTitle()}
-							{this.allScore()}
 						</View>
 					</Card>
 				</Content>
