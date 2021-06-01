@@ -45,19 +45,6 @@ class ProccessCertificateScreen extends Component {
 	}
 
 	componentDidMount() {
-		//this.setModalVisibleOnly(true);
-		//this.modalStart();
-		/* Alert.alert(
-			`Constancia laboral`,
-			`Enviaremos tu solicitud para que sea atendida por correo electronico`,
-			[
-				{
-					text: 'Cerrar'
-				}
-			],
-			{ cancelable: false }
-		); */
-		/* this.WrapperComponent(); */
 	}
 
 	test() {
@@ -92,7 +79,7 @@ class ProccessCertificateScreen extends Component {
 					<View style={this.styles.centeredView}>
 						<View style={this.styles.modalViewMail}>
 							<Text style={this.styles.modalTextTitle}>Constancia laboral {this.state.pais}</Text>
-							<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
+							<Text style={this.styles.modalTextDescription}>Haz click en acepta y enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
 							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 								<Pressable onPress={() => this.setModalVisible(false)}>
 									<View style={this.styles.viewMail}>
@@ -114,10 +101,42 @@ class ProccessCertificateScreen extends Component {
 		);
 	}
 
-	sendMailCertificate(onlyObject, token) {
+	async sendMailCertificate(onlyObject, token) {
 		this.setModalVisible(false)
-		console.log("Aqui se envia el correo");
-		this.props.mailCertificate(onlyObject, token);
+		//console.log("Aqui se envia el correo");
+		await this.props.mailCertificate(onlyObject, token);
+		this.setState({ modalVisibleSend: true });
+	}
+
+	modalSend() {
+		return(
+			<View style={this.styles.centeredView} key={3}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleSend}
+					visible={this.state.modalVisibleSend}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisibleSend(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewSendMail}>
+							<Text style={this.styles.modalTextTitle}>Solicitud enviada!!!</Text>
+							<ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false)}>
+								<Left style={this.styles.ListLeft}>
+									<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+								</Left>
+								<Body>
+									<Text style={this.styles.textStyle}>CERRAR</Text>
+								</Body>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
 	}
 
 	modalStart() {
@@ -165,7 +184,7 @@ class ProccessCertificateScreen extends Component {
 		modalViewSendMail: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 5 + 30,
+			height: screenHeight / 6,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -339,39 +358,7 @@ class ProccessCertificateScreen extends Component {
 				<Content>
 					{this.modalStart()}
 					{this.mailCertificate(algo, algo1)}
-					{(() => {
-						if (this.props.rrhhReducer.cargandoVacation) {
-							return(
-								<View style={this.styles.centeredView} key={3}>
-									<Modal
-										animationType="fade"
-										transparent={this.state.modalVisibleSend}
-										visible={this.state.modalVisibleSend}
-										onRequestClose={() => {
-										Alert.alert("Modal has been closed.");
-										
-										this.setModalVisibleSend(false);
-										}}
-									>
-										<View style={this.styles.centeredView}>
-											<View style={this.styles.modalViewSendMail}>
-												<Text style={this.styles.modalTextTitle}>Correo enviado exitosamente</Text>
-												<Text style={this.styles.modalTextDescription}>Constancia solicitada correctamente, pronto llegara un correo electronico a su bandeja de entradas para corroborar dicha informacion.</Text>
-												<ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false)}>
-													<Left style={this.styles.ListLeft}>
-														<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
-													</Left>
-													<Body>
-														<Text style={this.styles.textStyle}>CERRAR</Text>
-													</Body>
-												</ListItem>
-											</View>
-										</View>
-									</Modal>
-								</View>
-							);
-						}
-					})()}
+					{this.modalSend()}
 					<View style={{ 
 						backgroundColor: myStyles.bg2,
 						borderBottomLeftRadius: 20,

@@ -224,34 +224,44 @@ class ProccessVacationScreen extends Component {
 			</View>
 
 		);
-
-		/* Alert.alert(
-			message,
-			`Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.`,
-			[
-				{
-					text: 'Cancelar',
-					//onPress: () => console.log("Cancelar Pressed"),
-					style: 'cancelar'
-				},
-				{ text: 'Aceptar', onPress: () => this.sendMailVacation(objectMail, token) }
-			],
-			{ cancelable: false }
-		); */
 	}
 
-	sendMailVacation(objectMail, token) {
+	async sendMailVacation(objectMail, token) {
 		this.setModalVisible(false)
-		if (this.props.rrhhReducer.cargando) {
-			this.setModalVisibleSend(true);
-		}
-		this.props.mailVacation(objectMail, token);
-		/* Alert.alert(
-			'Solicitud enviada',
-			`Constancia solicitada correctamente. `,
-			[ { text: 'Aceptar', onPress: () => this.props.navigation.navigate('ProccessVacationScreen') } ],
-			{ cancelable: false }
-		); */
+
+		await this.props.mailVacation(objectMail, token);
+		this.setState({ modalVisibleSend: true });
+	}
+
+	modalSend() {
+		return(
+			<View style={this.styles.centeredView} key={3}>
+				<Modal
+					animationType="fade"
+					transparent={this.state.modalVisibleSend}
+					visible={this.state.modalVisibleSend}
+					onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					
+					this.setModalVisibleSend(false);
+					}}
+				>
+					<View style={this.styles.centeredView}>
+						<View style={this.styles.modalViewSendMail}>
+							<Text style={this.styles.modalTextTitle}>Solicitud enviada!!!</Text>
+							<ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false)}>
+								<Left style={this.styles.ListLeft}>
+									<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+								</Left>
+								<Body>
+									<Text style={this.styles.textStyle}>CERRAR</Text>
+								</Body>
+							</ListItem>
+						</View>
+					</View>
+				</Modal>
+			</View>
+		);
 	}
 
 	styles = StyleSheet.create({
@@ -479,7 +489,7 @@ class ProccessVacationScreen extends Component {
 							<View style={this.styles.centeredView} key={4}>
 								<View style={this.styles.modalViewMail}>
 									<Text style={this.styles.modalTextTitle}>MENSAJE</Text>
-									<Text style={this.styles.modalTextDescription}>Al aceptar, el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.</Text>
+									<Text style={this.styles.modalTextDescription}>Haz click en acepta y el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.</Text>
 									<ListItem key={4} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 										<Pressable onPress={() => this.setModalVisible(false)}>
 											<View style={this.styles.viewMail}>
@@ -498,39 +508,7 @@ class ProccessVacationScreen extends Component {
 							</View>
 						</Modal>
 					</View>
-					{(() => {
-						if (this.props.rrhhReducer.cargando) {
-							return(
-								<View style={this.styles.centeredView} key={3}>
-									<Modal
-										animationType="fade"
-										transparent={this.state.modalVisibleSend}
-										visible={this.state.modalVisibleSend}
-										onRequestClose={() => {
-										Alert.alert("Modal has been closed.");
-										
-										this.setModalVisibleSend(false);
-										}}
-									>
-										<View style={this.styles.centeredView}>
-											<View style={this.styles.modalViewSendMail}>
-												<Text style={this.styles.modalTextTitle}>Solicitud enviada</Text>
-												<Text style={this.styles.modalTextDescription}>Constancia solicitada correctamente.</Text>
-												<ListItem key={3} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleSend(false)}>
-													<Left style={this.styles.ListLeft}>
-														<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
-													</Left>
-													<Body>
-														<Text style={this.styles.textStyle}>CERRAR</Text>
-													</Body>
-												</ListItem>
-											</View>
-										</View>
-									</Modal>
-								</View>
-							);
-						}
-					})()}
+					{this.modalSend()}
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={2} />
 			</Container>
