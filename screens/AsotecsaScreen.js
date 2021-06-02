@@ -582,7 +582,7 @@ class ContactScreen extends Component {
 					</View>
 					{this.sendAlert()}
 					<View>
-						<Form style={{ marginRight: 20, marginLeft: 20 }}>
+						<Form style={{ marginRight: 20, marginLeft: 20 }} key={1}>
 							{/* primer nombre */}
 							<Item rounded style={{ marginTop: 15 }}>
 								<Icon
@@ -726,7 +726,7 @@ class ContactScreen extends Component {
 									placeholder="Fecha de Nacimiento"
 									onBlur={() => this.validateBirthday()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -751,7 +751,7 @@ class ContactScreen extends Component {
 									placeholder="Fecha de Ingreso"
 									onBlur={() => this.validateStartDate()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -776,7 +776,7 @@ class ContactScreen extends Component {
 									placeholder="No. De celular"
 									onBlur={() => this.validateMobilPhone()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -801,7 +801,7 @@ class ContactScreen extends Component {
 									placeholder="Correo electrónico"
 									onBlur={() => this.validateEmail()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -822,7 +822,7 @@ class ContactScreen extends Component {
 									placeholder="No. De cuenta"
 									onBlur={() => this.validateBankAcount()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -843,7 +843,7 @@ class ContactScreen extends Component {
 									placeholder="Entidad bancaria:"
 									onBlur={() => this.validateBankName()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -887,7 +887,7 @@ class ContactScreen extends Component {
 									placeholder="% de ahorro mensual"
 									onBlur={() => this.validateMonthPercent()}
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {
@@ -908,7 +908,7 @@ class ContactScreen extends Component {
 									onBlur={() => this.validatebankFees()}
 									placeholder="Incluir comisiones en el ahorro:"
 									placeholderTextColor={myStyles.bg1}
-									style={{ color: myStyles.bg1, outline: 'none' }}
+									style={{ color: myStyles.bg1 }}
 								/>
 							</Item>
 							{(() => {

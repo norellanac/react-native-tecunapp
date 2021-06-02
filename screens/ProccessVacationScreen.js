@@ -109,7 +109,7 @@ class ProccessVacationScreen extends Component {
 
 				{(() => {
 					return itemName.map((item) => (
-						<ListItem key={item.id} icon onPress={ () => this.mailVacation(item.email, item.departament)}>
+						<ListItem key={item.departament} icon onPress={ () => this.mailVacation(item.email, item.departament)}>
 							<Body style={{ marginRight: 5, marginLeft: 10 }}>
 								<Text>{item.departament}</Text>
 							</Body>
