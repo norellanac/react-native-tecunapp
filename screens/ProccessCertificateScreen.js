@@ -27,7 +27,7 @@ class ProccessCertificateScreen extends Component {
 		pathDocuemnt: apiUrl.link,
 		modalVisible: true,
 		modalVisibleMail: false,
-		modalVisibleSend: true,
+		modalVisibleSend: false,
 		contry: null,
 		pais: null,
 	};
@@ -48,7 +48,7 @@ class ProccessCertificateScreen extends Component {
 	}
 
 	test() {
-		console.log('Hola mundo desde el boton');
+		//console.log('Hola mundo desde el boton');
 	}
 
 	mailCertificate(contry, pais) {
@@ -57,8 +57,8 @@ class ProccessCertificateScreen extends Component {
 		var token = this.props.usuariosReducer.token;
 		//const { modalVisibleMail } = this.state;
 
-		console.log(pais);
-		console.log("Entro");
+		//console.log(pais);
+		//console.log("Entro");
 
 		var objectMail = { country: contry, emailUser: mailUser, pais: pais };
 
@@ -349,8 +349,8 @@ class ProccessCertificateScreen extends Component {
 		let algo = null;
 		let algo1 = null;
 
-		console.log(this.props.rrhhReducer);
-		console.log(this.state);
+		//console.log(this.props.rrhhReducer);
+		//console.log(this.state);
 
 		return (
 			<Container>

@@ -26,7 +26,7 @@ import * as loginActions from '../src/actions/loginActions';
 import * as userActions from '../src/actions/userActions';
 import * as questionActions from '../src/actions/questionActions';
 import FooterTabsNavigationIconText from '../components/FooterTaIconTextN-B';
-import HeaderCustom from './../components/HeaderCustom';
+import HeaderOnlyProfile from './../components/HeaderOnlyProfile';
 import { persistor, apiUrl, screenHeight, screenWidth, myStyles } from './../App';
 import { withNavigation } from 'react-navigation';
 import Constants from 'expo-constants';
@@ -686,14 +686,12 @@ class UserScreenProfile extends Component {
 	}
 
 	render() {
-		//console.log('perfil: ', this.props.questionReducer);
-		//console.log('User: ', this.props.usuariosReducer.user);
 		return (
 			<Container>
-				<HeaderCustom navigation={this.props.navigation} />
+				<HeaderOnlyProfile navigation={this.props.navigation} />
 				<Content style={{ backgroundColor: myStyles.light }}>
 					{this.modalMessage()}
-					<View style={{ backgroundColor: myStyles.bg1, paddingBottom: screenHeight / 5 }} />
+					<View style={{ backgroundColor: '#2c95c6', paddingBottom: screenHeight / 5 }} />
 					<Card
 						transparent
 						style={{

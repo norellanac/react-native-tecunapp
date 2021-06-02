@@ -41,7 +41,8 @@ class ProccessVacationScreen extends Component {
 		newArray: [],
 		company: '',
 		objectMail: null,
-		token: null,
+		tokenUser: '',
+		objectMailUser: '',
 		modalVisible: true,
 		modalVisibleMail: false,
 		modalVisibleSend: false,
@@ -173,62 +174,20 @@ class ProccessVacationScreen extends Component {
 	}
 
 	mailVacation(emailVacation, message) {
-		//console.log("Que viene aqui? ", emailVacation, message);
+		var mailUser = this.props.usuariosReducer.user.email;
+		var token = this.props.usuariosReducer.token;
 
-		console.log("Entro al mailVacation");
-		this.setState({ modalVisibleMail: true});
+		var objectMail = { email: emailVacation, emailUser: mailUser, departament: message };
 
-		let mailUser = this.props.usuariosReducer.user.email;
-		let token = this.props.usuariosReducer.token;
+		this.state.objectMailUser = objectMail,
+		this.state.tokenUser = token;
 
-		let objectMail = { email: emailVacation, emailUser: mailUser, departament: message };
-
-		this.setState({ objectMail: objectMail});
-
-		this.setState({ token: token});
-
-		return(
-			<View style={this.styles.centeredView} key={2}>
-				<Text>Hola mundo</Text>
-				<Modal
-					animationType="fade"
-					transparent={this.state.modalVisibleMail}
-					visible={this.state.modalVisibleMail}
-					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					
-					this.setModalVisible(false);
-					}}
-				>
-					<View style={this.styles.centeredView}>
-						<View style={this.styles.modalViewMail}>
-							<Text style={this.styles.modalTextTitle}>Constancia laboral</Text>
-							<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
-							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
-								<Pressable onPress={() => this.setModalVisible(false)}>
-									<View style={this.styles.viewMail}>
-										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
-										<Text style={this.styles.textStyleMail}>CERRAR</Text>
-									</View>
-								</Pressable>
-								<Pressable onPress={() => this.sendMailVacation(objectMail, token)}>
-									<View style={this.styles.viewMailAccept}>
-										<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
-										<Text style={this.styles.textStyleMail}>ACEPTAR</Text>
-									</View>
-								</Pressable>
-							</ListItem>
-						</View>
-					</View>
-				</Modal>
-			</View>
-
-		);
+		this.setState({modalVisibleMail: true});
 	}
 
 	async sendMailVacation(objectMail, token) {
 		this.setModalVisible(false)
-
+		
 		await this.props.mailVacation(objectMail, token);
 		this.setState({ modalVisibleSend: true });
 	}
@@ -475,7 +434,7 @@ class ProccessVacationScreen extends Component {
 				<Content>
 					{this.loadingInfoName()}
 					{this.modalStart()}
-					<View style={this.styles.centeredView} key={4}>
+					<View style={this.styles.centeredView} key={2}>
 						<Modal
 							animationType="fade"
 							transparent={this.state.modalVisibleMail}
@@ -486,18 +445,18 @@ class ProccessVacationScreen extends Component {
 							this.setModalVisible(false);
 							}}
 						>
-							<View style={this.styles.centeredView} key={4}>
+							<View style={this.styles.centeredView}>
 								<View style={this.styles.modalViewMail}>
-									<Text style={this.styles.modalTextTitle}>MENSAJE</Text>
-									<Text style={this.styles.modalTextDescription}>Haz click en acepta y el encargado recibirá tu información y se pondrán en contacto contigo, lo antes posible.</Text>
-									<ListItem key={4} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
+									<Text style={this.styles.modalTextTitle}>Constancia laboral</Text>
+									<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
+									<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 										<Pressable onPress={() => this.setModalVisible(false)}>
 											<View style={this.styles.viewMail}>
 												<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
 												<Text style={this.styles.textStyleMail}>CERRAR</Text>
 											</View>
 										</Pressable>
-										<Pressable onPress={() => this.sendMailVacation(this.state.objectMail, this.state.toke)}>
+										<Pressable onPress={() => this.sendMailVacation(this.state.objectMailUser, this.state.tokenUser)}>
 											<View style={this.styles.viewMailAccept}>
 												<Icon style={this.styles.buttonIcon} name="checkcircleo" type="AntDesign"/>
 												<Text style={this.styles.textStyleMail}>ACEPTAR</Text>

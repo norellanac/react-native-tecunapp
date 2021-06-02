@@ -41,9 +41,6 @@ export const mailVacation = (objectMail, token) => async dispatch => {
     });
 
     try {
-
-        console.log("Que trael los objectos",objectMail, token);
-
         let dataForm = "_method=" + encodeURIComponent("POST");
         dataForm += "&email=" + encodeURIComponent(objectMail.email);
         dataForm += "&emailUser=" + encodeURIComponent(objectMail.emailUser);
@@ -62,7 +59,7 @@ export const mailVacation = (objectMail, token) => async dispatch => {
         
         const data = await response.json();
 
-        console.log("Data ",data);
+        console.log("Data en mailVacation ",data);
 
         if (!response.ok) {
             dispatch({
@@ -112,7 +109,7 @@ export const mailCertificate = (objectMail, token) => async dispatch => {
         
         const data = await response.json();
 
-        console.log("Data ",data);
+        console.log("Data mailCertificate ",data);
 
         if (!response.ok) {
             dispatch({
