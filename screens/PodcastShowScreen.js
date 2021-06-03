@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dimensions, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { Dimensions, TouchableOpacity, Image, ScrollView, Pressable } from 'react-native';
 import HTML from 'react-native-render-html';
 import { WebView } from 'react-native-webview';
 import { Linking } from 'react-native';
@@ -39,6 +39,7 @@ import { Video } from 'expo-av';
 import { apiUrl, screenHeight, screenWidth, myStyles } from '../App';
 
 import Loading from './../components/Loading';
+import { searchTextInJobs } from '../src/actions/jobsActions';
 
 const sound = new Audio.Sound();
 
@@ -54,6 +55,7 @@ class PodcastShowScreen extends Component {
 		showComments: false,
 		showSpotify: false,
 		showAudio: false,
+		showPause: false,
 		podcastId: '',
 		sound1: null,
 		message: null
@@ -179,21 +181,17 @@ class PodcastShowScreen extends Component {
 	}
 
 	async playSound() {
-		//console.log('play: ');
 		await sound.playAsync();
-		//console.log('Play/Stop Sound');
 	}
 
 	async stopSound() {
-		//console.log('stop: ');
 		await sound.stopAsync();
-		//console.log('Play/Stop Sound');
 	}
 
 	async pauseSound() {
-		//console.log('stop: ');
 		await sound.pauseAsync();
-		//console.log('pause Sound', sound);
+		
+
 	}
 
 	inputSpotify() {
@@ -213,29 +211,62 @@ class PodcastShowScreen extends Component {
 		}
 	}
 
+	changeIconPause() {
+		console.log("Entro aqui en el await");
+		this.setState({ showPause: !this.state.showPause });
+	}
+
+	playTouchable() {
+		return (
+			<TouchableOpacity style={{ backgroundColor: myStyles.grey, borderRadius: 50 }} onPress={ this.playSound }>
+				<View>
+					<Icon name="play-circle" type="FontAwesome5" style={{padding: 40}} />
+				</View>
+				<Text>Play</Text>
+			</TouchableOpacity>
+		);
+	}
+
+	pauseTouchable() {
+		return(
+			<TouchableOpacity onPress={ this.pauseSound } style={{ backgroundColor: myStyles.grey, borderRadius: 50 }}>					
+				<View>
+					<Icon name="pause-circle" type="FontAwesome5" style={{padding: 40}} />
+				</View>
+				<Text>Pause</Text>
+			</TouchableOpacity>	
+		);
+	}
+
 	inputAudio() {
 		if (this.props.podcastReducer.podcast.featured_audio && this.state.showAudio == true) {
 			return (
-				<CardItem>
-					<Left>
-						<Button transparent bordered primary iconLeft onPress={this.playSound}>
-							<Icon name="play-circle" type="FontAwesome5" />
-							<Text>Play</Text>
-						</Button>
+				/* this.playSound, this.stopSound, this.pauseSound */
+				<ListItem avatar noBorder style={{ width: screenWidth, marginLeft: -5, backgroundColor: myStyles.grey}}>
+
+					<Left style={{ marginLeft: 35, marginRight: 35, marginTop: 5 }}>
+						<TouchableOpacity onPress={ this.pauseSound } style={{ backgroundColor: myStyles.bg1, borderRadius: 50 }}>					
+							<View>
+								<Icon name="pause-circle" type="FontAwesome5" style={{padding: 20, color: myStyles.light}} />
+							</View>
+						</TouchableOpacity>	
 					</Left>
-					<Body>
-						<Button transparent bordered primary iconLeft onPress={this.pauseSound}>
-							<Icon name="pause-circle" type="FontAwesome5" />
-							<Text>Pause</Text>
-						</Button>
+					<Body style={{ marginRight: 50, alignItems: 'center'}}>
+						<TouchableOpacity style={{ backgroundColor: myStyles.bg1, borderRadius: 50 }} onPress={ this.playSound }>
+							<View>
+								<Icon name="play-circle" type="FontAwesome5" style={{padding: 30, color: myStyles.light}} />
+							</View>
+						</TouchableOpacity>
 					</Body>
-					<Right>
-						<Button transparent bordered primary iconLeft onPress={this.stopSound}>
-							<Icon name="stop-circle" type="FontAwesome5" />
-							<Text>Stop</Text>
-						</Button>
+					<Right style={{ marginTop: 7,  }}>
+						<TouchableOpacity onPress={() =>Linking.openURL(this.state.pathImage + this.props.podcastReducer.podcast.featured_audio)}>
+							<View style={{ backgroundColor: myStyles.bg1, borderRadius: 50 }}>
+								<Icon name="cloud-download" type="FontAwesome" style={{padding: 20, color: myStyles.light}} />
+							</View>
+						</TouchableOpacity>
 					</Right>
-				</CardItem>
+				</ListItem>
+				
 			);
 		}
 	}
@@ -275,7 +306,7 @@ class PodcastShowScreen extends Component {
 			);
 		}
 
-		//console.log("Entro aqui ",podcast);
+		//console.log("State ", this.state);
 
 		return (
 			<Container>
@@ -302,16 +333,102 @@ class PodcastShowScreen extends Component {
 							</Text>
 						</View>
 						<Card style={{ flex: 0, marginTop: 0 }} key={podcast.id}>
-							<CardItem>
-								<Left>
-									<Text note>{podcast.created_at}</Text>
+							<ListItem style={{ width: screenWidth, marginLeft: -5}}>
+								<Left style={{ marginLeft: 11, marginRight: -(screenWidth / 5) }}>
+									{(() => {
+										if (podcast.featured_spotify) {
+											return(
+												<Button
+													iconLeft
+													transparent
+													style={{
+														alignSelf: 'center',
+														backgroundColor: '#f9f9f9',
+														borderWidth: 2,
+														borderRadius: 15,
+														shadowColor: myStyles.bg1,
+														shadowOffset: {
+															width: 0,
+															height: 6
+														},
+														shadowOpacity: 0.39,
+														shadowRadius: 8.3,
+
+														elevation: 8
+													}}
+													onPress={(showSpotify) => this.setState({ showSpotify: !this.state.showSpotify })}
+												>
+													<Icon name="music" type="FontAwesome" />
+													<Text style={{ marginLeft: -10,  color: myStyles.bg1, fontSize: 12 }}>ESCUCHAR</Text>
+												</Button>
+											);
+										} else {
+											if (podcast.featured_audio) {
+												return (<Button
+													iconLeft
+													transparent
+													style={{
+														alignSelf: 'center',
+														backgroundColor: '#f9f9f9',
+														borderWidth: 2,
+														borderRadius: 15,
+														shadowColor: myStyles.bg1,
+														shadowOffset: {
+															width: 0,
+															height: 6
+														},
+														shadowOpacity: 0.39,
+														shadowRadius: 8.3,
+	
+														elevation: 8
+													}}
+													onPress={(showAudio) => this.setState({ showAudio: !this.state.showAudio })}
+												>
+													<Icon name="cloud-download" type="FontAwesome" />
+													<Text style={{ marginLeft: -10,  color: myStyles.bg1, fontSize: 12 }}>DESCARGAR</Text>
+												</Button> );
+											}
+										}
+									})()}
 								</Left>
-								<Right>
+								<Body style={{ marginRight: -(screenWidth / 19) }}>
+									{(() => {
+										if (podcast.featured_spotify && podcast.featured_audio) {
+											return (<Button
+												iconLeft
+												transparent
+												style={{
+													alignSelf: 'center',
+													backgroundColor: '#f9f9f9',
+													borderWidth: 2,
+													marginLeft: -(screenWidth / 10),
+													borderRadius: 15,
+													shadowColor: myStyles.bg1,
+													shadowOffset: {
+														width: 0,
+														height: 6
+													},
+													shadowOpacity: 0.39,
+													shadowRadius: 8.3,
+
+													elevation: 8
+												}}
+												onPress={(showAudio) => this.setState({ showAudio: !this.state.showAudio })}
+											>
+												<Icon name="cloud-download" type="FontAwesome" />
+												<Text style={{ marginLeft: -10,  color: myStyles.bg1, fontSize: 12 }}>DESCARGAR</Text>
+											</Button> );
+										}
+									})()}
+								</Body>
+								<Right style={{  marginLeft: -10, marginRight: 5}}>
 									<Button
+										iconLeft
 										textStyle={{ color: '#87838B' }}
 										style={{ 
 											backgroundColor: '#fbf4ff', 
 											borderRadius: 20,
+											marginRight: -(screenWidth / 27),
 											shadowColor: `#9400d3`,
 											shadowOffset: {
 												width: 0,
@@ -335,9 +452,9 @@ class PodcastShowScreen extends Component {
 										{this.showUserNameLikes(podcast)}
 									</Button>
 								</Right>
-							</CardItem>
+							</ListItem>
 
-							<CardItem>
+							{/* <CardItem>
 								<Left>
 									{(() => {
 										if (podcast.featured_spotify) {
@@ -391,7 +508,7 @@ class PodcastShowScreen extends Component {
 										}
 									})()}
 								</Right>
-							</CardItem>
+							</CardItem> */}
 							<ScrollView>{this.inputSpotify()}</ScrollView>
 								{this.inputAudio()}
 							<CardItem>
