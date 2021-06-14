@@ -518,7 +518,7 @@ class ContactScreen extends Component {
 						<View style={this.styles.modalViewText}>
 							<Text style={this.styles.modalTextTitle}>ASOTECSA</Text>
 							<Text style={this.styles.modalTextDescription}>
-								¡Bienvenido a la Asociación Solidarista de Trabajadores Empresas TECUN, S.A.! Llena los datos solicitados para inscribirte.
+								¡Bienvenido a la Asociación Solidarista de Trabajadores Empresas TECUN, S.A.! Llena los datos solicitados para inscribirte o actualizarte.
 							</Text>
 							<ListItem key={1} noBorder style={this.styles.ListClose} icon delayPressIn onPress={() => this.setModalVisibleOnly(false)}>
 								<Left style={this.styles.ListLeft}>

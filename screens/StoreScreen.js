@@ -110,7 +110,7 @@ class StoreScreen extends Component {
 							{store.address}
 						</Text>
 					</Content>
-					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20 }}>
+					<Content style={{ marginRight: screenWidth / 10, marginLeft: screenWidth / 20, marginTop: 5 }}>
 						<Text style={{ fontSize: 15 }} note>
 							{store.schedule}
 						</Text>
