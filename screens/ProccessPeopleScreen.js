@@ -112,7 +112,7 @@ class ProccessPeopleScreen extends Component {
 	
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 1.8,
+			width: screenWidth / 1.3,
 			//backgroundColor: 'black'
 		},
 	

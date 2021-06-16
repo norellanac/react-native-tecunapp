@@ -115,7 +115,7 @@ class UserScreenProfile extends Component {
 		ListCloseMail: {
 			//backgroundColor: 'black',
 			alignSelf: 'flex-end',
-			marginRight: 15,
+			marginRight: 25,
 			marginBottom: 5
 			//backgroundColor: 'black'
 		},
@@ -521,10 +521,6 @@ class UserScreenProfile extends Component {
 					animationType="slide"
 					transparent={this.state.modalVisible}
 					visible={this.state.modalVisible}
-					onRequestClose={() => {
-						Alert.alert('Modal has been closed.');
-						this.setModalVisibleOnly(false);
-					}}
 				>
 					<View style={this.styles.centeredView}>
 						<View style={this.styles.modalViewText}>

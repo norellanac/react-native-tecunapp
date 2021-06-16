@@ -280,13 +280,13 @@ class ProccessCertificateScreen extends Component {
 
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 1.6,
+			width: screenWidth / 1.2,
 			//backgroundColor: 'black'
 		},
 
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 75,
+			width: screenWidth / 2.9,
 		},
 
 		textStyle: {

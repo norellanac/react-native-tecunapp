@@ -109,14 +109,15 @@ class ProccessVacationScreen extends Component {
 
 				{(() => {
 					return itemName.map((item) => (
-						<ListItem key={item.departament} icon onPress={ () => this.mailVacation(item.email, item.departament)}>
-							<Body style={{ marginRight: 5, marginLeft: 10 }}>
-								<Text>{item.departament}</Text>
+						<ListItem style={{ marginTop: 4, marginBottom: 8, paddingBottom: 5 }} key={item.departament} icon onPress={ () => this.mailVacation(item.email, item.departament)}>
+							<Body style={{ marginRight: 2, marginLeft: 10 }}>
+								<Text style={{ marginTop: 5, marginBottom: 7 }}>{item.departament}</Text>
 							</Body>
 							<Right>
 								<Thumbnail
 									square
 									style={{
+										marginTop: -3,
 										marginRight: 50,
 										paddingLeft: 50,
 										paddingRight: 8,
@@ -331,13 +332,13 @@ class ProccessVacationScreen extends Component {
 
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 1.7,
+			width: screenWidth / 1.2,
 			//backgroundColor: 'black'
 		},
 
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 75,
+			width: screenWidth / 2.9,
 		},
 
 		textStyle: {

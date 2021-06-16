@@ -136,7 +136,7 @@ class GameShowScreen extends Component {
 		ListCloseMail: {
 			//backgroundColor: 'black',
 			alignSelf: 'flex-end',
-			marginRight: 15,
+			marginRight: 30,
 			marginBottom: 5
 			//backgroundColor: 'black'
 		},

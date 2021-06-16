@@ -174,7 +174,7 @@ class ContactScreen extends Component {
 
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 90
+			width: screenWidth / 2.9,
 		},
 
 		textStyle: {

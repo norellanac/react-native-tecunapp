@@ -184,7 +184,7 @@ class ContactScreen extends Component {
 	
 		ListCloseMail: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 1.8,
+			width: screenWidth / 1.3,
 			//backgroundColor: 'black'
 		},
 	
@@ -219,7 +219,7 @@ class ContactScreen extends Component {
 		
 		ListClose: {
 			alignSelf: 'flex-end',
-			width: screenWidth / 2 - 75,
+			width: screenWidth / 2.9,
 		},
 
 		ListLeft: {
