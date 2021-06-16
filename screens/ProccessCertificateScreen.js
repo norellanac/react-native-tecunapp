@@ -184,7 +184,7 @@ class ProccessCertificateScreen extends Component {
 		modalViewSendMail: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 6,
+			height: screenHeight / 4,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -222,7 +222,7 @@ class ProccessCertificateScreen extends Component {
 		modalViewText: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 5,
+			height: screenHeight / 4,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,

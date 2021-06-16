@@ -144,14 +144,12 @@ class ProccessVacationScreen extends Component {
 					transparent={this.state.modalVisibleMail}
 					visible={this.state.modalVisibleMail}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					
 					this.setModalVisible(false);
 					}}
 				>
 					<View style={this.styles.centeredView}>
 						<View style={this.styles.modalViewMail}>
-							<Text style={this.styles.modalTextTitle}>Constancia laboral {this.state.pais}</Text>
+							<Text style={this.styles.modalTextTitle}>Consulta de vacaciones {this.state.pais}</Text>
 							<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
 							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 								<Pressable onPress={() => this.setModalVisible(false)}>
@@ -201,8 +199,6 @@ class ProccessVacationScreen extends Component {
 					transparent={this.state.modalVisibleSend}
 					visible={this.state.modalVisibleSend}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					
 					this.setModalVisibleSend(false);
 					}}
 				>
@@ -255,7 +251,7 @@ class ProccessVacationScreen extends Component {
 		modalViewMail: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 5 + 25,
+			height: screenHeight / 3.5,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -274,7 +270,7 @@ class ProccessVacationScreen extends Component {
 		modalViewText: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 4.5,
+			height: screenHeight / 3.5,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -396,7 +392,6 @@ class ProccessVacationScreen extends Component {
 					transparent={this.state.modalVisible}
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
 						this.setModalVisibleOnly(false);
 					}}
 				>
@@ -441,14 +436,12 @@ class ProccessVacationScreen extends Component {
 							transparent={this.state.modalVisibleMail}
 							visible={this.state.modalVisibleMail}
 							onRequestClose={() => {
-							Alert.alert("Modal has been closed.");
-							
 							this.setModalVisible(false);
 							}}
 						>
 							<View style={this.styles.centeredView}>
 								<View style={this.styles.modalViewMail}>
-									<Text style={this.styles.modalTextTitle}>Constancia laboral</Text>
+									<Text style={this.styles.modalTextTitle}>CONSULTAR  VACACIONES</Text>
 									<Text style={this.styles.modalTextDescription}>Enviaremos tu solicitud al área encargada y te responderán a través de correo electrónico o WhatsApp.</Text>
 									<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 										<Pressable onPress={() => this.setModalVisible(false)}>
