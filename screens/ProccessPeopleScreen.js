@@ -60,7 +60,7 @@ class ProccessPeopleScreen extends Component {
 		modalViewText: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 4,
+			height: screenHeight / 3,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -169,7 +169,6 @@ class ProccessPeopleScreen extends Component {
 					transparent={this.state.modalVisible}
 					visible={this.state.modalVisible}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
 						this.setModalVisibleOnly(false);
 					}}
 				>

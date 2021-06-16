@@ -281,48 +281,47 @@ class UserScreenProfile extends Component {
 	async suggestionButton() {
 		var token = this.props.usuariosReducer.token;
 		var object = {
-			'title': this.state.title,
-			'description': this.state.description
+			title: this.state.title,
+			description: this.state.description
 		};
 
-		if ((object.title != "") && (object.description != "")) {
+		if (object.title != '' && object.description != '') {
 			await this.props.suggestion(object, token);
-			this.setState({ 
-				title: "",
-				description: "",
+			this.setState({
+				title: '',
+				description: '',
 				messageAction: this.props.usuariosReducer.messageSuggestion,
 				statusAction: this.props.usuariosReducer.statusSuggestion
 			});
-			
 		} else {
 			this.setState({
-				messageAction: "Los campos de titulo y descripcion son requeridos, intente de nuevo",
-				statusAction: "error"
+				messageAction: 'Los campos de titulo y descripcion son requeridos, intente de nuevo',
+				statusAction: 'error'
 			});
 		}
 
-		if (this.state.statusAction == "success") {
+		if (this.state.statusAction == 'success') {
 			this.setState({ status: 'Correcto' });
 		} else {
 			this.setState({ status: 'Error' });
 		}
 
-		console.log("Que trae el estado: ",this.state);
-		
+		console.log('Que trae el estado: ', this.state);
+
 		this.setState({ modalVisibleMail: true });
 	}
 
-	modalMessage(){
-		return(
+	modalMessage() {
+		return (
 			<View style={this.styles.centeredView} key={2}>
 				<Modal
 					animationType="fade"
 					transparent={this.state.modalVisibleMail}
 					visible={this.state.modalVisibleMail}
 					onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					
-					this.setModalVisible(false);
+						Alert.alert('Modal has been closed.');
+
+						this.setModalVisible(false);
 					}}
 				>
 					<View style={this.styles.centeredView}>
@@ -332,7 +331,7 @@ class UserScreenProfile extends Component {
 							<ListItem key={2} noBorder style={this.styles.ListCloseMail} icon delayPressIn>
 								<Pressable onPress={() => this.setModalVisibleOnly(false)}>
 									<View style={this.styles.viewMailAccept}>
-										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign"/>
+										<Icon style={this.styles.buttonIcon} name="closecircleo" type="AntDesign" />
 										<Text style={this.styles.textStyleMail}>CERRAR</Text>
 									</View>
 								</Pressable>
@@ -588,16 +587,12 @@ class UserScreenProfile extends Component {
 		);
 	}
 
-	returnSuggestion(){
+	returnSuggestion() {
 		if (this.state.isDisplaySugge == 1) {
-			return(
-				<Col style={{ alignItems: 'center'}}>
-					<Item rounded style={{ marginTop: 10, width: screenWidth / 1.2,}}>
-						<Icon
-							type="MaterialIcons"
-							name="title"
-							style={{ color: myStyles.bg1, fontSize: 25 }}
-						/>
+			return (
+				<Col style={{ alignItems: 'center' }}>
+					<Item rounded style={{ marginTop: 10, width: screenWidth / 1.2 }}>
+						<Icon type="MaterialIcons" name="title" style={{ color: myStyles.bg1, fontSize: 25 }} />
 						<Input
 							onChangeText={(title) => this.setState({ title })}
 							value={this.state.title}
@@ -606,15 +601,15 @@ class UserScreenProfile extends Component {
 							style={{ color: myStyles.bg1, fontWeight: 'bold' }}
 						/>
 					</Item>
-					<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top'}}>
+					<Item rounded style={{ marginTop: 15, width: screenWidth / 1.2, textAlignVertical: 'top' }}>
 						<Icon
 							type="MaterialCommunityIcons"
 							name="email-edit"
 							style={{ color: myStyles.bg1, fontSize: 25 }}
 						/>
 						<TextInput
-							style={{ color: myStyles.bg1, justifyContent: "flex-start", marginRight: 50 }}
-							onChangeText={(description) => this.setState({description})}
+							style={{ color: myStyles.bg1, justifyContent: 'flex-start', marginRight: 50 }}
+							onChangeText={(description) => this.setState({ description })}
 							placeholder="Escribe tu opinión sobre TecunApp                                                                   "
 							placeholderTextColor={myStyles.bg1}
 							numberOfLines={6}
@@ -622,10 +617,18 @@ class UserScreenProfile extends Component {
 							multiline={true}
 						/>
 					</Item>
-					<Col style={{ alignItems: 'center'}}>
-						<Item rounded style={{ marginTop: 15, marginBottom: 20, width: screenWidth / 2.4, textAlignVertical: 'top'}}>
+					<Col style={{ alignItems: 'center' }}>
+						<Item
+							rounded
+							style={{
+								marginTop: 15,
+								marginBottom: 20,
+								width: screenWidth / 2.4,
+								textAlignVertical: 'top'
+							}}
+						>
 							<Button
-								onPress={ () => this.suggestionButton() }
+								onPress={() => this.suggestionButton()}
 								rounded
 								iconLeft
 								style={{
@@ -667,14 +670,13 @@ class UserScreenProfile extends Component {
 							</Button>
 						</Item>
 					</Col>
-					
 				</Col>
 			);
 		}
 	}
 
 	suggestion() {
-		if (this.state.isDisplaySugge == 0 ) {
+		if (this.state.isDisplaySugge == 0) {
 			this.setState({
 				isDisplaySugge: 1
 			});
@@ -776,7 +778,7 @@ class UserScreenProfile extends Component {
 						</View>
 						<View style={{ paddingTop: screenHeight / 17 }}>
 							<Grid>
-								<Col style={{ marginTop: -50, alignItems: 'center'}}>
+								<Col style={{ marginTop: -50, alignItems: 'center' }}>
 									<TouchableOpacity
 										onPress={() => {
 											this.onPressChange();
@@ -861,7 +863,7 @@ class UserScreenProfile extends Component {
 											style={{
 												backgroundColor: '#eba547',
 												width: screenWidth / 1.2,
-												borderRadius: 10,
+												borderRadius: 10
 											}}
 											onFocus
 											delayPressIn
@@ -936,12 +938,12 @@ class UserScreenProfile extends Component {
 
 									{this.allScoreTitle()}
 									{this.allScore()}
-									{ this.returnSuggestion() }
+									{this.returnSuggestion()}
 
-									<Col style={{ alignItems: 'center', marginTop: screenHeight / 10}}>
-										<Item style={{ marginTop: 15, alignItems: 'center', textAlignVertical: 'top'}}>
+									<Col style={{ alignItems: 'center', marginTop: screenHeight / 10 }}>
+										<Item style={{ marginTop: 15, alignItems: 'center', textAlignVertical: 'top' }}>
 											<Button
-												onPress={ () => this.logout() }
+												onPress={() => this.logout()}
 												iconRight
 												style={{
 													backgroundColor: myStyles.bg1,
@@ -988,6 +990,9 @@ class UserScreenProfile extends Component {
 							{this.showModal()}
 						</View>
 					</Card>
+					<Text note style={{ textAlign: 'center', color: myStyles.dark }}>
+						V.{Constants.manifest.version}
+					</Text>
 				</Content>
 				<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />
 			</Container>

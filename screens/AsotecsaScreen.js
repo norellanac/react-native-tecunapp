@@ -132,7 +132,7 @@ class ContactScreen extends Component {
 		modalViewText: {
 			marginTop: 50,
 			width: screenWidth - 30,
-			height: screenHeight / 4,
+			height: screenHeight / 3.5,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
@@ -151,7 +151,7 @@ class ContactScreen extends Component {
 		modalViewMail: {
 			marginTop: 50,
 			width: screenWidth - 20,
-			height: screenHeight / 3,
+			height: screenHeight / 2.5,
 			//margin: 20,
 			backgroundColor: "white",
 			borderRadius: 20,
