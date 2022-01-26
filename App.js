@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Platform, Image, StyleSheet, View, Text, Dimensions, StatusBar, ImageBackground } from 'react-native';
-import AppLoading from 'expo-app-loading';
+//import AppLoading from 'expo-app-loading';
 import * as Font from 'expo-font';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -212,7 +212,7 @@ class App extends React.Component {
 	// Load any resources or data that we need prior to rendering the app
 	render() {
 		if (!this.state.isReady) {
-			return <AppLoading />;
+			return (<View><Text>cargando</Text></View>)
 		} else {
 			if (!this.state.showSlides) {
 				return (
