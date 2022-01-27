@@ -1,3 +1,4 @@
+//https://medium.com/geekculture/how-to-convert-class-component-into-functional-components-in-react-ec87ca1a5b53
 import React, {useContext, useEffect, useState} from "react";
 import {
   Platform,
