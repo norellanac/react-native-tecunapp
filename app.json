@@ -14,7 +14,7 @@
     "scheme": "myapp",
     "splash": {
       "image": "./assets/images/splashApp.png",
-      "resizeMode": "cover",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     
