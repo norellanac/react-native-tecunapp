@@ -162,7 +162,7 @@ class PodcastScreen extends Component {
 			//console.log("jobsScreen: ", this.props);
 			return (
 				<Container>
-					<HederPostSection navigation={this.props.navigation} screen={2} />
+					<HeaderCustom navigation={this.props.navigation} screen={2} />
 					<Loading />
 					<FooterTabsNavigationIconText navigation={this.props.navigation} tab={1} />{' '}
 				</Container>
@@ -171,7 +171,7 @@ class PodcastScreen extends Component {
 
 		return (
 			<Container>
-				<HederPostSection navigation={this.props.navigation} screen={2} />
+				<HeaderCustom navigation={this.props.navigation} screen={2} />
 				<Image
 					source={{ uri: apiUrl.link + '/img/app/' + 'bpodcast.png' }}
 					style={{ 
